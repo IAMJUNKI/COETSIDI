@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
-const PUERTO = 80;
+const port = 80;
 
-app.listen(PUERTO, function(){
+app.listen(port, function(){
 	console.log('Servidor http corriendo en el puerto 80');
 });
 
