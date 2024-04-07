@@ -1,0 +1,3 @@
+[submodule "horarios"]
+	path = horarios
+	url = https://github.com/SOA-ETSIDI/horarios.git
