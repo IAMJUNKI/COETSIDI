@@ -1,3 +1,6 @@
 [submodule "horarios"]
 	path = horarios
 	url = https://github.com/SOA-ETSIDI/horarios.git
+[submodule "misc"]
+	path = misc
+	url = https://github.com/SOA-ETSIDI/misc.git
