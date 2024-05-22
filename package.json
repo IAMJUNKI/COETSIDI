@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pruebas": "cd server/modules/eye && node pruebas.js",
-    "start": "cd server && node index.js"
+    "start": "cd server && node index.js",
+    "pruebas_dashboard": "cd server && node pruebas_dashboard.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/IAMJUNKI/COETSIDI#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-redis": "^7.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
@@ -32,6 +34,7 @@
     "path": "^0.12.7",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
+    "redis": "^4.6.13",
     "sequelize": "^6.37.3"
   }
 }

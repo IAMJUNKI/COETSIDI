@@ -42,20 +42,24 @@
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
    
 <main class="form-signin w-100 m-auto">
-  <form>
-     <h1 class="h3 mb-3 fw-normal">Log in</h1>
+  <form  action="/auth/login" method="post" id="form_login_usuarios">
+    <img class="mb-4" src="/img/logo_etsidi.png" alt="" width="200" height="90">
+     <h1 class="h3 mb-3 fw-normal">CO-ETSIDI Login</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+      <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username">
+      <label for="floatingInput">Usuario</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+      <label for="floatingPassword">Contraseña</label>
     </div>
 
-  
-    <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
+    <button class="btn btn-primary w-100 py-2" type="submit">Entrar</button>
+
+    <div class="d-flex justify-content-center mt-3 t-100">
+            <p>¿No tienes cuenta? <a href="/signup" class="resalte">Registrate</a> </p>
+    </div>
     </form>
 </main>
 

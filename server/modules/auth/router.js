@@ -5,9 +5,6 @@ const authRouter = express.Router();
 
 const {passport} = require('./helpers')
 
-authRouter.use(passport.initialize());
-authRouter.use(passport.session());
-
 
 //passport processess the auth
 // authRouter.post("/login",
@@ -30,12 +27,15 @@ authRouter.post("/login", function (req, res, next) {
                     return next(err)
                 }
                 else{
+                    console.log('eeey')
                     return res.redirect('/main')
                 }
             });
         }
     })(req, res, next);
 });
+
+
 // authRouter.post('/login', authHandlers.loginUserHandler);
 // authRouter.post('/register', authHandlers.registerUserHandler);
 // authRouter.post('/logout', authHandlers.logoutUserHandler);

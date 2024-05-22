@@ -6,8 +6,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
 
 
 //AUTHENTICATION of users
@@ -40,22 +38,6 @@ async function login(username, password, done) {
 			return done(error)
 				}
 }
-//determinamos que info tneemos q guardar en la sesion (id del usuario)
-	passport.serializeUser(function (user, done) {
-        console.log(user,'deserailized user')
-		return done(null, user)
-	})
-				
-				//usa el id para buscar en el database
-	passport.deserializeUser( async function (userToBeFound, done) {
-			const userFound = userToBeFound.id || userToBeFound
-			const user = await knex(users_table).first('id').where({ id: userFound })
-					if (user) {
-						return done(null, user)
-					} else {
-						return done(null, false)
-					}
-	})
 
 const checkUserAndPassword = async (username, password) => {
     try {
@@ -63,7 +45,7 @@ const checkUserAndPassword = async (username, password) => {
         const infoUser = await knex('t_usuarios').where({ username: userToBeFound }).first('id', 'password') || {}
         console.log(infoUser,'infousers')
         let response
-       
+        
         if (infoUser.id) {
             const valid = await bcrypt.compare(password, infoUser.password);
             if (valid) {
@@ -77,15 +59,43 @@ const checkUserAndPassword = async (username, password) => {
         } else {
             response = { validated: false, error_code: 'not_user' }
         }
-
+        
         return response
     } catch (e) {
         console.log(e, 'checkUserAndPassword');
     }
 
-  }
+}
+
+//determinamos que info tneemos q guardar en la sesion (id del usuario)
+    passport.serializeUser(async function (user, done) {
+        console.log(user,'serialized user')
+       
+        return done(null, user)
+    })
+                
+                //usa el id para buscar en el database
+    passport.deserializeUser( async function (userToBeFound, done) {
+        console.log(userToBeFound,'deserialized user')
+            const userFound = userToBeFound.id || userToBeFound
+            const user = await knex('t_usuarios').first('id').where({ id: userFound })
+                    if (user) {
+                        return done(null, user)
+                    } else {
+                        return done(null, false)
+                    }
+    })
+
+const isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next()
+    } else {
+        console.log(req.isAuthenticated(),'is not logged in', req.user, req.session)
+         res.redirect('/login')
+    }
+}
 
 
 
- module.exports = { passport}
+ module.exports = { passport, isLoggedIn}
 
