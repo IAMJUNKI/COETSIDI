@@ -27,15 +27,26 @@ globalRouter.use(express.urlencoded({ extended: false }));
 //-----------------------------------------------------------------------
 if (process.env.NODE_ENV === 'development') {
 	
-	const redisClient = redis.createClient()
-	redisClient.connect().catch(console.error)
-    const store = new RedisStore({ client: redisClient })
-
+	const pgSession = require('connect-pg-simple')(session)
+    const sessionPool = require('pg').Pool
+    const sessionDBaccess = new sessionPool({
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        host: process.env.DATABASE_HOST,
+        port: 5432,
+        database: process.env.DATABASE_SESSION
+    })
 	globalRouter.use(
 		session({
-			store,
+			store: new pgSession({
+				pool: sessionDBaccess,
+				tableName: 'dev_sessions',
+				createTableIfMissing: true,
+				pruneSessionInterval: false
+			}),
 			secret:process.env.COOKIE_SECRET,
-			cookie: { maxAge:172800000, secure:false, sameSite: "none"},
+			// proxy: true,
+			cookie: { maxAge:172800000, secure:false, sameSite: 'lax', httpOnly: true},
 			resave: false,
 			saveUninitialized: false,
 			
@@ -44,7 +55,10 @@ if (process.env.NODE_ENV === 'development') {
 	);
 }
 else if (process.env.NODE_ENV === 'production') {
-	
+	//store for the cookie
+	// const redisClient = redis.createClient()
+	// redisClient.connect().catch(console.error)
+    // const store = new RedisStore({ client: redisClient })
 }
 
 globalRouter.use(passport.initialize());
@@ -70,6 +84,21 @@ globalRouter.get(['/signup'], (req, res, next) => {
 	try {
 		const file = 'signup.html'
         res.sendFile(file, { root: '../client/signup' }, function (err) {
+			if (err) {
+				console.log(err) 
+			}
+        }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
+})
+
+globalRouter.use(express.static(path.join(__dirname,'../client/dashboard/src')))
+globalRouter.get(['/dashboard'], (req, res, next) => {
+	try {
+		const file = 'dashboard.html'
+        res.sendFile(file, { root: '../client/dashboard' }, function (err) {
 			if (err) {
 				console.log(err) 
 			}

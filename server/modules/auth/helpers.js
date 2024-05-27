@@ -13,7 +13,11 @@ const bcrypt = require('bcrypt');
 
 //configuarmos una nueva instancia de la estrategia local y la pasamos al middleware passport
 //con los parametros username password y done donde done nos dirá si el user está autentificado
-passport.use(new LocalStrategy(login));
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    session: true
+  },login));
 				
 async function login(username, password, done) {
 	try {
@@ -22,7 +26,7 @@ async function login(username, password, done) {
         if(!result.validated){
             switch (result.error_code) {
                 case 'bad_password': {
-                    console.log('bad passsowrd')
+                    console.log('bad passsword')
                     // Count failed attempts by Username + IP only for registered users
                     return done(null, false, { message: `Incorrect password for ${username}` })
                 }
@@ -68,7 +72,7 @@ const checkUserAndPassword = async (username, password) => {
 }
 
 //determinamos que info tneemos q guardar en la sesion (id del usuario)
-    passport.serializeUser(async function (user, done) {
+    passport.serializeUser(function (user, done) {
         console.log(user,'serialized user')
        
         return done(null, user)
@@ -88,9 +92,10 @@ const checkUserAndPassword = async (username, password) => {
 
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
+        console.log('\x1b[31m%s\x1b[0m', 'Logged in');
         return next()
     } else {
-        console.log(req.isAuthenticated(),'is not logged in', req.user, req.session)
+        console.log(req.isAuthenticated(),'is not logged in', req.user, req.session,'raaa', req.session.passport)
          res.redirect('/login')
     }
 }

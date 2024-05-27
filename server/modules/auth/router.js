@@ -16,6 +16,7 @@ const {passport} = require('./helpers')
 
 //passport middleware verifies the user credentials
 authRouter.post("/login", function (req, res, next) {
+
     passport.authenticate('local', function (err, user, info) {
         if (err) {
          return next(err)
@@ -27,14 +28,24 @@ authRouter.post("/login", function (req, res, next) {
                     return next(err)
                 }
                 else{
-                    console.log('eeey')
-                    return res.redirect('/main')
+                    return res.redirect('/dashboard')
                 }
             });
         }
     })(req, res, next);
 });
 
+            //usa el id para buscar en el database
+            passport.deserializeUser( async function (userToBeFound, done) {
+                console.log(userToBeFound,'deserialized user')
+                    const userFound = userToBeFound.id || userToBeFound
+                    const user = await knex('t_usuarios').first('id').where({ id: userFound })
+                            if (user) {
+                                return done(null, user)
+                            } else {
+                                return done(null, false)
+                            }
+            })
 
 // authRouter.post('/login', authHandlers.loginUserHandler);
 // authRouter.post('/register', authHandlers.registerUserHandler);
