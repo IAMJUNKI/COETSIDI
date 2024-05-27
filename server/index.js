@@ -1,143 +1,129 @@
-
-
 const path = require('path');
+require('./aliases');
 //obtenemos el archivos con las variables de entorno a usar
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const express = require('express');
-const app = express();
+const globalRouter = express();
 
 //middleware session cookie en el navegador
 const session = require("express-session")
-//middleware de autentificación
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const redis = require('redis')
+const RedisStore = require('connect-redis').default
 // const cors = require('cors');
 
-//hashing passswords
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const password = 'contraseñajdjdjd';
-const wrongPassword = 'not_bacon';
+const {passport, isLoggedIn} = require('@auth/helpers.js')
+const { connectToDatabase, syncDatabase } = require('@db/connection.js');
 
-const { connectToDatabase, syncDatabase } = require('./database/connection.js');
+//SUB ROUTERS
+const authRouter = require('@auth/router.js')
 
-const port = process.env.PORT || 5050;
-// console.log(process.env,'eee')
+globalRouter.use(express.json());
+globalRouter.use(express.urlencoded({ extended: false }));
 
-//hash and unhash passwords----------------------------------------
-// bcrypt.hash(password, saltRounds, function(err, hash) {
-
-// })
-
-
-// bcrypt.compare(wrongPassword, hash, function(err, res) {
-// 	if (res) {
-// 	 // Passwords match
-// 	} else {
-// 	 // Passwords don't match
-// 	}
-//   });
-// app.set("trust proxy", 1);
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-
+//checkear que el problema del passport no vienen de que estamos en local
+//entrada diferente
+ 
 //COOKIES SESSION
 //-----------------------------------------------------------------------
 if (process.env.NODE_ENV === 'development') {
-
-	app.use(
+	
+	const pgSession = require('connect-pg-simple')(session)
+    const sessionPool = require('pg').Pool
+    const sessionDBaccess = new sessionPool({
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        host: process.env.DATABASE_HOST,
+        port: 5432,
+        database: process.env.DATABASE_SESSION
+    })
+	globalRouter.use(
 		session({
-		  secret:process.env.COOKIE_SECRET,
-		  cookie: { maxAge:172800000, secure:false, sameSite: "none"},
-		  resave: false,
-		  saveUninitialized: false,
+			store: new pgSession({
+				pool: sessionDBaccess,
+				tableName: 'dev_sessions',
+				createTableIfMissing: true,
+				pruneSessionInterval: false
+			}),
+			secret:process.env.COOKIE_SECRET,
+			// proxy: true,
+			cookie: { maxAge:172800000, secure:false, sameSite: 'lax', httpOnly: true},
+			resave: false,
+			saveUninitialized: false,
+			
+			
 		})
-	  );
+	);
 }
 else if (process.env.NODE_ENV === 'production') {
-
+	//store for the cookie
+	// const redisClient = redis.createClient()
+	// redisClient.connect().catch(console.error)
+    // const store = new RedisStore({ client: redisClient })
 }
 
-//AUTHENTICATION of users
-// ------------------------------------------------------------------------------
-app.use(passport.initialize());
-app.use(passport.session());
+globalRouter.use(passport.initialize());
+globalRouter.use(passport.session());
 
-//configuarmos una nueva instancia de la estrategia local y la pasamos al middleware passport
-//con los parametros username password y done donde done nos dirá si el user está autentificado
-passport.use(new LocalStrategy(login));
-
-async function login(username, password, done) {
+globalRouter.use(express.static(path.join(__dirname,'../client/login/src')))
+globalRouter.get(['/', '','/login'], (req, res, next) => {
 	try {
-		const result = await hashr.checkUserAndPassword(username, password)
-		switch (result.error_code) {
-			case 'bad_password': {
-				// Count failed attempts by Username + IP only for registered users
-				return done(null, false, { message: 'Incorrect username or password' })
+		const file = 'login.html'
+        res.sendFile(file, { root: '../client/login' }, function (err) {
+			if (err) {
+				console.log(err) 
 			}
-			case 'not_confirmed':
-				// TODO send another email...
-				return done(null, false, { message: 'Account has not been confirmed' })
-			case 'not_user':
-				return done(null, false, { message: 'Incorrect username or password' })
-			default:
-				return done(null, false, { message: 'Incorrect username or password' })
-			};
-		// else {
-			
-		// 	return done(null, { id: result.id, newuser: result.newuser })
-		// }
-	} catch (error) {
-		return done(error)
-	}
-}
-//determinamos que info tneemos q guardar en la sesion (id del usuario)
-passport.serializeUser(function (user, done) {
-    return done(null, user)
-})
-
-//usa el id para buscar en el database
-passport.deserializeUser(
-	async function (userToBeFound, done) {
-    const userFound = userToBeFound.id || userToBeFound
-    const user = await knex(users_table).first('id').where({ id: userFound })
-    if (user) {
-        return done(null, user)
-    } else {
-        return done(null, false)
-    }
-})
-
-//passport processess the auth
-app.post("/login",
-  passport.authenticate("local", { failureRedirect : "/login"}),
-  (req, res) => {
-    res.redirect("main");
-  }
-);
-// app.use('/auth',authRouter)
-
-app.use('/login/src', express.static(path.join(__dirname,'client/login/src')))
-app.get(['/', ''], (req, res, next) => {
-	try {
-        const file = 'login.html'
-        res.sendFile(file, { root: 'client/login' }, function (err) {
-            if (err) { console.log(err) }
         }
-        )
-    } catch (err) {
-       console.log(err,'error')
-    }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
 })
+
+globalRouter.use(express.static(path.join(__dirname,'../client/signup/src')))
+globalRouter.get(['/signup'], (req, res, next) => {
+	try {
+		const file = 'signup.html'
+        res.sendFile(file, { root: '../client/signup' }, function (err) {
+			if (err) {
+				console.log(err) 
+			}
+        }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
+})
+
+globalRouter.use(express.static(path.join(__dirname,'../client/dashboard/src')))
+globalRouter.get(['/dashboard'], (req, res, next) => {
+	try {
+		const file = 'dashboard.html'
+        res.sendFile(file, { root: '../client/dashboard' }, function (err) {
+			if (err) {
+				console.log(err) 
+			}
+        }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
+})
+
+globalRouter.get('/logout', (req, res) => {
+	req.logout()
+    req.session.destroy()
+    res.redirect('/login')
+})
+
+//verifies that the user is Logged in before going to any other end point
 //--------------------------------------------------------------------------
-app.listen(port, async () => {
+globalRouter.use('/auth',authRouter)
+globalRouter.use('', isLoggedIn)
+//--------------------------------------------------------------------------
+const port = process.env.PORT || 5050;
+
+globalRouter.listen(port, async () => {
 	await connectToDatabase();
 	await syncDatabase();
 	console.log(`Servidor http corriendo en el puerto ${port}`);
-});
-
-app.get('/', function(req, res){
-	res.send('Hola, estas en la pagina inicial');
-	console.log('Se recibio una petición get');
 });
