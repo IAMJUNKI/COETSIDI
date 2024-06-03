@@ -1,70 +1,72 @@
+// //initializes as soon as the DOM is safe to manipulate
+// $(function() {
+   
+//     //cosas tal q abres el dashboard
 
-// (() => {
-//     'use strict'
-  
-//     // Graphs
-//     const ctx = document.getElementById('myChart')
-//     // eslint-disable-next-line no-unused-vars
-//     const myChart = new Chart(ctx, {
-//       type: 'line',
-//       data: {
-//         labels: [
-//           'Sunday',
-//           'Monday',
-//           'Tuesday',
-//           'Wednesday',
-//           'Thursday',
-//           'Friday',
-//           'Saturday'
-//         ],
-//         datasets: [{
-//           data: [
-//             15339,
-//             21345,
-//             18483,
-//             24003,
-//             23489,
-//             24092,
-//             12034
-//           ],
-//           lineTension: 0,
-//           backgroundColor: 'transparent',
-//           borderColor: '#007bff',
-//           borderWidth: 4,
-//           pointBackgroundColor: '#007bff'
-//         }]
-//       },
-//       options: {
-//         plugins: {
-//           legend: {
-//             display: false
-//           },
-//           tooltip: {
-//             boxPadding: 3
-//           }
-//         }
-//       }
-//     })
-//   })()
-  
+//   });
 
-//BOTONES SIDEBAR
+//IGUAL METERLO COMO FUNCION HELPER
+const preventDoubleClick = function (event) {
+    let timeStampGlobal = 0
+    if (Math.abs(event.timeStamp - timeStampGlobal) < 500) { timeStampGlobal = event.timeStamp; return true } 
+    else { timeStampGlobal = event.timeStamp; return false }
+}
 
+$(document).on('change', '#selector-grados', async function (event) {
 
-$(document).on('click', '.boton_sidebar', function () {
-    const botonSeleccionado = this.id
-
-    console.log(botonSeleccionado, 'boton seleccionado')
-    // $('#js_resultado').empty()
-    // $('#js_planes').empty()
-    // $('#js_tabla_planes').hide()
-    // $('#js_nombre_usuario').hide()
-    // $('#js_num_usuario').hide()
-    // $('#searchId').val('')
-    // $('#searchUser').val('')
-    // $('.js-funciones').hide()
-    // $('#user-from').val('')
-    // $('#enviar_qr_user_to').val('')
+    console.log($(event.currentTarget).val())
+    const gradoElegido = $(event.currentTarget).val()
+    if(gradoElegido === 'grado_electrica_electronica'||gradoElegido === 'grado_diseno_mecanica' || gradoElegido === 'erasmus'){
+        $( "#curso5" ).prop( "disabled", false );
+    } else{
+        $( "#curso5" ).prop( "disabled", true );
+    }
+    document.getElementById("segundaParteFormulario").style.display = "";
     
-    // $(`#js_funcion_${botonSeleccionado}`).show()  
+})
+
+//verifica si algun checkbox está clickado para dejar buscar asignaturas (submit el form)
+$(document).on('change', '.checkboxChanger', async function () {
+
+    const checkboxes = document.querySelectorAll('.checkboxChanger');
+    let anyChecked = false
+    
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked) anyChecked = true //verifica el valor de la propiedad checked
+    });
+
+    if(anyChecked)   $( "#buscarAsignaturas" ).prop( "disabled", false ); //si alguno está checkeado permitimos usar el buscador
+
+    else   $( "#buscarAsignaturas" ).prop( "disabled", true );  
+})
+
+
+$(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
+
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    console.log('somethng',event.target)
+    const data = new FormData(event.target)
+    console.log(data)
+    for (let [key, value] of data.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+    $.ajax({
+        url: '/gestorData/buscarAsignaturas',
+        type: 'post',
+        data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (objetoEstructurado) {
+           
+            
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+
+
 })
