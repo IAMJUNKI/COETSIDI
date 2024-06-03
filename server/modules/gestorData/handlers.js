@@ -12,7 +12,7 @@ const getAllSubjects = async (req, res, next) => {
         const CSVFiltrado =await services.processCSVs(nombresGrupos)
         const objetoEstructurado = await services.crearObjetoEstructurado(CSVFiltrado)
 
-        console.log(JSON.stringify(objetoEstructurado, null, 2));
+        // console.log(JSON.stringify(objetoEstructurado, null, 2));
         res.status(200).send(objetoEstructurado)
     } catch (e) {
         debug('Error en handlers/getAllSubjects ' + e)
