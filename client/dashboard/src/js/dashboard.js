@@ -1,9 +1,28 @@
-// //initializes as soon as the DOM is safe to manipulate
-// $(function() {
-   
-//     //cosas tal q abres el dashboard
 
-//   });
+
+// const { preventDoubleClick, hideSpinner, showSpinner } = require('@utils/utils.js');
+
+
+// //initializes as soon as the DOM is safe to manipulate
+$(function() {
+    $.ajax({
+        url: '/gestorData/checkIfDataUserEmpty',
+        type: 'get',
+        success: function (response) {
+         if (response === true){
+            const elements = document.getElementsByClassName("newUser");
+            for (const element of elements) {
+                element.style.display = "none";
+            }
+            document.getElementById("cambiar_asignaturas").click();
+         }
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+
+  });
 
 //IGUAL METERLO COMO FUNCION HELPER
 const preventDoubleClick = function (event) {
@@ -11,6 +30,20 @@ const preventDoubleClick = function (event) {
     if (Math.abs(event.timeStamp - timeStampGlobal) < 500) { timeStampGlobal = event.timeStamp; return true } 
     else { timeStampGlobal = event.timeStamp; return false }
 }
+
+function destroySpinner() { 
+    document.getElementById('spinner_loader') .remove() 
+}  
+
+function showSpinner(element) { 
+    document.getElementById(element).insertAdjacentHTML('beforeend', '&nbsp;'); //añadimos un espacio entre el spinner y el html del elemento anterior
+    const spinner = document.createElement('div')
+    spinner.setAttribute("role","status")
+    spinner.setAttribute("class","spinner-border spinner-border-sm")
+    spinner.setAttribute("id","spinner_loader")
+    spinner.innerHTML =  `<span class="visually-hidden">Loading...</span>`
+    document.getElementById(element).append(spinner)  
+}  
 
 $(document).on('change', '#selector-grados', async function (event) {
 
@@ -41,12 +74,28 @@ $(document).on('change', '.checkboxChanger', async function () {
     else   $( "#buscarAsignaturas" ).prop( "disabled", true );  
 })
 
+//misma funcion pero para el segundo form
+$(document).on('change', '.checkSubjectChanger', async function () {
+
+    const checkboxes = document.querySelectorAll('.checkSubjectChanger');
+    let anyChecked = false
+    
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked) anyChecked = true 
+    });
+
+    if(anyChecked)   $( "#submit_asignaturas_info" ).prop( "disabled", false ); 
+
+    else   $( "#submit_asignaturas_info" ).prop( "disabled", true );  
+})
+
+
 
 $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
 
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
-    // console.log('somethng',event.target)
+    // showSpinner('js_form_asignaturas_usuario')
     const data = new FormData(event.target)
     // console.log(data)
     for (let [key, value] of data.entries()) {
@@ -88,13 +137,9 @@ $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
                 const asignatura = item.Asignatura;
 
                 arrayHtml.push(`
-                
-                <input type="checkbox" class="btn-check" id="${grupo}_${asignatura}" value="${grupo}_${asignatura}" autocomplete="off" name="asignaturasSeleccionadas">
+                <input type="checkbox" class="btn-check checkSubjectChanger" id="${grupo}_${asignatura}" value="${grupo}_${asignatura}" autocomplete="off" name="asignaturasSeleccionadas">
                 <label class="btn btn-outline-primary" for="${grupo}_${asignatura}">${grupo}: ${asignatura}</label>
-               
                 `)
-              
-            //   console.log(`Grupo: ${grupo}, Asignatura: ${asignatura}`);
             });
           });
         });
@@ -111,6 +156,56 @@ $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
            console.error(error)
         }
     })
-
-
 })
+
+
+$(document).on('submit', '#js_form_asignaturas_usuario', async function (event) {
+
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    showSpinner('submit_asignaturas_info')
+    const data = new FormData(event.target)
+    // console.log(data)
+    for (let [key, value] of data.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+    $.ajax({
+        url: '/gestorData/guardarAsignaturas',
+        type: 'post',
+        data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (objetoEstructurado) {
+          destroySpinner()
+          document.getElementById("cerrar_modal_asignaturas_2").click();
+    
+        },
+        error: function (error) {
+            $('#js_form_asignaturas_usuario').empty()
+            document.getElementById('js_form_asignaturas_usuario').innerHTML='Error sending the data'
+           console.error(error)
+        }
+    })
+})
+
+$(document).on('click', '#cerrar_modal_asignaturas_1, #cerrar_modal_asignaturas_2', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    const elements = document.getElementsByClassName("newUser");
+            for (const element of elements) {
+                element.style.display = "";
+            }  
+            
+   
+})
+
+$(document).on('click', '#cambiar_asignaturas', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    $('#js_form_asignaturas_usuario').empty();
+    document.getElementById("segundaParteFormulario").style.display = "none";
+    
+})
+

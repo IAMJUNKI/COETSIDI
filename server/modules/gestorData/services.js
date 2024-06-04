@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
+const { knex } = require('@db/knex.js')
+const Asignaturas = require('@db/models/asignaturas.js')
 const csvDirPath = path.join(__dirname, '../../../horarios/csv');
 
 const gradosPorCurso = {}
@@ -33,13 +35,21 @@ const readCSV = async (filePath) => {
   });
 };
 
-//filtrador en funcion del grupo y la clase Tipo de Teoria y Problemas
-const filterCSVData = (data, grupos, tipo) => {
-  return data.filter(row => grupos.includes(row.Grupo) && row.Tipo === tipo);
+// filtrador en funcion del grupo y la clase Tipo de Teoria y Problemas
+const filterCSVData = (data, filtroGrupos, filtroExtra, filtroExtraKey) => {
+  return data.filter(row => filtroGrupos.includes(row.Grupo) && filtroExtra.includes(row[filtroExtraKey]));
 };
 
+// const filterCSVData = (data, filtroGrupo, filtroExtra, key) => {
+  // return data.filter(row => {
+  //   const isGrupoIncluded = Array.isArray(filtroGrupo) ? filtroGrupo.includes(row.Grupo) : row.Grupo === filtroGrupo;
+  //   const isExtraIncluded = Array.isArray(filtroExtra) ? filtroExtra.includes(row[key]) : row[key] === filtroExtra;
+  //   return isGrupoIncluded && isExtraIncluded;
+  // });
+// };
+
 //coge todos los csv's que hay en la carpeta y los filtra individualmente
-const processCSVs = async (filtroGrupos, filtroTipo = 'Teoría y Problemas', dirPath = csvDirPath) => {
+const processCSVs = async (filtroGrupos, filtroExtra = 'Teoría y Problemas', filtroExtraKey = 'Tipo', dirPath = csvDirPath) => {
   try {
       const files = fs.readdirSync(dirPath).filter(file => path.extname(file) === '.csv');
       let allData = [];
@@ -47,7 +57,7 @@ const processCSVs = async (filtroGrupos, filtroTipo = 'Teoría y Problemas', dir
       for (const file of files) {
           const filePath = path.join(dirPath, file);
           const data = await readCSV(filePath);
-          const filteredData = filterCSVData(data, filtroGrupos, filtroTipo);
+          const filteredData = filterCSVData(data, filtroGrupos, filtroExtra, filtroExtraKey);
           
           //si hay alguna asignatura y grupo repetido( ej:clase lunes y martes) no se mete en alldata
           filteredData.forEach(row => { 
@@ -55,6 +65,7 @@ const processCSVs = async (filtroGrupos, filtroTipo = 'Teoría y Problemas', dir
             if (!exists) {
                 allData.push(row);
             }
+            else if (filtroExtra !== 'Teoría y Problemas') allData.push(row);
         });
       }
 
@@ -85,38 +96,89 @@ const getNombresGrupos = async (titulacion,cursos) => {
 }
 
 
-const crearObjetoEstructurado = async (CSVFiltrado, objetoGradosCurso = gradosPorCurso) => {
+const crearObjetoEstructurado = async (CSVFiltrado, tipoDeEstructura ,objetoGradosCurso = gradosPorCurso) => {
   const objetoEstructurado = {};
 
   CSVFiltrado.forEach(asignatura => {
-    const { Semestre, Grupo, Titulacion } = asignatura;
+    const { Semestre, Grupo, Titulacion, Dia } = asignatura;
     const semestreKey = `semestre_${Semestre}`;
 
     if (!objetoEstructurado[semestreKey]) {
       objetoEstructurado[semestreKey] = {};
     }
 
-    // busca el curso (1, 2, 3, 4, 5) en funcion de la Titulacion y Grupo
-    let curso = null;
-    if (objetoGradosCurso[Titulacion]) {
-      curso = Object.keys(objetoGradosCurso[Titulacion]).find(anho => {
-        const grupos = objetoGradosCurso[Titulacion][anho];
-        return Array.isArray(grupos) ? grupos.includes(Grupo) : grupos === Grupo;
-      });
-    }
-
-    if (curso) {
-      if (!objetoEstructurado[semestreKey][curso]) {
-        objetoEstructurado[semestreKey][curso] = [];
+    if(tipoDeEstructura === 'cursos'){
+      // busca el curso (1, 2, 3, 4, 5) en funcion de la Titulacion y Grupo
+      let curso = null;
+      if (objetoGradosCurso[Titulacion]) {
+        curso = Object.keys(objetoGradosCurso[Titulacion]).find(anho => {
+          const grupos = objetoGradosCurso[Titulacion][anho];
+          return Array.isArray(grupos) ? grupos.includes(Grupo) : grupos === Grupo;
+        });
       }
-
-      objetoEstructurado[semestreKey][curso].push(asignatura);
+  
+      if (curso) {
+        if (!objetoEstructurado[semestreKey][curso]) {
+          objetoEstructurado[semestreKey][curso] = [];
+        }
+  
+        objetoEstructurado[semestreKey][curso].push(asignatura);
+      }
+    }
+    else if(tipoDeEstructura === 'dias'){
+      if (!objetoEstructurado[semestreKey][Dia]) {
+        objetoEstructurado[semestreKey][Dia] = [];
+      }
+      objetoEstructurado[semestreKey][Dia].push(asignatura);
     }
   });
 
   return objetoEstructurado;
 };
 
+const separarGradoYAsignaturas = async (arrayForm) => {
+
+  const objetoBonito = {};
+
+  arrayForm.forEach(asignatura => {
+   
+    const [key, value] = asignatura.split('_');
+
+    
+    if (!objetoBonito[key]) {
+      objetoBonito[key] = [];
+    }
+
+    objetoBonito[key].push(value);
+  });
+
+console.log(objetoBonito);
+ return objetoBonito;
+}
+
+//creacion actualizacion tabla hecha con SEQUELIZE en vez de knex para que coja el default value uuid creado con sequelize
+const guardarInfoDB = async (data_user, user_id) => {
+  try {
+    await Asignaturas.upsert({
+        user_id: user_id,
+        data_user: data_user
+    });
+    console.log('Asignatura creada/actualizada con éxito');
+    
+} catch (error) {
+    console.error('Error al crear/actualizar Asignatura:', error);
+}
+}
+
+
+//devuelve true si no hay valor en la db y false si ya existe algún valor
+const isDBEmpty = async (user_id) => {
+
+const dbQuery = await knex('t_asignaturas').where({ user_id })
+
+ return Object.keys(dbQuery).length === 0;
+}
+
 module.exports = {
-  processCSVs, getNombresGrupos ,crearObjetoEstructurado
+  processCSVs, getNombresGrupos ,crearObjetoEstructurado, separarGradoYAsignaturas, isDBEmpty, guardarInfoDB
 }

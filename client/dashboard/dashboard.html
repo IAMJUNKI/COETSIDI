@@ -124,7 +124,7 @@
       <!-- <canvas class="my-4 w-100" id="mapaEtsidi" width="900" height="380"></canvas> -->
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
+        <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
           Cambiar asignaturas
         </button>
   
@@ -134,9 +134,9 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulario asignaturas</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" class="btn-close newUser" id="cerrar_modal_asignaturas_1" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="body_form_subjects">
                   <p>Este formulario permitirá crear tu horario personalizado en función de las asignaturas que vas a cursar este año.</p>
                   <form id="js_form_buscar_asignaturas" enctype="multipart/form-data">
                     <div id="div-elegir-grado">
@@ -193,14 +193,14 @@
                       </div>
                     </div>
                   </form>
-                    <form  id="js_form_asignaturas_usuario">
-                    
-                    </form>
+                  <form  id="js_form_asignaturas_usuario" enctype="multipart/form-data">
+
+                  </form>
 
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="button" class="btn btn-primary">Enviar</button>
+                  <button type="button" class="btn btn-secondary newUser" id="cerrar_modal_asignaturas_2" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" form="js_form_asignaturas_usuario"  id="submit_asignaturas_info" class="btn btn-primary" disabled>Enviar</button>
                 </div>
               </div>
             </div>
