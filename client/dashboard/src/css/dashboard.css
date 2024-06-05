@@ -1,49 +1,15 @@
 /* REVISAR */
 
-.bi {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  /*
-   * Sidebar
-   */
-  
-  @media (min-width: 768px) {
-    .sidebar .offcanvas-lg {
-      /* position: -webkit-sticky;
-      position: sticky; */
-      top: 48px;
-    }
-    .navbar-search {
-      display: block;
-    }
-  }
-  
-  .sidebar {
-    height: 100%; /* Full-height  */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    left: 0;
-    overflow-x: hidden; /* Disable horizontal scroll */
-  }
-  .sidebar .nav-link {
-    font-size: .875rem;
-    font-weight: 500;
-  }
-  
-  .sidebar .nav-link.active {
-    color: #2470dc;
-  }
-  
-  .sidebar-heading {
-    font-size: .75rem;
-  }
-  
+
   /*
    * Navbar
    */
+ 
+   .ajuste-sesion {
+    display: flex;
+    align-items: center;
+    height: 100%; 
+  }
   
   .navbar-brand {
     padding-top: .75rem;
@@ -51,115 +17,7 @@
     background-color: rgba(0, 0, 0, .25);
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
   }
-/*   
-  .navbar .form-control {
-    padding: .75rem 1rem;
-  } */
-  
-  .zona-principal-izquierda{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex: 0 0 250px;
-    max-width: 250px;
-    z-index: 10;
-    background: rgb(255, 255, 255);
-    border-right: 1px solid gray;
-    &.editor{
-        flex: 0 0 250px;
-        max-width: 250px;
-    }
-}
 
-.zona-principal{
-  position: absolute;
-  top:48px;
-  left: 0;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  border-top: 1px solid gray;
-  background-color: white;
-}
-
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
-
-.b-example-divider {
-  width: 100%;
-  height: 3rem;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-
-.b-example-vr {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
-}
-
-.bi {
-  vertical-align: -.125em;
-  fill: currentColor;
-}
-
-.nav-scroller {
-  position: relative;
-  z-index: 2;
-  height: 2.75rem;
-  overflow-y: hidden;
-}
-
-.nav-scroller .nav {
-  display: flex;
-  flex-wrap: nowrap;
-  padding-bottom: 1rem;
-  margin-top: -1px;
-  overflow-x: auto;
-  text-align: center;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-
-.btn-bd-primary {
-  --bd-violet-bg: #712cf9;
-  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-  --bs-btn-font-weight: 600;
-  --bs-btn-color: var(--bs-white);
-  --bs-btn-bg: var(--bd-violet-bg);
-  --bs-btn-border-color: var(--bd-violet-bg);
-  --bs-btn-hover-color: var(--bs-white);
-  --bs-btn-hover-bg: #6528e0;
-  --bs-btn-hover-border-color: #6528e0;
-  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-  --bs-btn-active-color: var(--bs-btn-hover-color);
-  --bs-btn-active-bg: #5a23c8;
-  --bs-btn-active-border-color: #5a23c8;
-}
-
-.bd-mode-toggle {
-  z-index: 1500;
-}
-
-.bd-mode-toggle .dropdown-menu .active .bi {
-  display: block !important;
-}
 /* -----------horario---------- */
 
 @media screen and (min-width:700px) {
@@ -196,13 +54,6 @@
     [time-2030] 1em
     [time-2100] 1em;
     
-      /* Note 1:
-      Use 24hr time for gridline names for simplicity
-
-      Note 2: Use "auto" instead of "1fr" for a more compact schedule where height of a slot is not proportional to the session length. Implementing a "compact" shortcode attribute might make sense for this!
-      Try 0.5fr for more compact equal rows. I don't quite understand how that works :)
-      */
-    
     grid-template-columns:
     [times] 4em
     [lunes-start] 0.5fr
@@ -216,6 +67,23 @@
     [jueves-end viernes-start] 0.5fr
     [viernes-half] 0.5fr
     [viernes-end];
+  }
+}
+#day-selector {
+  display: none; 
+}
+
+@media screen and (max-width: 699px) {
+  .schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+  .time-slot {
+    display: none;
+  }
+  #day-selector {
+    display: block;
   }
 }
 
@@ -257,12 +125,6 @@
  * VISUAL STYLES
  * Design-y stuff ot particularly important to the demo
  *************************/
-/* body {
-  padding: 50px;
-  max-width: 1100px;
-  margin: 0 auto;
-  line-height: 1.5;
-} */
 
 .session {
   padding: .4em;
@@ -273,24 +135,35 @@
     rgba(0,0,0,.3) 4px 4px 0;
 }
 
-.session-title,
-.session-time,
-.session-track,
-.session-presenter {
+.session-title, .session-time, .session-track, .session-presenter {
   display: block;
 }
 
-.session-title,
-.time-slot {
+.session-title, .time-slot {
   margin: 0;
   font-size: 1em;
 }
 
-.track-slot,
-.time-slot {
+.track-slot, .time-slot {
   font-weight: bold;
   font-size:.75em;
 }
+
+
+/* #day-select {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  background-color: #1259B2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#day-select option {
+  background-color: white;
+  color: black;
+} */
 
 /* default palette */
 .default-color-1 {

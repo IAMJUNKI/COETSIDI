@@ -5,6 +5,7 @@
 
 // //initializes as soon as the DOM is safe to manipulate
 $(function() {
+    
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
         type: 'get',
@@ -22,7 +23,13 @@ $(function() {
         }
     })
 
+    // Lunes es el default
+    if (window.innerWidth < 700) {
+    showDay('lunes');
+    }
+
   });
+
 
 //IGUAL METERLO COMO FUNCION HELPER
 const preventDoubleClick = function (event) {
@@ -31,6 +38,7 @@ const preventDoubleClick = function (event) {
     else { timeStampGlobal = event.timeStamp; return false }
 }
 
+//Spinner de carga
 function destroySpinner() { 
     document.getElementById('spinner_loader') .remove() 
 }  
@@ -44,14 +52,20 @@ function showSpinner(element) {
     spinner.innerHTML =  `<span class="visually-hidden">Loading...</span>`
     document.getElementById(element).append(spinner)  
 }  
+//CAMBIO DE PAGINAS Y GESTION OFFCANVAS-------------------------------------------------------------
 
-//INICIO-----------------------------------------------------------------------------------------
 $(document).on('click', '#boton_inicio', async function (event) {
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
     document.getElementById("pagina_horario").style.display = "none";
     document.getElementById("pagina_inicio").style.display = "";
 })
+
+$(document).on('click', '.nav-item:not(.dropdown)', async function () {
+    document.getElementById("boton-cerrar-offcanvas").click();
+})
+
+//INICIO-----------------------------------------------------------------------------------------
 $(document).on('change', '#selector-grados', async function (event) {
 
     console.log($(event.currentTarget).val())
@@ -96,8 +110,6 @@ $(document).on('change', '.checkSubjectChanger', async function () {
     else   $( "#submit_asignaturas_info" ).prop( "disabled", true );  
 })
 
-
-
 $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
 
     event.preventDefault()
@@ -124,7 +136,6 @@ $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
                 `<hr>
                 <h2 class="fs-5">Selecciona tus asignaturas</h2>`
             ];
-        // console.log('huh',objetoEstructurado)
   
         Object.keys(objetoEstructurado).forEach(semestre => {
 
@@ -223,4 +234,45 @@ $(document).on('click', '#boton_horario', async function (event) {
     document.getElementById("pagina_inicio").style.display = "none";
     document.getElementById("pagina_horario").style.display = "";
 })
+
+$(document).on('change', '#day-select', async function (event) {
+    const dia = $(event.currentTarget).val()
+    showDay(dia)
+})
+
+
+function showDay(day) {
+    const schedule = document.querySelector('.schedule');
+    const sessions = schedule.querySelectorAll('.session');
+    sessions.forEach(session => {
+      const gridColumn = session.style.gridColumn;
+      if (gridColumn.includes(day)) {
+        session.style.display = 'block';
+      } else {
+        session.style.display = 'none';
+      }
+    });
+  }
+
+  function showAllDays() {
+    const schedule = document.querySelector('.schedule');
+    const sessions = schedule.querySelectorAll('.session');
+    sessions.forEach(session => {
+        session.style.display = 'block';
+    });
+  }
+
+//FUNCIONES RESPONSIVE
+
+    window.addEventListener('resize', function() {
+        handleScreenWidthChange();
+    });
+
+    function handleScreenWidthChange() {
+        if (window.innerWidth >= 700) {
+            showAllDays();
+        } else {
+            showDay(document.getElementById('day-select').value)
+        }
+    }
 
