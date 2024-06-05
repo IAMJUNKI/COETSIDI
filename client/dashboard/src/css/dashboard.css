@@ -25,7 +25,7 @@
     display: grid;
     grid-gap: 0.4em;
     grid-template-rows:
-    [tracks] auto
+    [fila-dias] auto
     [time-0800] 1em
     [time-0830] 1em
     [time-0900] 1em
@@ -79,7 +79,7 @@
     flex-direction: column;
     gap: 0.4em;
   }
-  .time-slot {
+  .horas-por-dia {
     display: none;
   }
   #day-selector {
@@ -87,17 +87,17 @@
   }
 }
 
-.time-slot {
+.horas-por-dia {
   grid-column: times;
 }
 
-.track-slot {
-  display: none; /* hidden on small screens and browsers without grid support */
+.dias-de-la-semana {
+  display: none; 
 }
 
 @supports( display:grid ) {
   @media screen and (min-width:700px) {
-    .track-slot {
+    .dias-de-la-semana {
       display: block;
       padding: 10px 5px 5px;
       position: sticky;
@@ -109,13 +109,13 @@
 }
 
 /* Small-screen & fallback styles */
-.session {
+.clase {
   margin-bottom:  1em;
 }
 
 @supports( display:grid ) {
   @media screen and (min-width: 700px) {
-    .session {
+    .clase {
       margin: 0;
     } 
   }
@@ -126,7 +126,7 @@
  * Design-y stuff ot particularly important to the demo
  *************************/
 
-.session {
+.clase {
   padding: .4em;
   border-radius: 8px;
   font-size: 12px;
@@ -135,16 +135,16 @@
     rgba(0,0,0,.3) 4px 4px 0;
 }
 
-.session-title, .session-time, .session-track, .session-presenter {
+.clase-asignatura, .clase-time, .clase-aula, .clase-grupo {
   display: block;
 }
 
-.session-title, .time-slot {
+.clase-asignatura, .horas-por-dia {
   margin: 0;
   font-size: 1em;
 }
 
-.track-slot, .time-slot {
+.dias-de-la-semana, .horas-por-dia {
   font-weight: bold;
   font-size:.75em;
 }

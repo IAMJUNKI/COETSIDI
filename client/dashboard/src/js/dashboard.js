@@ -61,6 +61,7 @@ $(document).on('click', '#boton_inicio', async function (event) {
     document.getElementById("pagina_inicio").style.display = "";
 })
 
+//todos los nav item triggerean el click salvo el que tiene la clase dropdown (muy util)
 $(document).on('click', '.nav-item:not(.dropdown)', async function () {
     document.getElementById("boton-cerrar-offcanvas").click();
 })
