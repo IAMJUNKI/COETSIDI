@@ -160,3 +160,406 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
   display: block !important;
 }
+/* -----------horario---------- */
+
+@media screen and (min-width:700px) {
+  .schedule {
+    display: grid;
+    grid-gap: 0.4em;
+    grid-template-rows:
+    [tracks] auto
+    [time-0800] 1em
+    [time-0830] 1em
+    [time-0900] 1em
+    [time-0930] 1em
+    [time-1000] 1em
+    [time-1030] 1em
+    [time-1100] 1em
+    [time-1130] 1em
+    [time-1200] 1em
+    [time-1230] 1em
+    [time-1300] 1em
+    [time-1330] 1em
+    [time-1400] 1em
+    [time-1430] 1em
+    [time-1500] 1em
+    [time-1530] 1em
+    [time-1600] 1em
+    [time-1630] 1em
+    [time-1700] 1em
+    [time-1730] 1em
+    [time-1800] 1em
+    [time-1830] 1em
+    [time-1900] 1em
+    [time-1930] 1em
+    [time-2000] 1em
+    [time-2030] 1em
+    [time-2100] 1em;
+    
+      /* Note 1:
+      Use 24hr time for gridline names for simplicity
+
+      Note 2: Use "auto" instead of "1fr" for a more compact schedule where height of a slot is not proportional to the session length. Implementing a "compact" shortcode attribute might make sense for this!
+      Try 0.5fr for more compact equal rows. I don't quite understand how that works :)
+      */
+    
+    grid-template-columns:
+    [times] 4em
+    [lunes-start] 0.5fr
+    [lunes-half] 0.5fr
+    [lunes-end martes-start] 0.5fr
+    [martes-half] 0.5fr
+    [martes-end miercoles-start] 0.5fr
+    [miercoles-half] 0.5fr
+    [miercoles-end jueves-start] 0.5fr
+    [jueves-half] 0.5fr
+    [jueves-end viernes-start] 0.5fr
+    [viernes-half] 0.5fr
+    [viernes-end];
+  }
+}
+
+.time-slot {
+  grid-column: times;
+}
+
+.track-slot {
+  display: none; /* hidden on small screens and browsers without grid support */
+}
+
+@supports( display:grid ) {
+  @media screen and (min-width:700px) {
+    .track-slot {
+      display: block;
+      padding: 10px 5px 5px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(255,255,255,.9);
+    }
+  }
+}
+
+/* Small-screen & fallback styles */
+.session {
+  margin-bottom:  1em;
+}
+
+@supports( display:grid ) {
+  @media screen and (min-width: 700px) {
+    .session {
+      margin: 0;
+    } 
+  }
+}
+
+/*************************
+ * VISUAL STYLES
+ * Design-y stuff ot particularly important to the demo
+ *************************/
+/* body {
+  padding: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+  line-height: 1.5;
+} */
+
+.session {
+  padding: .4em;
+  border-radius: 8px;
+  font-size: 12px;
+  box-shadow:
+    rgba(255,255,255,.6) 1px 1px 0,
+    rgba(0,0,0,.3) 4px 4px 0;
+}
+
+.session-title,
+.session-time,
+.session-track,
+.session-presenter {
+  display: block;
+}
+
+.session-title,
+.time-slot {
+  margin: 0;
+  font-size: 1em;
+}
+
+.track-slot,
+.time-slot {
+  font-weight: bold;
+  font-size:.75em;
+}
+
+/* default palette */
+.default-color-1 {
+  background-color: #1259B2;
+  color: #fff;
+}
+
+.default-color-2 {
+  background-color: #687f00;
+  color: #fff;
+}
+
+.default-color-3 {
+  background-color: #544D69;
+  color: #fff;
+}
+
+.default-color-4 {
+  background-color: #c35500;
+  color: #fff;
+}
+
+.default-color-5 {
+  background-color: #A63A50;
+  color: #fff;
+}
+
+.default-color-6 {
+  background-color: #2C3E50; 
+  color: #fff;
+}
+
+.default-color-7 {
+  background-color: #8E44AD;
+  color: #fff;
+}
+
+.default-color-8 {
+  background-color: #d0b623; 
+  color: #fff;
+}
+
+.default-color-9 {
+  background-color: #0b8f75; 
+  color: #fff;
+}
+
+.default-color-10 {
+  background-color: #1fa1bf;
+  color: #fff;
+}
+
+.default-color-11 {
+  background-color: #27AE60; 
+  color: #fff;
+}
+
+.default-color-12 {
+  background-color: #e55b4c; 
+  color: #fff;
+}
+
+/* a lighter cohesive palette */
+.color-1 {
+  background-color: #FF6F61; /* Coral */
+  color: #fff;
+}
+
+.color-2 {
+  background-color: #6B5B95; /* Purple */
+  color: #fff;
+}
+
+.color-3 {
+  background-color: #88B04B; /* Green */
+  color: #fff;
+}
+
+.color-4 {
+  background-color: #FFA07A; /* Light Salmon */
+  color: #fff;
+}
+
+.color-5 {
+  background-color: #f4bfbe; /* Light Pink */
+  color: #fff;
+}
+
+.color-6 {
+  background-color: #92A8D1; /* Light Blue */
+  color: #fff;
+}
+
+.color-7 {
+  background-color: #955251; /* Deep Red */
+  color: #fff;
+}
+
+.color-8 {
+  background-color: #B565A7; /* Lavender Purple */
+  color: #fff;
+}
+
+.color-9 {
+  background-color: #009B77; /* Teal */
+  color: #fff;
+}
+
+.color-10 {
+  background-color: #DD4124; /* Fiery Red */
+  color: #fff;
+}
+
+.color-11 {
+  background-color: #D65076; /* Raspberry */
+  color: #fff;
+}
+
+.color-12 {
+  background-color: #45B8AC; /* Mint */
+  color: #fff;
+}
+
+/* a dark palette */
+.dark-color-1 {
+  background-color: #1B2631; /* Dark Blue */
+  color: #fff;
+}
+
+.dark-color-2 {
+  background-color: #4A235A; /* Dark Purple */
+  color: #fff;
+}
+
+.dark-color-3 {
+  background-color: #145A32; /* Dark Green */
+  color: #fff;
+}
+
+.dark-color-4 {
+  background-color: #641E16; /* Dark Red */
+  color: #fff;
+}
+
+.dark-color-5 {
+  background-color: #512E5F; /* Dark Lavender */
+  color: #fff;
+}
+
+.dark-color-6 {
+  background-color: #154360; /* Navy Blue */
+  color: #fff;
+}
+
+.dark-color-7 {
+  background-color: #784212; /* Dark Brown */
+  color: #fff;
+}
+
+.dark-color-8 {
+  background-color: #0B5345; /* Dark Teal */
+  color: #fff;
+}
+
+.dark-color-9 {
+  background-color: #7D3C98; /* Dark Magenta */
+  color: #fff;
+}
+
+.dark-color-10 {
+  background-color: #922B21; /* Dark Burgundy */
+  color: #fff;
+}
+
+.dark-color-11 {
+  background-color: #1C2833; /* Almost Black */
+  color: #fff;
+}
+
+.dark-color-12 {
+  background-color: #6E2C00; /* Dark Orange */
+  color: #fff;
+}
+
+/* a light palette */
+.light-color-1 {
+  background-color: #FAD7A0; /* Light Peach */
+  color: #333;
+}
+
+.light-color-2 {
+  background-color: #E8DAEF; /* Light Lavender */
+  color: #333;
+}
+
+.light-color-3 {
+  background-color: #D5F5E3; /* Light Mint */
+  color: #333;
+}
+
+.light-color-4 {
+  background-color: #FCF3CF; /* Light Yellow */
+  color: #333;
+}
+
+.light-color-5 {
+  background-color: #F9E79F; /* Light Gold */
+  color: #333;
+}
+
+.light-color-6 {
+  background-color: #EBDEF0; /* Light Purple */
+  color: #333;
+}
+
+.light-color-7 {
+  background-color: #AED6F1; /* Light Blue */
+  color: #333;
+}
+
+.light-color-8 {
+  background-color: #A9DFBF; /* Light Green */
+  color: #333;
+}
+
+.light-color-9 {
+  background-color: #F5CBA7; /* Light Coral */
+  color: #333;
+}
+
+.light-color-10 {
+  background-color: #FADBD8; /* Light Pink */
+  color: #333;
+}
+
+.light-color-11 {
+  background-color: #FDEDEC; /* Very Light Pink */
+  color: #333;
+}
+
+.light-color-12 {
+  background-color: #D6EAF8; /* Very Light Blue */
+  color: #333;
+}
+
+.track-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ccc;
+  color: #000;
+  box-shadow: none;
+}
+
+.text {
+  max-width: 750px;
+  font-size: 18px;
+  margin: 0 auto 50px;
+}
+
+.meta {
+  color: #555;
+  font-style: italic;
+}
+
+.meta a {
+  color: #555;
+}
+
+hr {
+  margin: 40px 0;
+}

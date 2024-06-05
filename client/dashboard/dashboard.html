@@ -41,49 +41,49 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2 active boton_sidebar" id="lalallala" aria-current="page" href="#">
+              <button class="nav-link d-flex align-items-center gap-2 active boton_sidebar" id="boton_inicio" aria-current="page">
                 <i class="fa-solid fa-house"></i>
                 Inicio
-              </a>
+              </button>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <button class="nav-link d-flex align-items-center gap-2" id="boton_horario">
                 <i class="fa-solid fa-calendar-days"></i>
                 Horario
-              </a>
+              </button>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <button class="nav-link d-flex align-items-center gap-2" href="#">
                 <i class="fa-solid fa-map-location-dot"></i>
                 Mapa
-              </a>
+              </button>
           </ul>
 
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
           
             <span >Social</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
+            <a class="link-secondary" href="#">
               <i class="fa-regular fa-square-plus fa-xl"></i>
             </a>
           </h6>
           <ul class="nav flex-column mb-auto">
               <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <button class="nav-link d-flex align-items-center gap-2" >
                     <i class="fa-solid fa-users"></i>
                       Asociaciones
-                    </a>
+                  </button>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <button class="nav-link d-flex align-items-center gap-2" >
                     <i class="fa-regular fa-newspaper"></i>
                     Noticias
-                  </a>
+                  </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <button class="nav-link d-flex align-items-center gap-2">
                       <i class="fa-solid fa-chalkboard-user"></i>
                         Tablon de anuncios
-                    </a>
+                    </button>
                 </li>
           </ul>
 
@@ -108,104 +108,233 @@
     </div>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Inicio</h1>
-        <!-- <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-            This week
+      <div id="pagina_inicio">
+        
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Inicio</h1>
+          <!-- <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+              This week
+            </button>
+          </div> -->
+        </div>
+        <!-- <canvas class="my-4 w-100" id="mapaEtsidi" width="900" height="380"></canvas> -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
+            Cambiar asignaturas
           </button>
-        </div> -->
-      </div>
-      <!-- <canvas class="my-4 w-100" id="mapaEtsidi" width="900" height="380"></canvas> -->
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
-          Cambiar asignaturas
-        </button>
-  
-          <!-- Modal formulario asignaturas -->
-          <div class="modal fade" id="formularioAsignaturas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulario asignaturas</h1>
-                  <button type="button" class="btn-close newUser" id="cerrar_modal_asignaturas_1" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="body_form_subjects">
-                  <p>Este formulario permitirá crear tu horario personalizado en función de las asignaturas que vas a cursar este año.</p>
-                  <form id="js_form_buscar_asignaturas" enctype="multipart/form-data">
-                    <div id="div-elegir-grado">
-                      <h2 class="fs-5">Grado universitario</h2>
-                        <select class="form-select" id="selector-grados" name="titulacion" aria-label="Default select example">
-                          <option  selected disabled hidden>selecciona un grado</option>
-                          <option value="56IE">Grado en Ingeniería Eléctrica</option>
-                          <option value="56IA">Grado en Ingeniería Electrónica Industrial y Automática</option>
-                          <option value="56IM">Grado en Ingeniería Mecánica</option>
-                          <option value="56IQ">Grado en Ingeniería Química</option>
-                          <option value="56DD">Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto</option>
-                          <option value="56DM">Grado en Ingeniería en Diseño Industrial y en Ingeniería Mecánica</option>
-                          <option value="56EE">Grado en Ingeniería Eléctrica y en Ingeniería Electrónica</option>
-                          <option value="erasmus">Estudiante internacional</option>
-                        </select>
-                    </div>
-                    <div id="segundaParteFormulario" style="display: none">
-                      <hr>
-                        <h2 class="fs-5">Selecciona tus cursos</h2>
-                       
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input checkboxChanger" type="checkbox" value="1" id="curso1" name="cursos">
-                            <label class="form-check-label" for="curso1">
-                              1ero
-                            </label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input checkboxChanger" type="checkbox" value="2" id="curso2" name="cursos">
-                            <label class="form-check-label" for="curso2">
-                              2ndo
-                            </label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input checkboxChanger" type="checkbox" value="3" id="curso3" name="cursos">
-                            <label class="form-check-label" for="curso3">
-                              3ero
-                            </label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input checkboxChanger" type="checkbox" value="4" id="curso4" name="cursos">
-                            <label class="form-check-label" for="curso4">
-                              4to
-                            </label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input checkboxChanger" type="checkbox" value="5" id="curso5" name="cursos" disabled>
-                            <label class="form-check-label" for="curso5">
-                              5to
-                            </label>
-                          </div>       
-                      
-                      <div class="mb-3" style="margin-top: 20px;">
-                        <button class="btn btn-primary" id="buscarAsignaturas" type="submit" disabled>Buscar</button>
+    
+            <!-- Modal formulario asignaturas -->
+            <div class="modal fade" id="formularioAsignaturas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulario asignaturas</h1>
+                    <button type="button" class="btn-close newUser" id="cerrar_modal_asignaturas_1" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" id="body_form_subjects">
+                    <p>Este formulario permitirá crear tu horario personalizado en función de las asignaturas que vas a cursar este año.</p>
+                    <form id="js_form_buscar_asignaturas" enctype="multipart/form-data">
+                      <div id="div-elegir-grado">
+                        <h2 class="fs-5">Grado universitario</h2>
+                          <select class="form-select" id="selector-grados" name="titulacion" aria-label="Default select example">
+                            <option  selected disabled hidden>selecciona un grado</option>
+                            <option value="56IE">Grado en Ingeniería Eléctrica</option>
+                            <option value="56IA">Grado en Ingeniería Electrónica Industrial y Automática</option>
+                            <option value="56IM">Grado en Ingeniería Mecánica</option>
+                            <option value="56IQ">Grado en Ingeniería Química</option>
+                            <option value="56DD">Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto</option>
+                            <option value="56DM">Grado en Ingeniería en Diseño Industrial y en Ingeniería Mecánica</option>
+                            <option value="56EE">Grado en Ingeniería Eléctrica y en Ingeniería Electrónica</option>
+                            <option value="erasmus">Estudiante internacional</option>
+                          </select>
                       </div>
-                    </div>
-                  </form>
-                  <form  id="js_form_asignaturas_usuario" enctype="multipart/form-data">
-
-                  </form>
-
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary newUser" id="cerrar_modal_asignaturas_2" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="submit" form="js_form_asignaturas_usuario"  id="submit_asignaturas_info" class="btn btn-primary" disabled>Enviar</button>
+                      <div id="segundaParteFormulario" style="display: none">
+                        <hr>
+                          <h2 class="fs-5">Selecciona tus cursos</h2>
+                         
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input checkboxChanger" type="checkbox" value="1" id="curso1" name="cursos">
+                              <label class="form-check-label" for="curso1">
+                                1ero
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input checkboxChanger" type="checkbox" value="2" id="curso2" name="cursos">
+                              <label class="form-check-label" for="curso2">
+                                2ndo
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input checkboxChanger" type="checkbox" value="3" id="curso3" name="cursos">
+                              <label class="form-check-label" for="curso3">
+                                3ero
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input checkboxChanger" type="checkbox" value="4" id="curso4" name="cursos">
+                              <label class="form-check-label" for="curso4">
+                                4to
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input checkboxChanger" type="checkbox" value="5" id="curso5" name="cursos" disabled>
+                              <label class="form-check-label" for="curso5">
+                                5to
+                              </label>
+                            </div>       
+                        
+                        <div class="mb-3" style="margin-top: 20px;">
+                          <button class="btn btn-primary" id="buscarAsignaturas" type="submit" disabled>Buscar</button>
+                        </div>
+                      </div>
+                    </form>
+                    <form  id="js_form_asignaturas_usuario" enctype="multipart/form-data">
+  
+                    </form>
+  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary newUser" id="cerrar_modal_asignaturas_2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" form="js_form_asignaturas_usuario"  id="submit_asignaturas_info" class="btn btn-primary" disabled>Enviar</button>
+                  </div>
                 </div>
               </div>
             </div>
+        </div>
+      </div> 
+      <div id="pagina_horario" style="display: none">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Horario</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn">
+              <i class="fa-solid fa-download"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+              Paleta
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+              Semestre 1
+            </button>
+          </div>
+        </div>
+        <div class="schedule" aria-labelledby="schedule-heading">
+  
+          <span class="track-slot text-center" aria-hidden="true" style="grid-column: lunes; grid-row: tracks;">Lunes</span>
+          <span class="track-slot text-center" aria-hidden="true" style="grid-column: martes; grid-row: tracks;">Martes</span>
+          <span class="track-slot text-center" aria-hidden="true" style="grid-column: miercoles; grid-row: tracks;">Miércoles</span>
+          <span class="track-slot text-center" aria-hidden="true" style="grid-column: jueves; grid-row: tracks;">Jueves</span>
+          <span class="track-slot text-center" aria-hidden="true" style="grid-column: viernes; grid-row: tracks;">Viernes</span>
+          
+          <h2 class="time-slot" style="grid-row: time-0800;">8:00</h2>
+          <h2 class="time-slot" style="grid-row: time-0900;">9:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1000;">10:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1100;">11:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1200;">12:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1300;">13:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1400;">14:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1500;">15:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1600;">16:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1700;">17:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1800;">18:00</h2>
+          <h2 class="time-slot" style="grid-row: time-1900;">19:00</h2>
+          <h2 class="time-slot" style="grid-row: time-2000;">20:00</h2>
+          <h2 class="time-slot" style="grid-row: time-2100;">21:00</h2>
+        
+          <div class="session session-1 default-color-3" style="grid-column: lunes; grid-row: time-0830 / time-1130;">
+            <h3 class="session-title">INSTALACIONES ELÉCTRICAS BAJA TENSIÓN</h3>
+            <span class="session-time">08:30 - 11:30</span>
+            <span class="session-track">E303</span>
+            <!-- <span class="session-presenter">Presenter</span> -->
+          </div>
+          
+          <div class="session session-2 default-color-2" style="grid-column: lunes; grid-row: time-1200 / time-1400;">
+            <h3 class="session-title">SIS. ELEC. DIGITALES</h3>
+            <span class="session-time">12:00 - 14:00</span>
+            <span class="session-track">A404</span>
+            <!-- <span class="session-presenter">Presenter</span> -->
+          </div> 
+          
+          <div class="session session-8 default-color-1" style="grid-column: lunes; grid-row: time-1730 / time-1930;">
+            <h3 class="session-title">OFICINA TÉCNICA</h3>
+            <span class="session-time">17:30 - 19:30</span>
+            <span class="session-track">A32</span>
+            <!-- <span class="session-presenter">Presenter</span> -->
           </div>
 
+          <div class="session session-12 default-color-1" style="grid-column: lunes; grid-row: time-1500 / time-1700;">
+            <h3 class="session-title">OFICINA TÉCNICA</h3>
+            <span class="session-time">15:00 - 17:00</span>
+            <span class="session-track">A309</span>
+            <!-- <span class="session-presenter">Presenter</span> -->
+          </div>
+          
+          <div class="session session-3 default-color-11" style="grid-column: miercoles; grid-row: time-1000 / time-1100;">
+            <h3 class="session-title">blabla</h3>
+            <span class="session-time">10:00 - 11:00</span>
+            <span class="session-track">A21</span>
+            <!-- <span class="session-presenter">Presenter</span> -->
+          </div>
+          
+          <div class="session session-4 default-color-7" style="grid-column: jueves; grid-row: time-1000 / time-1400;">
+            <h3 class="session-title">ALGO</h3>
+            <span class="session-time">10:00 - 14:00</span>
+          </div>
+          
+          
+          <div class="session session-5 default-color-9" style="grid-column: miercoles; grid-row: time-0830 / time-1000;">
+            <h3 class="session-title">algo</h3>
+            <span class="session-time">10:30 - 14:00</span>
+            
+          </div>
+          
+          
+          <div class="session session-6 default-color-12" style="grid-column: viernes-start / viernes-half; grid-row: time-0900 / time-1000;">
+            <h3 class="session-title">LSAT</h3>
+            <span class="session-time">9:00 - 10:00</span>
+          </div>
+
+          <div class="session session-6 default-color-2" style="grid-column: viernes-half / viernes-end; grid-row: time-0900 / time-1000;">
+            <h3 class="session-title">SIS. ELEC. DIGITALES</h3>
+            <span class="session-time">9:00 - 10:00</span>
+          </div>
+
+          <!-- <div class="session session-7 track-all" style="grid-column: lunes-start / jueves-end; grid-row: time-1000 / time-1030;">
+            <h3 class="session-title">Take a break!</h3>
+          </div> -->
+
+          
+          <div class="session session-9 default-color-4" style="grid-column: martes-start / miercoles-end; grid-row: time-1830 / time-2000;">
+            <h3 class="session-title">Ingles</h3>
+            <span class="session-time">18:30 - 20:00</span>
+            <span class="session-track">B21</span>
+          </div>
+          
+          <div class="session session-10 default-color-4" style="grid-column: jueves; grid-row: time-1730 / time-1900;">
+            <h3 class="session-title">Ingles</h3>
+            <span class="session-time">10:30 - 11:00</span>
+            <span class="session-track">B32</span>
+          </div>
+
+          
+          <div class="session session-11 default-color-5" style="grid-column: martes; grid-row: time-1100 / time-1200;">
+            <h3 class="session-title">Algebra</h3>
+            <span class="session-time">11:00 - 12:00</span>
+            <span class="session-track">A10</span>
+          </div>
+          
+          <div class="session session-11 default-color-6" style="grid-column: miercoles; grid-row: time-1100 / time-1200;">
+            <h3 class="session-title">Expression Gráfica</h3>
+            <span class="session-time">11:00 - 12:00</span>
+            <span class="session-track">B35</span>
+          </div>
+          
+        </div>
       </div>
     </main>
   </div>

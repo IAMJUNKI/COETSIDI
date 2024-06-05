@@ -45,6 +45,13 @@ function showSpinner(element) {
     document.getElementById(element).append(spinner)  
 }  
 
+//INICIO-----------------------------------------------------------------------------------------
+$(document).on('click', '#boton_inicio', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    document.getElementById("pagina_horario").style.display = "none";
+    document.getElementById("pagina_inicio").style.display = "";
+})
 $(document).on('change', '#selector-grados', async function (event) {
 
     console.log($(event.currentTarget).val())
@@ -207,5 +214,13 @@ $(document).on('click', '#cambiar_asignaturas', async function (event) {
     $('#js_form_asignaturas_usuario').empty();
     document.getElementById("segundaParteFormulario").style.display = "none";
     
+})
+
+//HORARIO-----------------------------------------------------------------------------------------------------
+$(document).on('click', '#boton_horario', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    document.getElementById("pagina_inicio").style.display = "none";
+    document.getElementById("pagina_horario").style.display = "";
 })
 
