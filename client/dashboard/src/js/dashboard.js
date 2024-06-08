@@ -15,20 +15,17 @@ $(function() {
             for (const element of elements) {
                 element.style.display = "none";
             }
-            document.getElementById("cambiar_asignaturas").click();
+            document.getElementById("cambiar_asignaturas").click();  
+         }
+         else {
+            generarHorario()
          }
         },
         error: function (error) {
            console.error(error)
         }
     })
-
-    // Lunes es el default
-    if (window.innerWidth < 700) {
-    showDay('lunes');
-    }
-
-  });
+});
 
 
 //IGUAL METERLO COMO FUNCION HELPER
@@ -115,6 +112,7 @@ $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
 
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
+    showSpinner('buscarAsignaturas')
     // showSpinner('js_form_asignaturas_usuario')
     const data = new FormData(event.target)
     // console.log(data)
@@ -130,6 +128,7 @@ $(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
         contentType: false,
         processData: false,
         success: function (objetoEstructurado) {
+            destroySpinner()
             $('#js_form_asignaturas_usuario').empty()
             const selectorAsignaturas = document.createElement('div')
 
@@ -196,9 +195,10 @@ $(document).on('submit', '#js_form_asignaturas_usuario', async function (event) 
         cache: false,
         contentType: false,
         processData: false,
-        success: function (objetoEstructurado) {
+        success: function () {
           destroySpinner()
           document.getElementById("cerrar_modal_asignaturas_2").click();
+          generarHorario()
     
         },
         error: function (error) {
@@ -236,18 +236,42 @@ $(document).on('click', '#boton_horario', async function (event) {
     document.getElementById("pagina_horario").style.display = "";
 })
 
+function generarHorario(){
+    $.ajax({
+        url: '/gestorData/generarHorario',
+        type: 'get',
+        success: function (data) {
+        
+        renderSchedule(data);
+
+        if (window.innerWidth < 992) showDay('lunes'); // Lunes es el default
+        else showAllDays()
+
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+}
+
+
+
 $(document).on('change', '#day-select', async function (event) {
-    const dia = $(event.currentTarget).val()
-    showDay(dia)
+    // const dia = $(event.currentTarget).val()
+    showDay()
 })
 
 
-function showDay(day) {
+
+function showDay() {
+    const day=document.getElementById('day-select').value
+    const semestre = document.getElementById('elegir-semestre').value
     const schedule = document.querySelector('.schedule');
     const sessions = schedule.querySelectorAll('.session');
     sessions.forEach(session => {
       const gridColumn = session.style.gridColumn;
-      if (gridColumn.includes(day)) {
+      const className = session.className
+      if (gridColumn.includes(day) && className.includes(semestre)) {
         session.style.display = 'block';
       } else {
         session.style.display = 'none';
@@ -256,24 +280,223 @@ function showDay(day) {
   }
 
   function showAllDays() {
+    const semestre = document.getElementById('elegir-semestre').value
+    // console.log(semestre,'semestre')
     const schedule = document.querySelector('.schedule');
     const sessions = schedule.querySelectorAll('.session');
     sessions.forEach(session => {
+        session.style.display = 'none';
+    });
+    const semestreElegido = schedule.querySelectorAll(`.${semestre}`);
+    semestreElegido.forEach(session => {
         session.style.display = 'block';
     });
+   
   }
 
+
+  function shortenSentence(sentence) {
+    const wordsToIgnore = ["de", "y", "en", "la", "el", "a", "con","and","for"]; // Common words to ignore
+    const maxCharsPerWord = 4; // Maximum characters to take from each word
+
+    return sentence.split(' ').map(word => {
+        if (wordsToIgnore.includes(word.toLowerCase())) {
+            return word;
+        }
+        return word.slice(0, maxCharsPerWord) + '.';
+    }).join(' ');
+}
+
+  function createScheduleElement(asignatura, horaInicio, horaFinal, aula, grupo, dia, tipo, colorClass, semesterClass, columnSpan) {
+    
+
+    const sessionDiv = document.createElement('div');
+    sessionDiv.className = `session ${colorClass} ${semesterClass}`;
+    sessionDiv.style.gridColumn = `${columnSpan}`; // Lowercase the day and add column span
+    sessionDiv.style.gridRow = `time-${horaInicio.replace(':', '')} / time-${horaFinal.replace(':', '')}`;
+    const timeElement = document.createElement('span');
+    timeElement.className = 'session-time';
+    timeElement.textContent = `${horaInicio} - ${horaFinal} ${tipo}`;
+
+    const titleElement = document.createElement('h3');
+    titleElement.className = 'session-asignatura';
+    titleElement.textContent = asignatura;
+
+    const aulaElement = document.createElement('span');
+    aulaElement.className = 'session-aula';
+    aulaElement.textContent = `${aula}`;
+  
+   
+  
+    const tipoElement = document.createElement('span');
+    tipoElement.className = 'session-tipo';
+    tipoElement.textContent = tipo;
+  
+    sessionDiv.appendChild(titleElement);
+    sessionDiv.appendChild(aulaElement);
+    sessionDiv.appendChild(timeElement);
+    // sessionDiv.appendChild(tipoElement);
+  
+    return sessionDiv;
+  }
+
+  //cambiar semestre horario
+  $(document).on('change', '#elegir-semestre', async function (event) {
+
+    showAllDays()
+    
+})
+
+
+  function renderSchedule(scheduleData) {
+      $('.session').remove()
+    const scheduleContainer = document.getElementById('schedule-container');
+    const subjectColorMap = {};
+    let colorIndex = 1;
+  
+    for (const semestre in scheduleData) {
+      const diasDeLaSemana = scheduleData[semestre];
+  
+      for (const dia in diasDeLaSemana) {
+        const sessions = diasDeLaSemana[dia];
+       
+        const collisionMap = {};
+        // console.log(dia,'dia')
+// Iterate through scheduleData to calculate collision indices
+sessions.forEach( (session, index) => {
+    let {Asignatura, HoraInicio, HoraFinal, Aula, Grupo, Tipo } = session;
+  const startSession = session.HoraInicio.replace(":", "");
+  const endSession = session.HoraFinal.replace(":", "");
+  let collisions = 0
+  const collidedBuddy = []
+  for (let j = 0; j < sessions.length; j++) {
+
+    const start2 = sessions[j].HoraInicio.replace(":", "");
+    const end2 = sessions[j].HoraFinal.replace(":", "");
+
+    if(j === index) continue
+    else if ((startSession >= start2 && startSession < end2) || (endSession > start2 && endSession <= end2) || startSession<= start2 && endSession >= end2|| startSession>= start2 && endSession <= end2) {
+        collisions ++
+        collidedBuddy.push(j)
+
+          }
+  }
+
+ const collisionHandler = {}
+ collisionHandler.collidedBuddy = collidedBuddy
+ collisionHandler.collisions = collisions
+ collisionMap[index]=collisionHandler
+
+          if (!subjectColorMap[Asignatura]) {
+            subjectColorMap[Asignatura] = `default-color-${colorIndex}`;
+            colorIndex = colorIndex === 12 ? 1 : colorIndex + 1; // Reset or increment color index
+          }
+          const diaSinAcento = dia.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+          const colorClass = subjectColorMap[Asignatura];
+          const columnSpan =  handlerForCollisions(collisionMap,index, collidedBuddy,collisions, `${diaSinAcento}`)
+          if(columnSpan !== `${dia}-start / ${dia}-end` && Asignatura.length>15) Asignatura = shortenSentence(Asignatura)
+        switch (Tipo) {
+            case 'Teoría y Problemas':
+                Tipo = 'TyP'
+                break;
+            case 'Laboratorio':
+                Tipo = 'Lab'
+                break;
+            case 'Acciones Cooperativas':
+                Tipo = 'AC'
+                break;
+        
+            default:
+                break;
+        }
+          const sessionElement = createScheduleElement(Asignatura, HoraInicio, HoraFinal, Aula, Grupo, diaSinAcento, Tipo, colorClass, semestre, columnSpan);
+          scheduleContainer.appendChild(sessionElement);
+        });
+      }
+    }
+  }
+
+ function handlerForCollisions(collisionMap,index,collidedBuddy,collisions, dia) {
+    let counter = 0;
+    let counter2 = 0;
+    let greatestCollision = collisions;
+
+    if (collisions === 0) return `${dia}-start / ${dia}-end`
+    else{ 
+        // Iterate through all values in the collisionMap
+        for (let key in collisionMap) {
+            let value = collisionMap[key];
+  
+            // Check if the current index is in the collidedBuddy array of the current key
+            if (value.collidedBuddy.includes(index)) {
+                // Determine the greatest collision number
+                greatestCollision = Math.max(greatestCollision, value.collisions);
+                        counter++;
+            }
+            if(collidedBuddy.includes(key)) counter2++
+        }
+
+        counter = Math.max(counter, counter2);    
+        switch (greatestCollision) {
+            case 1:
+                if(counter === 0) return `${dia}-start / ${dia}-half`
+                else return `${dia}-half / ${dia}-end`
+                break;
+            case 2:
+                if(counter === 0 ) return `${dia}-start / ${dia}-first-third`
+                else if(counter === 1)return `${dia}-first-third / ${dia}-second-third`
+                else return `${dia}-second-third / ${dia}-end`
+                break;
+            case 3:
+                if(counter === 0 ) return `${dia}-start / ${dia}-first-third`
+                else if(counter === 1)return `${dia}-first-third / ${dia}-second-third`
+                else return `${dia}-second-third / ${dia}-end`
+                break;
+ 
+            default:
+                break;
+        }
+    }
+}
+  
+
 //FUNCIONES RESPONSIVE
+
 
     window.addEventListener('resize', function() {
         handleScreenWidthChange();
     });
 
     function handleScreenWidthChange() {
-        if (window.innerWidth >= 700) {
+        if (window.innerWidth >= 992) {
             showAllDays();
         } else {
-            showDay(document.getElementById('day-select').value)
+            showDay()
         }
     }
+
+//Google calendar
+
+$(document).on('click', '#auth_calendar', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+console.log('ee')
+    $.ajax({
+        url: '/calendar/authCalendar',
+        type: 'get',
+        success: function (response) {
+        //  if (response === true){
+        //     const elements = document.getElementsByClassName("newUser");
+        //     for (const element of elements) {
+        //         element.style.display = "none";
+        //     }
+        //     document.getElementById("cambiar_asignaturas").click();
+        //  }
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+   
+})
 

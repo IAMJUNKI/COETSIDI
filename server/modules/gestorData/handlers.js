@@ -12,6 +12,19 @@ const checkDB = async (req, res, next) => {
     }
 };
 
+const generarHorarios = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const dataUser =await services.getDataUser(userId)
+        // console.log(JSON.stringify(dataUser,null,2),'datauser')
+        res.status(200).send(dataUser)
+    } catch (e) {
+        debug('Error en handlers/getAllSubjects ' + e)
+        throw e
+    }
+};
+
+
 const getAllSubjects = async (req, res, next) => {
     try {
         const { titulacion, cursos } = req.body;
@@ -52,5 +65,5 @@ const saveSubjects = async (req, res, next) => {
 };
 
 module.exports = {
-    getAllSubjects, saveSubjects, checkDB
+    getAllSubjects, saveSubjects, checkDB, generarHorarios
 }

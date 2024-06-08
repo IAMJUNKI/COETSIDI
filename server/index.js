@@ -18,6 +18,8 @@ const debug = require('debug')('&:INDEX JS')
 //SUB ROUTERS
 const authRouter = require('@auth/router.js')
 const gestorDataRouter = require('@gestorData/router.js')
+const googleCalendarRouter = require('@googleCalendar/router.js')
+
 
 
 globalRouter.use(express.json());
@@ -97,6 +99,9 @@ globalRouter.get(['/signup'], (req, res, next) => {
 }
 })
 
+
+
+
 //verifies that the user is Logged in before going to any other end point
 //--------------------------------------------------------------------------
 globalRouter.use('/auth',authRouter)
@@ -130,6 +135,20 @@ globalRouter.get(['/dashboard'], (req, res, next) => {
 }
 })
 
+globalRouter.get(['/oauthgoogle'], (req, res, next) => {
+	try {
+		const file = 'dashboard.html'
+        res.sendFile(file, { root: '../client/dashboard' }, function (err) {
+			if (err) {
+				console.log(err) 
+			}
+        }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
+})
+
 globalRouter.get('/logout', (req, res) => {
 	req.logout(function (err) {
         if (err) { debug('ERROR LOGOUT', err); return next(err) }
@@ -140,6 +159,7 @@ globalRouter.get('/logout', (req, res) => {
 })
 
 globalRouter.use('/gestorData',gestorDataRouter)
+globalRouter.use('/calendar',googleCalendarRouter)
 
 const port = process.env.PORT || 5050;
 

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
 const { knex } = require('@db/knex.js')
-const Asignaturas = require('@db/models/asignaturas.js')
+const Horarios = require('@db/models/horarios.js')
 const csvDirPath = path.join(__dirname, '../../../horarios/csv');
 
 const gradosPorCurso = {}
@@ -159,7 +159,7 @@ console.log(objetoBonito);
 //creacion actualizacion tabla hecha con SEQUELIZE en vez de knex para que coja el default value uuid creado con sequelize
 const guardarInfoDB = async (data_user, user_id) => {
   try {
-    await Asignaturas.upsert({
+    await Horarios.upsert({
         user_id: user_id,
         data_user: data_user
     });
@@ -170,15 +170,21 @@ const guardarInfoDB = async (data_user, user_id) => {
 }
 }
 
+const getDataUser = async (user_id) => {
+
+  const dbQuery = await knex('t_horarios').where({ user_id }).first('data_user')
+  
+   return dbQuery.data_user;
+  }
 
 //devuelve true si no hay valor en la db y false si ya existe algún valor
 const isDBEmpty = async (user_id) => {
 
-const dbQuery = await knex('t_asignaturas').where({ user_id })
+const dbQuery = await knex('t_horarios').where({ user_id })
 
  return Object.keys(dbQuery).length === 0;
 }
 
 module.exports = {
-  processCSVs, getNombresGrupos ,crearObjetoEstructurado, separarGradoYAsignaturas, isDBEmpty, guardarInfoDB
+  processCSVs, getNombresGrupos ,crearObjetoEstructurado, separarGradoYAsignaturas, isDBEmpty, guardarInfoDB, getDataUser
 }

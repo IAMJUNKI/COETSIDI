@@ -5,5 +5,6 @@ moduleAlias.addAliases({
     '@db': path.join(__dirname, 'database'),
     '@gestorData': path.join(__dirname, 'modules','gestorData'),
     '@utils': path.join(__dirname, 'modules','utils'),
+    '@googleCalendar': path.join(__dirname, 'modules','googleCalendar')
     
 })

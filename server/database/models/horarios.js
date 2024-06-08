@@ -2,8 +2,8 @@
 const { sequelize } = require('../connection.js');
 const { DataTypes } = require('sequelize');
 
-const Asignaturas = sequelize.define(
-    'asignaturas',
+const Horarios = sequelize.define(
+    'horarios',
     {
         id: {
             type: DataTypes.UUID,
@@ -19,15 +19,27 @@ const Asignaturas = sequelize.define(
                 key: 'id'
             }
         },
+        semestre_horario: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        paleta_horario: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        calendar_event_ids: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }, 
         data_user: {
             type: DataTypes.JSON,
             allowNull: true,
         }, 
     },
     {
-        tableName: 't_asignaturas',
+        tableName: 't_horarios',
         timestamps: true,
     },
 );
 
-module.exports = Asignaturas;
+module.exports = Horarios;
