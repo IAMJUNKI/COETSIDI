@@ -13,9 +13,14 @@ const RedisStore = require('connect-redis').default
 
 const {passport, isLoggedIn} = require('@auth/helpers.js')
 const { connectToDatabase, syncDatabase } = require('@db/connection.js');
+const debug = require('debug')('&:INDEX JS')
 
 //SUB ROUTERS
 const authRouter = require('@auth/router.js')
+const gestorDataRouter = require('@gestorData/router.js')
+const googleCalendarRouter = require('@googleCalendar/router.js')
+
+
 
 globalRouter.use(express.json());
 globalRouter.use(express.urlencoded({ extended: false }));
@@ -94,7 +99,28 @@ globalRouter.get(['/signup'], (req, res, next) => {
 }
 })
 
+
+
+
+//verifies that the user is Logged in before going to any other end point
+//--------------------------------------------------------------------------
+globalRouter.use('/auth',authRouter)
+globalRouter.use('', isLoggedIn)
+//--------------------------------------------------------------------------
+
 globalRouter.use(express.static(path.join(__dirname,'../client/dashboard/src')))
+
+globalRouter.get(['/dashboard.js'], async (req, res, next) => {
+    try {
+        const file = 'dashboard.js'
+        res.sendFile(file, { root: '../client/dashboard/src/js' }, function (err) {
+            if (err) { console.log(err) }
+        }
+        )
+    } catch (e) {
+        const er = errorBreadcrumbs(e, `ADMIN_ROUTER  ${req.method}  ${req.url}`); next(er)
+    }
+})
 globalRouter.get(['/dashboard'], (req, res, next) => {
 	try {
 		const file = 'dashboard.html'
@@ -109,17 +135,32 @@ globalRouter.get(['/dashboard'], (req, res, next) => {
 }
 })
 
-globalRouter.get('/logout', (req, res) => {
-	req.logout()
-    req.session.destroy()
-    res.redirect('/login')
+globalRouter.get(['/oauthgoogle'], (req, res, next) => {
+	try {
+		const file = 'dashboard.html'
+        res.sendFile(file, { root: '../client/dashboard' }, function (err) {
+			if (err) {
+				console.log(err) 
+			}
+        }
+	)
+} catch (err) {
+	console.log(err,'error')
+}
 })
 
-//verifies that the user is Logged in before going to any other end point
-//--------------------------------------------------------------------------
-globalRouter.use('/auth',authRouter)
-globalRouter.use('', isLoggedIn)
-//--------------------------------------------------------------------------
+globalRouter.get('/logout', (req, res) => {
+	req.logout(function (err) {
+        if (err) { debug('ERROR LOGOUT', err); return next(err) }
+        debug('Logout done!!')
+        req.session.destroy()
+        res.redirect('/login')
+    })
+})
+
+globalRouter.use('/gestorData',gestorDataRouter)
+globalRouter.use('/calendar',googleCalendarRouter)
+
 const port = process.env.PORT || 5050;
 
 globalRouter.listen(port, async () => {

@@ -35,17 +35,17 @@ authRouter.post("/login", function (req, res, next) {
     })(req, res, next);
 });
 
-            //usa el id para buscar en el database
-            passport.deserializeUser( async function (userToBeFound, done) {
-                console.log(userToBeFound,'deserialized user')
-                    const userFound = userToBeFound.id || userToBeFound
-                    const user = await knex('t_usuarios').first('id').where({ id: userFound })
-                            if (user) {
-                                return done(null, user)
-                            } else {
-                                return done(null, false)
-                            }
-            })
+            // //usa el id para buscar en el database
+            // passport.deserializeUser( async function (userToBeFound, done) {
+            //     console.log(userToBeFound,'deserialized user')
+            //         const userFound = userToBeFound.id || userToBeFound
+            //         const user = await knex('t_usuarios').first('id').where({ id: userFound })
+            //                 if (user) {
+            //                     return done(null, user)
+            //                 } else {
+            //                     return done(null, false)
+            //                 }
+            // })
 
 // authRouter.post('/login', authHandlers.loginUserHandler);
 // authRouter.post('/register', authHandlers.registerUserHandler);

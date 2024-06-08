@@ -2,3 +2,9 @@
 
 # dependencies
 .env
+
+# Dependency directories
+node_modules/
+
+#pruebas
+server/modules/pruebas/
