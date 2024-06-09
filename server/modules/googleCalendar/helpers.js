@@ -11,7 +11,6 @@ const {getDataUser} = require('@gestorData/services.js')
 
 }
 
-
 function parseHorario(horario) {
     const events = []; //donde se creará cada evento
     const now = new Date();

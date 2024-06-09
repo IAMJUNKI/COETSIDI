@@ -23,10 +23,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 
+    <!-- CSS Leaflet -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+   
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css"
+  />
   </head>
   <body>
 
-<header class="navbar navbar-expand-lg bd-navbar sticky-top shadow">
+<header class="navbar navbar-expand-lg bd-navbar sticky-top shadow bg-light">
  
   <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
     <div class="bd-navbar-toggle">
@@ -215,8 +223,7 @@
         <div class="modal-body">
           <h6 class="modal-title fs-5" id="staticBackdropLabel">¿Quieres añadir este horario a tu Google Calendar?</h6>
           <hr>
-            Si es tu primera vez después de pulsar el boton confirmar
-            se te redigirá para que inicies sesión en tu cuenta de google.
+            Se te redigirá para que inicies sesión en tu cuenta de google.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">volver</button>
@@ -230,17 +237,17 @@
 
     <main class=" container-xxl bd-gutter mt-3 my-md-4 bd-layout">
       <!-- PAGINA INICIO -->
-      <div id="pagina_inicio"> 
+      <!-- <div id="pagina_inicio"> 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Inicio</h1>
         </div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-          <!-- Button trigger modal -->
+      
           <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
             Cambiar asignaturas
           </button>
         </div>
-      </div> 
+      </div>  -->
       <!-- PAGINA HORARIO -->
       <div id="pagina_horario" style="display: none">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -295,15 +302,51 @@
           <h2 class="horas-por-dia" style="grid-row: time-2100;">21:00</h2>
         </div>
       </div>
+
+    <!-- PAGINA MAPA -->
+      <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+      
+       <div class="container-fluid p-0">
+        <div id="map-container" class="position-relative">
+            <div id="map"></div>
+              <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
+                <i class="fa-solid fa-layer-group"></i>
+              </a>
+          
+            <div id="floor-select" class="controles" style="display: none;">
+              <button class="btn btn-light floor-button" value="baja">-1</button>
+              <button class="btn btn-light active floor-button"  value="0">0</button>
+              <button class="btn btn-light floor-button" value="1">1</button>
+              <button class="btn btn-light floor-button" value="2">2</button>
+              <button class="btn btn-light floor-button" value="3">3</button>
+              <button class="btn btn-light floor-button" value="4">4</button>
+            </div>
+            <div id="route-finding" class="controles" style="display: none;" class="p-3 bg-white rounded shadow">
+              <select id="start-point" class="form-control mb-2"></select>
+              <select id="end-point" class="form-control mb-2"></select>
+              <button id="find-route" class="btn btn-primary w-100">Find Route</button>
+            </div>
+        </div>
+    </div>
+    
     </main>
 
-<script src="https://apis.google.com/js/api.js"></script>
+    <!-- google APIS JS -->
+  <script src="https://apis.google.com/js/api.js"></script>
 
-<!-- popover -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <!-- popover boostrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- boostrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script> -->
-    <script src="/js/dashboard.js" type="text/javascript"></script>
+  
+    <!-- Leaflet JS -->
+    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> -->
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.js"></script>
+  <!--My JS -->
+  <script src="/js/dashboard.js" type="text/javascript"></script>
 </body>
 </html>
