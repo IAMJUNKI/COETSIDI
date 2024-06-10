@@ -1,4 +1,17 @@
-# COETSIDI
+# MY-ETSIDI
+
+## 🏁 Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+* You have installed the following software/tools:
+  * Node 20.x
+  * PGadmin
+
+### Installing
 
 `npm ci` instead of `npm install` will install exact dependency versions from the lockfile (package-lock.json) which ensures reproducibility
 
@@ -17,10 +30,19 @@ install all depencies
 npm install
 ```
 
-For local run migrations to get the needed table
+For local, run the migrations to get the needed tables on your database
 ```sh
 cd server/database/
 npx sequelize-cli db:migrate
  ```
 
 You're ready!
+
+## ⛏️ Built Using
+- [PostgresSQL](https://www.postgresql.org/) - Database
+- [Express](https://expressjs.com/) - Server Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+
+## ✍️ Authors
+- [@Diego](https://github.com/IAMJUNKI)
+
