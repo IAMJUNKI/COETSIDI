@@ -29,7 +29,27 @@ install all depencies
 ```sh
 npm install
 ```
+Create your .env for environment variables
+```sh
+touch .env
+```
 
+Your .env variables should look something like this!
+```
+NODE_ENV='development'#LOCAL
+HOST='http://localhost:5050'
+PORT= '5050'
+
+COOKIE_SECRET = 'someCOokieSecret'
+
+#DATABASE DEV
+DATABASE_NAME ='postgres'
+DATABASE_USER ='postgres'
+DATABASE_PASSWORD ='postgres'
+DATABASE_HOST ='localhost'
+DATABASE_SESSION = 'sessions'
+#this last one is for storing the cookie for the user session
+```
 For local, run the migrations to get the needed tables on your database
 ```sh
 cd server/database/
