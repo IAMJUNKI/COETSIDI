@@ -62,6 +62,7 @@ You're ready!
 - [PostgresSQL](https://www.postgresql.org/) - Database
 - [Express](https://expressjs.com/) - Server Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Bootstrap](https://getbootstrap.com/) - Front-end Framework
 
 ## ✍️ Authors
 - [@Diego](https://github.com/IAMJUNKI)
