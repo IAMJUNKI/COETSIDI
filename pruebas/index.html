@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighted Graph Visualization</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.min.js"></script>
+    <style>
+        #graph {
+            width: 100%;
+            height: 500px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM fully loaded and parsed');
+            
+            const dot = `
+                digraph {
+                    A -> B [label="3"];
+                    A -> C [label="1"];
+                    B -> C [label="2"];
+                }
+            `;
+            
+            console.log('Rendering graph...');
+            
+            // Check if d3 and d3-graphviz are loaded
+            if (typeof d3 === 'undefined') {
+                console.error('d3 is not loaded');
+            } else {
+                console.log('d3 is loaded');
+            }
+
+            if (typeof d3.graphviz === 'undefined') {
+                console.error('d3-graphviz is not loaded');
+            } else {
+                console.log('d3-graphviz is loaded');
+            }
+
+            // Render the graph
+            d3.select("#graph").graphviz({ useWorker: false })
+                .renderDot(dot)
+                .on("end", () => {
+                    console.log('Graph rendered');
+                })
+                .on("error", (error) => {
+                    console.error('Error rendering graph:', error);
+                });
+        });
+    </script>
+</body>
+</html>
