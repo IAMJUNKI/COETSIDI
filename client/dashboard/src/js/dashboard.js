@@ -2,7 +2,6 @@
 
 // const { preventDoubleClick, hideSpinner, showSpinner } = require('@utils/utils.js');
 
-
 // //initializes as soon as the DOM is safe to manipulate
 $(function() {
     
@@ -503,14 +502,35 @@ console.log('ee')
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const LeafIcon = L.Icon.extend({
-        options: {
-            iconUrl: './img/dot.png',
-            iconSize:     [60, 60],
-            // iconAnchor:   [22, 94],
-            popupAnchor:  [0, 0]
-        }
+   
+    const finalIcon = L.divIcon({
+        className: 'pin-icon',
+        html: '<div id="final-position-container"></div>',
+        iconSize:     [40, 40],
+        iconAnchor:   [20,60],
+
     });
+    const currentPositionIcon = L.divIcon({
+        className: 'pulsing-circle-icon',
+        html: '<div id="current-position-container"></div>',
+        iconSize:     [50, 50]
+    
+    });
+    const arrowUpIcon = L.divIcon({
+        className: 'pulsing-up-arrow-icon',
+        html: '<div id="arrow-position-container"></div>',
+        iconSize:     [60, 60],
+        popupAnchor:  [0, 83]
+    
+    });
+    const arrowDownIcon = L.divIcon({
+        className: 'pulsing-down-arrow-icon',
+        html: '<div id="arrow-position-container"></div>',
+        iconSize:     [60, 60],
+        popupAnchor:  [0, -9]
+    
+    });
+
 
     //defining the map 
     const map = L.map('map', {
@@ -518,6 +538,319 @@ document.addEventListener('DOMContentLoaded', () => {
         minZoom: -1,
         maxZoom: 5
     });
+
+
+    const nodosPlanta5=[
+        //laboratorios
+    { id: 'B-150-L1', latlng: [637.971925, 631.903809], name: 'Lab de metrología dimensional' },
+    { id: 'B-150-L2', latlng: [656.849027, 587.278809], name: 'Lab de fabricación ensamblaje y ensayo de conjuntos mecánicos' },
+    { id: 'A-146', latlng: [573.489507, 637.048828], name: 'Ormazabal' },
+    { id: 'A-146-L', latlng: [572.820976, 556.239746], name: 'Lab de alta tensión' },
+    { id: 'A-144-L1', latlng: [520.726778, 653.275879], name: 'Lab de máquinas eléctricas II' },
+    { id: 'A-144-L2', latlng: [536.811088, 610.832031],  name: 'Lab de máquinas eléctricas II' },
+    { id: 'A-138-L', latlng: [430.220015, 715.640625],  name: 'Lab de prototipado electrónico' },
+    { id: 'A-140-L1', latlng: [481.862663, 661.858887],  name: 'Lab de ensayos de polímeros' },
+    { id: 'A-240-L2', latlng: [468.299629, 589.759766],  name: 'Lab de transformación de polímeros' },
+    { id: 'A-137-L', latlng: [434.74629, 698.173828], name: 'Lab de medios comtinuos' },
+    { id: 'A-134-L', latlng: [409.967761, 697.140625],  name: 'Lab de ing. térmica' },
+    { id: 'A-133-L', latlng: [362.340726, 696.889648],  name: 'Lab de máquina herramienta y soldadura' },
+    { id: 'A-132-L', latlng: [328.777285, 711.959229],  name: 'Lab de investigación LIMIT' },
+    { id: 'A-131-L1', latlng: [308.92815, 684.136719],  name: 'Lab de proyectos 1' },
+    { id: 'A-131-L2', latlng: [308.752243, 538.386719],  name: 'Lab de mecatrónica' },
+    { id: 'A-125-L', latlng: [218.820166, 728.90625],  name: 'Lab de óptica' },
+    { id: 'A-113-L', latlng: [162.720758, 707.277588],  name: 'Lab de coworking' },
+    { id: 'A-111-L', latlng: [184.813261, 611.6875],  name: 'Lab de idiomas' },
+
+
+    //despachos
+    { id: 'B -150-1', latlng: [651.84847, 649.028809], name: 'Despacho B 150-1' },
+    { id: 'B -150-2', latlng: [664.372325, 631.839355], name: 'Despacho B 150-2' },
+    { id: 'B -150b', latlng: [664.372325, 613.464355], name: 'Despacho B 150b' },
+    { id: 'B -148', latlng: [651.42291, 696.436035],  name: 'Despacho de ing. mecánica y construcción' },
+    { id: 'A -140', latlng: [464.219814, 686.217773], name: 'Despacho A -140' },
+    { id: 'A -108', latlng: [185.563344, 510.6875],  name: 'Despacho A -108' },
+    { id: 'A -105', latlng: [181.026707, 421.788086],  name: 'Despacho A -105' },
+  
+   
+    // //Aulas
+    { id: 'taller2', latlng: [582.615523, 688.173828],  name: 'Taller 2' },
+    { id: 'taller1', latlng: [561.613185, 688.923828], name: 'Taller 1' },
+    { id: 'taller', latlng: [535.560949, 567.707031],  name: 'Taller' },
+    { id: 'A-140-A', latlng: [451.234253, 661.233887],  name: 'Aula de tecnología de polímeros' },
+    { id: 'A-129-S1', latlng: [324.054834, 685.761719],  name: 'Sala 1' },
+    { id: 'A-129-S2', latlng: [293.551438, 686.136719], name: 'Sala 2' },
+    { id: 'A-109-S', latlng: [183.81315, 556.4375],  name: 'Sala roja' },
+    { id: 'A-106-S', latlng: [185.27718, 473.038086],  name: 'Sala azul' },
+  
+    // //Otros
+    { id: 'A-139', latlng: [448.22202, 715.640625],  name: 'MotoStudent' },
+    { id: 'almacen_de_zinico', latlng: [171.248274, 327.507813],  name: 'Almacén de zinico' },
+    { id: 'club_deportivo', latlng: [270.899217, 745.759766],  name: 'Club deportivo' },
+
+
+    // //Nodos
+  
+    { id: 'nodo_exterior_medio_pisoBAJO', latlng: [271.790185, 502.625],  name: 'nodo ext medio piso -1' },
+    { id: 'nodo_despachos_b-150', latlng: [656.37431, 632.375],  name: 'nodo despachosb150 ' },
+    { id: 'nodo_lab_maquinas_pisoBAJO', latlng: [535.228393, 654.275879], name: 'nodo labs maqs piso -1' },
+    { id: 'nodo_labs2_pisoBAJO', latlng: [534.823197, 703.054688], name: 'nodo labs 2 piso -1' },
+    { id: 'nodo_B-150s', latlng: [639.057313, 649.706055],  name: 'nodo B -150s' },
+    { id: 'nodo_salida_escalera_bloque_B_pisoBAJO', latlng: [639.807396, 668.706055],  name: 'nodo salida escalera bloque B piso -1' },
+    { id: 'nodo_principio_pasillo_B_pisoBAJO', latlng: [628.056088, 704.956055],  name: 'nodo pricnipio pasillo B piso -1' },
+    { id: 'nodo_labs1_pisoBAJO', latlng: [572.014259, 708.339355], name: 'nodo labs 1 piso -1' },
+    { id: 'nodo_talleres_pisoBAJO', latlng: [572.61441, 688.673828],  name: 'nodo talleres piso -1' },
+    { id: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', latlng: [463.719758, 705.467773],  name: 'nodo entrada escalera bloque A norte piso -1' },
+    { id: 'nodo_labs3_pisoBAJO', latlng: [466.799462, 660.509766], name: 'nodo labs 3 piso -1' },
+    { id: 'nodo_mitad_pasillo_A_norte_pisoBAJO', latlng: [384.843232, 706.389648],  name: 'nodo mitad pasillo A norte piso -1' },
+    { id: 'nodo_labs4_pisoBAJO', latlng: [336.950893, 706.875],  name: 'nodo labs 4 piso -1' },
+    { id: 'nodo_final_pasillo_labs_pisoBAJO', latlng: [278.194351, 706.625],  name: 'nodo final pasillo labs piso -1' },
+    { id: 'nodo_entrada_escalera_principal_pisoBAJO', latlng: [272.904521, 691.193848],  name: 'nodo entrada escalera principal piso -1' },
+    { id: 'nodo_exterior_pisoBAJO', latlng: [270.456191, 647.402344],  name: 'nodo exterior ppiso -1' },
+    { id: 'nodo_1_pasillo_pisoBAJO', latlng: [251.311959, 678.499023],  name: 'nodo 1 pasillo piso -1' },
+    { id: 'nodo_2_pasillo_pisoBAJO', latlng: [248.568061, 723.252197],  name: 'nodo 2 pasillo piso -1' },
+    { id: 'nodo_3_pasillo_pisoBAJO', latlng: [226.757573, 727.754395],  name: 'nodo 3 pasillo piso -1' },
+    { id: 'nodo_4_pasillo_pisoBAJO', latlng: [227.632671, 748.254395],  name: 'nodo 4 pasillo piso -1' },
+    { id: 'nodo_5_pasillo_pisoBAJO', latlng: [173.832473, 748.75293],  name: 'nodo 5 pasillo piso -1' },
+    { id: 'nodo_6_pasillo_pisoBAJO', latlng: [173.535638, 707.787109],  name: 'nodo 6 pasillo piso -1' },
+    { id: 'nodo_6_7_pasillo_pisoBAJO', latlng: [173.504704, 670.741418],  name: 'nodo 6-7 pasillo piso -1' },
+    { id: 'nodo_7_pasillo_pisoBAJO', latlng: [173.468248, 627.083984],  name: 'nodo 7 pasillo piso -1' },
+    { id: 'nodo_8_pasillo_pisoBAJO', latlng: [174.718387, 527.833984],  name: 'nodo 8 pasillo piso -1' },
+    { id: 'nodo_9_pasillo_pisoBAJO', latlng: [173.056092, 409.296875],  name: 'nodo 9 pasillo piso -1' },
+    { id: 'nodo_entrada_escalera_cafet_pisoBAJO', latlng: [172.701684, 335.305542],  name: 'nodo entrada escalera cafet piso -1' },
+   
+    { id: 'nodo_salida_ext_pisoBAJO', latlng: [180.066342, 392.050293],  name: 'nodo dsalida ext piso -1' },
+    { id: 'nodo_entrada_escalera_pista_deportiva_pisoBAJO', latlng: [293.739342, 392.451172],  name: 'nodo entrada escalera pista depprtiva piso -1' },
+    { id: 'nodo_entrada_salas_pisoBAJO', latlng: [309.525911, 706.044922],  name: 'nodo entrada salas piso -1' },
+
+    { id: 'nodo_bloque_A_subida_escalera_3_pisoBAJO', latlng: [487.768538, 734.208008],  name: 'nodo bloque A subida escaleras 3 piso -1' },
+    { id: 'nodo_bloque_A_subida_escalera_2_pisoBAJO', latlng: [464.515949, 735.458008],  name: 'nodo bloque A subida escaleras 2 piso -1' },
+    { id: 'nodo_bloque_A_subida_escalera_1_pisoBAJO', latlng: [464.631283, 726.875488],  name: 'nodo escalera bloque A subida 1 piso -1' },
+    
+    { id: 'nodo_bloque_B_subida_escalera_3_pisoBAJO', latlng: [689.061094, 664.0625],  name: 'nodo bloque B subida escaleras 3 piso -1' },
+    { id: 'nodo_bloque_B_subida_escalera_2_pisoBAJO', latlng: [689.123601, 676.75],  name: 'nodo bloque B subida escaleras 2 piso -1' },
+    { id: 'nodo_bloque_B_subida_escalera_1_pisoBAJO', latlng: [668.371291, 676.8125],  name: 'nodo escalera bloque B subida 1 piso -1' },
+
+    { id: 'nodo_conexion_entrada_subida_escalera_3_pisoBAJO', latlng: [94.855581, 663.999023],  name: 'nodo esclaera entrada subida escaleras 3 piso -1' },
+    { id: 'nodo_conexion_entrada_subida_escalera_2_pisoBAJO', latlng: [94.855581, 672.624023],  name: 'nodo escalera entrada subida escaleras 2 piso -1' },
+    { id: 'nodo_conexion_entrada_subida_escalera_1_pisoBAJO', latlng: [105.856806, 673.124023],  name: 'nodo escalera entrada subida 1 piso -1' },
+
+
+    { id: 'nodo_conexion_cafeteria_subida_escalera_3_pisoBAJO', latlng: [199.611653, 315.074707],  name: 'nodo esclaera cafetria subida escaleras 3 piso -1' },
+    { id: 'nodo_conexion_cafeteria_subida_escalera_2_pisoBAJO', latlng: [200.309159, 335.347168],  name: 'nodo escalera cafeteria subida escaleras 2 piso -1' },
+   
+
+    { id: 'nodo_conexion_terraza_subida_escalera_3_pisoBAJO', latlng: [257.794412, 650.500977],  name: 'nodo escalera terraza subida 1 piso -1' },
+    { id: 'nodo_conexion_terraza_subida_escalera_2_pisoBAJO', latlng: [234.916865, 651.000977],  name: 'nodo escalera terraza subida escaleras 2 piso -1' },
+    { id: 'nodo_conexion_terraza_subida_escalera_1_pisoBAJO', latlng: [234.091715, 641.816406],  name: 'nodo esclaera terraza subida escaleras 3 piso -1' },
+
+
+    { id: 'nodo_conexion_pista_deportiva_subida_escalera_1_pisoBAJO', latlng: [298.978173, 369.359375],  name: 'nodo escalera pista deport subida 1 piso -1' },
+
+    
+    
+    
+    
+
+    // //ascensores y/o escaleras
+    
+    { id: 'nodo_escalera_principal_pisoBAJO', latlng: [271.154326, 727.068848],  name: 'nodo escalera principal piso -1' },
+    
+    { id: 'nodo_escaleras_terraza_SUBIDA_pisoBAJO', latlng: [257.41937, 641.250977], name: 'nodo escaleras terraza piso -1' },
+
+    { id: 'nodo_escalera_entrada_SUBIDA_pisoBAJO', latlng: [110.607335, 663.499023],  name: 'nodo escalera entrada subida piso -1' },
+
+    { id: 'nodo_escalera_bloque_A_SUBIDA_pisoBAJO', latlng: [486.768427, 718.458008],  name: 'nodo escalera bloque A subida piso -1' },
+
+    { id: 'nodo_escalera_bloque_B_SUBIDA_pisoBAJO', latlng: [678.497418, 664.4375],  name: 'nodo escalera bloque B piso -1' },
+
+    { id: 'nodo_escalera_cafeteria_SUBIDA_pisoBAJO', latlng: [186.985247, 314.199707],  name: 'nodo escalera cafeteria piso -1' },
+
+    { id: 'nodo_escalera_pista_deportiva_SUBIDA_pisoBAJO', latlng: [298.665638, 353.203125],  name: 'nodo escalera pista deportiva piso -1' },
+    
+]
+ 
+
+
+    const edgesPlanta5 = [
+        { from: 'nodo_despachos_b-150', to: 'B-150-L2', weight: getDistanceBetweenPoints('nodo_despachos_b-150','B-150-L2', nodosPlanta5) },
+        { from: 'nodo_despachos_b-150', to: 'B -150b', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B -150b', nodosPlanta5)  },
+        { from: 'nodo_despachos_b-150', to: 'B -150-2', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B -150-2', nodosPlanta5) },
+        { from: 'nodo_despachos_b-150', to: 'nodo_B-150s', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','nodo_B-150s', nodosPlanta5)},
+       
+        { from: 'nodo_B-150s', to: 'B-150-L1', weight: getDistanceBetweenPoints('nodo_B-150s','B-150-L1', nodosPlanta5) },
+        { from: 'nodo_B-150s', to: 'B -150-1', weight:  getDistanceBetweenPoints('nodo_B-150s','B -150-1', nodosPlanta5) },
+        { from: 'nodo_B-150s', to: 'nodo_salida_escalera_bloque_B_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_B-150s','nodo_salida_escalera_bloque_B_pisoBAJO', nodosPlanta5)},
+        
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B -150-1', weight: getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B -150-1', nodosPlanta5) },
+
+
+
+        { from: 'nodo_6_7_pasillo_pisoBAJO', to: 'nodo_conexion_entrada_subida_escalera_1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_6_7_pasillo_pisoBAJO','nodo_conexion_entrada_subida_escalera_1_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_conexion_entrada_subida_escalera_1_pisoBAJO', to: 'nodo_conexion_entrada_subida_escalera_2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_pisoBAJO','nodo_conexion_entrada_subida_escalera_2_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_conexion_entrada_subida_escalera_2_pisoBAJO', to: 'nodo_conexion_entrada_subida_escalera_3_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_2_pisoBAJO','nodo_conexion_entrada_subida_escalera_3_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_conexion_entrada_subida_escalera_3_pisoBAJO', to: 'nodo_escalera_entrada_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_pisoBAJO','nodo_escalera_entrada_SUBIDA_pisoBAJO', nodosPlanta5) },
+
+
+
+
+
+
+
+
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'nodo_bloque_B_subida_escalera_1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','nodo_bloque_B_subida_escalera_1_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_bloque_B_subida_escalera_1_pisoBAJO', to: 'nodo_bloque_B_subida_escalera_2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_1_pisoBAJO','nodo_bloque_B_subida_escalera_2_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_bloque_B_subida_escalera_2_pisoBAJO', to: 'nodo_bloque_B_subida_escalera_3_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_pisoBAJO','nodo_bloque_B_subida_escalera_3_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_bloque_B_subida_escalera_3_pisoBAJO', to: 'nodo_escalera_bloque_B_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_3_pisoBAJO','nodo_escalera_bloque_B_SUBIDA_pisoBAJO', nodosPlanta5) },
+
+
+
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B -148', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B -148', nodosPlanta5)},
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'nodo_principio_pasillo_B_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','nodo_principio_pasillo_B_pisoBAJO', nodosPlanta5)},
+       
+        { from: 'nodo_principio_pasillo_B_pisoBAJO', to: 'B -148', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_pisoBAJO','B -148', nodosPlanta5) },
+        { from: 'nodo_principio_pasillo_B_pisoBAJO', to: 'nodo_labs1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_pisoBAJO','nodo_labs1_pisoBAJO', nodosPlanta5) },
+
+        { from: 'nodo_labs1_pisoBAJO', to: 'nodo_labs2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs1_pisoBAJO','nodo_labs2_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_labs1_pisoBAJO', to: 'nodo_talleres_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs1_pisoBAJO','nodo_talleres_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_talleres_pisoBAJO', to: 'taller2', weight: getDistanceBetweenPoints('nodo_talleres_pisoBAJO','taller2', nodosPlanta5) },
+        { from: 'nodo_talleres_pisoBAJO', to: 'taller1', weight:  getDistanceBetweenPoints('nodo_talleres_pisoBAJO','taller1', nodosPlanta5) },
+        { from: 'nodo_talleres_pisoBAJO', to: 'A-146', weight:  getDistanceBetweenPoints('nodo_talleres_pisoBAJO','A-146', nodosPlanta5)},
+
+        { from: 'A-146', to: 'A-146-L', weight:  getDistanceBetweenPoints('A-146','A-146-L', nodosPlanta5)},
+    
+        { from: 'nodo_labs2_pisoBAJO', to: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', weight: getDistanceBetweenPoints('nodo_labs2_pisoBAJO','nodo_entrada_escalera_bloque_A_norte_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_labs2_pisoBAJO', to: 'nodo_lab_maquinas_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs2_pisoBAJO','nodo_lab_maquinas_pisoBAJO', nodosPlanta5) },
+        
+        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A-144-L1', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A-144-L1', nodosPlanta5)},
+        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A-144-L2', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A-144-L2', nodosPlanta5) },
+       
+        { from: 'A-144-L2', to: 'taller', weight:  getDistanceBetweenPoints('A-144-L2','taller', nodosPlanta5)},
+
+
+
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'nodo_bloque_A_subida_escalera_1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','nodo_bloque_A_subida_escalera_1_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_bloque_A_subida_escalera_1_pisoBAJO', to: 'nodo_bloque_A_subida_escalera_2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_1_pisoBAJO','nodo_bloque_A_subida_escalera_2_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_bloque_A_subida_escalera_2_pisoBAJO', to: 'nodo_bloque_A_subida_escalera_3_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_pisoBAJO','nodo_bloque_A_subida_escalera_3_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_bloque_A_subida_escalera_3_pisoBAJO', to: 'nodo_escalera_bloque_A_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_3_pisoBAJO','nodo_escalera_bloque_A_SUBIDA_pisoBAJO', nodosPlanta5)},
+
+
+
+
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A -140', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A -140', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-139', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-139', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-138-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-138-L', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-137-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-137-L', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-134-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-134-L', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'nodo_mitad_pasillo_A_norte_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','nodo_mitad_pasillo_A_norte_pisoBAJO', nodosPlanta5)},
+       
+    
+        { from: 'A -140', to: 'nodo_labs3_pisoBAJO', weight:  getDistanceBetweenPoints('A -140','nodo_labs3_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_labs3_pisoBAJO', to: 'A-140-L1', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-140-L1', nodosPlanta5)},
+        { from: 'nodo_labs3_pisoBAJO', to: 'A-140-A', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-140-A', nodosPlanta5)},
+        { from: 'nodo_labs3_pisoBAJO', to: 'A-240-L2', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-240-L2', nodosPlanta5)},
+
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-139', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-139', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-138-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-138-L', nodosPlanta5) },
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-137-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-137-L', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-134-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-134-L', nodosPlanta5) },
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-133-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-133-L', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'nodo_labs4_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','nodo_labs4_pisoBAJO', nodosPlanta5) },
+      
+        { from: 'nodo_labs4_pisoBAJO', to: 'A-133-L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A-133-L', nodosPlanta5)},
+        { from: 'nodo_labs4_pisoBAJO', to: 'A-132-L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A-132-L', nodosPlanta5)},
+        { from: 'nodo_labs4_pisoBAJO', to: 'nodo_entrada_salas_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','nodo_entrada_salas_pisoBAJO', nodosPlanta5)},
+        
+        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A-132-L', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A-132-L', nodosPlanta5)},
+        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A-131-L1', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A-131-L1', nodosPlanta5)},
+        { from: 'nodo_entrada_salas_pisoBAJO', to: 'nodo_final_pasillo_labs_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','nodo_final_pasillo_labs_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_final_pasillo_labs_pisoBAJO', to: 'nodo_entrada_escalera_principal_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_final_pasillo_labs_pisoBAJO','nodo_entrada_escalera_principal_pisoBAJO', nodosPlanta5)},
+                
+        { from: 'A-131-L1', to: 'A-129-S2', weight:  getDistanceBetweenPoints('A-131-L1','A-129-S2', nodosPlanta5)},
+        { from: 'A-131-L1', to: 'A-129-S1', weight:  getDistanceBetweenPoints('A-131-L1','A-129-S1', nodosPlanta5)},
+        { from: 'A-131-L1', to: 'A-131-L2', weight:  getDistanceBetweenPoints('A-131-L1','A-131-L2', nodosPlanta5)},
+       
+        { from: 'nodo_entrada_escalera_principal_pisoBAJO', to: 'nodo_escalera_principal_pisoBAJO', weight: getDistanceBetweenPoints('nodo_entrada_escalera_principal_pisoBAJO','nodo_escalera_principal_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_principal_pisoBAJO', to: 'nodo_exterior_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_pisoBAJO','nodo_exterior_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_principal_pisoBAJO', to: 'nodo_1_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_pisoBAJO','nodo_1_pasillo_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_1_pasillo_pisoBAJO', to: 'nodo_2_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_1_pasillo_pisoBAJO','nodo_2_pasillo_pisoBAJO', nodosPlanta5) },
+
+
+
+        { from: 'nodo_exterior_pisoBAJO', to: 'nodo_conexion_terraza_subida_escalera_1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_exterior_pisoBAJO','nodo_conexion_terraza_subida_escalera_1_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_conexion_terraza_subida_escalera_1_pisoBAJO', to: 'nodo_conexion_terraza_subida_escalera_2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_1_pisoBAJO','nodo_conexion_terraza_subida_escalera_2_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_conexion_terraza_subida_escalera_2_pisoBAJO', to: 'nodo_conexion_terraza_subida_escalera_3_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_2_pisoBAJO','nodo_conexion_terraza_subida_escalera_3_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_conexion_terraza_subida_escalera_3_pisoBAJO', to: 'nodo_escaleras_terraza_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_3_pisoBAJO','nodo_escaleras_terraza_SUBIDA_pisoBAJO', nodosPlanta5)},
+
+
+        { from: 'nodo_exterior_pisoBAJO', to: 'nodo_exterior_medio_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_exterior_pisoBAJO','nodo_exterior_medio_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_escalera_principal_pisoBAJO', to: 'club_deportivo', weight:  getDistanceBetweenPoints('nodo_escalera_principal_pisoBAJO','club_deportivo', nodosPlanta5)},
+
+        { from: 'nodo_3_pasillo_pisoBAJO', to: 'nodo_2_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','nodo_2_pasillo_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_3_pasillo_pisoBAJO', to: 'nodo_4_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','nodo_4_pasillo_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_3_pasillo_pisoBAJO', to: 'A-125-L', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','A-125-L', nodosPlanta5)},
+
+        { from: 'nodo_4_pasillo_pisoBAJO', to: 'nodo_5_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_4_pasillo_pisoBAJO','nodo_5_pasillo_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_6_pasillo_pisoBAJO', to: 'nodo_5_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_6_pasillo_pisoBAJO','nodo_5_pasillo_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_6_pasillo_pisoBAJO', to: 'nodo_6_7_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_6_pasillo_pisoBAJO','nodo_6_7_pasillo_pisoBAJO', nodosPlanta5) },
+
+        { from: 'nodo_6_7_pasillo_pisoBAJO', to: 'nodo_7_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_6_7_pasillo_pisoBAJO','nodo_7_pasillo_pisoBAJO', nodosPlanta5) },
+    
+
+        { from: 'nodo_6_pasillo_pisoBAJO', to: 'A-113-L', weight:  getDistanceBetweenPoints('nodo_6_pasillo_pisoBAJO','A-113-L', nodosPlanta5)},
+    
+        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A-111-L', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A-111-L', nodosPlanta5)},
+        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A-109-S', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A-109-S', nodosPlanta5)},
+        { from: 'nodo_7_pasillo_pisoBAJO', to: 'nodo_8_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','nodo_8_pasillo_pisoBAJO', nodosPlanta5) },
+        
+
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-111-L', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-111-L', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-109-S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-109-S', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A -108', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A -108', nodosPlanta5) },
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'nodo_9_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','nodo_9_pasillo_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-106-S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-106-S', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A -105', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A -105', nodosPlanta5) },
+      
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A -108', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A -108', nodosPlanta5) },
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A-106-S', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A-106-S', nodosPlanta5)},
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A -105', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A -105', nodosPlanta5) },
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'nodo_salida_ext_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','nodo_salida_ext_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'nodo_entrada_escalera_cafet_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','nodo_entrada_escalera_cafet_pisoBAJO', nodosPlanta5)},
+
+        { from: 'nodo_entrada_escalera_cafet_pisoBAJO', to: 'almacen_de_zinico', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafet_pisoBAJO','almacen_de_zinico', nodosPlanta5)},
+        
+
+
+
+
+
+        { from: 'nodo_entrada_escalera_cafet_pisoBAJO', to: 'nodo_conexion_cafeteria_subida_escalera_2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafet_pisoBAJO','nodo_conexion_cafeteria_subida_escalera_2_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_conexion_cafeteria_subida_escalera_2_pisoBAJO', to: 'nodo_conexion_cafeteria_subida_escalera_3_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_2_pisoBAJO','nodo_conexion_cafeteria_subida_escalera_3_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_conexion_cafeteria_subida_escalera_3_pisoBAJO', to: 'nodo_escalera_cafeteria_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_3_pisoBAJO','nodo_escalera_cafeteria_SUBIDA_pisoBAJO', nodosPlanta5) },
+        
+
+
+
+
+
+
+        { from: 'nodo_entrada_escalera_pista_deportiva_pisoBAJO', to: 'nodo_salida_ext_pisoBAJO', weight: getDistanceBetweenPoints('nodo_entrada_escalera_pista_deportiva_pisoBAJO','nodo_salida_ext_pisoBAJO', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_pista_deportiva_pisoBAJO', to: 'nodo_exterior_medio_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_pista_deportiva_pisoBAJO','nodo_exterior_medio_pisoBAJO', nodosPlanta5) },
+
+        { from: 'nodo_entrada_escalera_pista_deportiva_pisoBAJO', to: 'nodo_conexion_pista_deportiva_subida_escalera_1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_pista_deportiva_pisoBAJO','nodo_conexion_pista_deportiva_subida_escalera_1_pisoBAJO', nodosPlanta5)},
+        { from: 'nodo_conexion_pista_deportiva_subida_escalera_1_pisoBAJO', to: 'nodo_escalera_pista_deportiva_SUBIDA_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_conexion_pista_deportiva_subida_escalera_1_pisoBAJO','nodo_escalera_pista_deportiva_SUBIDA_pisoBAJO', nodosPlanta5)},
+    ]
+
+const todasLasPlantas = {}
+todasLasPlantas.planta5 = {}
+todasLasPlantas.planta5.nodes = nodosPlanta5
+todasLasPlantas.planta5.edges = edgesPlanta5
 
 
     const nodosPlanta0=[
@@ -633,29 +966,114 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'nodo_bloque_C_norte', latlng: [461.198437, 414.850586],  name: 'nodo escalera bloque C norte' },
         { id: 'nodo_bloque_C_sur', latlng: [376.716109, 405.686035],  name: 'nodo escalera bloque C sur' },
 
-        //ascensores y/o escaleras
-        { id: 'nodo_escalera_entrada', latlng: [109.046159, 667.949219],  name: 'nodo escalera entrada' },
-        { id: 'nodo_escaleras_terraza', latlng: [235.483088, 655.929688], name: 'nodo escaleras terraza' },
-        { id: 'nodo_escalera_principal', latlng: [245.386534, 735.491211],  name: 'nodo escalera principal' },
-        { id: 'nodo_escalera_bloque_A', latlng: [475.454231, 727.530273],  name: 'nodo escalera bloque A' },
-        { id: 'nodo_escalera_bloque_B', latlng: [680.519288, 669.970703],  name: 'nodo escalera bloque B' },
-        { id: 'nodo_escalera_bloque_B_secundaria', latlng: [626.528845, 488.818359],  name: 'nodo escalera bloque B segundaria' },
+        { id: 'nodo_bloque_A_subida_escalera_3_piso0', latlng: [487.768538, 734.208008],  name: 'nodo bloque A subida escaleras 3 piso 0' },
+    { id: 'nodo_bloque_A_subida_escalera_2_piso0', latlng: [464.515949, 735.458008],  name: 'nodo bloque A subida escaleras 2 piso 0' },
+    { id: 'nodo_bloque_A_subida_escalera_1_piso0', latlng: [464.631283, 726.875488],  name: 'nodo escalera bloque A subida 1 piso 0' },
+    
+    { id: 'nodo_bloque_B_subida_escalera_3_piso0', latlng: [689.061094, 664.0625],  name: 'nodo bloque B subida escaleras 3 piso 0' },
+    { id: 'nodo_bloque_B_subida_escalera_2_piso0', latlng: [689.123601, 676.75],  name: 'nodo bloque B subida escaleras 2 piso 0' },
+    { id: 'nodo_bloque_B_subida_escalera_1_piso0', latlng: [668.371291, 676.8125],  name: 'nodo escalera bloque B subida 1 piso 0' },
+
+    { id: 'nodo_conexion_entrada_subida_escalera_3_piso0', latlng: [97.54338, 662.842773],  name: 'nodo esclaera entrada subida escaleras 3 piso 0' },
+    { id: 'nodo_conexion_entrada_subida_escalera_2_piso0', latlng: [97.418366, 672.717773],  name: 'nodo escalera entrada subida escaleras 2 piso 0' },
+    { id: 'nodo_conexion_entrada_subida_escalera_1_piso0', latlng: [105.856806, 673.124023],  name: 'nodo escalera entrada subida 1 piso 0' },
+
+
+    { id: 'nodo_conexion_cafeteria_subida_escalera_3_piso0', latlng: [199.611653, 315.074707],  name: 'nodo esclaera cafetria subida escaleras 3 piso 0' },
+    { id: 'nodo_conexion_cafeteria_subida_escalera_2_piso0', latlng: [200.309159, 335.347168],  name: 'nodo escalera cafeteria subida escaleras 2 piso 0' },
+    { id: 'nodo_conexion_cafeteria_subida_escalera_1_piso0', latlng: [184.269361, 335],  name: 'nodo escalera cafeteria subida escaleras 1 piso 0' },
+   
+
+    { id: 'nodo_conexion_principal_subida_escalera_3_piso0', latlng: [272.00574, 725.628906],  name: 'nodo esclaera principal subida escaleras 3 piso 0' },
+    { id: 'nodo_conexion_principal_subida_escalera_2_piso0', latlng: [272.00574, 746.128906],  name: 'nodo escalera principal subida escaleras 2 piso 0' },
+    { id: 'nodo_conexion_principal_subida_escalera_1_piso0', latlng: [246.750762, 746.003906],  name: 'nodo escalera principal subida escaleras 1 piso 0' },
+   
+
+
+    { id: 'nodo_conexion_terraza_subida_escalera_3_piso0', latlng: [257.794412, 650.500977],  name: 'nodo escalera terraza subida 1 piso 0' },
+    { id: 'nodo_conexion_terraza_subida_escalera_2_piso0', latlng: [234.916865, 651.000977],  name: 'nodo escalera terraza subida escaleras 2 piso 0' },
+
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_1_piso0', latlng: [614.016403, 484.71582],  name: 'nodo escalera bloque B subida escalera secundaria 1 piso 0' },
+    
+
+    { id: 'nodo_acceso_escalera_entrada', latlng: [132.635314, 673.236328],  name: 'nodo escalera entrada' },
+    { id: 'nodo_acceso_escalera_cafeteria', latlng: [175.992478, 323.035153],  name: 'nodo escalera cafeteria' },
+    { id: 'nodo_acceso_escalera_principal', latlng: [233.634218, 735.366211],  name: 'nodo escalera cafeteria' },
+       
+ 
+
+
+      //ascensores y/o escaleras
+        { id: 'nodo_escalera_principal_SUBIDA_piso0', latlng: [272.00574, 725.628906],  name: 'nodo escalera principal subida piso 0' },
+        { id: 'nodo_escalera_principal_BAJADA_piso0', latlng: [247.773326, 726.43457],  name: 'nodo escalera principal bajada piso 0' },
+       
+        { id: 'nodo_escalera_entrada_SUBIDA_piso0', latlng: [97.54338, 662.842773],  name: 'nodo escalera entrada subida piso 0' },
+        { id: 'nodo_escalera_entrada_BAJADA_piso0', latlng: [110.607335, 663.499023],  name: 'nodo escalera entrada subida piso 0' },
+        
+        { id: 'nodo_escalera_bloque_A_SUBIDA_piso0', latlng: [487.768538, 734.208008],  name: 'nodo escalera bloque A subida piso 0' },
+        { id: 'nodo_escalera_bloque_A_BAJADA_piso0', latlng: [486.768427, 718.458008],  name: 'nodo escalera bloque A subida piso 0' },
+
+        { id: 'nodo_escalera_bloque_B_SUBIDA_piso0', latlng: [689.061094, 664.0625],  name: 'nodo escalera bloque B piso 0' },
+
+        { id: 'nodo_escalera_bloque_B_BAJADA_piso0', latlng: [678.497418, 664.4375],  name: 'nodo escalera bloque B piso 0' },
+
+        { id: 'nodo_escaleras_terraza_SUBIDA_piso0', latlng: [257.41937, 641.250977], name: 'nodo escaleras terraza piso 0' },
+
+        { id: 'nodo_escaleras_terraza_BAJADA_piso0', latlng: [234.091715, 641.816406],  name: 'nodo esclaera terraza subida escaleras 3 piso 0' },
+
+        { id: 'nodo_escalera_cafeteria_SUBIDA_piso0', latlng: [199.611653, 315.074707],  name: 'nodo escalera cafeteria piso 0' },
+
+        { id: 'nodo_escalera_cafeteria_BAJADA_piso0', latlng: [186.985247, 314.199707],  name: 'nodo escalera cafeteria piso 0' },
+
+       { id: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso0', latlng: [630.404609, 484.193359],  name: 'nodo escalera bloque B segundaria' },
+
+
         { id: 'nodo_escalera_bloque_C', latlng: [421.415429, 408.658203],  name: 'nodo escalera bloque C' },
-        { id: 'nodo_escalera_cafeteria', latlng: [191.504623, 323.524414],  name: 'nodo escalera cafeteria' },
+        
+        { id: 'nodo_escalera_pista_deportiva_BAJADA_piso0', latlng: [304.229235, 353.390625],  name: 'nodo escalera pista deportiva piso 0' },
         
     ]
 
 
     const edgesPlanta0 = [
+        { from: 'nodo_escalera_pista_deportiva_BAJADA_piso0', to: 'pista_deportiva', weight: getDistanceBetweenPoints('nodo_escalera_pista_deportiva_BAJADA_piso0','pista_deportiva', nodosPlanta0) },
+       
         { from: 'hall_entrada', to: 'nodo_principio_pasillo_A_sur', weight: getDistanceBetweenPoints('hall_entrada','nodo_principio_pasillo_A_sur', nodosPlanta0) },
         { from: 'hall_entrada', to: 'nodo_principio_pasillo_A_norte', weight:  getDistanceBetweenPoints('hall_entrada','nodo_principio_pasillo_A_norte', nodosPlanta0)  },
-        { from: 'hall_entrada', to: 'nodo_escaleras_terraza', weight:  getDistanceBetweenPoints('hall_entrada','nodo_escaleras_terraza', nodosPlanta0) },
-        { from: 'hall_entrada', to: 'nodo_escalera_principal', weight:  getDistanceBetweenPoints('hall_entrada','nodo_escalera_principal', nodosPlanta0)},
-        { from: 'hall_entrada', to: 'nodo_escalera_entrada', weight:  getDistanceBetweenPoints('hall_entrada','nodo_escalera_entrada', nodosPlanta0) },
+        { from: 'hall_entrada', to: 'nodo_conexion_terraza_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('hall_entrada','nodo_conexion_terraza_subida_escalera_2_piso0', nodosPlanta0) },
+        { from: 'hall_entrada', to: 'nodo_acceso_escalera_principal', weight:  getDistanceBetweenPoints('hall_entrada','nodo_acceso_escalera_principal', nodosPlanta0)},
+        { from: 'hall_entrada', to: 'nodo_acceso_escalera_entrada', weight:  getDistanceBetweenPoints('hall_entrada','nodo_acceso_escalera_entrada', nodosPlanta0) },
+
+        { from: 'nodo_conexion_entrada_subida_escalera_1_piso0', to: 'nodo_acceso_escalera_entrada', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso0','nodo_acceso_escalera_entrada', nodosPlanta0) },
+        { from: 'nodo_escalera_entrada_BAJADA_piso0', to: 'nodo_acceso_escalera_entrada', weight:  getDistanceBetweenPoints('nodo_escalera_entrada_BAJADA_piso0','nodo_acceso_escalera_entrada', nodosPlanta0) },
+
+
+        { from: 'nodo_conexion_entrada_subida_escalera_1_piso0', to: 'nodo_conexion_entrada_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso0','nodo_conexion_entrada_subida_escalera_2_piso0', nodosPlanta0) },
+        { from: 'nodo_conexion_entrada_subida_escalera_3_piso0', to: 'nodo_conexion_entrada_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso0','nodo_conexion_entrada_subida_escalera_2_piso0', nodosPlanta0) },
+        { from: 'nodo_conexion_entrada_subida_escalera_3_piso0', to: 'nodo_escalera_entrada_SUBIDA_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso0','nodo_escalera_entrada_SUBIDA_piso0', nodosPlanta0) },
+
+
+        { from: 'nodo_conexion_terraza_subida_escalera_2_piso0', to: 'nodo_escaleras_terraza_BAJADA_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_2_piso0','nodo_escaleras_terraza_BAJADA_piso0', nodosPlanta0) },
+        { from: 'nodo_conexion_terraza_subida_escalera_2_piso0', to: 'nodo_conexion_terraza_subida_escalera_3_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_2_piso0','nodo_conexion_terraza_subida_escalera_3_piso0', nodosPlanta0) },
+        { from: 'nodo_escaleras_terraza_SUBIDA_piso0', to: 'nodo_conexion_terraza_subida_escalera_3_piso0', weight:  getDistanceBetweenPoints('nodo_escaleras_terraza_SUBIDA_piso0','nodo_conexion_terraza_subida_escalera_3_piso0', nodosPlanta0) },
 
         { from: 'nodo_principio_pasillo_A_norte', to: 'nodo_principio_pasillo_A_sur', weight: getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','nodo_principio_pasillo_A_sur', nodosPlanta0) },
-        { from: 'nodo_principio_pasillo_A_norte', to: 'nodo_escaleras_terraza', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','nodo_escaleras_terraza', nodosPlanta0) },
-        { from: 'nodo_principio_pasillo_A_norte', to: 'nodo_escalera_principal', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','nodo_escalera_principal', nodosPlanta0)},
+        { from: 'nodo_principio_pasillo_A_norte', to: 'nodo_conexion_terraza_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','nodo_conexion_terraza_subida_escalera_2_piso0', nodosPlanta0) },
+
+
+        { from: 'nodo_principio_pasillo_A_norte', to: 'nodo_acceso_escalera_principal', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','nodo_acceso_escalera_principal', nodosPlanta0)},
+
+        { from: 'nodo_escalera_principal_BAJADA_piso0', to: 'nodo_acceso_escalera_principal', weight:  getDistanceBetweenPoints('nodo_escalera_principal_BAJADA_piso0','nodo_acceso_escalera_principal', nodosPlanta0)},
+
+        { from: 'nodo_conexion_principal_subida_escalera_1_piso0', to: 'nodo_acceso_escalera_principal', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_1_piso0','nodo_acceso_escalera_principal', nodosPlanta0)},
+        { from: 'nodo_conexion_principal_subida_escalera_1_piso0', to: 'nodo_conexion_principal_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_1_piso0','nodo_conexion_principal_subida_escalera_2_piso0', nodosPlanta0)},
+        { from: 'nodo_conexion_principal_subida_escalera_3_piso0', to: 'nodo_conexion_principal_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_3_piso0','nodo_conexion_principal_subida_escalera_2_piso0', nodosPlanta0)},
+        { from: 'nodo_conexion_principal_subida_escalera_3_piso0', to: 'nodo_escalera_principal_SUBIDA_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_3_piso0','nodo_escalera_principal_SUBIDA_piso0', nodosPlanta0)},
+
+
+
+
+
         { from: 'nodo_principio_pasillo_A_norte', to: 'A019', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','A019', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_A_norte', to: 'enfermeria', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','enfermeria', nodosPlanta0) },
         
@@ -663,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_principio_pasillo_A_sur', to: 'A01', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A01', nodosPlanta0) },
         { from: 'nodo_principio_pasillo_A_sur', to: 'A02', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A02', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_A_sur', to: 'nodo_pasillo_A_lab_motores_sur', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','nodo_pasillo_A_lab_motores_sur', nodosPlanta0)},
-        { from: 'nodo_principio_pasillo_A_sur', to: 'nodo_escalera_entrada', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','nodo_escalera_entrada', nodosPlanta0)},
+        { from: 'nodo_principio_pasillo_A_sur', to: 'nodo_acceso_escalera_entrada', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','nodo_acceso_escalera_entrada', nodosPlanta0)},
     
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A015-L', weight: getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A015-L', nodosPlanta0) },
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A01', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A01', nodosPlanta0) },
@@ -690,9 +1108,20 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_baño_pasillo_A_sur', to: 'A005-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A005-L', nodosPlanta0)},
         { from: 'nodo_baño_pasillo_A_sur', to: 'A004-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A004-L', nodosPlanta0)},
         { from: 'nodo_baño_pasillo_A_sur', to: 'nodo_final_pasillo_A_sur', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','nodo_final_pasillo_A_sur', nodosPlanta0)},
-        { from: 'nodo_baño_pasillo_A_sur', to: 'nodo_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','nodo_escalera_cafeteria', nodosPlanta0)},
+        { from: 'nodo_baño_pasillo_A_sur', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
         
-        { from: 'nodo_final_pasillo_A_sur', to: 'nodo_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','nodo_escalera_cafeteria', nodosPlanta0)},
+        { from: 'nodo_final_pasillo_A_sur', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
+
+
+        { from: 'nodo_conexion_cafeteria_subida_escalera_1_piso0', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_1_piso0','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
+        { from: 'nodo_conexion_cafeteria_subida_escalera_1_piso0', to: 'nodo_conexion_cafeteria_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_1_piso0','nodo_conexion_cafeteria_subida_escalera_2_piso0', nodosPlanta0)},
+        { from: 'nodo_conexion_cafeteria_subida_escalera_3_piso0', to: 'nodo_conexion_cafeteria_subida_escalera_2_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_3_piso0','nodo_conexion_cafeteria_subida_escalera_2_piso0', nodosPlanta0)},
+        { from: 'nodo_conexion_cafeteria_subida_escalera_3_piso0', to: 'nodo_escalera_cafeteria_SUBIDA_piso0', weight:  getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_3_piso0','nodo_escalera_cafeteria_SUBIDA_piso0', nodosPlanta0)},
+
+
+
+        { from: 'nodo_escalera_cafeteria_BAJADA_piso0', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_escalera_cafeteria_BAJADA_piso0','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
+
         { from: 'nodo_final_pasillo_A_sur', to: 'A004-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A004-L', nodosPlanta0)},
         { from: 'nodo_final_pasillo_A_sur', to: 'A002-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A002-L', nodosPlanta0)},
         { from: 'nodo_final_pasillo_A_sur', to: 'Fablab', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','Fablab', nodosPlanta0)},
@@ -748,7 +1177,18 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_entrada_A028s_norte', to: 'A026', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A026', nodosPlanta0) },
         
         { from: 'nodo_entrada_A029s_norte', to: 'A029-L1', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','A029-L1', nodosPlanta0)},
-        { from: 'nodo_entrada_A029s_norte', to: 'nodo_escalera_bloque_A', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_escalera_bloque_A', nodosPlanta0) },
+
+
+        { from: 'nodo_entrada_A029s_norte', to: 'nodo_escalera_bloque_A_BAJADA_piso0', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_escalera_bloque_A_BAJADA_piso0', nodosPlanta0) },
+
+
+        { from: 'nodo_entrada_A029s_norte', to: 'nodo_bloque_A_subida_escalera_1_piso0', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_bloque_A_subida_escalera_1_piso0', nodosPlanta0) },
+        { from: 'nodo_bloque_A_subida_escalera_2_piso0', to: 'nodo_bloque_A_subida_escalera_1_piso0', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso0','nodo_bloque_A_subida_escalera_1_piso0', nodosPlanta0) },
+        { from: 'nodo_bloque_A_subida_escalera_2_piso0', to: 'nodo_bloque_A_subida_escalera_3_piso0', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso0','nodo_bloque_A_subida_escalera_3_piso0', nodosPlanta0) },
+        { from: 'nodo_escalera_bloque_A_SUBIDA_piso0', to: 'nodo_bloque_A_subida_escalera_3_piso0', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_A_SUBIDA_piso0','nodo_bloque_A_subida_escalera_3_piso0', nodosPlanta0) },
+
+
+
         { from: 'nodo_entrada_A029s_norte', to: 'A030', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','A030', nodosPlanta0)},
         { from: 'nodo_entrada_A029s_norte', to: 'A031', weight: getDistanceBetweenPoints('nodo_entrada_A029s_norte','A031', nodosPlanta0) },
         { from: 'nodo_entrada_A029s_norte', to: 'nodo_second_half_pasillo_A_norte', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_second_half_pasillo_A_norte', nodosPlanta0) },
@@ -783,7 +1223,16 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_principio_pasillo_B', to: 'B036', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B','B036', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_B', to: 'B037', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B','B037', nodosPlanta0) },
         { from: 'nodo_principio_pasillo_B', to: 'B01', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B','B01', nodosPlanta0)},
-        { from: 'nodo_principio_pasillo_B', to: 'nodo_escalera_bloque_B', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B','nodo_escalera_bloque_B', nodosPlanta0)},
+
+        { from: 'nodo_principio_pasillo_B', to: 'nodo_escalera_bloque_B_BAJADA_piso0', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B','nodo_escalera_bloque_B_BAJADA_piso0', nodosPlanta0)},
+      
+        { from: 'nodo_principio_pasillo_B', to: 'nodo_bloque_B_subida_escalera_1_piso0', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B','nodo_bloque_B_subida_escalera_1_piso0', nodosPlanta0)},
+        { from: 'nodo_bloque_B_subida_escalera_2_piso0', to: 'nodo_bloque_B_subida_escalera_1_piso0', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso0','nodo_bloque_B_subida_escalera_1_piso0', nodosPlanta0)},
+        { from: 'nodo_bloque_B_subida_escalera_2_piso0', to: 'nodo_bloque_B_subida_escalera_3_piso0', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso0','nodo_bloque_B_subida_escalera_3_piso0', nodosPlanta0)},
+        { from: 'nodo_bloque_B_subida_escalera_3_piso0', to: 'nodo_escalera_bloque_B_SUBIDA_piso0', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_3_piso0','nodo_escalera_bloque_B_SUBIDA_piso0', nodosPlanta0)},
+
+
+
         { from: 'nodo_principio_pasillo_B', to: 'nodo_mitad_pasillo_B', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B','nodo_mitad_pasillo_B', nodosPlanta0) },
     
         { from: 'nodo_mitad_pasillo_B', to: 'B02', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_B','B02', nodosPlanta0)},
@@ -798,7 +1247,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
         { from: 'nodo_final_pasillo_asociaciones', to: 'B042', weight:  getDistanceBetweenPoints('nodo_final_pasillo_asociaciones','B042', nodosPlanta0)},
         { from: 'nodo_final_pasillo_asociaciones', to: 'B041', weight: getDistanceBetweenPoints('nodo_final_pasillo_asociaciones','B041', nodosPlanta0) },
-        { from: 'nodo_final_pasillo_asociaciones', to: 'nodo_escalera_bloque_B_secundaria', weight:  getDistanceBetweenPoints('nodo_final_pasillo_asociaciones','nodo_escalera_bloque_B_secundaria', nodosPlanta0)},
+
+        { from: 'nodo_final_pasillo_asociaciones', to: 'nodo_subida_escalera_bloque_B_secundaria_1_piso0', weight:  getDistanceBetweenPoints('nodo_final_pasillo_asociaciones','nodo_subida_escalera_bloque_B_secundaria_1_piso0', nodosPlanta0)},
+
+        { from: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso0', to: 'nodo_subida_escalera_bloque_B_secundaria_1_piso0', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_SUBIDA_piso0','nodo_subida_escalera_bloque_B_secundaria_1_piso0', nodosPlanta0)},
 
         { from: 'nodo_escalera_bloque_C', to: 'nodo_bloque_C_norte', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C','nodo_bloque_C_norte', nodosPlanta0)},
         { from: 'nodo_escalera_bloque_C', to: 'C002', weight: getDistanceBetweenPoints('nodo_escalera_bloque_C','C002', nodosPlanta0) },
@@ -819,7 +1271,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_bloque_C_norte', to: 'C002', weight:  getDistanceBetweenPoints('nodo_bloque_C_norte','C002', nodosPlanta0)},   
     ]
 
-const todasLasPlantas = {}
 todasLasPlantas.planta0 = {}
 todasLasPlantas.planta0.nodes = nodosPlanta0
 todasLasPlantas.planta0.edges = edgesPlanta0
@@ -860,6 +1311,7 @@ const nodosPlanta1=[
     { id: 'A120', latlng: [146.946392, 743.230469],  name: 'Secretaría y Registro' },
     { id: 'A118', latlng: [148.088261, 714.113281], name: 'Despacho A 118' },
     { id: 'A117', latlng: [147.963247, 665.863281],  name: 'Conserjería' },
+    { id: 'oficina_de_practicas', latlng: [158.868937, 657.637207],  name: 'Oficina de prácticas' },
     { id: 'direccion', latlng: [147.963247, 684.863281],  name: 'Dirección' },
     { id: 'A115', latlng: [144.027304, 628.400635],  name: 'Despacho A 115' },
     { id: 'A114', latlng: [183.475098, 611.064453], name: 'Administración' },
@@ -920,22 +1372,120 @@ const nodosPlanta1=[
     { id: 'nodo_bloque_C_norte_piso1', latlng: [459.067726, 416.692871],  name: 'nodo bloque C norte piso 1' },
     { id: 'nodo_bloque_C_sur_piso1', latlng: [372.434056, 407.979492],  name: 'nodo bloque C sur piso 1' },
 
+
+    { id: 'nodo_bloque_A_subida_escalera_3_piso1', latlng: [487.768538, 734.208008],  name: 'nodo bloque A subida escaleras 3 piso 0' },
+    { id: 'nodo_bloque_A_subida_escalera_2_piso1', latlng: [464.515949, 735.458008],  name: 'nodo bloque A subida escaleras 2 piso 0' },
+    { id: 'nodo_bloque_A_subida_escalera_1_piso1', latlng: [464.631283, 726.875488],  name: 'nodo escalera bloque A subida 1 piso 0' },
+    
+    { id: 'nodo_bloque_B_subida_escalera_3_piso1', latlng: [689.061094, 664.0625],  name: 'nodo bloque B subida escaleras 3 piso 1' },
+    { id: 'nodo_bloque_B_subida_escalera_2_piso1', latlng: [689.123601, 676.75],  name: 'nodo bloque B subida escaleras 2 piso 1' },
+    { id: 'nodo_bloque_B_subida_escalera_1_piso1', latlng: [668.371291, 676.8125],  name: 'nodo escalera bloque B subida 1 piso 1' },
+
+    { id: 'nodo_conexion_entrada_subida_escalera_3_piso1', latlng: [97.54338, 660.842773],  name: 'nodo escalera entrada subida escaleras 3 piso 1' },
+    { id: 'nodo_conexion_entrada_subida_escalera_2_piso1', latlng: [97.418366, 670.967773],  name: 'nodo escalera entrada subida escaleras 2 piso 1' },
+  
+
+
+    { id: 'nodo_conexion_cafeteria_subida_escalera_3_piso1', latlng: [200.23654, 311.324707],  name: 'nodo esclaera cafetria subida escaleras 3 piso 1' },
+    { id: 'nodo_conexion_cafeteria_subida_escalera_2_piso1', latlng: [200.309159, 335.347168],  name: 'nodo escalera cafeteria subida escaleras 2 piso 1' },
+    { id: 'nodo_conexion_cafeteria_subida_escalera_1_piso1', latlng: [184.269361, 335],  name: 'nodo escalera cafeteria subida escaleras 1 piso 1' },
+   
+
+    { id: 'nodo_conexion_principal_subida_escalera_3_piso1', latlng: [272.00574, 725.628906],  name: 'nodo esclaera principal subida escaleras 3 piso 1' },
+    { id: 'nodo_conexion_principal_subida_escalera_2_piso1', latlng: [272.00574, 746.128906],  name: 'nodo escalera principal subida escaleras 2 piso 1' },
+    { id: 'nodo_conexion_principal_subida_escalera_1_piso1', latlng: [246.750762, 746.003906],  name: 'nodo escalera principal subida escaleras 1 piso 1' },
+   
+
+
+    { id: 'nodo_conexion_terraza_subida_escalera_3_piso1', latlng: [257.794412, 650.500977],  name: 'nodo escalera terraza subida 1 piso 1' },
+    { id: 'nodo_conexion_terraza_subida_escalera_2_piso1', latlng: [234.916865, 651.000977],  name: 'nodo escalera terraza subida escaleras 2 piso 1' },
+
+
+
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_3_piso1', latlng: [614.016403, 484.71582],  name: 'nodo escalera bloque B subida escalera secundaria 3 piso 1' },
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_2_piso1', latlng: [612.911046, 493.994629],  name: 'nodo escalera bloque B subida escalera secundaria 2 piso 1' },
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_1_piso1', latlng: [634.538454, 493.994629],  name: 'nodo escalera bloque B subida escalera secundaria 1 piso 1' },
+    
+
+    { id: 'nodo_acceso_escalera_cafeteria_piso1', latlng: [177.776215, 321.094727],  name: 'nodo escalera cafeteria piso 1' },
+    { id: 'nodo_acceso_escalera_principal_piso1', latlng: [234.620728, 733.445801],  name: 'nodo escalera principal piso 1' },
+    { id: 'nodo_acceso_escalera_bloque_C_piso1', latlng: [416.266639, 409.743625],  name: 'nodo escalera bloque C piso 1' },
+   
+
+
+
+
+
     // //ascensores y/o escaleras
-    { id: 'nodo_escaleras_terraza_piso1', latlng: [235.829556, 644.754883], name: 'nodo escaleras terraza piso 1' },
-    { id: 'nodo_escalera_principal_piso1', latlng: [253.83156, 733.754883],  name: 'nodo escalera principal piso 1' },
-    { id: 'nodo_escalera_bloque_A_piso1', latlng: [474.706152, 731.591797],  name: 'nodo escalera bloque A piso 1' },
-    { id: 'nodo_escalera_bloque_B_piso1', latlng: [678.451463, 667.831055],  name: 'nodo escalera bloque B piso 1' },
-    { id: 'nodo_escalera_bloque_B_secundaria_piso1', latlng: [627.989871, 487.772461],  name: 'nodo escalera bloque B secundaria piso 1' },
-    { id: 'nodo_escalera_bloque_C_piso1', latlng: [410.56483, 408.817871],  name: 'nodo escalera bloque C piso 1' },
-    { id: 'nodo_escalera_cafeteria_piso1', latlng: [200.14716, 323.157227],  name: 'nodo escalera cafeteria piso 1' },
+    
+
+
+    { id: 'nodo_escalera_principal_SUBIDA_piso1', latlng: [272.00574, 725.628906],  name: 'nodo escalera principal subida piso 1' },
+        { id: 'nodo_escalera_principal_BAJADA_piso1', latlng: [247.773326, 726.43457],  name: 'nodo escalera principal bajada piso 1' },
+       
+        { id: 'nodo_escalera_entrada_SUBIDA_piso1', latlng: [112.23204, 660.499023],  name: 'nodo escalera entrada subida piso 1' },
+        { id: 'nodo_escalera_entrada_BAJADA_piso1', latlng: [107.481511, 671.249023],  name: 'nodo escalera entrada subida piso 1' },
+
+
+        
+        { id: 'nodo_escalera_bloque_A_SUBIDA_piso1', latlng: [487.768538, 734.208008],  name: 'nodo escalera bloque A subida piso 1' },
+        { id: 'nodo_escalera_bloque_A_BAJADA_piso1', latlng: [486.768427, 718.458008],  name: 'nodo escalera bloque A subida piso 1' },
+
+
+
+        { id: 'nodo_escalera_bloque_B_SUBIDA_piso1', latlng: [689.061094, 664.0625],  name: 'nodo escalera bloque B piso 1' },
+
+        { id: 'nodo_escalera_bloque_B_BAJADA_piso1', latlng: [678.497418, 664.4375],  name: 'nodo escalera bloque B piso 1' },
+
+
+
+
+
+        { id: 'nodo_escaleras_terraza_SUBIDA_piso1', latlng: [257.41937, 641.250977], name: 'nodo escaleras terraza piso 0' },
+
+        { id: 'nodo_escaleras_terraza_BAJADA_piso1', latlng: [234.091715, 641.816406],  name: 'nodo esclaera terraza subida escaleras 3 piso 0' },
+
+
+
+        { id: 'nodo_escalera_cafeteria_SUBIDA_piso1', latlng: [200.23654, 311.324707],  name: 'nodo escalera cafeteria piso 1' },
+
+        { id: 'nodo_escalera_cafeteria_BAJADA_piso1', latlng: [185.80602, 310.5],  name: 'nodo escalera cafeteria piso 1' },
+
+
+       { id: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso1', latlng: [614.016403, 484.71582],  name: 'nodo escalera bloque B segundaria' },
+       { id: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso1', latlng: [630.404609, 484.193359],  name: 'nodo escalera bloque B segundaria' },
+
+
+       { id: 'nodo_escalera_bloque_C_SUBIDA_piso1', latlng: [433.377257, 411.675781],  name: 'nodo escalera bloque C' },
+       { id: 'nodo_escalera_bloque_C_BAJADA_piso1', latlng: [401.7696, 407.882324],  name: 'nodo escalera bloque C' },
+
+
     
 ]
  
 
 
 const edgesPlanta1 = [
-    { from: 'nodo_escalera_bloque_B_secundaria_piso1', to: 'nodo_entrada_escalera_secundaria_piso1', weight: getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_piso1','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1) },
+    { from: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso1', to: 'nodo_entrada_escalera_secundaria_piso1', weight: getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_BAJADA_piso1','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1) },
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_1_piso1', to: 'nodo_entrada_escalera_secundaria_piso1', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_1_piso1','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1) },
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_1_piso1', to: 'nodo_subida_escalera_bloque_B_secundaria_2_piso1', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_1_piso1','nodo_subida_escalera_bloque_B_secundaria_2_piso1', nodosPlanta1) },
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_3_piso1', to: 'nodo_subida_escalera_bloque_B_secundaria_2_piso1', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_3_piso1','nodo_subida_escalera_bloque_B_secundaria_2_piso1', nodosPlanta1) },
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_3_piso1', to: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso1', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_3_piso1','nodo_escalera_bloque_B_secundaria_SUBIDA_piso1', nodosPlanta1) },
 
+
+    { from: 'nodo_escalera_entrada_BAJADA_piso1', to: 'nodo_conexion_entrada_subida_escalera_2_piso1', weight: getDistanceBetweenPoints('nodo_escalera_entrada_BAJADA_piso1','nodo_conexion_entrada_subida_escalera_2_piso1', nodosPlanta1) },
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso1', to: 'nodo_conexion_entrada_subida_escalera_2_piso1', weight: getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso1','nodo_conexion_entrada_subida_escalera_2_piso1', nodosPlanta1) },
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso1', to: 'nodo_escalera_entrada_SUBIDA_piso1', weight: getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso1','nodo_escalera_entrada_SUBIDA_piso1', nodosPlanta1) },
+
+
+    { from: 'nodo_acceso_escalera_cafeteria_piso1', to: 'nodo_escalera_cafeteria_BAJADA_piso1', weight: getDistanceBetweenPoints('nodo_acceso_escalera_cafeteria_piso1','nodo_escalera_cafeteria_BAJADA_piso1', nodosPlanta1) },
+    { from: 'nodo_acceso_escalera_cafeteria_piso1', to: 'nodo_conexion_cafeteria_subida_escalera_1_piso1', weight: getDistanceBetweenPoints('nodo_acceso_escalera_cafeteria_piso1','nodo_conexion_cafeteria_subida_escalera_1_piso1', nodosPlanta1) },
+    { from: 'nodo_conexion_cafeteria_subida_escalera_2_piso1', to: 'nodo_conexion_cafeteria_subida_escalera_1_piso1', weight: getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_2_piso1','nodo_conexion_cafeteria_subida_escalera_1_piso1', nodosPlanta1) },
+    { from: 'nodo_conexion_cafeteria_subida_escalera_2_piso1', to: 'nodo_conexion_cafeteria_subida_escalera_3_piso1', weight: getDistanceBetweenPoints('nodo_conexion_cafeteria_subida_escalera_2_piso1','nodo_conexion_cafeteria_subida_escalera_3_piso1', nodosPlanta1) },
+    { from: 'nodo_escalera_cafeteria_SUBIDA_piso1', to: 'nodo_conexion_cafeteria_subida_escalera_3_piso1', weight: getDistanceBetweenPoints('nodo_escalera_cafeteria_SUBIDA_piso1','nodo_conexion_cafeteria_subida_escalera_3_piso1', nodosPlanta1) },
+
+
+    
     { from: 'nodo_entrada_despacho_B150', to: 'nodo_entrada_escalera_secundaria_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1)  },
     { from: 'nodo_entrada_despacho_B150', to: 'B150', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','B150', nodosPlanta1) },
     { from: 'nodo_entrada_despacho_B150', to: 'B149', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','B149', nodosPlanta1)},
@@ -952,7 +1502,21 @@ const edgesPlanta1 = [
     { from: 'nodo_B11_aseos', to: 'B11', weight: getDistanceBetweenPoints('nodo_B11_aseos','B11', nodosPlanta1) },
     { from: 'nodo_B11_aseos', to: 'nodo_salida_escalera_bloque_B_piso1', weight:  getDistanceBetweenPoints('nodo_B11_aseos','nodo_salida_escalera_bloque_B_piso1', nodosPlanta1) },
 
-    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_escalera_bloque_B_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_escalera_bloque_B_piso1', nodosPlanta1)},
+
+    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_escalera_bloque_B_BAJADA_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_escalera_bloque_B_BAJADA_piso1', nodosPlanta1)},
+
+    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_bloque_B_subida_escalera_1_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_bloque_B_subida_escalera_1_piso1', nodosPlanta1)},
+    { from: 'nodo_bloque_B_subida_escalera_2_piso1', to: 'nodo_bloque_B_subida_escalera_1_piso1', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso1','nodo_bloque_B_subida_escalera_1_piso1', nodosPlanta1)},
+    { from: 'nodo_bloque_B_subida_escalera_2_piso1', to: 'nodo_bloque_B_subida_escalera_3_piso1', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso1','nodo_bloque_B_subida_escalera_3_piso1', nodosPlanta1)},
+    { from: 'nodo_escalera_bloque_B_SUBIDA_piso1', to: 'nodo_bloque_B_subida_escalera_3_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_B_SUBIDA_piso1','nodo_bloque_B_subida_escalera_3_piso1', nodosPlanta1)},
+
+
+
+    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_escalera_bloque_B_BAJADA_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_escalera_bloque_B_BAJADA_piso1', nodosPlanta1)},
+
+
+
+
     { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'oficina_internacional', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','oficina_internacional', nodosPlanta1)},
     { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_principio_pasillo_B_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_principio_pasillo_B_piso1', nodosPlanta1)},
 
@@ -973,7 +1537,14 @@ const edgesPlanta1 = [
     { from: 'A139', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139','A139-L2', nodosPlanta1) },
     { from: 'A139-L1', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139-L1','A139-L2', nodosPlanta1)},
 
-    { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_escalera_bloque_A_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_escalera_bloque_A_piso1', nodosPlanta1) },
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_escalera_bloque_A_BAJADA_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_escalera_bloque_A_BAJADA_piso1', nodosPlanta1) },
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_bloque_A_subida_escalera_1_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_bloque_A_subida_escalera_1_piso1', nodosPlanta1) },
+    { from: 'nodo_bloque_A_subida_escalera_2_piso1', to: 'nodo_bloque_A_subida_escalera_1_piso1', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso1','nodo_bloque_A_subida_escalera_1_piso1', nodosPlanta1) },
+    { from: 'nodo_bloque_A_subida_escalera_2_piso1', to: 'nodo_bloque_A_subida_escalera_3_piso1', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso1','nodo_bloque_A_subida_escalera_3_piso1', nodosPlanta1) },
+    { from: 'nodo_bloque_A_subida_escalera_3_piso1', to: 'nodo_escalera_bloque_A_SUBIDA_piso1', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_3_piso1','nodo_escalera_bloque_A_SUBIDA_piso1', nodosPlanta1) },
+    
+    
+
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_entrada_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_entrada_A130_134_piso1', nodosPlanta1)},
 
     { from: 'nodo_entrada_A130_134_piso1', to: 'nodo_medio_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','nodo_medio_A130_134_piso1', nodosPlanta1)},
@@ -1015,13 +1586,34 @@ const edgesPlanta1 = [
     { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'gestion_economica', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','gestion_economica', nodosPlanta1)},
     { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_entrada_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_entrada_escalera_principal_piso1', nodosPlanta1)},
     { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_entrada_escaleras_terraza_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_entrada_escaleras_terraza_piso1', nodosPlanta1)},
-    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_escalera_principal_piso1', nodosPlanta1)},
+    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_acceso_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_acceso_escalera_principal_piso1', nodosPlanta1)},
 
-    { from: 'nodo_entrada_escaleras_terraza_piso1', to: 'nodo_escaleras_terraza_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escaleras_terraza_piso1','nodo_escaleras_terraza_piso1', nodosPlanta1) },
+
+    { from: 'nodo_escalera_principal_BAJADA_piso1', to: 'nodo_acceso_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_principal_BAJADA_piso1','nodo_acceso_escalera_principal_piso1', nodosPlanta1)},
+
+    { from: 'nodo_conexion_principal_subida_escalera_1_piso1', to: 'nodo_acceso_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_1_piso1','nodo_acceso_escalera_principal_piso1', nodosPlanta1)},
+
+    { from: 'nodo_conexion_principal_subida_escalera_1_piso1', to: 'nodo_conexion_principal_subida_escalera_2_piso1', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_1_piso1','nodo_conexion_principal_subida_escalera_2_piso1', nodosPlanta1)},
+    { from: 'nodo_conexion_principal_subida_escalera_3_piso1', to: 'nodo_conexion_principal_subida_escalera_2_piso1', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_3_piso1','nodo_conexion_principal_subida_escalera_2_piso1', nodosPlanta1)},
+    { from: 'nodo_conexion_principal_subida_escalera_3_piso1', to: 'nodo_escalera_principal_SUBIDA_piso1', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_3_piso1','nodo_escalera_principal_SUBIDA_piso1', nodosPlanta1)},
+
+
+
+    { from: 'nodo_escaleras_terraza_BAJADA_piso1', to: 'nodo_conexion_terraza_subida_escalera_2_piso1', weight: getDistanceBetweenPoints('nodo_escaleras_terraza_BAJADA_piso1','nodo_conexion_terraza_subida_escalera_2_piso1', nodosPlanta1) },
+
+    { from: 'nodo_conexion_terraza_subida_escalera_3_piso1', to: 'nodo_conexion_terraza_subida_escalera_2_piso1', weight: getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_3_piso1','nodo_conexion_terraza_subida_escalera_2_piso1', nodosPlanta1) },
+
+    { from: 'nodo_conexion_terraza_subida_escalera_3_piso1', to: 'nodo_escaleras_terraza_SUBIDA_piso1', weight: getDistanceBetweenPoints('nodo_conexion_terraza_subida_escalera_3_piso1','nodo_escaleras_terraza_SUBIDA_piso1', nodosPlanta1) },
+
+
+
+
+
+    { from: 'nodo_entrada_escaleras_terraza_piso1', to: 'nodo_conexion_terraza_subida_escalera_2_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escaleras_terraza_piso1','nodo_conexion_terraza_subida_escalera_2_piso1', nodosPlanta1) },
     { from: 'nodo_entrada_escaleras_terraza_piso1', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escaleras_terraza_piso1','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1) },
 
     { from: 'nodo_entrada_escalera_principal_piso1', to: 'nodo_secretaria', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso1','nodo_secretaria', nodosPlanta1)},
-    { from: 'nodo_entrada_escalera_principal_piso1', to: 'nodo_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso1','nodo_escalera_principal_piso1', nodosPlanta1)},
+    { from: 'nodo_entrada_escalera_principal_piso1', to: 'nodo_acceso_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso1','nodo_acceso_escalera_principal_piso1', nodosPlanta1)},
 
 
     { from: 'nodo_secretaria', to: 'A120', weight:  getDistanceBetweenPoints('nodo_secretaria','A120', nodosPlanta1) },
@@ -1036,6 +1628,8 @@ const edgesPlanta1 = [
     { from: 'nodo_conserjeria', to: 'direccion', weight:  getDistanceBetweenPoints('nodo_conserjeria','direccion', nodosPlanta1) },
     { from: 'nodo_conserjeria', to: 'A117', weight:  getDistanceBetweenPoints('nodo_conserjeria','A117', nodosPlanta1)},
     { from: 'nodo_conserjeria', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_conserjeria','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1)},
+
+    { from: 'nodo_conserjeria', to: 'oficina_de_practicas', weight:  getDistanceBetweenPoints('nodo_conserjeria','oficina_de_practicas', nodosPlanta1)},
 
     { from: 'nodo_entrada_despachos_A115', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1)},
     { from: 'nodo_entrada_despachos_A115', to: 'A115', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A115', nodosPlanta1)},
@@ -1067,19 +1661,29 @@ const edgesPlanta1 = [
   
     { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'A16', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','A16', nodosPlanta1)},
     { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'A17', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','A17', nodosPlanta1) },
-    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'nodo_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','nodo_escalera_cafeteria_piso1', nodosPlanta1) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'nodo_acceso_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','nodo_acceso_escalera_cafeteria_piso1', nodosPlanta1) },
     { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'cafeteria', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','cafeteria', nodosPlanta1) },
 
     { from: 'cafeteria', to: 'comedor', weight:  getDistanceBetweenPoints('cafeteria','comedor', nodosPlanta1)},
-    { from: 'cafeteria', to: 'nodo_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('cafeteria','nodo_escalera_cafeteria_piso1', nodosPlanta1) }, 
+    { from: 'cafeteria', to: 'nodo_acceso_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('cafeteria','nodo_acceso_escalera_cafeteria_piso1', nodosPlanta1) }, 
    
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'nodo_bloque_C_norte_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','nodo_bloque_C_norte_piso1', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C102', weight: getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C102', nodosPlanta1) },
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C103', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C103', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C104', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C104', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C105', weight: getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C105', nodosPlanta1) },
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C106', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C106', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'nodo_bloque_C_sur_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','nodo_bloque_C_sur_piso1', nodosPlanta1)},
+
+
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_escalera_bloque_C_SUBIDA_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_escalera_bloque_C_SUBIDA_piso1', nodosPlanta1)},
+  
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_escalera_bloque_C_BAJADA_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_escalera_bloque_C_BAJADA_piso1', nodosPlanta1)},
+  
+
+
+
+
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_bloque_C_norte_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_bloque_C_norte_piso1', nodosPlanta1)},
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C102', weight: getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C102', nodosPlanta1) },
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C103', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C103', nodosPlanta1)},
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C104', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C104', nodosPlanta1)},
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C105', weight: getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C105', nodosPlanta1) },
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C106', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C106', nodosPlanta1)},
+    { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_bloque_C_sur_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_bloque_C_sur_piso1', nodosPlanta1)},
 
     { from: 'nodo_bloque_C_sur_piso1', to: 'C106', weight: getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C106', nodosPlanta1) },
     { from: 'nodo_bloque_C_sur_piso1', to: 'C107', weight:  getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C107', nodosPlanta1)},
@@ -1136,6 +1740,7 @@ const nodosPlanta2=[
     { id: 'A218', latlng: [136.643023, 760.316162],  name: 'Despacho A 218' },
     { id: 'A217', latlng: [130.079792, 757.128662],  name: 'Despacho A 217' },
     { id: 'sala_de_juntas', latlng: [135.138353, 739.109863], name: 'Sala de juntas' },
+    { id: 'A214', latlng: [184.371402, 676.971069],  name: 'Despacho A 214' },
     { id: 'A210', latlng: [127.919897, 542.584473],  name: 'Despacho A 210' },
     { id: 'A206', latlng: [184.549815, 394.303711],  name: 'Despacho A 206' },
     
@@ -1164,7 +1769,7 @@ const nodosPlanta2=[
     { id: 'B22', latlng: [678.051158, 562.976318],  name: 'B22' },
 
     // //Otros
-    { id: 'salon_de_actos', latlng: [176.169565, 304.838867],  name: 'Salón de actos' },
+    { id: 'salon_de_actos', latlng: [173.231738, 304.901367],  name: 'Salón de actos' },
     { id: 'terraza', latlng: [206.731227, 540.197266],  name: 'Terraza' },
    
     // //Nodos
@@ -1198,190 +1803,313 @@ const nodosPlanta2=[
     { id: 'nodo_entrada_A210s', latlng: [172.601101, 547.812988],  name: 'nodo entrada A210s' },
     { id: 'nodo_entrada_A211s', latlng: [173.699367, 630.192383],  name: 'nodo entrada A211s' },
     { id: 'nodo_entrada_A224s', latlng: [292.264186, 702.45166],  name: 'nodo entrada A224s' },
+    { id: 'nodo_sala_juntas_norte', latlng: [155.275226, 746.365234],  name: 'nodo sala juntas norte' },
+    { id: 'nodo_sala_juntas_sur', latlng: [137.224901, 748.585938],  name: 'nodo sala juntas sur' },
+    { id: 'nodo_entrada_terrza_izq', latlng: [178.488698, 431.75],  name: 'nodo entrada terr izq' },
+    
 
-    // //ascensores y/o escaleras
-    { id: 'nodo_escaleras_terraza_piso2', latlng: [235.829556, 644.754883], name: 'nodo escaleras terraza piso 2' },
-    { id: 'nodo_escalera_principal_piso2', latlng: [253.83156, 733.754883],  name: 'nodo escalera principal piso 2' },
-    { id: 'nodo_escalera_bloque_A_piso2', latlng: [474.706152, 731.591797],  name: 'nodo escalera bloque A piso 2' },
-    { id: 'nodo_escalera_bloque_B_piso2', latlng: [678.451463, 667.831055],  name: 'nodo escalera bloque B piso 2' },
-    { id: 'nodo_escalera_bloque_B_secundaria_piso2', latlng: [627.989871, 487.772461],  name: 'nodo escalera bloque B secundaria piso 2' },
-    { id: 'nodo_escalera_bloque_C_piso2', latlng: [418.898262, 413.802734],  name: 'nodo escalera bloque C piso 2' },
-    { id: 'nodo_escalera_cafeteria_piso2', latlng: [200.14716, 323.157227],  name: 'nodo escalera cafeteria piso 2' },
-    { id: 'nodo_escalera_entrada_piso2', latlng: [108.171511, 668.487305],  name: 'nodo escalera entrada piso 2' },
+
+
+    { id: 'nodo_bloque_A_subida_escalera_3_piso2', latlng: [487.768538, 734.208008],  name: 'nodo bloque A subida escaleras 3 piso 2' },
+    { id: 'nodo_bloque_A_subida_escalera_2_piso2', latlng: [464.515949, 735.458008],  name: 'nodo bloque A subida escaleras 2 piso 2' },
+    { id: 'nodo_bloque_A_subida_escalera_1_piso2', latlng: [464.631283, 726.875488],  name: 'nodo escalera bloque A subida 1 piso 2' },
+    
+    { id: 'nodo_bloque_B_subida_escalera_3_piso2', latlng: [689.061094, 664.0625],  name: 'nodo bloque B subida escaleras 3 piso 2' },
+    { id: 'nodo_bloque_B_subida_escalera_2_piso2', latlng: [689.123601, 676.75],  name: 'nodo bloque B subida escaleras 2 piso 2' },
+    { id: 'nodo_bloque_B_subida_escalera_1_piso2', latlng: [668.371291, 676.8125],  name: 'nodo escalera bloque B subida 1 piso 2' },
+
+    { id: 'nodo_conexion_entrada_subida_escalera_3_piso2', latlng: [97.54338, 662.842773],  name: 'nodo esclaera entrada subida escaleras 3 piso 2' },
+    { id: 'nodo_conexion_entrada_subida_escalera_2_piso2', latlng: [97.418366, 672.717773],  name: 'nodo escalera entrada subida escaleras 2 piso 2' },
+    { id: 'nodo_conexion_entrada_subida_escalera_1_piso2', latlng: [105.856806, 673.124023],  name: 'nodo escalera entrada subida 1 piso 2' },
+
+
+    { id: 'nodo_conexion_principal_subida_escalera_3_piso2', latlng: [272.00574, 725.628906],  name: 'nodo esclaera principal subida escaleras 3 piso 2' },
+    { id: 'nodo_conexion_principal_subida_escalera_2_piso2', latlng: [272.00574, 746.128906],  name: 'nodo escalera principal subida escaleras 2 piso 2' },
+    { id: 'nodo_conexion_principal_subida_escalera_1_piso2', latlng: [246.750762, 746.003906],  name: 'nodo escalera principal subida escaleras 1 piso 2' },
+   
+
+
+
+
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_3_piso2', latlng: [614.016403, 484.71582],  name: 'nodo escalera bloque B subida escalera secundaria 3 piso 2' },
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_2_piso2', latlng: [612.911046, 493.994629],  name: 'nodo escalera bloque B subida escalera secundaria 2 piso 2' },
+    { id: 'nodo_subida_escalera_bloque_B_secundaria_1_piso2', latlng: [634.538454, 493.994629],  name: 'nodo escalera bloque B subida escalera secundaria 1 piso 2' },
+    
+
+    { id: 'nodo_acceso_escalera_entrada_piso2', latlng: [117.650747, 671.258235],  name: 'nodo escalera entrada piso 2' },
         
     
+
+    // //ascensores y/o escaleras
+    { id: 'nodo_escalera_cafeteria_piso2', latlng: [186.265582, 313.687988],  name: 'nodo escalera cafeteria piso 2' },
+    { id: 'nodo_escaleras_terraza_piso2', latlng: [235.829556, 644.754883], name: 'nodo escaleras terraza piso 2' },
+     { id: 'nodo_escalera_bloque_C_piso2', latlng: [417.468578, 414.744141],  name: 'nodo escalera bloque C piso 2' },
+    
+
+    { id: 'nodo_escalera_principal_SUBIDA_piso2', latlng: [272.00574, 725.628906],  name: 'nodo escalera principal subida piso 2' },
+        { id: 'nodo_escalera_principal_BAJADA_piso2', latlng: [247.773326, 726.43457],  name: 'nodo escalera principal bajada piso 2' },
+       
+        { id: 'nodo_escalera_entrada_SUBIDA_piso2', latlng: [97.54338, 662.842773],  name: 'nodo escalera entrada subida piso 2' },
+        { id: 'nodo_escalera_entrada_BAJADA_piso2', latlng: [110.607335, 663.499023],  name: 'nodo escalera entrada subida piso 2' },
+        
+        
+        { id: 'nodo_escalera_bloque_A_SUBIDA_piso2', latlng: [487.768538, 734.208008],  name: 'nodo escalera bloque A subida piso 2' },
+        { id: 'nodo_escalera_bloque_A_BAJADA_piso2', latlng: [486.768427, 718.458008],  name: 'nodo escalera bloque A subida piso 2' },
+
+
+        { id: 'nodo_escalera_bloque_B_SUBIDA_piso2', latlng: [689.061094, 664.0625],  name: 'nodo escalera bloque B piso 2' },
+
+        { id: 'nodo_escalera_bloque_B_BAJADA_piso2', latlng: [678.497418, 664.4375],  name: 'nodo escalera bloque B piso 2' },
+
+
+       { id: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso2', latlng: [614.016403, 484.71582],  name: 'nodo escalera bloque B segundaria' },
+       { id: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso2', latlng: [630.404609, 484.193359],  name: 'nodo escalera bloque B segundaria' },
+
+
 ]
  
 
 
 const edgesPlanta2 = [
-    { from: 'nodo_escalera_bloque_B_secundaria_piso1', to: 'nodo_entrada_escalera_secundaria_piso1', weight: getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_piso1','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1) },
+    { from: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso2', to: 'nodo_entrada_escalera_secundaria_piso2', weight: getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_BAJADA_piso2','nodo_entrada_escalera_secundaria_piso2', nodosPlanta2) },
 
-    { from: 'nodo_entrada_despacho_B150', to: 'nodo_entrada_escalera_secundaria_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','nodo_entrada_escalera_secundaria_piso1', nodosPlanta1)  },
-    { from: 'nodo_entrada_despacho_B150', to: 'B150', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','B150', nodosPlanta1) },
-    { from: 'nodo_entrada_despacho_B150', to: 'B149', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','B149', nodosPlanta1)},
-    { from: 'nodo_entrada_despacho_B150', to: 'nodo_entrada_despacho_B149', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B150','nodo_entrada_despacho_B149', nodosPlanta1) },
 
-    { from: 'nodo_entrada_despacho_B149', to: 'B149', weight: getDistanceBetweenPoints('nodo_entrada_despacho_B149','B149', nodosPlanta1) },
-    { from: 'nodo_entrada_despacho_B149', to: 'B12', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B149','B12', nodosPlanta1) },
-    { from: 'nodo_entrada_despacho_B149', to: 'nodo_pasillo_B11_B12', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B149','nodo_pasillo_B11_B12', nodosPlanta1)},
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_1_piso2', to: 'nodo_entrada_escalera_secundaria_piso2', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_1_piso2','nodo_entrada_escalera_secundaria_piso2', nodosPlanta2) },
+
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_1_piso2', to: 'nodo_subida_escalera_bloque_B_secundaria_2_piso2', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_1_piso2','nodo_subida_escalera_bloque_B_secundaria_2_piso2', nodosPlanta2) },
+
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_3_piso2', to: 'nodo_subida_escalera_bloque_B_secundaria_2_piso2', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_3_piso2','nodo_subida_escalera_bloque_B_secundaria_2_piso2', nodosPlanta2) },
+
+    { from: 'nodo_subida_escalera_bloque_B_secundaria_3_piso2', to: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso2', weight: getDistanceBetweenPoints('nodo_subida_escalera_bloque_B_secundaria_3_piso2','nodo_escalera_bloque_B_secundaria_SUBIDA_piso2', nodosPlanta2) },
+
+
+
+    { from: 'nodo_entrada_despacho_B249', to: 'nodo_entrada_escalera_secundaria_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B249','nodo_entrada_escalera_secundaria_piso2', nodosPlanta2)  },
+    { from: 'nodo_entrada_despacho_B249', to: 'B249', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B249','B249', nodosPlanta2) },
+    { from: 'nodo_entrada_despacho_B249', to: 'B248', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B249','B248', nodosPlanta2)},
+    { from: 'nodo_entrada_despacho_B249', to: 'nodo_entrada_despacho_B248', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B249','nodo_entrada_despacho_B248', nodosPlanta2) },
+
+    { from: 'nodo_entrada_despacho_B248', to: 'B248', weight: getDistanceBetweenPoints('nodo_entrada_despacho_B248','B248', nodosPlanta2) },
+    { from: 'nodo_entrada_despacho_B248', to: 'B22', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B248','B22', nodosPlanta2) },
+    { from: 'nodo_entrada_despacho_B248', to: 'nodo_pasillo_B21_B22', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B248','nodo_pasillo_B21_B22', nodosPlanta2)},
     
-    { from: 'nodo_pasillo_B11_B12', to: 'B12', weight:  getDistanceBetweenPoints('nodo_pasillo_B11_B12','B12', nodosPlanta1)},
-    { from: 'nodo_pasillo_B11_B12', to: 'B11', weight:  getDistanceBetweenPoints('nodo_pasillo_B11_B12','B11', nodosPlanta1) },
-    { from: 'nodo_pasillo_B11_B12', to: 'nodo_B11_aseos', weight:  getDistanceBetweenPoints('nodo_pasillo_B11_B12','nodo_B11_aseos', nodosPlanta1) },
+    { from: 'nodo_pasillo_B21_B22', to: 'B22', weight:  getDistanceBetweenPoints('nodo_pasillo_B21_B22','B22', nodosPlanta2)},
+    { from: 'nodo_pasillo_B21_B22', to: 'B21', weight:  getDistanceBetweenPoints('nodo_pasillo_B21_B22','B21', nodosPlanta2) },
+    { from: 'nodo_pasillo_B21_B22', to: 'nodo_B21_aseos', weight:  getDistanceBetweenPoints('nodo_pasillo_B21_B22','nodo_B21_aseos', nodosPlanta2) },
     
-    { from: 'nodo_B11_aseos', to: 'B11', weight: getDistanceBetweenPoints('nodo_B11_aseos','B11', nodosPlanta1) },
-    { from: 'nodo_B11_aseos', to: 'nodo_salida_escalera_bloque_B_piso1', weight:  getDistanceBetweenPoints('nodo_B11_aseos','nodo_salida_escalera_bloque_B_piso1', nodosPlanta1) },
+    { from: 'nodo_B21_aseos', to: 'B21', weight: getDistanceBetweenPoints('nodo_B21_aseos','B21', nodosPlanta2) },
+    { from: 'nodo_B21_aseos', to: 'nodo_salida_escalera_bloque_B_piso2', weight:  getDistanceBetweenPoints('nodo_B21_aseos','nodo_salida_escalera_bloque_B_piso2', nodosPlanta2) },
 
-    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_escalera_bloque_B_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_escalera_bloque_B_piso1', nodosPlanta1)},
-    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'oficina_internacional', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','oficina_internacional', nodosPlanta1)},
-    { from: 'nodo_salida_escalera_bloque_B_piso1', to: 'nodo_principio_pasillo_B_piso1', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso1','nodo_principio_pasillo_B_piso1', nodosPlanta1)},
+    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'nodo_bloque_B_subida_escalera_1_piso2', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','nodo_bloque_B_subida_escalera_1_piso2', nodosPlanta2)},
 
-    { from: 'nodo_principio_pasillo_B_piso1', to: 'oficina_internacional', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso1','oficina_internacional', nodosPlanta1) },
-    { from: 'nodo_principio_pasillo_B_piso1', to: 'nodo_final_pasillo_A_norte_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_piso1','nodo_final_pasillo_A_norte_piso1', nodosPlanta1) },
+    { from: 'nodo_bloque_B_subida_escalera_2_piso2', to: 'nodo_bloque_B_subida_escalera_1_piso2', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso2','nodo_bloque_B_subida_escalera_1_piso2', nodosPlanta2)},
 
-    { from: 'nodo_final_pasillo_A_norte_piso1', to: 'A140', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso1','A140', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_norte_piso1', to: 'nodo_entrada_A139s_norte', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso1','nodo_entrada_A139s_norte', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_norte_piso1', to: 'A138', weight: getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso1','A138', nodosPlanta1) },
+    { from: 'nodo_bloque_B_subida_escalera_2_piso2', to: 'nodo_bloque_B_subida_escalera_3_piso2', weight:  getDistanceBetweenPoints('nodo_bloque_B_subida_escalera_2_piso2','nodo_bloque_B_subida_escalera_3_piso2', nodosPlanta2)},
+
+
+    { from: 'nodo_escalera_bloque_B_SUBIDA_piso2', to: 'nodo_bloque_B_subida_escalera_3_piso2', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_B_SUBIDA_piso2','nodo_bloque_B_subida_escalera_3_piso2', nodosPlanta2)},
+
+
+    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'nodo_escalera_bloque_B_BAJADA_piso2', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','nodo_escalera_bloque_B_BAJADA_piso2', nodosPlanta2)},
+
+
+    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'B241-L', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','B241-L', nodosPlanta2)},
+    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'nodo_principio_pasillo_B_piso2', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','nodo_principio_pasillo_B_piso2', nodosPlanta2)},
+
+    { from: 'nodo_principio_pasillo_B_piso2', to: 'B241-L', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso2','B241-L', nodosPlanta2) },
+    { from: 'nodo_principio_pasillo_B_piso2', to: 'nodo_final_pasillo_A_norte_piso2', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_piso2','nodo_final_pasillo_A_norte_piso2', nodosPlanta2) },
+
+    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238-2', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238-2', nodosPlanta2)},
+    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238-1', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238-1', nodosPlanta2)},
+    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'nodo_entrada_A239s_norte', weight: getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','nodo_entrada_A239s_norte', nodosPlanta2) },
     
-    { from: 'nodo_entrada_A139s_norte', to: 'A140', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','A140', nodosPlanta1) },
-    { from: 'nodo_entrada_A139s_norte', to: 'A138', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','A138', nodosPlanta1)},
-    { from: 'nodo_entrada_A139s_norte', to: 'A139', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','A139', nodosPlanta1)},
-    { from: 'nodo_entrada_A139s_norte', to: 'A137', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','A137', nodosPlanta1)},
-    { from: 'nodo_entrada_A139s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','nodo_entrada_escalera_bloque_A_norte_piso1', nodosPlanta1)},
+    { from: 'nodo_entrada_A239s_norte', to: 'A238-2', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238-2', nodosPlanta2) },
+    { from: 'nodo_entrada_A239s_norte', to: 'A238-1', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238-1', nodosPlanta2)},
+    { from: 'nodo_entrada_A239s_norte', to: 'A238', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238', nodosPlanta2)},
+    { from: 'nodo_entrada_A239s_norte', to: 'A239', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A239', nodosPlanta2)},
+    { from: 'nodo_entrada_A239s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','nodo_entrada_escalera_bloque_A_norte_piso2', nodosPlanta2)},
 
-    { from: 'A139', to: 'A139-L1', weight: getDistanceBetweenPoints('A139','A139-L1', nodosPlanta1) },
-    { from: 'A139', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139','A139-L2', nodosPlanta1) },
-    { from: 'A139-L1', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139-L1','A139-L2', nodosPlanta1)},
-
-    { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_escalera_bloque_A_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_escalera_bloque_A_piso1', nodosPlanta1) },
-    { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_entrada_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_entrada_A130_134_piso1', nodosPlanta1)},
-
-    { from: 'nodo_entrada_A130_134_piso1', to: 'nodo_medio_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','nodo_medio_A130_134_piso1', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A130-L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130-L', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A130-L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130-L', nodosPlanta1)},
-
-
-    { from: 'nodo_medio_A130_134_piso1', to: 'A132-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A132-L', nodosPlanta1)},
-    { from: 'nodo_medio_A130_134_piso1', to: 'A133-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A133-L', nodosPlanta1) },
-    { from: 'nodo_medio_A130_134_piso1', to: 'A134-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A134-L', nodosPlanta1)},
-    { from: 'nodo_medio_A130_134_piso1', to: 'A137', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A137', nodosPlanta1)},
-
-    { from: 'nodo_entrada_A130_134_piso1', to: 'proyecto_mentor', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','proyecto_mentor', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A129', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A129', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A128', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A128', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'nodo_mitad_pasillo_A_norte_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','nodo_mitad_pasillo_A_norte_piso1', nodosPlanta1)},
-
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'proyecto_mentor', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','proyecto_mentor', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A129', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A129', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A128', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A128', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A127', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A127', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A126', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A126', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A125', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A125', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A123', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A123', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'nodo_entrada_A124s_norte', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','nodo_entrada_A124s_norte', nodosPlanta1)},
+    { from: 'A239-L', to: 'A239', weight:  getDistanceBetweenPoints('A239-L','A239', nodosPlanta2)},
     
-    { from: 'A124-S1', to: 'A124', weight:  getDistanceBetweenPoints('A124-S1','A124', nodosPlanta1)},
+
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso2', to: 'nodo_escalera_bloque_A_BAJADA_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso2','nodo_escalera_bloque_A_BAJADA_piso2', nodosPlanta2) },
+
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso2', to: 'nodo_bloque_A_subida_escalera_1_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso2','nodo_bloque_A_subida_escalera_1_piso2', nodosPlanta2) },
+
+    { from: 'nodo_bloque_A_subida_escalera_2_piso2', to: 'nodo_bloque_A_subida_escalera_1_piso2', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso2','nodo_bloque_A_subida_escalera_1_piso2', nodosPlanta2) },
+
+    { from: 'nodo_bloque_A_subida_escalera_2_piso2', to: 'nodo_bloque_A_subida_escalera_3_piso2', weight:  getDistanceBetweenPoints('nodo_bloque_A_subida_escalera_2_piso2','nodo_bloque_A_subida_escalera_3_piso2', nodosPlanta2) },
+
+    { from: 'nodo_escalera_bloque_A_SUBIDA_piso2', to: 'nodo_bloque_A_subida_escalera_3_piso2', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_A_SUBIDA_piso2','nodo_bloque_A_subida_escalera_3_piso2', nodosPlanta2) },
+
+
+
+
+
+
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso2', to: 'A238', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso2','A238', nodosPlanta2)},
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso2', to: 'nodo_entrada_A21_A22_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso2','nodo_entrada_A21_A22_piso2', nodosPlanta2)},
+
+    { from: 'A22', to: 'A21', weight:  getDistanceBetweenPoints('A22','A21', nodosPlanta2)},
+
+    { from: 'nodo_entrada_A21_A22_piso2', to: 'A21', weight:  getDistanceBetweenPoints('nodo_entrada_A21_A22_piso2','A21', nodosPlanta2)},
+    { from: 'nodo_entrada_A21_A22_piso2', to: 'A22', weight:  getDistanceBetweenPoints('nodo_entrada_A21_A22_piso2','A22', nodosPlanta2)},
+    { from: 'nodo_entrada_A21_A22_piso2', to: 'A233', weight:  getDistanceBetweenPoints('nodo_entrada_A21_A22_piso2','A233', nodosPlanta2)},
+    { from: 'nodo_entrada_A21_A22_piso2', to: 'A232', weight:  getDistanceBetweenPoints('nodo_entrada_A21_A22_piso2','A232', nodosPlanta2)},
+    { from: 'nodo_entrada_A21_A22_piso2', to: 'nodo_mitad_pasillo_A_norte_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_A21_A22_piso2','nodo_mitad_pasillo_A_norte_piso2', nodosPlanta2)},
+
+
+
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A233', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A233', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A232', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A232', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A231', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A231', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A230', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A230', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A229', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A229', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A228', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A228', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'A227', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','A227', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'ADI2', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','ADI2', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_norte_piso2', to: 'nodo_entrada_A224s', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso2','nodo_entrada_A224s', nodosPlanta2)},
+
+
+    { from: 'nodo_entrada_A224s', to: 'A231', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A231', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A230', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A230', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A229', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A229', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A228', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A228', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A227', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A227', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'ADI2', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','ADI2', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A224', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A224', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A23', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A23', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A225', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A225', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A224-L', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A224-L', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'nodo_entrada_despachos_A222s', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','nodo_entrada_despachos_A222s', nodosPlanta2)},
+
+    { from: 'A224-L', to: 'A225', weight:  getDistanceBetweenPoints('A224-L','A225', nodosPlanta2)},
+    { from: 'A224-L', to: 'A224', weight:  getDistanceBetweenPoints('A224-L','A224', nodosPlanta2)},
+
+    { from: 'A224', to: 'A23', weight:  getDistanceBetweenPoints('A224','A23', nodosPlanta2)},
+
+    { from: 'nodo_entrada_despachos_A222s', to: 'A222-1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','A222-1', nodosPlanta2)},
+    { from: 'nodo_entrada_despachos_A222s', to: 'nodo_entrada_escalera_principal_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','nodo_entrada_escalera_principal_piso2', nodosPlanta2)},
+    { from: 'nodo_entrada_despachos_A222s', to: 'nodo_principio_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','nodo_principio_pasillo_A_sur_piso2', nodosPlanta2)},
+
+    { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_escalera_principal_BAJADA_piso2', weight: getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_escalera_principal_BAJADA_piso2', nodosPlanta2) },
+
+
+    { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_conexion_principal_subida_escalera_1_piso2', weight: getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_conexion_principal_subida_escalera_1_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_principal_subida_escalera_2_piso2', to: 'nodo_conexion_principal_subida_escalera_1_piso2', weight: getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_2_piso2','nodo_conexion_principal_subida_escalera_1_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_principal_subida_escalera_2_piso2', to: 'nodo_conexion_principal_subida_escalera_3_piso2', weight: getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_2_piso2','nodo_conexion_principal_subida_escalera_3_piso2', nodosPlanta2) },
     
-    { from: 'nodo_entrada_A124s_norte', to: 'A124-S1', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A124-S1', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A124', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A124', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A127', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A127', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A126', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A126', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A125', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A125', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A123', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A123', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'A122', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A122', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'gestion_economica', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','gestion_economica', nodosPlanta1)},
-    { from: 'nodo_entrada_A124s_norte', to: 'nodo_principio_pasillo_A_norte_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','nodo_principio_pasillo_A_norte_piso1', nodosPlanta1)},
-
-    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'gestion_economica', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','gestion_economica', nodosPlanta1)},
-    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_entrada_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_entrada_escalera_principal_piso1', nodosPlanta1)},
-    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_entrada_escaleras_terraza_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_entrada_escaleras_terraza_piso1', nodosPlanta1)},
-    { from: 'nodo_principio_pasillo_A_norte_piso1', to: 'nodo_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte_piso1','nodo_escalera_principal_piso1', nodosPlanta1)},
-
-    { from: 'nodo_entrada_escaleras_terraza_piso1', to: 'nodo_escaleras_terraza_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escaleras_terraza_piso1','nodo_escaleras_terraza_piso1', nodosPlanta1) },
-    { from: 'nodo_entrada_escaleras_terraza_piso1', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escaleras_terraza_piso1','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1) },
-
-    { from: 'nodo_entrada_escalera_principal_piso1', to: 'nodo_secretaria', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso1','nodo_secretaria', nodosPlanta1)},
-    { from: 'nodo_entrada_escalera_principal_piso1', to: 'nodo_escalera_principal_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso1','nodo_escalera_principal_piso1', nodosPlanta1)},
+    { from: 'nodo_escalera_principal_SUBIDA_piso2', to: 'nodo_conexion_principal_subida_escalera_3_piso2', weight: getDistanceBetweenPoints('nodo_escalera_principal_SUBIDA_piso2','nodo_conexion_principal_subida_escalera_3_piso2', nodosPlanta2) },
+    
+    
 
 
-    { from: 'nodo_secretaria', to: 'A120', weight:  getDistanceBetweenPoints('nodo_secretaria','A120', nodosPlanta1) },
-    { from: 'nodo_secretaria', to: 'A118', weight:  getDistanceBetweenPoints('nodo_secretaria','A118', nodosPlanta1)},
-    { from: 'nodo_secretaria', to: 'nodo_direccion', weight:  getDistanceBetweenPoints('nodo_secretaria','nodo_direccion', nodosPlanta1)},
 
-    { from: 'nodo_direccion', to: 'A118', weight:  getDistanceBetweenPoints('nodo_direccion','A118', nodosPlanta1)},
-    { from: 'nodo_direccion', to: 'direccion', weight:  getDistanceBetweenPoints('nodo_direccion','direccion', nodosPlanta1) },
-    { from: 'nodo_direccion', to: 'nodo_conserjeria', weight:  getDistanceBetweenPoints('nodo_direccion','nodo_conserjeria', nodosPlanta1)},
-    { from: 'nodo_direccion', to: 'A117', weight:  getDistanceBetweenPoints('nodo_direccion','A117', nodosPlanta1)},
+    { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_entrada_juntas', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_entrada_juntas', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_principio_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_principio_pasillo_A_sur_piso2', nodosPlanta2) },
 
-    { from: 'nodo_conserjeria', to: 'direccion', weight:  getDistanceBetweenPoints('nodo_conserjeria','direccion', nodosPlanta1) },
-    { from: 'nodo_conserjeria', to: 'A117', weight:  getDistanceBetweenPoints('nodo_conserjeria','A117', nodosPlanta1)},
-    { from: 'nodo_conserjeria', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_conserjeria','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1)},
+    { from: 'A222-1', to: 'A222-2', weight:  getDistanceBetweenPoints('A222-1','A222-2', nodosPlanta2)},
+    { from: 'A222-2', to: 'A222-3', weight:  getDistanceBetweenPoints('A222-2','A222-3', nodosPlanta2)},
 
-    { from: 'nodo_entrada_despachos_A115', to: 'nodo_principio_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','nodo_principio_pasillo_A_sur_piso1', nodosPlanta1)},
-    { from: 'nodo_entrada_despachos_A115', to: 'A115', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A115', nodosPlanta1)},
-    { from: 'nodo_entrada_despachos_A115', to: 'A114', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A114', nodosPlanta1) },
-    { from: 'nodo_entrada_despachos_A115', to: 'A11', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A11', nodosPlanta1)},
-    { from: 'nodo_entrada_despachos_A115', to: 'A112-L', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A112-L', nodosPlanta1) },
-    { from: 'nodo_entrada_despachos_A115', to: 'A12', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A12', nodosPlanta1)},
-    { from: 'nodo_entrada_despachos_A115', to: 'nodo_mitad_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','nodo_mitad_pasillo_A_sur_piso1', nodosPlanta1)},
+    { from: 'nodo_sala_juntas_norte', to: 'nodo_entrada_juntas', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','nodo_entrada_juntas', nodosPlanta2) },
+    { from: 'nodo_sala_juntas_norte', to: 'A215-L', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','A215-L', nodosPlanta2) },
+    { from: 'nodo_sala_juntas_norte', to: 'A220', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','A220', nodosPlanta2)},
+    { from: 'nodo_sala_juntas_norte', to: 'sala_de_juntas', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','sala_de_juntas', nodosPlanta2)},
+    { from: 'nodo_sala_juntas_norte', to: 'nodo_sala_juntas_sur', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','nodo_sala_juntas_sur', nodosPlanta2)},
 
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A114', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A114', nodosPlanta1) },
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A11', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A11', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A112-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A112-L', nodosPlanta1) },
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A12', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A12', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A13', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A13', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A110-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A110-L', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A108-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A108-L', nodosPlanta1) },
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A14', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A14', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A15', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A15', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'nodo_final_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','nodo_final_pasillo_A_sur_piso1', nodosPlanta1)},
 
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A13', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A13', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A110-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A110-L', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A108-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A108-L', nodosPlanta1) },
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A14', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A14', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A15', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A15', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A16', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A16', nodosPlanta1) },
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A17', weight: getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A17', nodosPlanta1) },
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'nodo_entrada_escalera_cafeteria_piso1', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','nodo_entrada_escalera_cafeteria_piso1', nodosPlanta1) },
-  
-    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'A16', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','A16', nodosPlanta1)},
-    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'A17', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','A17', nodosPlanta1) },
-    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'nodo_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','nodo_escalera_cafeteria_piso1', nodosPlanta1) },
-    { from: 'nodo_entrada_escalera_cafeteria_piso1', to: 'cafeteria', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso1','cafeteria', nodosPlanta1) },
+    { from: 'nodo_sala_juntas_sur', to: 'A219', weight:  getDistanceBetweenPoints('nodo_sala_juntas_sur','A219', nodosPlanta2)},
+    { from: 'nodo_sala_juntas_sur', to: 'A218', weight:  getDistanceBetweenPoints('nodo_sala_juntas_sur','A218', nodosPlanta2) },
+    { from: 'nodo_sala_juntas_sur', to: 'A217', weight:  getDistanceBetweenPoints('nodo_sala_juntas_sur','A217', nodosPlanta2)},
+    { from: 'nodo_sala_juntas_sur', to: 'sala_de_juntas', weight:  getDistanceBetweenPoints('nodo_sala_juntas_sur','sala_de_juntas', nodosPlanta2)},
 
-    { from: 'cafeteria', to: 'comedor', weight:  getDistanceBetweenPoints('cafeteria','comedor', nodosPlanta1)},
-    { from: 'cafeteria', to: 'nodo_escalera_cafeteria_piso1', weight: getDistanceBetweenPoints('cafeteria','nodo_escalera_cafeteria_piso1', nodosPlanta1) }, 
+    { from: 'nodo_principio_pasillo_A_sur_piso2', to: 'nodo_entrada_juntas', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso2','nodo_entrada_juntas', nodosPlanta2) },
+    { from: 'nodo_principio_pasillo_A_sur_piso2', to: 'A214', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso2','A214', nodosPlanta2)},
+    { from: 'nodo_principio_pasillo_A_sur_piso2', to: 'nodo_pasillo_escalera_entrada_piso2', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso2','nodo_pasillo_escalera_entrada_piso2', nodosPlanta2)},
+
+    { from: 'nodo_pasillo_escalera_entrada_piso2', to: 'A214', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso2','A214', nodosPlanta2)},
+    { from: 'nodo_pasillo_escalera_entrada_piso2', to: 'nodo_entrada_escalera_entrada_piso2', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso2','nodo_entrada_escalera_entrada_piso2', nodosPlanta2)},
+    { from: 'nodo_pasillo_escalera_entrada_piso2', to: 'nodo_entrada_A211s', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso2','nodo_entrada_A211s', nodosPlanta2) },
+    { from: 'nodo_pasillo_escalera_entrada_piso2', to: 'nodo_entrada_dcha_terraza', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso2','nodo_entrada_dcha_terraza', nodosPlanta2)},
+
+    { from: 'nodo_entrada_escalera_entrada_piso2', to: 'nodo_acceso_escalera_entrada_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_entrada_piso2','nodo_acceso_escalera_entrada_piso2', nodosPlanta2) },
+
+    { from: 'nodo_escalera_entrada_BAJADA_piso2', to: 'nodo_acceso_escalera_entrada_piso2', weight:  getDistanceBetweenPoints('nodo_escalera_entrada_BAJADA_piso2','nodo_acceso_escalera_entrada_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_entrada_subida_escalera_1_piso2', to: 'nodo_acceso_escalera_entrada_piso2', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso2','nodo_acceso_escalera_entrada_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_entrada_subida_escalera_1_piso2', to: 'nodo_conexion_entrada_subida_escalera_2_piso2', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso2','nodo_conexion_entrada_subida_escalera_2_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso2', to: 'nodo_conexion_entrada_subida_escalera_2_piso2', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso2','nodo_conexion_entrada_subida_escalera_2_piso2', nodosPlanta2) },
+
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso2', to: 'nodo_escalera_entrada_SUBIDA_piso2', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso2','nodo_escalera_entrada_SUBIDA_piso2', nodosPlanta2) },
+
+
+
+
+
+    { from: 'nodo_entrada_A211s', to: 'nodo_entrada_dcha_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','nodo_entrada_dcha_terraza', nodosPlanta2) },
+    { from: 'nodo_entrada_A211s', to: 'A211', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','A211', nodosPlanta2)},
+    { from: 'nodo_entrada_A211s', to: 'A211-L', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','A211-L', nodosPlanta2)},
+    { from: 'nodo_entrada_A211s', to: 'nodo_entrada_A210s', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','nodo_entrada_A210s', nodosPlanta2)},
+
+    { from: 'nodo_entrada_A210s', to: 'A210-L', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','A210-L', nodosPlanta2) },
+    { from: 'nodo_entrada_A210s', to: 'nodo_mitad_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','nodo_mitad_pasillo_A_sur_piso2', nodosPlanta2)},
+    { from: 'nodo_entrada_A210s', to: 'nodo_entrada_medio_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','nodo_entrada_medio_terraza', nodosPlanta2) },
+
+    { from: 'A210', to: 'A210-L', weight:  getDistanceBetweenPoints('A210','A210-L', nodosPlanta2)},
+
+    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'nodo_entrada_medio_terraza', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','nodo_entrada_medio_terraza', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'ADI1', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','ADI1', nodosPlanta2)},
+    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'A208-S', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','A208-S', nodosPlanta2) },
+    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'nodo_entrada_terrza_izq', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','nodo_entrada_terrza_izq', nodosPlanta2)},
    
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'nodo_bloque_C_norte_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','nodo_bloque_C_norte_piso1', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C102', weight: getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C102', nodosPlanta1) },
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C103', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C103', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C104', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C104', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C105', weight: getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C105', nodosPlanta1) },
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'C106', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','C106', nodosPlanta1)},
-    { from: 'nodo_escalera_bloque_C_piso1', to: 'nodo_bloque_C_sur_piso1', weight:  getDistanceBetweenPoints('nodo_escalera_bloque_C_piso1','nodo_bloque_C_sur_piso1', nodosPlanta1)},
+    { from: 'nodo_entrada_terrza_izq', to: 'nodo_acceso_bloque_C_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','nodo_acceso_bloque_C_piso2', nodosPlanta2)},
+    { from: 'nodo_entrada_terrza_izq', to: 'A208-S', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','A208-S', nodosPlanta2)},
+    { from: 'nodo_entrada_terrza_izq', to: 'nodo_entrada_izq_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','nodo_entrada_izq_terraza', nodosPlanta2)},
+    { from: 'nodo_entrada_terrza_izq', to: 'ADI1', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','ADI1', nodosPlanta2)},
 
-    { from: 'nodo_bloque_C_sur_piso1', to: 'C106', weight: getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C106', nodosPlanta1) },
-    { from: 'nodo_bloque_C_sur_piso1', to: 'C107', weight:  getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C107', nodosPlanta1)},
+    { from: 'nodo_acceso_bloque_C_piso2', to: 'A206', weight:  getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','A206', nodosPlanta2) },
+    { from: 'nodo_acceso_bloque_C_piso2', to: 'servicios_informaticos', weight:  getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','servicios_informaticos', nodosPlanta2)},
+    { from: 'nodo_acceso_bloque_C_piso2', to: 'nodo_entrada_escalera_cafeteria_piso2', weight:  getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','nodo_entrada_escalera_cafeteria_piso2', nodosPlanta2)},
 
-    { from: 'C107', to: 'C108', weight:  getDistanceBetweenPoints('C107','C108', nodosPlanta1)},
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'A202-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','A202-L', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'salon_de_actos', weight: getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','salon_de_actos', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'nodo_escalera_cafeteria_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','nodo_escalera_cafeteria_piso2', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'servicios_informaticos', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','servicios_informaticos', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'A206', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','A206', nodosPlanta2) },
+  
 
-    { from: 'C108', to: 'C109', weight: getDistanceBetweenPoints('C108','C109', nodosPlanta1) },
+    { from: 'terraza', to: 'nodo_terraza_dcha', weight:  getDistanceBetweenPoints('terraza','nodo_terraza_dcha', nodosPlanta2)},
+    { from: 'terraza', to: 'nodo_entrada_dcha_terraza', weight:  getDistanceBetweenPoints('terraza','nodo_entrada_dcha_terraza', nodosPlanta2) },
+    { from: 'terraza', to: 'nodo_entrada_medio_terraza', weight: getDistanceBetweenPoints('terraza','nodo_entrada_medio_terraza', nodosPlanta2) },
+    { from: 'terraza', to: 'nodo_entrada_izq_terraza', weight:  getDistanceBetweenPoints('terraza','nodo_entrada_izq_terraza', nodosPlanta2) },
 
-    { from: 'nodo_bloque_C_norte_piso1', to: 'C101', weight:  getDistanceBetweenPoints('nodo_bloque_C_norte_piso1','C101', nodosPlanta1)},
-    { from: 'nodo_bloque_C_norte_piso1', to: 'C102', weight:  getDistanceBetweenPoints('nodo_bloque_C_norte_piso1','C102', nodosPlanta1)},   
+    { from: 'nodo_terraza_dcha', to: 'nodo_escaleras_terraza_piso2', weight:  getDistanceBetweenPoints('nodo_terraza_dcha','nodo_escaleras_terraza_piso2', nodosPlanta2)},
+    { from: 'nodo_terraza_dcha', to: 'nodo_entrada_dcha_terraza', weight: getDistanceBetweenPoints('nodo_terraza_dcha','nodo_entrada_dcha_terraza', nodosPlanta2) }, 
+   
+    { from: 'nodo_acceso_bloque_C_piso2', to: 'nodo_pasillo_acceso_bloque_C_piso2', weight: getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','nodo_pasillo_acceso_bloque_C_piso2', nodosPlanta2) }, 
+
+    { from: 'nodo_entrada_bloque_C_piso2', to: 'nodo_pasillo_acceso_bloque_C_piso2', weight: getDistanceBetweenPoints('nodo_entrada_bloque_C_piso2','nodo_pasillo_acceso_bloque_C_piso2', nodosPlanta2) }, 
+    { from: 'nodo_entrada_bloque_C_piso2', to: 'nodo_escalera_bloque_C_piso2', weight: getDistanceBetweenPoints('nodo_entrada_bloque_C_piso2','nodo_escalera_bloque_C_piso2', nodosPlanta2) }, 
+
+
+   
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_bloque_C_norte_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_bloque_C_norte_piso1', nodosPlanta2)},
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C102', weight: getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C102', nodosPlanta2) },
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C103', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C103', nodosPlanta2)},
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C104', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C104', nodosPlanta2)},
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C105', weight: getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C105', nodosPlanta2) },
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'C106', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','C106', nodosPlanta2)},
+//     { from: 'nodo_acceso_escalera_bloque_C_piso1', to: 'nodo_bloque_C_sur_piso1', weight:  getDistanceBetweenPoints('nodo_acceso_escalera_bloque_C_piso1','nodo_bloque_C_sur_piso1', nodosPlanta2)},
+
+//     { from: 'nodo_bloque_C_sur_piso1', to: 'C106', weight: getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C106', nodosPlanta2) },
+//     { from: 'nodo_bloque_C_sur_piso1', to: 'C107', weight:  getDistanceBetweenPoints('nodo_bloque_C_sur_piso1','C107', nodosPlanta2)},
+
 ]
 
-const ascensores = [
-    { from: 'nodo_escalera_principal_piso1', to: 'nodo_escalera_principal', weight: 10},
-    { from: 'nodo_escaleras_terraza', to: 'nodo_escaleras_terraza_piso1', weight:  10}, 
-    { from: 'nodo_escalera_bloque_A', to: 'nodo_escalera_bloque_A_piso1', weight: 10},
-    { from: 'nodo_escalera_bloque_B', to: 'nodo_escalera_bloque_B_piso1', weight:  10}, 
-    { from: 'nodo_escalera_bloque_C', to: 'nodo_escalera_bloque_C_piso1', weight: 10},
-    { from: 'nodo_escalera_cafeteria', to: 'nodo_escalera_cafeteria_piso1', weight:  10}, 
-    { from: 'nodo_escalera_bloque_B_secundaria', to: 'nodo_escalera_bloque_B_secundaria_piso1', weight: 10},
-]
 
 
 todasLasPlantas.planta2 = {}
@@ -1389,6 +2117,347 @@ todasLasPlantas.planta2.nodes = nodosPlanta2
 todasLasPlantas.planta2.edges = edgesPlanta2
 
 
+const nodosPlanta3=[
+    //laboratorios
+    { id: 'A324-L', latlng: [518.278894, 630.256348], name: 'Lab de teoría de mécanismos síntesis y simulación de mecanismos diseño de máquinas' },
+    { id: 'EG1_EG2', latlng: [304.180516, 700.112305],  name: 'EG1 y EG2' },
+    { id: 'EG3', latlng: [398.359364, 623.891602],  name: 'EG3' },
+    { id: 'EG4', latlng: [399.359475, 690.891602],  name: 'EG4' },
+    { id: 'A309-L', latlng: [233.663438, 700.424805], name: 'Lab de fabricación aditiva y digitalización industrial' },
+    { id: 'A305-L', latlng: [182.020584, 744.163086], name: 'Ecolab' },
+    { id: 'A303-L', latlng: [166.41582, 691.514648], name: 'Lab de ampliación de física' },
+    { id: 'ADIpi', latlng: [165.915764, 737.014648], name: 'ADI π' },
+
+    //despachos
+    { id: 'B335', latlng: [669.466776, 499.614746], name: 'Despacho B 335' },
+    { id: 'B336', latlng: [642.088727, 507.364746],  name: 'Despacho B 336' },
+    { id: 'B328-S', latlng: [651.42291, 696.436035],  name: 'Sala polivalente' },
+    { id: 'A326', latlng: [517.704865, 711.609619],  name: 'Despacho A 326' },
+    { id: 'A325', latlng: [501.140521, 711.797119],  name: 'Despacho A 325' },
+    { id: 'A324', latlng: [519.534953, 686.983398],  name: 'Despacho A 324' },
+    { id: 'A324-S', latlng: [523.343417, 669.117676],  name: 'Sala de reuniones' },
+    { id: 'A320', latlng: [392.693092, 713.761475],  name: 'Despacho A 320' },
+    { id: 'A318', latlng: [398.376037, 638.788574],  name: 'Sala de control' },
+    { id: 'A317', latlng: [377.884803, 711.979736],  name: 'Despacho A 317' },
+    { id: 'A316', latlng: [345.974512, 711.861328],  name: 'Despacho A 316' },
+    { id: 'A315', latlng: [328.777285, 711.959229],  name: 'Despacho A 315' },
+    { id: 'A314', latlng: [296.071739, 711.7146],  name: 'Despacho A 314' },
+    { id: 'A331-1', latlng: [296.408532, 611.268555],  name: 'Despacho A 331-1' },
+    { id: 'A331-2', latlng: [296.408532, 611.268555],  name: 'Despacho A 331-2' },
+    { id: 'A308', latlng: [213.536197, 700.174805],  name: 'Despacho A 308' },
+    { id: 'A308-1', latlng: [213.536197, 700.174805],  name: 'Despacho A 308-1' },
+    { id: 'A302-1', latlng: [192.872349, 699.971069],  name: 'Despacho A 302-1' },
+    { id: 'A307', latlng: [225.401879, 744.870605], name: 'Despacho A 307' },
+    { id: 'A305', latlng: [174.144707, 752.788086],  name: 'Despacho A 305' },
+  
+    // //Aulas
+    
+    { id: 'A31', latlng: [288.657669, 603.268555],  name: 'A31' },
+    { id: 'A32', latlng: [392.858752, 581.141602],  name: 'A32' },
+    { id: 'A301-S3', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.2' },
+    { id: 'A301-S2', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.1' },
+    { id: 'A301-S1', latlng: [163.518209, 524.220459],  name: 'Sala de trabajo 1' },
+    { id: 'A301-S4', latlng: [167.634788, 428.62793],  name: 'Biblioteca' },
+    { id: 'B31', latlng: [667.113303, 643.226318],  name: 'B31' },
+    { id: 'B32', latlng: [678.051158, 562.976318],  name: 'B32' },
+
+    // //Otros
+  
+    // //Nodos
+    { id: 'nodo_entrada_escalera_secundaria_piso3', latlng: [650.992433, 487.772461],  name: 'nodo entrada escalera secundaria piso 3 ' },
+    { id: 'nodo_entrada_despacho_B336', latlng: [653.242683, 507.272461],  name: 'nodo entrada despacho B336' },
+    { id: 'nodo_principio_pasillo_A_sur_piso3', latlng: [175.378103, 706.06311],  name: 'nodo principio pasillo A sur piso 3' },
+    { id: 'nodo_adipi_piso3', latlng: [174.966412, 729.085938], name: 'nodo adi π piso 3' },
+    { id: 'nodo_entrada_escalera_principal_piso3', latlng: [233.078609, 727.004883],  name: 'nodo entrada escalera principal piso 3' },
+    { id: 'nodo_final_pasilloA_piso3', latlng: [250.601713, 706.594727],  name: 'nodo final pasillo A piso 3' },
+    { id: 'nodo_entrada_despacho_B335', latlng: [681.745857, 510.022461], name: 'nodo entrada despacho B335' },
+    { id: 'nodo_pasillo_B31_B32', latlng: [684.496163, 648.272461], name: 'nodo pasillo B31 B32' },
+    { id: 'nodo_B31_aseos', latlng: [639.057313, 649.706055],  name: 'nodo B31 aseos' },
+    { id: 'nodo_salida_escalera_bloque_B_piso3', latlng: [639.807396, 668.706055],  name: 'nodo salida escalera bloque B piso 3' },
+    { id: 'nodo_principio_pasillo_B_piso3', latlng: [628.056088, 704.956055],  name: 'nodo pricnipio pasillo B piso 3' },
+    { id: 'nodo_final_pasillo_A_norte_piso3', latlng: [534.823197, 703.054688], name: 'nodo final pasillo A Norte piso 3' },
+    { id: 'nodo_entrada_A324s_norte', latlng: [518.32136, 702.804688],  name: 'nodo entrada A 324s norte' },
+    { id: 'nodo_entrada_escalera_bloque_A_norte_piso3', latlng: [473.956068, 706.341797],  name: 'nodo entrada escalera bloque A norte piso 3' },
+    { id: 'nodo_zona_hall_piso3', latlng: [208.049683, 716.562988],  name: 'nodo zona hall piso 3' },
+    { id: 'nodo_entrada_escalera_entrada_piso3', latlng: [125.480086, 673.546875], name: 'nodo entrada escalera entrada piso 3' },
+    { id: 'nodo_pasillo_escalera_entrada_piso3', latlng: [172.48532, 673.796875],  name: 'nodo pasillo escalera entrada piso 3' },
+    { id: 'nodo_entrada_sala_trabajo1', latlng: [175.937857, 524.360352],  name: 'nodo entrada sala de trabajo 1 piso 3' },
+    { id: 'nodo_entrada_sala_trabajo2', latlng: [176.860104, 497.125977],  name: 'nodo entrada sala de trabajo 2 piso 3' },
+    { id: 'nodo_entrada_biblioteca', latlng: [174.427081, 429.333984],  name: 'nodo entrada biblio piso 3' },
+    { id: 'nodo_entrada_A311s', latlng: [292.264186, 702.45166],  name: 'nodo entrada A311s' },
+    { id: 'nodo_entrada_eg3_4', latlng: [395.017406, 705.779297],  name: 'nodo entrada eg 3 4' },
+    { id: 'nodo_pasilloA_piso3', latlng: [318.368344, 706.666992],  name: 'nodo pasillo A piso 3' },
+    { id: 'nodo_hall2_piso3', latlng: [232.740978, 711.830566],  name: 'nodo hall 2 piso 3' },
+
+
+
+    { id: 'nodo_conexion_entrada_subida_escalera_3_piso3', latlng: [97.54338, 662.842773],  name: 'nodo esclaera entrada subida escaleras 3 piso 3' },
+    { id: 'nodo_conexion_entrada_subida_escalera_2_piso3', latlng: [97.418366, 672.717773],  name: 'nodo escalera entrada subida escaleras 2 piso 3' },
+    { id: 'nodo_conexion_entrada_subida_escalera_1_piso3', latlng: [105.856806, 673.124023],  name: 'nodo escalera entrada subida 1 piso 3' },
+
+
+    { id: 'nodo_conexion_principal_subida_escalera_3_piso3', latlng: [272.00574, 725.628906],  name: 'nodo esclaera principal subida escaleras 3 piso 3' },
+    { id: 'nodo_conexion_principal_subida_escalera_2_piso3', latlng: [272.00574, 746.128906],  name: 'nodo escalera principal subida escaleras 2 piso 3' },
+    { id: 'nodo_conexion_principal_subida_escalera_1_piso3', latlng: [246.750762, 746.003906],  name: 'nodo escalera principal subida escaleras 1 piso 3' },
+   
+    { id: 'nodo_acceso_escalera_entrada_piso3', latlng: [116.587231, 670.947353],  name: 'nodo escalera entrada piso 3' },
+
+
+
+    // //ascensores y/o escaleras
+ 
+    { id: 'nodo_escalera_bloque_A_piso3', latlng: [486.018279, 724.333008],  name: 'nodo escalera bloque A subida piso 3' },
+    { id: 'nodo_escalera_bloque_B_piso3', latlng: [678.497418, 664.4375],  name: 'nodo escalera bloque B piso 3' },
+    { id: 'nodo_escalera_bloque_B_secundaria_piso3', latlng: [630.404609, 484.193359],  name: 'nodo escalera bloque B secundaria piso 3' },
+
+    
+
+    { id: 'nodo_escalera_principal_SUBIDA_piso3', latlng: [272.00574, 725.628906],  name: 'nodo escalera principal subida piso 3' },
+        { id: 'nodo_escalera_principal_BAJADA_piso3', latlng: [247.773326, 726.43457],  name: 'nodo escalera principal bajada piso 3' },
+       
+
+        { id: 'nodo_escalera_entrada_SUBIDA_piso3', latlng: [97.54338, 662.842773],  name: 'nodo escalera entrada subida piso 2' },
+        { id: 'nodo_escalera_entrada_BAJADA_piso3', latlng: [110.607335, 663.499023],  name: 'nodo escalera entrada subida piso 2' },
+        
+      
+]
+ 
+
+
+const edgesPlanta3 = [
+    { from: 'nodo_escalera_bloque_B_secundaria_piso3', to: 'nodo_entrada_escalera_secundaria_piso3', weight: getDistanceBetweenPoints('nodo_escalera_bloque_B_secundaria_piso3','nodo_entrada_escalera_secundaria_piso3', nodosPlanta3) },
+
+    { from: 'nodo_entrada_despacho_B336', to: 'nodo_entrada_escalera_secundaria_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B336','nodo_entrada_escalera_secundaria_piso3', nodosPlanta3)  },
+    { from: 'nodo_entrada_despacho_B336', to: 'B336', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B336','B336', nodosPlanta3) },
+    { from: 'nodo_entrada_despacho_B336', to: 'B335', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B336','B335', nodosPlanta3)},
+    { from: 'nodo_entrada_despacho_B336', to: 'nodo_entrada_despacho_B335', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B336','nodo_entrada_despacho_B335', nodosPlanta3) },
+
+    { from: 'nodo_entrada_despacho_B335', to: 'B335', weight: getDistanceBetweenPoints('nodo_entrada_despacho_B335','B335', nodosPlanta3) },
+    { from: 'nodo_entrada_despacho_B335', to: 'B32', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B335','B32', nodosPlanta3) },
+    { from: 'nodo_entrada_despacho_B335', to: 'nodo_pasillo_B31_B32', weight:  getDistanceBetweenPoints('nodo_entrada_despacho_B335','nodo_pasillo_B31_B32', nodosPlanta3)},
+    
+    { from: 'nodo_pasillo_B31_B32', to: 'B32', weight:  getDistanceBetweenPoints('nodo_pasillo_B31_B32','B32', nodosPlanta3) },
+    { from: 'nodo_pasillo_B31_B32', to: 'B31', weight:  getDistanceBetweenPoints('nodo_pasillo_B31_B32','B31', nodosPlanta3)},
+    { from: 'nodo_pasillo_B31_B32', to: 'nodo_B31_aseos', weight:  getDistanceBetweenPoints('nodo_pasillo_B31_B32','nodo_B31_aseos', nodosPlanta3) },
+    
+    { from: 'nodo_B31_aseos', to: 'B31', weight: getDistanceBetweenPoints('nodo_B31_aseos','B31', nodosPlanta3) },
+    { from: 'nodo_B31_aseos', to: 'nodo_salida_escalera_bloque_B_piso3', weight:  getDistanceBetweenPoints('nodo_B31_aseos','nodo_salida_escalera_bloque_B_piso3', nodosPlanta3) },
+
+    { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'nodo_escalera_bloque_B_piso3', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','nodo_escalera_bloque_B_piso3', nodosPlanta3)},
+    { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'B328-S', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','B328-S', nodosPlanta3)},
+    { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'nodo_principio_pasillo_B_piso3', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','nodo_principio_pasillo_B_piso3', nodosPlanta3)},
+
+    { from: 'nodo_principio_pasillo_B_piso3', to: 'B328-S', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso3','B328-S', nodosPlanta3) },
+    { from: 'nodo_principio_pasillo_B_piso3', to: 'nodo_final_pasillo_A_norte_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_piso3','nodo_final_pasillo_A_norte_piso3', nodosPlanta3) },
+
+    { from: 'nodo_final_pasillo_A_norte_piso3', to: 'A326', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso3','A326', nodosPlanta3)},
+    { from: 'nodo_final_pasillo_A_norte_piso3', to: 'nodo_entrada_A324s_norte', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso3','nodo_entrada_A324s_norte', nodosPlanta3)},
+    
+    { from: 'nodo_entrada_A324s_norte', to: 'A324', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','A324', nodosPlanta3) },
+    { from: 'nodo_entrada_A324s_norte', to: 'A326', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','A326', nodosPlanta3)},
+    { from: 'nodo_entrada_A324s_norte', to: 'A325', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','A325', nodosPlanta3)},
+    { from: 'nodo_entrada_A324s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','nodo_entrada_escalera_bloque_A_norte_piso3', nodosPlanta3)},
+   
+    { from: 'A324-S', to: 'A324', weight:  getDistanceBetweenPoints('A324-S','A324', nodosPlanta3)},
+    { from: 'A324-L', to: 'A324', weight:  getDistanceBetweenPoints('A324-L','A324', nodosPlanta3)},
+    
+
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso3', to: 'nodo_escalera_bloque_A_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso3','nodo_escalera_bloque_A_piso3', nodosPlanta3) },
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso3', to: 'A325', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso3','A325', nodosPlanta3)},
+    { from: 'nodo_entrada_escalera_bloque_A_norte_piso3', to: 'nodo_entrada_eg3_4', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso3','nodo_entrada_eg3_4', nodosPlanta3)},
+
+
+    { from: 'nodo_entrada_eg3_4', to: 'EG4', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','EG4', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A318', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A318', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'EG3', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','EG3', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A32', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A32', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A320', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A320', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A317', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A317', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A316', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A316', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'A315', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','A315', nodosPlanta3)},
+    { from: 'nodo_entrada_eg3_4', to: 'nodo_pasilloA_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_eg3_4','nodo_pasilloA_piso3', nodosPlanta3)},
+
+
+    { from: 'nodo_pasilloA_piso3', to: 'A317', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','A317', nodosPlanta3)},
+    { from: 'nodo_pasilloA_piso3', to: 'A316', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','A316', nodosPlanta3)},
+    { from: 'nodo_pasilloA_piso3', to: 'A315', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','A315', nodosPlanta3)},
+    { from: 'nodo_pasilloA_piso3', to: 'A314', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','A314', nodosPlanta3)},
+    { from: 'nodo_pasilloA_piso3', to: 'EG1_EG2', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','EG1_EG2', nodosPlanta3)},
+    { from: 'nodo_pasilloA_piso3', to: 'nodo_entrada_A311s', weight:  getDistanceBetweenPoints('nodo_pasilloA_piso3','nodo_entrada_A311s', nodosPlanta3)},
+
+    { from: 'nodo_entrada_A311s', to: 'A314', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A314', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'EG1_EG2', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','EG1_EG2', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'A331-2', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A331-2', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'A331-1', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A331-2', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'A31', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A31', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'nodo_final_pasilloA_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','nodo_final_pasilloA_piso3', nodosPlanta3)},
+   
+
+    { from: 'nodo_final_pasilloA_piso3', to: 'A309-L', weight:  getDistanceBetweenPoints('nodo_final_pasilloA_piso3','A309-L', nodosPlanta3)},
+    { from: 'nodo_final_pasilloA_piso3', to: 'nodo_hall2_piso3', weight:  getDistanceBetweenPoints('nodo_final_pasilloA_piso3','nodo_hall2_piso3', nodosPlanta3)},
+
+    { from: 'nodo_hall2_piso3', to: 'A309-L', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A309-L', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'nodo_entrada_escalera_principal_piso3', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','nodo_entrada_escalera_principal_piso3', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'A308-1', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A308-1', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'A308', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A308', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'nodo_zona_hall_piso3', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','nodo_zona_hall_piso3', nodosPlanta3)},
+
+    { from: 'nodo_entrada_escalera_principal_piso3', to: 'A307', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso3','A307', nodosPlanta3)},
+
+
+    { from: 'nodo_entrada_escalera_principal_piso3', to: 'nodo_escalera_principal_BAJADA_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso3','nodo_escalera_principal_BAJADA_piso3', nodosPlanta3)},
+    { from: 'nodo_entrada_escalera_principal_piso3', to: 'nodo_conexion_principal_subida_escalera_1_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso3','nodo_conexion_principal_subida_escalera_1_piso3', nodosPlanta3)},
+    { from: 'nodo_conexion_principal_subida_escalera_2_piso3', to: 'nodo_conexion_principal_subida_escalera_1_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_2_piso3','nodo_conexion_principal_subida_escalera_1_piso3', nodosPlanta3)},
+    { from: 'nodo_conexion_principal_subida_escalera_2_piso3', to: 'nodo_conexion_principal_subida_escalera_3_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_principal_subida_escalera_2_piso3','nodo_conexion_principal_subida_escalera_3_piso3', nodosPlanta3)},
+    { from: 'nodo_escalera_principal_SUBIDA_piso3', to: 'nodo_conexion_principal_subida_escalera_3_piso3', weight:  getDistanceBetweenPoints('nodo_escalera_principal_SUBIDA_piso3','nodo_conexion_principal_subida_escalera_3_piso3', nodosPlanta3)},
+
+
+
+
+    { from: 'nodo_entrada_escalera_principal_piso3', to: 'nodo_zona_hall_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso3','nodo_zona_hall_piso3', nodosPlanta3)},
+
+
+    { from: 'nodo_zona_hall_piso3', to: 'A308-1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A308-1', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'A308', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A308', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'A302-1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A302-1', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'nodo_adipi_piso3', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','nodo_adipi_piso3', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'nodo_principio_pasillo_A_sur_piso3', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','nodo_principio_pasillo_A_sur_piso3', nodosPlanta3)},
+
+    { from: 'nodo_adipi_piso3', to: 'A305-L', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','A305-L', nodosPlanta3)},
+    { from: 'nodo_adipi_piso3', to: 'A305', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','A305', nodosPlanta3)},
+    { from: 'nodo_adipi_piso3', to: 'ADIpi', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','ADIpi', nodosPlanta3)},
+    { from: 'nodo_adipi_piso3', to: 'nodo_principio_pasillo_A_sur_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','nodo_adipi_piso3', nodosPlanta3)},
+
+    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A302-1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A302-1', nodosPlanta3)},
+    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A303-L', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A303-L', nodosPlanta3)},
+    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'nodo_pasillo_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','nodo_pasillo_escalera_entrada_piso3', nodosPlanta3)},
+
+    { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'nodo_entrada_sala_trabajo1', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','nodo_entrada_sala_trabajo1', nodosPlanta3)},
+    { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'nodo_entrada_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','nodo_entrada_escalera_entrada_piso3', nodosPlanta3)},
+    { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'A303-L', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','A303-L', nodosPlanta3)},
+
+    { from: 'nodo_entrada_escalera_entrada_piso3', to: 'nodo_acceso_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_entrada_piso3','nodo_acceso_escalera_entrada_piso3', nodosPlanta3)},
+
+    { from: 'nodo_escalera_entrada_BAJADA_piso3', to: 'nodo_acceso_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_escalera_entrada_BAJADA_piso3','nodo_acceso_escalera_entrada_piso3', nodosPlanta3)},
+
+    { from: 'nodo_conexion_entrada_subida_escalera_1_piso3', to: 'nodo_acceso_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso3','nodo_acceso_escalera_entrada_piso3', nodosPlanta3)},
+    { from: 'nodo_conexion_entrada_subida_escalera_1_piso3', to: 'nodo_conexion_entrada_subida_escalera_2_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_1_piso3','nodo_conexion_entrada_subida_escalera_2_piso3', nodosPlanta3)},
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso3', to: 'nodo_conexion_entrada_subida_escalera_2_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso3','nodo_conexion_entrada_subida_escalera_2_piso3', nodosPlanta3)},
+    { from: 'nodo_conexion_entrada_subida_escalera_3_piso3', to: 'nodo_escalera_entrada_SUBIDA_piso3', weight:  getDistanceBetweenPoints('nodo_conexion_entrada_subida_escalera_3_piso3','nodo_escalera_entrada_SUBIDA_piso3', nodosPlanta3)},
+
+
+
+    { from: 'nodo_entrada_sala_trabajo1', to: 'A301-S1', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo1','A301-S1', nodosPlanta3)},
+    { from: 'nodo_entrada_sala_trabajo1', to: 'nodo_entrada_sala_trabajo2', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo1','nodo_entrada_sala_trabajo2', nodosPlanta3)},
+
+
+    { from: 'nodo_entrada_sala_trabajo2', to: 'A301-S2', weight: getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301-S2', nodosPlanta3) },
+    { from: 'nodo_entrada_sala_trabajo2', to: 'A301-S3', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301-S3', nodosPlanta3) },
+    { from: 'nodo_entrada_sala_trabajo2', to: 'nodo_entrada_biblioteca', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','nodo_entrada_biblioteca', nodosPlanta3) },
+
+    { from: 'nodo_entrada_biblioteca', to: 'A301-S4', weight:  getDistanceBetweenPoints('nodo_entrada_biblioteca','A301-S4', nodosPlanta3) },
+
+]
+
+todasLasPlantas.planta3 = {}
+todasLasPlantas.planta3.nodes = nodosPlanta3
+todasLasPlantas.planta3.edges = edgesPlanta3
+
+
+
+const nodosPlanta4=[
+    //laboratorios
+    { id: 'A404-L', latlng: [250.601713, 706.594727],  name: 'Lab de energía solar fotovoltaica' },
+   { id: 'A402-L', latlng: [123.141036, 682.261719],  name: 'Lab de energía solar térmica' },
+    { id: 'A401-L', latlng: [117.640424, 679.324219],  name: 'Lab de proyectos 2' },
+    
+    //despachos
+    
+    // //Aulas
+    { id: 'A403-A', latlng: [129.64176, 678.324219],  name: 'Aula de energía solar térmica' },
+   
+    // //Otros
+  
+    // //Nodos
+    { id: 'nodo_piso4', latlng: [124.614572, 672.8125],  name: 'nodo piso 4 ' },
+   
+    // //ascensores y/o escaleras
+ 
+    { id: 'nodo_escalera_principal_piso4', latlng: [258.707521, 724.629883],  name: 'nodo escalera principal piso 4' },
+    { id: 'nodo_escalera_entrada_piso4', latlng: [111.857581, 660.811523],  name: 'nodo escalera entrada piso 4' },
+        
+]
+ 
+
+
+const edgesPlanta4 = [
+    { from: 'nodo_escalera_principal_piso4', to: 'A404-L', weight: getDistanceBetweenPoints('nodo_escalera_principal_piso4','A404-L', nodosPlanta4) },
+
+    { from: 'nodo_escalera_entrada_piso4', to: 'nodo_piso4', weight:  getDistanceBetweenPoints('nodo_escalera_entrada_piso4','nodo_piso4', nodosPlanta4)  },
+
+    { from: 'nodo_piso4', to: 'A403-A', weight:  getDistanceBetweenPoints('nodo_piso4','A403-A', nodosPlanta4) },
+    { from: 'nodo_piso4', to: 'A402-L', weight:  getDistanceBetweenPoints('nodo_piso4','A402-L', nodosPlanta4)},
+    { from: 'nodo_piso4', to: 'A401-L', weight:  getDistanceBetweenPoints('nodo_piso4','A401-L', nodosPlanta4) },
+
+]
+
+
+todasLasPlantas.planta4 = {}
+todasLasPlantas.planta4.nodes = nodosPlanta4
+todasLasPlantas.planta4.edges = edgesPlanta4
+
+
+const ascensores = [
+    //escalera terraza
+    { from: 'nodo_escaleras_terraza_SUBIDA_pisoBAJO', to: 'nodo_escaleras_terraza_BAJADA_piso0', weight:  10}, 
+    { from: 'nodo_escaleras_terraza_SUBIDA_piso0', to: 'nodo_escaleras_terraza_BAJADA_piso1', weight:  10}, 
+    { from: 'nodo_escaleras_terraza_SUBIDA_piso1', to: 'nodo_escaleras_terraza_piso2', weight:  10}, 
+    
+    //escalera principal
+    { from: 'nodo_escalera_principal_pisoBAJO', to: 'nodo_escalera_principal_BAJADA_piso0', weight: 10},
+    { from: 'nodo_escalera_principal_SUBIDA_piso0', to: 'nodo_escalera_principal_BAJADA_piso1', weight: 10},
+    { from: 'nodo_escalera_principal_SUBIDA_piso1', to: 'nodo_escalera_principal_BAJADA_piso2', weight: 10},
+    { from: 'nodo_escalera_principal_SUBIDA_piso2', to: 'nodo_escalera_principal_BAJADA_piso3', weight: 10},
+    { from: 'nodo_escalera_principal_SUBIDA_piso3', to: 'nodo_escalera_principal_piso4', weight: 10},
+
+    //escalera bloque A
+    { from: 'nodo_escalera_bloque_A_SUBIDA_pisoBAJO', to: 'nodo_escalera_bloque_A_BAJADA_piso0', weight: 10},
+    { from: 'nodo_escalera_bloque_A_SUBIDA_piso0', to: 'nodo_escalera_bloque_A_BAJADA_piso1', weight: 10},
+    { from: 'nodo_escalera_bloque_A_SUBIDA_piso1', to: 'nodo_escalera_bloque_A_BAJADA_piso2', weight: 10},
+    { from: 'nodo_escalera_bloque_A_SUBIDA_piso2', to: 'nodo_escalera_bloque_A_piso3', weight: 10},
+
+    //escalera bloque B
+    { from: 'nodo_escalera_bloque_B_SUBIDA_pisoBAJO', to: 'nodo_escalera_bloque_B_BAJADA_piso0', weight:  10},
+    { from: 'nodo_escalera_bloque_B_SUBIDA_piso0', to: 'nodo_escalera_bloque_B_BAJADA_piso1', weight:  10}, 
+    { from: 'nodo_escalera_bloque_B_SUBIDA_piso1', to: 'nodo_escalera_bloque_B_BAJADA_piso2', weight:  10}, 
+    { from: 'nodo_escalera_bloque_B_SUBIDA_piso2', to: 'nodo_escalera_bloque_B_piso3', weight:  10}, 
+  
+    //escalera bloque B secundaria
+    { from: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso0', to: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso1', weight: 10},
+    { from: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso1', to: 'nodo_escalera_bloque_B_secundaria_BAJADA_piso2', weight: 10},
+    { from: 'nodo_escalera_bloque_B_secundaria_SUBIDA_piso2', to: 'nodo_escalera_bloque_B_secundaria_piso3', weight: 10},
+
+
+    //escalera bloque C
+    { from: 'nodo_escalera_bloque_C', to: 'nodo_escalera_bloque_C_BAJADA_piso1', weight: 10},
+    { from: 'nodo_escalera_bloque_C_SUBIDA_piso1', to: 'nodo_escalera_bloque_C_piso2', weight: 10},
+
+    //escalera Cafeteria
+    { from: 'nodo_escalera_cafeteria_SUBIDA_pisoBAJO', to: 'nodo_escalera_cafeteria_BAJADA_piso0', weight:  10}, 
+    { from: 'nodo_escalera_cafeteria_SUBIDA_piso0', to: 'nodo_escalera_cafeteria_BAJADA_piso1', weight:  10},
+    { from: 'nodo_escalera_cafeteria_SUBIDA_piso1', to: 'nodo_escalera_cafeteria_piso2', weight:  10}, 
+
+    //escalera Entrada
+    
+    { from: 'nodo_escalera_entrada_SUBIDA_pisoBAJO', to: 'nodo_escalera_entrada_BAJADA_piso0', weight:  10},
+    { from: 'nodo_escalera_entrada_SUBIDA_piso0', to: 'nodo_escalera_entrada_BAJADA_piso1', weight:  10}, 
+    { from: 'nodo_escalera_entrada_SUBIDA_piso1', to: 'nodo_escalera_entrada_BAJADA_piso2', weight:  10}, 
+    { from: 'nodo_escalera_entrada_SUBIDA_piso2', to: 'nodo_escalera_entrada_BAJADA_piso3', weight:  10},
+    { from: 'nodo_escalera_entrada_SUBIDA_piso3', to: 'nodo_escalera_entrada_piso4', weight:  10}, 
+
+    //escalera Pista Deportiva
+    { from: 'nodo_escalera_pista_deportiva_pisoBAJO', to: 'nodo_escalera_pista_deportiva_BAJADA_piso0', weight:  10}, 
+ ]
 
 //GET DISTANCE BETWEEN NODES
     function getDistanceBetweenPoints(id1, id2, nodosPlanta) {
@@ -1419,10 +2488,10 @@ const markers = {};
 //     markers[node.id].bindPopup(node.id); // Optional: bind popup with node id
 // });
 
-nodosPlanta2.forEach(node => {
-    markers[node.id] = L.marker(node.latlng, {icon: new LeafIcon()}).addTo(map);
-    markers[node.id].bindPopup(node.id); // Optional: bind popup with node id
-});
+// nodosPlanta1.forEach(node => {
+//     markers[node.id] = L.marker(node.latlng).addTo(map);
+//     markers[node.id].bindPopup(node.id); // Optional: bind popup with node id
+// });
 
 
 //CREATE POLYLINE BETWEEN NODES (EDGES)
@@ -1443,13 +2512,13 @@ nodosPlanta2.forEach(node => {
 //     }
 // }));
 
-// const geojsonFeatures = edgesPlanta1.map(edge => ({
+// const geojsonFeatures = edgesPlanta3.map(edge => ({
 //     type: 'Feature',
 //     geometry: {
 //         type: 'LineString',
 //         coordinates: [
-//             [nodosPlanta1.find(node => node.id === edge.from).latlng[1], nodosPlanta1.find(node => node.id === edge.from).latlng[0]],
-//             [nodosPlanta1.find(node => node.id === edge.to).latlng[1], nodosPlanta1.find(node => node.id === edge.to).latlng[0]]
+//             [nodosPlanta3.find(node => node.id === edge.from).latlng[1], nodosPlanta3.find(node => node.id === edge.from).latlng[0]],
+//             [nodosPlanta3.find(node => node.id === edge.to).latlng[1], nodosPlanta3.find(node => node.id === edge.to).latlng[0]]
 //         ]
 //     },
 //     properties: {
@@ -1487,12 +2556,12 @@ map.on('layeradd', function(event) {
             // Replace alert and console.log with your desired handling of coordinates
         });
     }
-    // if (event.layer instanceof L.Polygon) {
-    //     const layer = event.layer;
-    //     layer.on('click', function() {
-    //         console.log(`${JSON.stringify(layer.getLatLngs())}`)
-    //     });
-    // }
+    if (event.layer instanceof L.Polygon) {
+        const layer = event.layer;
+        layer.on('click', function() {
+            console.log(`${JSON.stringify(layer.getLatLngs())}`)
+        });
+    }
 });
 
 // GET POLYGONE COORDINATES INFO
@@ -1504,7 +2573,127 @@ function getInfoXY(e) {
     }
 }
 
+//PLANTA -1 AULAS CLICKABLES
+const B_150_L2 = L.polygon([[{"lat":688.6555661594709,"lng":535.8125},{"lat":628.1205642776494,"lng":535.71875},{"lat":628.1203917773357,"lng":585.5},{"lat":690.4359351757263,"lng":585.5}]]);
 
+const B_150_L1 = L.polygon([[{"lat":650.4341054402566,"lng":587.125},{"lat":650.4651398148646,"lng":629.40625},{"lat":628.1513583839633,"lng":629.4375},{"lat":628.1512906159829,"lng":587.125}]]);
+
+const B_150b = L.polygon([[{"lat":690.5613972301378,"lng":587.25},{"lat":691.7346945176264,"lng":621.027099609375},{"lat":664.8543962937075,"lng":621.089599609375},{"lat":664.8088713326881,"lng":587.25}]]);
+
+
+const B_150_2 = L.polygon([[{"lat":691.6752591985232,"lng":623.00927734375},{"lat":692.4254070559349,"lng":639.13427734375},{"lat":664.7949609746044,"lng":639.13427734375},{"lat":664.6699363317024,"lng":623.07177734375}]]);
+
+const B_150_1 = L.polygon([[{"lat":692.4254070559349,"lng":641.50927734375},{"lat":693.1130425918956,"lng":657.13427734375},{"lat":653.4353000609352,"lng":657.0224609375},{"lat":653.5603247038371,"lng":641.5224609375}]]);
+
+const B_148 = L.polygon([[{"lat":693.9965847178164,"lng":684.033935546875},{"lat":694.3716586465222,"lng":693.971435546875},{"lat":681.5566327490725,"lng":708.596435546875},{"lat":653.5511127390362,"lng":712.846435546875},{"lat":653.4886004175852,"lng":684.158935546875}]]);
+
+const A_146_L = L.polygon([[{"lat":594.4299962363568,"lng":515.8125},{"lat":594.4295896284747,"lng":597.3125},{"lat":549.8591053282435,"lng":597.25},{"lat":549.6090560424395,"lng":516}]]);
+
+const A_146 = L.polygon([[{"lat":594.4552042448519,"lng":598.8258056640625},{"lat":549.6077695709447,"lng":598.826171875},{"lat":549.663526936932,"lng":661.6319580078125},{"lat":567.9563417388032,"lng":661.638916015625},{"lat":568.1438787031561,"lng":687.076416015625},{"lat":579.2085595999785,"lng":687.076416015625},{"lat":579.1840623151783,"lng":661.625},{"lat":594.4287663315232,"lng":661.643798828125}]]);
+
+const taller2 = L.polygon([[{"lat":594.3324741921608,"lng":679.93359375},{"lat":594.4574988350628,"lng":695.24609375},{"lat":581.0798620445544,"lng":695.24609375},{"lat":581.0173497231034,"lng":679.99609375}]]);
+
+const taller1 = L.polygon([[{"lat":565.0928712565192,"lng":680.02783203125},{"lat":565.1553835779702,"lng":695.21533203125},{"lat":549.5909614316182,"lng":695.27783203125},{"lat":549.5909614316182,"lng":680.15283203125}]]);
+
+const A_144 = L.polygon([[{"lat":544.8783447138735,"lng":533.751953125},{"lat":545.0033693567755,"lng":581.751953125},{"lat":496.49380791081956,"lng":581.626953125},{"lat":496.375,"lng":533.77978515625}]]);
+
+const A_144_L2 = L.polygon([[{"lat":544.9696231428213,"lng":583.90673828125},{"lat":545.0016863585856,"lng":627.90673828125},{"lat":496.6093159130419,"lng":627.91162109375},{"lat":496.49609129971145,"lng":583.8841552734375}]]);
+
+const A_144_L1 = L.polygon([[{"lat":527.7793681783967,"lng":630.2279052734375},{"lat":496.46465031722136,"lng":630.2279052734375},{"lat":496.4880913176336,"lng":676.5758056640625},{"lat":527.9075835170349,"lng":676.4854736328125}]]);
+
+const A_140_L2 = L.polygon([[{"lat":491.93306427764935,"lng":534.5},{"lat":491.93471759234365,"lng":632.48291015625},{"lat":480.213657320286,"lng":632.48291015625},{"lat":480.3074258024625,"lng":641.23291015625},{"lat":471.9709224958331,"lng":641.25830078125},{"lat":471.9914343513092,"lng":677.342529296875},{"lat":461.05177809738876,"lng":677.280029296875},{"lat":461.05177809738876,"lng":619.092529296875},{"lat":443.5080369464308,"lng":618.959228515625},{"lat":443.36731141459217,"lng":539.0625},{"lat":460.49568749215905,"lng":538.9375},{"lat":460.55819981361003,"lng":534.625}]]);
+
+const A_140_L1 = L.polygon([[{"lat":491.94580241769273,"lng":634.3404541015625},{"lat":482.2637501792211,"lng":634.4100341796875},{"lat":482.20123785777014,"lng":643.3787841796875},{"lat":474.0581533281359,"lng":643.4100341796875},{"lat":474.01584762621644,"lng":677.312744140625},{"lat":491.9665338190225,"lng":677.3218994140625}]]);
+
+const A_140_A = L.polygon([[{"lat":459.1195785615714,"lng":677.25},{"lat":443.36647355592595,"lng":677.3125},{"lat":443.36633801996527,"lng":644.0625},{"lat":459.05693070415975,"lng":643.9375}]]);
+
+const A_140 = L.polygon([[{"lat":491.9264554993996,"lng":678.8155517578125},{"lat":491.9577116601251,"lng":695.9718017578125},{"lat":474.01667540369556,"lng":696.0030517578125},{"lat":474.01667540369556,"lng":678.8780517578125}],[{"lat":457.5032775059591,"lng":678.555908203125},{"lat":457.5032775059591,"lng":695.930908203125},{"lat":443.312980536588,"lng":695.930908203125},{"lat":443.4380051794899,"lng":678.618408203125}]]);
+
+const A_139 = L.polygon([[{"lat":456.83259740667063,"lng":717.0068359375},{"lat":456.7641752692797,"lng":742.575439453125},{"lat":443.2884787712601,"lng":744.861328125},{"lat":443.2884787712601,"lng":716.986328125}]]);
+
+const A_138_L = L.polygon([[{"lat":441.01589691202037,"lng":716.90625},{"lat":441.03803519902505,"lng":745.111328125},{"lat":423.2845359069484,"lng":747.798828125},{"lat":423.2845359069484,"lng":717.048828125}]]);
+
+
+const A_137_L = L.polygon([[{"lat":438.6639279441547,"lng":516.473388671875},{"lat":438.80648713192465,"lng":690.75},{"lat":429.9922498073373,"lng":690.75},{"lat":430.0547621287883,"lng":661.5625},{"lat":390.2639378013155,"lng":661.623779296875},{"lat":390.3048483789451,"lng":516.625}]]);
+
+
+const A_134_L = L.polygon([[{"lat":426.8710817785902,"lng":696},{"lat":416.30649945337564,"lng":696},{"lat":416.3690117748266,"lng":692.8125},{"lat":405.67940480671007,"lng":692.875},{"lat":405.67940480671007,"lng":695.875},{"lat":372.3677353845189,"lng":696.019287109375},{"lat":372.339714724806,"lng":664.65625},{"lat":426.87231392368767,"lng":664.625}]]);
+
+const A_133_L = L.polygon([[{"lat":384.89959249601236,"lng":661.48291015625},{"lat":368.45885195440616,"lng":661.67041015625},{"lat":368.4920156997688,"lng":685.5625},{"lat":358.74009355341684,"lng":685.5},{"lat":358.67758123196586,"lng":661.5},{"lat":337.1621099700701,"lng":661.555908203125},{"lat":337.17889962722006,"lng":516.625},{"lat":384.9963528505117,"lng":516.6875}]]);
+
+const A_132_L = L.polygon([[{"lat":396.9962049931,"lng":718.6875},{"lat":396.9962049931,"lng":751.6875},{"lat":287.8042815922003,"lng":768.375},{"lat":285.3663010556123,"lng":756.625},{"lat":285.4288133770633,"lng":718.625}]]);
+
+const A_131_L1 = L.polygon([{"lat":316.12326267541266,"lng":675.75},{"lat":316.18577499686364,"lng":691.75},{"lat":303.05818749215905,"lng":691.875},{"lat":302.99567517070807,"lng":675.6875},{"lat":285.1796635571805,"lng":675.8125},{"lat":285.11695409251394,"lng":565.0625},{"lat":333.1184696309838,"lng":565.125},{"lat":333.2153061544527,"lng":675.75}]);
+
+const A_131_L2 = L.polygon([[{"lat":333.11923356094417,"lng":562.1875},{"lat":333.1811298098464,"lng":516.25},{"lat":284.74037694678924,"lng":516.1875},{"lat":284.8654015896912,"lng":562.1875}]]);
+
+const A_129_S1 = L.polygon([[{"lat":333.3057108805133,"lng":677.75},{"lat":333.43073552341525,"lng":695.375},{"lat":318.4902906966324,"lng":695.5625},{"lat":318.4902906966324,"lng":677.75}]]);
+
+const A_129_S2 = L.polygon([[{"lat":301.18281784862984,"lng":677.625},{"lat":301.12030552717886,"lng":695.375},{"lat":285.1171512357295,"lng":695.4375},{"lat":285.1171512357295,"lng":677.625}]]);
+
+const club_deportivo = L.polygon([[{"lat":278.99754803125614,"lng":735.5},{"lat":279.1225726741581,"lng":754.3125},{"lat":261.43158570353245,"lng":754.3125},{"lat":261.36907338208147,"lng":735.4375}]]);
+
+const A_125_L = L.polygon([[{"lat":219.745712135061,"lng":718.625},{"lat":219.745712135061,"lng":741.5625},{"lat":186.10468416760756,"lng":741.70361328125},{"lat":185.97965952470562,"lng":718.64111328125}]]);
+
+const A_113_L = L.polygon([[{"lat":169.61469926698567,"lng":679},{"lat":169.61469926698567,"lng":733.75},{"lat":129.60681353836227,"lng":733.75},{"lat":129.48178889546034,"lng":679.125}]]);
+
+const A_111_L = L.polygon([[{"lat":225.15210719214295,"lng":586.54052734375},{"lat":225.27713183504488,"lng":632.41552734375},{"lat":188.3948621789702,"lng":632.41552734375},{"lat":188.51988682187215,"lng":586.54052734375}]]);
+
+const A_109_S = L.polygon([[{"lat":225.6150689105149,"lng":523.625},{"lat":225.74009355341684,"lng":582.875},{"lat":188.35772532573435,"lng":583.125},{"lat":188.35772532573435,"lng":523.5}]]);
+
+const A_108 = L.polygon([[{"lat":225.92264145025717,"lng":503.80126953125},{"lat":225.84892108894744,"lng":519.603515625},{"lat":188.48277461153825,"lng":519.375},{"lat":188.2539316629926,"lng":503.6728515625}]]);
+
+const A_106_S = L.polygon([[{"lat":226.1143049805545,"lng":440.875},{"lat":226.1143049805545,"lng":500.125},{"lat":188.60691210997007,"lng":500},{"lat":188.2318381812642,"lng":440.875}]]);
+
+const A_105 = L.polygon([[{"lat":211.9030649049232,"lng":405.96875},{"lat":211.9030649049232,"lng":436.5},{"lat":184.5968544455795,"lng":436.503662109375},{"lat":184.58993035019805,"lng":406}]]);
+
+const A_105_1 = L.polygon([[{"lat":226.96634731706007,"lng":405.96875},{"lat":226.99760347778556,"lng":420.78125},{"lat":214.5263953483162,"lng":420.71875},{"lat":214.5263953483162,"lng":406}]]);
+
+const A_105_2 = L.polygon([[{"lat":226.4326083839633,"lng":422.3125},{"lat":226.4537508737029,"lng":436.486083984375},{"lat":214.55526730827822,"lng":436.4375},{"lat":214.52474819434735,"lng":422.3480224609375}]]);
+
+const A_101 = L.polygon([[{"lat":179.26499408570353,"lng":308.670166015625},{"lat":179.2739551409574,"lng":328.625},{"lat":166.54558936860406,"lng":328.890869140625},{"lat":166.56441654569244,"lng":308.625}]]);
+
+
+const layerGroupPlanta5 = L.layerGroup([
+    B_150_L2,
+    B_150_L1,
+    B_150b,
+    B_150_2,
+    B_150_1,
+    B_148,
+    A_146_L,
+    A_146,
+    taller2,
+    taller1,
+    A_144,
+    A_144_L2,
+    A_144_L1,
+    A_140_L2,
+    A_140_L1,
+    A_140_A,
+    A_140,
+    A_139,
+    A_138_L,
+    A_137_L,
+    A_134_L,
+    A_133_L,
+    A_132_L,
+    A_131_L1,
+    A_131_L2,
+    A_129_S1,
+    A_129_S2,
+    club_deportivo,
+    A_125_L,
+    A_113_L,
+    A_111_L,
+    A_109_S,
+    A_108,
+    A_106_S,
+    A_105,
+    A_105_1,
+    A_105_2,
+    A_101
+])
 
 //PLANTA 0 AULAS CLICKABLES
     const B01 = L.polygon([
@@ -1651,6 +2840,30 @@ function getInfoXY(e) {
 
     const A002 = L.polygon([[{"lat":164.67878042528116,"lng":260.6597900390625},{"lat":164.6475269454549,"lng":273.8472900390625},{"lat":131.9803963986118,"lng":273.757080078125},{"lat":131.85538247930663,"lng":260.757080078125}]]);
 
+    const C001 = L.polygon([[{"lat":475.0012265444378,"lng":425.19189453125},{"lat":472.313196722046,"lng":448.25439453125},{"lat":457.81033814541996,"lng":446.69189453125},{"lat":460.4983679678119,"lng":423.37939453125}]]);
+
+    const C002 = L.polygon([[{"lat":458.37206749466816,"lng":423.1875},{"lat":455.6840376722763,"lng":446.625},{"lat":441.4312283814542,"lng":444.875},{"lat":444.0567458823951,"lng":421.625}]]);
+
+    const C003 = L.polygon([[{"lat":441.4934013029374,"lng":421.242919921875},{"lat":438.80537148054555,"lng":444.367919921875},{"lat":424.17748826101763,"lng":442.680419921875},{"lat":426.99054272631145,"lng":419.555419921875}]]);
+
+
+    const C004 = L.polygon([[{"lat":424.8521817929279,"lng":419.4287109375},{"lat":422.0391273276341,"lng":442.6162109375},{"lat":407.66129339391006,"lng":440.9287109375},{"lat":410.34932321630197,"lng":417.7412109375}]]);
+
+
+    const C005 = L.polygon([[{"lat":407.9228486746599,"lng":417.30078125},{"lat":405.3954659300679,"lng":440.6162109375},{"lat":391.2676812821478,"lng":438.9912109375},{"lat":394.0842451207054,"lng":415.63427734375}]]);
+
+
+    const C006 = L.polygon([[{"lat":391.5481051848666,"lng":415.40283203125},{"lat":388.87185018907826,"lng":438.612548828125},{"lat":374.1369775704787,"lng":436.925048828125},{"lat":376.8381521407961,"lng":413.579833984375}]]);
+
+
+    const C007 = L.polygon([[{"lat":359.77503326791765,"lng":413.7086181640625},{"lat":357.3057965706042,"lng":434.7711181640625},{"lat":372.06908245514995,"lng":436.4898681640625},{"lat":374.5010831675539,"lng":415.3980712890625}]]);
+
+
+    const C008 = L.polygon([[{"lat":357.43661285552986,"lng":413.375},{"lat":355.02988847966736,"lng":434.5},{"lat":340.5278061544528,"lng":432.8125},{"lat":343.02829901249174,"lng":411.78125}]]);
+
+
+    const C009 = L.polygon([[{"lat":340.60948729322365,"lng":411.3282470703125},{"lat":338.17150675663567,"lng":432.3594970703125},{"lat":319.9553918669463,"lng":430.3546142578125},{"lat":317.0173127587505,"lng":430.0108642578125},{"lat":314.95440615086835,"lng":429.3858642578125},{"lat":312.78820769933867,"lng":428.2779541015625},{"lat":311.0378626987114,"lng":427.0592041015625},{"lat":309.6938477875155,"lng":425.6842041015625},{"lat":308.4748575192215,"lng":424.0904541015625},{"lat":307.4434042152804,"lng":422.2779541015625},{"lat":306.56823171496677,"lng":419.6529541015625},{"lat":306.3494385898884,"lng":417.1529541015625},{"lat":306.3806947506138,"lng":415.2154541015625},{"lat":306.69325635786873,"lng":412.4967041015625},{"lat":309.0283975840995,"lng":393.1875},{"lat":330.0856486459846,"lng":395.6820068359375},{"lat":328.92917069914154,"lng":405.3695068359375},{"lat":328.83540221696506,"lng":406.7132568359375},{"lat":329.05419534204344,"lng":407.6820068359375},{"lat":329.4605254314748,"lng":408.4945068359375},{"lat":329.9606240030826,"lng":409.2757568359375},{"lat":330.77328418194526,"lng":409.8382568359375},{"lat":331.6172005215334,"lng":410.2757568359375},{"lat":332.617397664749,"lng":410.4632568359375}]]);
+
 
     const layerGroupPlanta0 = L.layerGroup([
         B01,
@@ -1715,8 +2928,196 @@ function getInfoXY(e) {
         Fablab,
         A006,
         A007,
-        A002
+        A002,
+        C009,
+        C008,
+        C007,
+        C006,
+        C005,
+        C004,
+        C003,
+        C002,
+        C001
     ])
+
+
+//PLANTA 1 AULAS CLICKABLES
+
+
+const B149 = L.polygon([[{"lat":688.4133163521336,"lng":484.2767333984375},{"lat":688.7883902808395,"lng":497.7454833984375},{"lat":665.994979008728,"lng":497.7767333984375},{"lat":665.994979008728,"lng":480.9954833984375}]]);
+
+const B150 = L.polygon([[{"lat":640.3355209509472,"lng":500.1875},{"lat":640.3355209509472,"lng":515.0625},{"lat":609.7044834399699,"lng":515},{"lat":609.7044834399699,"lng":500.3125}]]);
+
+const B12 = L.polygon([[{"lat":675.1213774934137,"lng":518.4375},{"lat":675.2464021363156,"lng":574.125},{"lat":601.9320662401204,"lng":574.1875},{"lat":601.8064255246697,"lng":518.4375}]]);
+
+const B11 = L.polygon([[{"lat":674.9908081975733,"lng":577.25},{"lat":675.2408574833772,"lng":640.125},{"lat":601.9788586303923,"lng":640.38623046875},{"lat":601.8538339874904,"lng":577.38623046875}]]);
+
+const B142 = L.polygon([[{"lat":695.1830149918454,"lng":681.3125},{"lat":695.3705519561984,"lng":686.1875},{"lat":689.2443444540029,"lng":698.9375},{"lat":675.6166583776906,"lng":708.0625},{"lat":653.9514994085704,"lng":710.769775390625},{"lat":653.8264747656684,"lng":681.394775390625}]]);
+
+const A139_L1 = L.polygon([[{"lat":545.5185163404842,"lng":515.7725830078125},{"lat":545.5161164578741,"lng":591.66796875},{"lat":494.84855816620967,"lng":591.62841796875},{"lat":494.59850888040575,"lng":515.75341796875}]]);
+
+const A139_L2 = L.polygon([[{"lat":515.9941965965912,"lng":594.125},{"lat":516.0567089180422,"lng":642},{"lat":494.48995801745616,"lng":642.0625},{"lat":494.55247033890714,"lng":594.1875}]]);
+
+const A139 = L.polygon([[{"lat":516.0745257361507,"lng":643.681640625},{"lat":516.0120134146997,"lng":659.306640625},{"lat":494.78126624191265,"lng":659.404541015625},{"lat":494.78126624191265,"lng":643.779541015625}],[{"lat":513.9106941233399,"lng":661.55078125},{"lat":513.9106941233399,"lng":676.23828125},{"lat":494.69181810850046,"lng":676.281494140625},{"lat":494.7855865906769,"lng":661.625244140625}],[{"lat":514.0357187662419,"lng":678.67578125},{"lat":514.0903498395971,"lng":693.921875},{"lat":494.68795141315843,"lng":693.8662109375},{"lat":494.9106112335789,"lng":678.750244140625}],[{"lat":545.59375,"lng":593.9150390625},{"lat":545.5013368774307,"lng":608.6009521484375},{"lat":525.5236823888381,"lng":608.5880126953125},{"lat":525.4111113724753,"lng":593.924072265625}],[{"lat":545.531237678549,"lng":610.7275390625},{"lat":545.4388245559797,"lng":625.4134521484375},{"lat":525.4611700673871,"lng":625.4005126953125},{"lat":525.3485990510243,"lng":610.736572265625}],[{"lat":545.59375,"lng":627.6650390625},{"lat":545.5013368774307,"lng":642.3509521484375},{"lat":525.5931518495618,"lng":642.3851318359375},{"lat":525.6042870808467,"lng":627.710205078125}],[{"lat":545.59375,"lng":644.3525390625},{"lat":545.4851044859042,"lng":660.1475830078125},{"lat":525.5847150160403,"lng":660.1240234375},{"lat":525.6042870808467,"lng":644.397705078125}],[{"lat":545.4411314676416,"lng":662.375732421875},{"lat":545.3786191461907,"lng":677.063232421875},{"lat":527.1250212825062,"lng":677.188232421875},{"lat":527.1875336039573,"lng":662.313232421875}],[{"lat":545.3786191461908,"lng":679.188232421875},{"lat":545.3161068247398,"lng":693.875732421875},{"lat":527.0625089610553,"lng":694.000732421875},{"lat":527.1250212825064,"lng":679.125732421875}]]);
+
+const A140 = L.polygon([[{"lat":545.4327069555711,"lng":716.6875},{"lat":545.4952192770221,"lng":727.3125},{"lat":528.5543801638081,"lng":730},{"lat":528.5,"lng":716.681884765625}]]);
+
+const A138 = L.polygon([[{"lat":526.3190180475652,"lng":715},{"lat":526.3815303690162,"lng":730.34375},{"lat":511.7063966252666,"lng":732.6004638671875},{"lat":511.61262814309015,"lng":714.9754638671875}]]);
+
+const A137 = L.polygon([[{"lat":509.32970746635124,"lng":714.9879150390625},{"lat":495.3582036220585,"lng":714.9566650390625},{"lat":495.326947461333,"lng":735.0191650390625},{"lat":509.29845130562575,"lng":732.8629150390625}]]);
+
+const proyecto_mentor = L.polygon([[{"lat":416.5467397440722,"lng":713.923095703125},{"lat":416.6092520655232,"lng":732.298095703125},{"lat":405.48205884724985,"lng":732.360595703125},{"lat":405.5445711687008,"lng":713.985595703125}]]);
+
+const A129 = L.polygon([[{"lat":403.2970248176425,"lng":713.913818359375},{"lat":403.2313710862591,"lng":732.3525390625},{"lat":388.4784632238292,"lng":732.2900390625},{"lat":388.44357391526427,"lng":713.970947265625}]]);
+
+const A128 = L.polygon([[{"lat":386.1456524320304,"lng":713.883056640625},{"lat":386.0871227395738,"lng":732.32421875},{"lat":371.209190234242,"lng":732.32421875},{"lat":371.209190234242,"lng":713.94921875}]]);
+
+const A127 = L.polygon([[{"lat":368.68144176658245,"lng":714.0504150390625},{"lat":368.7126979273079,"lng":732.3004150390625},{"lat":355.2725488153485,"lng":732.3316650390625},{"lat":355.21272257020985,"lng":714.123291015625}]]);
+
+const A126 = L.polygon([[{"lat":353.24765276358943,"lng":714.03125},{"lat":353.3101650850404,"lng":732.25},{"lat":339.2761489192967,"lng":732.28125},{"lat":339.2761489192967,"lng":714.0625}]]);
+
+const A125 = L.polygon([[{"lat":337.03046702779716,"lng":714.0478515625},{"lat":337.1242355099737,"lng":732.2353515625},{"lat":322.40258380826924,"lng":732.2978515625},{"lat":322.4639384733946,"lng":714.0625}]]);
+
+const A123 = L.polygon([[{"lat":320.08602837070094,"lng":713.9190673828125},{"lat":306.739647740918,"lng":713.8878173828125},{"lat":306.77090390164346,"lng":732.2940673828125},{"lat":320.11728453142644,"lng":732.2940673828125}]]);
+
+const A122 = L.polygon([[{"lat":304.4106974837357,"lng":713.80224609375},{"lat":304.37944132301016,"lng":732.27099609375},{"lat":286.3172874437694,"lng":732.294921875},{"lat":286.3172874437694,"lng":713.857421875}]]);
+
+const A124_S1 = L.polygon([[{"lat":306.0538817051096,"lng":694.017822265625},{"lat":286.1836064214922,"lng":693.96875},{"lat":286.15246115382547,"lng":594.51318359375},{"lat":306.09073740523684,"lng":594.53125}]]);
+
+const A124_S2 = L.polygon([[{"lat":337.59193874670683,"lng":648.625},{"lat":337.5919079430794,"lng":693.96875},{"lat":317.6409540387476,"lng":693.96875},{"lat":317.55891445776655,"lng":648.71875}]]);
+
+const A124 = L.polygon([[{"lat":337.2170619612166,"lng":632.25},{"lat":337.18580580049104,"lng":646.8125},{"lat":317.21653773948424,"lng":646.875},{"lat":317.21653773948424,"lng":632.21875}],[{"lat":337.2393542663584,"lng":615.420654296875},{"lat":337.17684194490744,"lng":630.045654296875},{"lat":317.26117331576967,"lng":630.076904296875},{"lat":317.1674048335932,"lng":615.420654296875}],[{"lat":337.21749937272614,"lng":598.90625},{"lat":337.21749937272614,"lng":613.625},{"lat":317.18230034768897,"lng":613.625},{"lat":317.2135565084144,"lng":598.90625}],[{"lat":337.2446900146962,"lng":581.9688720703125},{"lat":337.2134338539706,"lng":596.6876220703125},{"lat":317.2025316101224,"lng":596.6829833984375},{"lat":317.26504393157336,"lng":581.9329833984375}],[{"lat":337.3105470500206,"lng":565.46875},{"lat":337.2792908892951,"lng":579.8125},{"lat":317.22003927182465,"lng":579.8048095703125},{"lat":317.2825515932756,"lng":565.4298095703125}],[{"lat":337.32018802534185,"lng":548.8839111328125},{"lat":337.32018802534185,"lng":563.4464111328125},{"lat":317.2339535503701,"lng":563.4464111328125},{"lat":317.1714412289191,"lng":548.9151611328125}],[{"lat":337.1737940659892,"lng":534.135498046875},{"lat":337.2363063874402,"lng":547.260498046875},{"lat":317.35738816603043,"lng":547.260498046875},{"lat":317.23236352312847,"lng":534.197998046875}],[{"lat":337.2363063874402,"lng":515.822998046875},{"lat":337.2363063874402,"lng":531.885498046875},{"lat":317.29487584457945,"lng":531.947998046875},{"lat":317.29487584457945,"lng":515.822998046875}],[{"lat":305.22428121135545,"lng":515.93505859375},{"lat":305.22428121135545,"lng":532.15380859375},{"lat":286.45312528003296,"lng":532.15380859375},{"lat":286.45312528003296,"lng":515.90380859375}],[{"lat":305.68677135419466,"lng":548.858154296875},{"lat":305.6242590327437,"lng":534.420654296875},{"lat":286.337864826962,"lng":534.3612060546875},{"lat":286.400377148413,"lng":548.9237060546875}],[{"lat":305.68494945964835,"lng":551.03125},{"lat":305.71620562037384,"lng":565.375},{"lat":286.4338713326881,"lng":565.375},{"lat":286.4338713326881,"lng":551.15625}],[{"lat":306.0284776735308,"lng":578.15625},{"lat":306.12224615570733,"lng":592.28125},{"lat":286.14443148825205,"lng":592.3765869140625},{"lat":286.20694380970303,"lng":578.2203369140625}]]);
+
+const A121 = L.polygon([[{"lat":280.9052760453071,"lng":662.185546875},{"lat":281.030300688209,"lng":693.373046875},{"lat":245.0581225245085,"lng":693.177734375},{"lat":245.18314716741043,"lng":657.490234375},{"lat":261.18660837500227,"lng":657.452392578125},{"lat":261.2488137803108,"lng":662.177734375}]]);
+
+const A120 = L.polygon([[{"lat":184.64999014283921,"lng":755.1357421875},{"lat":184.64999014283921,"lng":781.7607421875},{"lat":109.26013047296448,"lng":793.6357421875},{"lat":94.88229653924046,"lng":781.5107421875},{"lat":94.63224725343656,"lng":755.2607421875},{"lat":128.03137825510333,"lng":755.2197265625},{"lat":127.92798895997993,"lng":735.7423095703125},{"lat":140.77018869742102,"lng":735.8349609375},{"lat":140.81985646629747,"lng":755.139892578125}]]);
+
+const A118 = L.polygon([[{"lat":144.79447931788448,"lng":695.781005859375},{"lat":144.70249968636307,"lng":730.85302734375},{"lat":105.22108491495959,"lng":730.87060546875},{"lat":105.22108491495959,"lng":695.74560546875}]]);
+
+const direccion = L.polygon([[{"lat":144.80257675143824,"lng":676.310302734375},{"lat":144.80257675143824,"lng":693.185302734375},{"lat":104.9553672240443,"lng":693.247802734375},{"lat":105.01787954549528,"lng":676.372802734375}]]);
+
+const A117 = L.polygon([[{"lat":144.74661160098213,"lng":657.3125},{"lat":144.68409927953115,"lng":674.0625},{"lat":129.18104355968958,"lng":674.125},{"lat":129.11853123823863,"lng":657.375}]]);
+
+const oficina_de_practicas = L.polygon([[{"lat":164.61039011954048,"lng":638.76953125},{"lat":164.61039011954048,"lng":654.20703125},{"lat":115.95602474147356,"lng":654.2275390625},{"lat":115.89351242002257,"lng":638.9150390625}]]);
+
+const A114 = L.polygon([[{"lat":227.7936336182949,"lng":599.72509765625},{"lat":227.91865826119684,"lng":653.60009765625},{"lat":188.41087110418124,"lng":653.35009765625},{"lat":188.28584646127928,"lng":599.60009765625}]]);
+
+const A115 = L.polygon([[{"lat":164.4470911294514,"lng":596.283935546875},{"lat":164.55206765148665,"lng":622.5274658203125},{"lat":147.59811011344695,"lng":622.60888671875},{"lat":147.7231347563489,"lng":596.35888671875}],[{"lat":137.91416429198702,"lng":620.41943359375},{"lat":138.03918893488895,"lng":635.23193359375},{"lat":115.95915326988906,"lng":635.248046875},{"lat":115.89664094843809,"lng":620.498046875}],[{"lat":137.93374195745292,"lng":602.9375},{"lat":137.99625427890388,"lng":618.6875},{"lat":116.11694177106295,"lng":618.625},{"lat":116.05442944961199,"lng":602.9375}],[{"lat":138.1837912432568,"lng":583.26513671875},{"lat":138.12127892180584,"lng":601.14013671875},{"lat":115.80438016380809,"lng":601.26513671875},{"lat":115.9375,"lng":583.2664794921875}]]);
+
+const A112_L = L.polygon([[{"lat":115.93347032546552,"lng":582.039794921875},{"lat":164.74857071168702,"lng":582},{"lat":164.685121959962,"lng":523.71875},{"lat":115.87026856282596,"lng":523.75}]]);
+
+const A110_L = L.polygon([[{"lat":164.70472426832984,"lng":474.001708984375},{"lat":164.70472426832984,"lng":520.876708984375},{"lat":115.92919534204347,"lng":520.9375},{"lat":116.05402284172985,"lng":474.125}]]);
+
+const A108_L = L.polygon([[{"lat":164.5591362438841,"lng":440.25},{"lat":164.68416088678603,"lng":471.25},{"lat":115.99184319945516,"lng":471.375},{"lat":115.99184319945516,"lng":440.25}]]);
+
+const A11 = L.polygon([[{"lat":227.9759619692815,"lng":553.583984375},{"lat":227.85093732637955,"lng":597.388427734375},{"lat":187.80620373855226,"lng":597.375},{"lat":187.86871606000324,"lng":553.470947265625}]]);
+
+const A12 = L.polygon([[{"lat":227.87251722762872,"lng":551.3125},{"lat":187.90155552717889,"lng":551.375},{"lat":187.90176499184543,"lng":502.59375},{"lat":227.93445044088392,"lng":502.625}]]);
+
+const A13 = L.polygon([[{"lat":227.872621959962,"lng":500.125},{"lat":227.87227079860924,"lng":453.21875},{"lat":187.83954838521782,"lng":453.3125},{"lat":187.90208534957077,"lng":500.21875}]]);
+
+const A14 = L.polygon([[{"lat":227.87305937147158,"lng":450.71875},{"lat":227.809894013119,"lng":405.90625},{"lat":187.8086002607667,"lng":405.90625},{"lat":187.8398564214922,"lng":450.75}]]);
+
+const A15 = L.polygon([[{"lat":164.6209092782766,"lng":437.5625},{"lat":116.36609159094576,"lng":437.625},{"lat":116.24084516192627,"lng":392.8125},{"lat":164.68092034517986,"lng":392.6875}]]);
+
+const A16 = L.polygon([[{"lat":164.5559449880818,"lng":390.5},{"lat":164.49343266663084,"lng":355.4375},{"lat":116.24017980357367,"lng":355.4375},{"lat":116.24017980357367,"lng":390.375}]]);
+
+const A17 = L.polygon([[{"lat":164.55856945713927,"lng":352.875},{"lat":164.4960571356883,"lng":308},{"lat":116.05442944961199,"lng":308.0625},{"lat":116.17945409251394,"lng":353.0625}]]);
+
+
+const cafeteria = L.polygon([[{"lat":197.62612013190673,"lng":259.9453125},{"lat":197.62612013190673,"lng":301.6328125},{"lat":174.12148726634047,"lng":301.7578125},{"lat":174.0589749448895,"lng":260.1328125}]]);
+
+const comedor = L.polygon([[{"lat":201.49131337706328,"lng":302.75},{"lat":201.36660909188666,"lng":223.875},{"lat":301.9356271394519,"lng":223.8125},{"lat":303.619919641737,"lng":225.0098876953125},{"lat":304.9951907136584,"lng":227.5411376953125},{"lat":305.8391070532466,"lng":230.1348876953125},{"lat":306.71427955356023,"lng":233.5723876953125},{"lat":307.55819589314837,"lng":237.6036376953125},{"lat":308.05829446475616,"lng":241.6348876953125},{"lat":308.58964919708944,"lng":245.8223876953125},{"lat":308.8979375011201,"lng":249.9464111328125},{"lat":309.11673062619855,"lng":254.2276611328125},{"lat":309.3065873837303,"lng":259.1180419921875},{"lat":309.3378435444558,"lng":262.7117919921875},{"lat":309.3239247853827,"lng":267.701416015625},{"lat":309.1000036964353,"lng":272.4859619140625},{"lat":308.91246673208235,"lng":276.7984619140625},{"lat":308.431903260928,"lng":282.331787109375},{"lat":307.9630608500457,"lng":285.706787109375},{"lat":307.52547459988887,"lng":288.644287109375},{"lat":306.7480593714716,"lng":292.96875},{"lat":305.93539919260894,"lng":295.96875},{"lat":304.96645821011884,"lng":298.78125},{"lat":303.99751722762875,"lng":300.71875},{"lat":303.21611320949154,"lng":301.59375},{"lat":301.9346106197466,"lng":302.65625}]]);
+
+const A130_L = L.polygon([[{"lat":426.9362062476477,"lng":649.5},{"lat":427.06123089054967,"lng":694.125},{"lat":390.116448913024,"lng":694.125},{"lat":390.17896123447497,"lng":649.4375}]]);
+
+const A132_L = L.polygon([[{"lat":427.06068874670683,"lng":610.8125},{"lat":426.99817642525585,"lng":646.875},{"lat":390.365956054985,"lng":646.875},{"lat":390.17841909063213,"lng":610.75}]]);
+
+
+const A133_L = L.polygon([[{"lat":428.370231598473,"lng":561.375},{"lat":428.432743919924,"lng":608.9375},{"lat":390.11685552090614,"lng":608.9375},{"lat":390.11685552090614,"lng":561.5}]]);
+
+const A134_L = L.polygon([[{"lat":440.7952757316702,"lng":515.56640625},{"lat":440.7327634102192,"lng":558.44140625},{"lat":390.36777962972917,"lng":558.4375},{"lat":390.1802426653763,"lng":515.5}]]);
+
+
+
+const C109 = L.polygon([[{"lat":336.2336247916555,"lng":412.3282470703125},{"lat":333.7956442550675,"lng":433.3594970703125},{"lat":315.5795293653781,"lng":431.3546142578125},{"lat":312.6414502571823,"lng":431.0108642578125},{"lat":310.5785436493002,"lng":430.3858642578125},{"lat":308.4123451977705,"lng":429.2779541015625},{"lat":306.66200019714324,"lng":428.0592041015625},{"lat":305.3179852859473,"lng":426.6842041015625},{"lat":304.0989950176533,"lng":425.0904541015625},{"lat":303.0675417137122,"lng":423.2779541015625},{"lat":302.1923692133986,"lng":420.6529541015625},{"lat":301.9735760883202,"lng":418.1529541015625},{"lat":302.00483224904565,"lng":416.2154541015625},{"lat":302.31739385630055,"lng":413.4967041015625},{"lat":304.6525350825313,"lng":394.1875},{"lat":325.7097861444164,"lng":396.6820068359375},{"lat":324.55330819757336,"lng":406.3695068359375},{"lat":324.4595397153969,"lng":407.7132568359375},{"lat":324.67833284047526,"lng":408.6820068359375},{"lat":325.08466292990664,"lng":409.4945068359375},{"lat":325.58476150151444,"lng":410.2757568359375},{"lat":326.3974216803771,"lng":410.8382568359375},{"lat":327.2413380199652,"lng":411.2757568359375},{"lat":328.2415351631808,"lng":411.4632568359375}]]);
+
+const C108 = L.polygon([[{"lat":352.81070106815775,"lng":414.3125},{"lat":350.40397669229526,"lng":435.4375},{"lat":335.9018943670807,"lng":433.75},{"lat":338.40238722511964,"lng":412.71875}]]);
+
+const C107 = L.polygon([[{"lat":355.0240968376436,"lng":414.7086181640625},{"lat":352.5548601403301,"lng":435.7711181640625},{"lat":367.3181460248759,"lng":437.4898681640625},{"lat":369.7501467372798,"lng":416.3980712890625}]]);
+
+const C106 = L.polygon([[{"lat":387.0091609987992,"lng":416.27685546875},{"lat":384.25861885495635,"lng":439.52685546875},{"lat":369.57078729591194,"lng":437.8336181640625},{"lat":372.22756095757836,"lng":414.6148681640625}]]);
+
+const C105 = L.polygon([[{"lat":403.20753467928387,"lng":418.1787109375},{"lat":400.6445294997939,"lng":441.3662109375},{"lat":386.5167448518738,"lng":439.7412109375},{"lat":389.26728699571663,"lng":416.6787109375}]]);
+
+const C104 = L.polygon([[{"lat":419.97622071975195,"lng":420.1787109375},{"lat":417.16316625445813,"lng":443.3662109375},{"lat":402.7853323207341,"lng":441.6787109375},{"lat":405.473362143126,"lng":418.4912109375}]]);
+
+const C103 = L.polygon([[{"lat":436.7424648726634,"lng":422.117919921875},{"lat":434.05443505027154,"lng":445.242919921875},{"lat":419.4265518307436,"lng":443.555419921875},{"lat":422.23960629603744,"lng":420.430419921875}]]);
+
+const C102 = L.polygon([[{"lat":453.43447564385184,"lng":424.31689453125},{"lat":450.74644582145993,"lng":447.37939453125},{"lat":436.43112420918686,"lng":445.75439453125},{"lat":439.18166635302975,"lng":422.56689453125}]]);
+
+const C101 = L.polygon([[{"lat":470.2502901141638,"lng":426.19189453125},{"lat":467.56226029177196,"lng":449.25439453125},{"lat":453.05940171514595,"lng":447.69189453125},{"lat":455.74743153753786,"lng":424.37939453125}]]);
+
+const layerGroupPlanta1 = L.layerGroup([
+    B149,
+    B150,
+    B12,
+    B11,
+    B142,
+    A139_L1,
+    A139_L2,
+    A139,
+    A140,
+    A138,
+    A137,
+    proyecto_mentor,
+    A129,
+    A128,
+    A127,
+    A126,
+    A125,
+    A123,
+    A122,
+    A124_S1,
+    A124_S2,
+    A124,
+    A121,
+    A120,
+    A118,
+    direccion,
+    A117,
+    oficina_de_practicas,
+    A114,
+    A115,
+    A112_L,
+    A110_L,
+    A108_L,
+    A11,
+    A12,
+    A13,
+    A14,
+    A15,
+    A16,
+    A17,
+    cafeteria,
+    comedor,
+    A130_L,
+    A132_L,
+    A133_L,
+    A134_L,
+    C109,
+    C108,
+    C107,
+    C106,
+    C105,
+    C104,
+    C103,
+    C102,
+    C101
+])
+
+
+
     // const A21 = L.polygon([
     //     [692.36, 591.75],
     //     [619.453, 645.875],
@@ -1792,7 +3193,7 @@ function getInfoXY(e) {
             
             if (layer instanceof L.Polygon) {
                 layer.setStyle({
-                    opacity: '0',
+                    opacity: '100',
                     fillOpacity: '0'
                 });
             }
@@ -1905,66 +3306,66 @@ map.pm.setGlobalOptions({pathOptions:{color:'red'}});
 //--------------------------------------------------------------------------------------------------------
 
 
- Object.values(todasLasPlantas).forEach(planta => {
-            planta.nodes.forEach(node => {
-                if (!node.id.startsWith('nodo')) {
-                    const option1 = document.createElement('option');
-                    const option2 = document.createElement('option');
-                    option1.value = option2.value = node.id;
-                    option1.text = option2.text = node.name;
-                    startPointSelect.appendChild(option1);
-                    endPointSelect.appendChild(option2);
-                }
-            });
-        });
+//  Object.values(todasLasPlantas).forEach(planta => {
+//             planta.nodes.forEach(node => {
+//                 if (!node.id.startsWith('nodo')) {
+//                     const option1 = document.createElement('option');
+//                     const option2 = document.createElement('option');
+//                     option1.value = option2.value = node.id;
+//                     option1.text = option2.text = node.name;
+//                     startPointSelect.appendChild(option1);
+//                     endPointSelect.appendChild(option2);
+//                 }
+//             });
+//         });
+
+// Object.values(todasLasPlantas).forEach(planta => {
+//     // Sort nodes alphabetically by node.name
+//     planta.nodes.sort((a, b) => a.name.localeCompare(b.name)).forEach(node => {
+//         if (!node.id.startsWith('nodo')) {
+//             // Create and populate options
+//             const option1 = document.createElement('option');
+//             const option2 = document.createElement('option');
+//             option1.value = option2.value = node.id;
+//             option1.text = option2.text = node.name;
+//             // Append options to select elements
+//             startPointSelect.appendChild(option1);
+//             endPointSelect.appendChild(option2);
+//         }
+//     });
+// });
+
+
+//CARGA OPCIONES EN EL BUSCADOR
+let allNodes = [];
+Object.values(todasLasPlantas).forEach(planta => {
+    planta.nodes.forEach(node => {
+        if (!node.id.startsWith('nodo')) {
+            allNodes.push({ id: node.id, name: node.name });
+        }
+    });
+});
+
+// Sort allNodes alphabetically by node.name
+allNodes.sort((a, b) => a.name.localeCompare(b.name));
+
+// Clear startPointSelect and endPointSelect before appending sorted options
+startPointSelect.innerHTML = '';
+endPointSelect.innerHTML = '';
+
+// Create and append sorted options
+allNodes.forEach(node => {
+    const option1 = document.createElement('option');
+    const option2 = document.createElement('option');
+    option1.value = option2.value = node.id;
+    option1.text = option2.text = node.name;
+    startPointSelect.appendChild(option1);
+    endPointSelect.appendChild(option2);
+});
 
 
 // Dijkstra's algorithm to find the shortest path
-    // function findShortestPath(startId, endId) {
-    //     const distances = {};
-    //     const prev = {};
-    //     const pq = new Set(nodosPlanta0.map(n => n.id));
-
-    //     distances[startId] = 0;
-
-    //     nodosPlanta0.forEach(node => {
-    //         if (node.id !== startId) distances[node.id] = Infinity;
-    //         prev[node.id] = null;
-    //     });
-
-    //     while (pq.size > 0) {
-    //         const closestNode = [...pq].reduce((min, nodeId) => 
-    //             distances[nodeId] < distances[min] ? nodeId : min, [...pq][0]);
-
-    //         pq.delete(closestNode);
-
-    //         if (closestNode === endId) {
-    //             const path = [];
-    //             let step = endId;
-    //             while (prev[step]) {
-    //                 path.push(step);
-    //                 step = prev[step];
-    //             }
-    //             return path.concat(startId).reverse();
-    //         }
-
-    //         const neighbors = edgesPlanta0
-    //             .filter(edge => edge.from === closestNode || edge.to === closestNode)
-    //             .map(edge => edge.from === closestNode ? edge.to : edge.from);
-
-    //         neighbors.forEach(neighbor => {
-    //             const alt = distances[closestNode] + edgesPlanta0.find(edge => 
-    //                 (edge.from === closestNode && edge.to === neighbor) || 
-    //                 (edge.to === closestNode && edge.from === neighbor)).weight;
-
-    //             if (alt < distances[neighbor]) {
-    //                 distances[neighbor] = alt;
-    //                 prev[neighbor] = closestNode;
-    //             }
-    //         });
-    //     }
-    //     return [];
-    // }
+   
 
     function findShortestPath(startId, endId, todasLasPlantas) {
         const distances = {};
@@ -2030,17 +3431,22 @@ map.pm.setGlobalOptions({pathOptions:{color:'red'}});
     
 //--------------------------------------------------------------------------------------------------------
    
-
+//OVERLAY OF CLICKABLE CLASSES
     function addOverlayAulas(floor) {
 
     let layerGroup
         switch (floor) {
+            
             case '0':
                layerGroup = layerGroupPlanta0
+               layerGroupPlanta1.remove()
+               layerGroupPlanta5.remove()
                 break;
             case '1':
                 console.log(floor)
+                layerGroup = layerGroupPlanta1
                 layerGroupPlanta0.remove()
+                layerGroupPlanta5.remove()
                 break;
             case '2':
                 console.log(floor)
@@ -2054,9 +3460,11 @@ map.pm.setGlobalOptions({pathOptions:{color:'red'}});
                 console.log(floor)
 
                 break;
-            case 'baja':
+            case '5':
                 console.log(floor)
-
+            layerGroup = layerGroupPlanta5
+            layerGroupPlanta0.remove()
+            layerGroupPlanta1.remove()
                 break;
         
             default:
@@ -2078,37 +3486,24 @@ map.pm.setGlobalOptions({pathOptions:{color:'red'}});
        layerGroup.addTo(map)
     }
 
-
+//CHARGE SVG MAPS
     let currentLayer = null;
 
     function loadFloor(floor) {
         if (currentLayer) {
             map.removeLayer(currentLayer);
         }
-        // addOverlayAulas(floor)
+        addOverlayAulas(floor)
     
+        
         const svgUrl = `/img/planta_${floor}.svg`;
 
-        // const geojsonLayer = L.geoJSON(geojsonFeatures).addTo(map);
+            //   const geojsonLayer = L.geoJSON(geojsonFeatures).addTo(map);
 
 
         currentLayer = L.imageOverlay(svgUrl, bounds).addTo(map);
         map.fitBounds(bounds);
 
-        // Clear and populate the start and end point selects
-        // startPointSelect.innerHTML = '';
-        // endPointSelect.innerHTML = '';
-
-        // Object.values(floorData).forEach(floor => {
-        //     floor.nodes.forEach(node => {
-        //         const option1 = document.createElement('option');
-        //         const option2 = document.createElement('option');
-        //         option1.value = option2.value = node.id;
-        //         option1.text = option2.text = node.id;
-        //         startPointSelect.appendChild(option1);
-        //         endPointSelect.appendChild(option2);
-        //     });
-        // });
     }
 
     //BOTONES CAMBIO DE PISO
@@ -2205,46 +3600,71 @@ map.pm.setGlobalOptions({pathOptions:{color:'red'}});
                 return null;
             }).filter(latlng => latlng !== null);
     
-            //redirige a la planta en la que se encuentra el path
-       document.querySelector(`#floor-select .floor-button[value="${getFloorById(part[0],todasLasPlantas)}"]`).click()
 
-            window.currentRoute = L.polyline(latlngs, { color: 'green', dashArray: '5,10' }).addTo(map);
+            document.querySelector(`#floor-select .floor-button[value="${getFloorById(part[0],todasLasPlantas)}"]`).click()
+           
+          
+
+            window.currentRoute = L.polyline(latlngs, { color: '#50C153', dashArray: '5,10' }).addTo(map);
             map.fitBounds(window.currentRoute.getBounds());
     
             const startLatlng = latlngs[0];
             const endLatlng = latlngs[latlngs.length - 1];
     
-//         console.log(part[0],'start')
 //         console.log(part[part.length - 1],'end')
 
             if (startLatlng && index === 0) {
-                window.startMarker = L.marker(startLatlng, { title: 'Origen', icon: new LeafIcon() }).addTo(map).bindPopup('Origen').openPopup();
+                window.startMarker = L.marker(startLatlng, { title: 'Origen', icon: currentPositionIcon }).addTo(map).bindPopup('Origen');
+                loadLottieAnimation('/img/current_position.json','current-position-container');
             }
             
             if (endLatlng && index < pathParts.length - 1) {
-                window.secondEscalatorMarker = L.marker(endLatlng, { title: 'Next Path' }).addTo(map).bindPopup('Next Path').openPopup();
+
+                let currentFloor = parseInt( getFloorById(pathParts[index][0],todasLasPlantas), 10 )
+                let nextFloor = parseInt( getFloorById(pathParts[index+1][0],todasLasPlantas), 10 )
+                if (currentFloor === 5) currentFloor = -1
+                if (nextFloor === 5) nextFloor = -1
+                if ( nextFloor > currentFloor ){
+                    window.secondEscalatorMarker = L.marker(endLatlng, { title: `subir a la planta ${nextFloor}`, icon: arrowUpIcon }).addTo(map).bindPopup(`subir a la planta ${nextFloor}`).openPopup();
+                    loadLottieAnimation('./img/arrow_up.json','arrow-position-container');
+                }
+                else {
+                    window.secondEscalatorMarker = L.marker(endLatlng, { title: `bajar a la planta ${nextFloor}`, icon: arrowDownIcon }).addTo(map).bindPopup(`bajar a la planta ${nextFloor}`).openPopup();
+                    loadLottieAnimation('./img/arrow_down.json','arrow-position-container');
+                }
                 window.secondEscalatorMarker.on('click', () => {
                     currentPartIndex++;
                     drawPathPart(currentPartIndex);
                 });
             } else if (endLatlng && index === pathParts.length - 1) {
-                window.endMarker = L.marker(endLatlng, { title: 'Destino' }).addTo(map).bindPopup('Destino').openPopup();
+                window.endMarker = L.marker(endLatlng, { title: 'Destino',  icon: finalIcon }).addTo(map)
+                loadLottieAnimation('./img/destination.json','final-position-container');
             }
     
             if (startLatlng && index > 0) {
-                window.escalatorMarker = L.marker(startLatlng, { title: 'Previous Path' }).addTo(map).bindPopup('Previous Path').openPopup();
+                window.escalatorMarker = L.marker(startLatlng, { title: 'volver', icon: currentPositionIcon }).addTo(map);
                 window.escalatorMarker.on('click', () => {
                     currentPartIndex--;
                     drawPathPart(currentPartIndex);
                 });
+                loadLottieAnimation('/img/current_position.json','current-position-container');
             }
              
         }
-    
         drawPathPart(currentPartIndex);
     });
     
+    async function loadLottieAnimation(path, container) {
 
+        lottie.loadAnimation({
+            container: document.getElementById(container), // Required
+            path, // Path to the animation JSON file
+            renderer: 'svg', // Required
+            loop: true, // Optional, defaults to true
+            autoplay: true, // Optional, defaults to true
+            name: "Animation" // Name for future reference
+        });
+    }
     
 //---------------------------------------------------------------------------------------------------------------
 

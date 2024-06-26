@@ -3,6 +3,9 @@
 # variables
 .env
 
+# archivo de macOS que almacena atributos de carpeta
+.DS_Store
+
 # Dependency directories
 node_modules/
 
