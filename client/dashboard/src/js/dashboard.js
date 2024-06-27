@@ -542,48 +542,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nodosPlanta5=[
         //laboratorios
-    { id: 'B-150-L1', latlng: [637.971925, 631.903809], name: 'Lab de metrología dimensional' },
-    { id: 'B-150-L2', latlng: [656.849027, 587.278809], name: 'Lab de fabricación ensamblaje y ensayo de conjuntos mecánicos' },
-    { id: 'A-146', latlng: [573.489507, 637.048828], name: 'Ormazabal' },
-    { id: 'A-146-L', latlng: [572.820976, 556.239746], name: 'Lab de alta tensión' },
-    { id: 'A-144-L1', latlng: [520.726778, 653.275879], name: 'Lab de máquinas eléctricas II' },
-    { id: 'A-144-L2', latlng: [536.811088, 610.832031],  name: 'Lab de máquinas eléctricas II' },
-    { id: 'A-138-L', latlng: [430.220015, 715.640625],  name: 'Lab de prototipado electrónico' },
-    { id: 'A-140-L1', latlng: [481.862663, 661.858887],  name: 'Lab de ensayos de polímeros' },
-    { id: 'A-240-L2', latlng: [468.299629, 589.759766],  name: 'Lab de transformación de polímeros' },
-    { id: 'A-137-L', latlng: [434.74629, 698.173828], name: 'Lab de medios comtinuos' },
-    { id: 'A-134-L', latlng: [409.967761, 697.140625],  name: 'Lab de ing. térmica' },
-    { id: 'A-133-L', latlng: [362.340726, 696.889648],  name: 'Lab de máquina herramienta y soldadura' },
-    { id: 'A-132-L', latlng: [328.777285, 711.959229],  name: 'Lab de investigación LIMIT' },
-    { id: 'A-131-L1', latlng: [308.92815, 684.136719],  name: 'Lab de proyectos 1' },
-    { id: 'A-131-L2', latlng: [308.752243, 538.386719],  name: 'Lab de mecatrónica' },
-    { id: 'A-125-L', latlng: [218.820166, 728.90625],  name: 'Lab de óptica' },
-    { id: 'A-113-L', latlng: [162.720758, 707.277588],  name: 'Lab de coworking' },
-    { id: 'A-111-L', latlng: [184.813261, 611.6875],  name: 'Lab de idiomas' },
+    { id: 'B_150_L1', latlng: [637.971925, 631.903809], name: 'Lab de metrología dimensional' },
+    { id: 'B_150_L2', latlng: [656.849027, 587.278809], name: 'Lab de fabricación ensamblaje y ensayo de conjuntos mecánicos' },
+    { id: 'A_146', latlng: [573.489507, 637.048828], name: 'Ormazabal' },
+    { id: 'A_146_L', latlng: [572.820976, 556.239746], name: 'Lab de alta tensión' },
+    { id: 'A_144_L1', latlng: [520.726778, 653.275879], name: 'Lab de máquinas eléctricas II' },
+    { id: 'A_144_L2', latlng: [536.811088, 610.832031],  name: 'Lab de máquinas eléctricas II' },
+    { id: 'A_138_L', latlng: [430.220015, 715.640625],  name: 'Lab de prototipado electrónico' },
+    { id: 'A_140_L1', latlng: [481.862663, 661.858887],  name: 'Lab de ensayos de polímeros' },
+    { id: 'A_240_L2', latlng: [468.299629, 589.759766],  name: 'Lab de transformación de polímeros' },
+    { id: 'A_137_L', latlng: [434.74629, 698.173828], name: 'Lab de medios comtinuos' },
+    { id: 'A_134_L', latlng: [409.967761, 697.140625],  name: 'Lab de ing. térmica' },
+    { id: 'A_133_L', latlng: [362.340726, 696.889648],  name: 'Lab de máquina herramienta y soldadura' },
+    { id: 'A_132_L', latlng: [328.777285, 711.959229],  name: 'Lab de investigación LIMIT' },
+    { id: 'A_131_L1', latlng: [308.92815, 684.136719],  name: 'Lab de proyectos 1' },
+    { id: 'A_131_L2', latlng: [308.752243, 538.386719],  name: 'Lab de mecatrónica' },
+    { id: 'A_125_L', latlng: [218.820166, 728.90625],  name: 'Lab de óptica' },
+    { id: 'A_113_L', latlng: [162.720758, 707.277588],  name: 'Lab de coworking' },
+    { id: 'A_111_L', latlng: [184.813261, 611.6875],  name: 'Lab de idiomas' },
 
 
     //despachos
-    { id: 'B -150-1', latlng: [651.84847, 649.028809], name: 'Despacho B 150-1' },
-    { id: 'B -150-2', latlng: [664.372325, 631.839355], name: 'Despacho B 150-2' },
-    { id: 'B -150b', latlng: [664.372325, 613.464355], name: 'Despacho B 150b' },
-    { id: 'B -148', latlng: [651.42291, 696.436035],  name: 'Despacho de ing. mecánica y construcción' },
-    { id: 'A -140', latlng: [464.219814, 686.217773], name: 'Despacho A -140' },
-    { id: 'A -108', latlng: [185.563344, 510.6875],  name: 'Despacho A -108' },
-    { id: 'A -105', latlng: [181.026707, 421.788086],  name: 'Despacho A -105' },
+    { id: 'B_150_1', latlng: [651.84847, 649.028809], name: 'Despacho B 150-1' },
+    { id: 'B_150_2', latlng: [664.372325, 631.839355], name: 'Despacho B 150-2' },
+    { id: 'B_150b', latlng: [664.372325, 613.464355], name: 'Despacho B 150b' },
+    { id: 'B_148', latlng: [651.42291, 696.436035],  name: 'Despacho de ing. mecánica y construcción' },
+    { id: 'A_140', latlng: [464.219814, 686.217773], name: 'Despacho A -140' },
+    { id: 'A_108', latlng: [185.563344, 510.6875],  name: 'Despacho A -108' },
+    { id: 'A_105', latlng: [181.026707, 421.788086],  name: 'Despacho A -105' },
   
    
     // //Aulas
     { id: 'taller2', latlng: [582.615523, 688.173828],  name: 'Taller 2' },
     { id: 'taller1', latlng: [561.613185, 688.923828], name: 'Taller 1' },
     { id: 'taller', latlng: [535.560949, 567.707031],  name: 'Taller' },
-    { id: 'A-140-A', latlng: [451.234253, 661.233887],  name: 'Aula de tecnología de polímeros' },
-    { id: 'A-129-S1', latlng: [324.054834, 685.761719],  name: 'Sala 1' },
-    { id: 'A-129-S2', latlng: [293.551438, 686.136719], name: 'Sala 2' },
-    { id: 'A-109-S', latlng: [183.81315, 556.4375],  name: 'Sala roja' },
-    { id: 'A-106-S', latlng: [185.27718, 473.038086],  name: 'Sala azul' },
+    { id: 'A_140_A', latlng: [451.234253, 661.233887],  name: 'Aula de tecnología de polímeros' },
+    { id: 'A_129_S1', latlng: [324.054834, 685.761719],  name: 'Sala 1' },
+    { id: 'A_129_S2', latlng: [293.551438, 686.136719], name: 'Sala 2' },
+    { id: 'A_109_S', latlng: [183.81315, 556.4375],  name: 'Sala roja' },
+    { id: 'A_106_S', latlng: [185.27718, 473.038086],  name: 'Sala azul' },
   
     // //Otros
-    { id: 'A-139', latlng: [448.22202, 715.640625],  name: 'MotoStudent' },
+    { id: 'A_139', latlng: [448.22202, 715.640625],  name: 'MotoStudent' },
     { id: 'almacen_de_zinico', latlng: [171.248274, 327.507813],  name: 'Almacén de zinico' },
     { id: 'club_deportivo', latlng: [270.899217, 745.759766],  name: 'Club deportivo' },
 
@@ -672,16 +672,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const edgesPlanta5 = [
-        { from: 'nodo_despachos_b-150', to: 'B-150-L2', weight: getDistanceBetweenPoints('nodo_despachos_b-150','B-150-L2', nodosPlanta5) },
-        { from: 'nodo_despachos_b-150', to: 'B -150b', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B -150b', nodosPlanta5)  },
-        { from: 'nodo_despachos_b-150', to: 'B -150-2', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B -150-2', nodosPlanta5) },
+        { from: 'nodo_despachos_b-150', to: 'B_150_L2', weight: getDistanceBetweenPoints('nodo_despachos_b-150','B_150_L2', nodosPlanta5) },
+        { from: 'nodo_despachos_b-150', to: 'B_150b', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B_150b', nodosPlanta5)  },
+        { from: 'nodo_despachos_b-150', to: 'B_150_2', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','B_150_2', nodosPlanta5) },
         { from: 'nodo_despachos_b-150', to: 'nodo_B-150s', weight:  getDistanceBetweenPoints('nodo_despachos_b-150','nodo_B-150s', nodosPlanta5)},
        
-        { from: 'nodo_B-150s', to: 'B-150-L1', weight: getDistanceBetweenPoints('nodo_B-150s','B-150-L1', nodosPlanta5) },
-        { from: 'nodo_B-150s', to: 'B -150-1', weight:  getDistanceBetweenPoints('nodo_B-150s','B -150-1', nodosPlanta5) },
+        { from: 'nodo_B-150s', to: 'B_150_L1', weight: getDistanceBetweenPoints('nodo_B-150s','B_150_L1', nodosPlanta5) },
+        { from: 'nodo_B-150s', to: 'B_150_1', weight:  getDistanceBetweenPoints('nodo_B-150s','B_150_1', nodosPlanta5) },
         { from: 'nodo_B-150s', to: 'nodo_salida_escalera_bloque_B_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_B-150s','nodo_salida_escalera_bloque_B_pisoBAJO', nodosPlanta5)},
         
-        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B -150-1', weight: getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B -150-1', nodosPlanta5) },
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B_150_1', weight: getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B_150_1', nodosPlanta5) },
 
 
 
@@ -704,10 +704,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B -148', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B -148', nodosPlanta5)},
+        { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'B_148', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','B_148', nodosPlanta5)},
         { from: 'nodo_salida_escalera_bloque_B_pisoBAJO', to: 'nodo_principio_pasillo_B_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_pisoBAJO','nodo_principio_pasillo_B_pisoBAJO', nodosPlanta5)},
        
-        { from: 'nodo_principio_pasillo_B_pisoBAJO', to: 'B -148', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_pisoBAJO','B -148', nodosPlanta5) },
+        { from: 'nodo_principio_pasillo_B_pisoBAJO', to: 'B_148', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_pisoBAJO','B_148', nodosPlanta5) },
         { from: 'nodo_principio_pasillo_B_pisoBAJO', to: 'nodo_labs1_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_pisoBAJO','nodo_labs1_pisoBAJO', nodosPlanta5) },
 
         { from: 'nodo_labs1_pisoBAJO', to: 'nodo_labs2_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs1_pisoBAJO','nodo_labs2_pisoBAJO', nodosPlanta5)},
@@ -715,17 +715,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         { from: 'nodo_talleres_pisoBAJO', to: 'taller2', weight: getDistanceBetweenPoints('nodo_talleres_pisoBAJO','taller2', nodosPlanta5) },
         { from: 'nodo_talleres_pisoBAJO', to: 'taller1', weight:  getDistanceBetweenPoints('nodo_talleres_pisoBAJO','taller1', nodosPlanta5) },
-        { from: 'nodo_talleres_pisoBAJO', to: 'A-146', weight:  getDistanceBetweenPoints('nodo_talleres_pisoBAJO','A-146', nodosPlanta5)},
+        { from: 'nodo_talleres_pisoBAJO', to: 'A_146', weight:  getDistanceBetweenPoints('nodo_talleres_pisoBAJO','A_146', nodosPlanta5)},
 
-        { from: 'A-146', to: 'A-146-L', weight:  getDistanceBetweenPoints('A-146','A-146-L', nodosPlanta5)},
+        { from: 'A_146', to: 'A_146_L', weight:  getDistanceBetweenPoints('A_146','A_146_L', nodosPlanta5)},
     
         { from: 'nodo_labs2_pisoBAJO', to: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', weight: getDistanceBetweenPoints('nodo_labs2_pisoBAJO','nodo_entrada_escalera_bloque_A_norte_pisoBAJO', nodosPlanta5) },
         { from: 'nodo_labs2_pisoBAJO', to: 'nodo_lab_maquinas_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs2_pisoBAJO','nodo_lab_maquinas_pisoBAJO', nodosPlanta5) },
         
-        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A-144-L1', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A-144-L1', nodosPlanta5)},
-        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A-144-L2', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A-144-L2', nodosPlanta5) },
+        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A_144_L1', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A_144_L1', nodosPlanta5)},
+        { from: 'nodo_lab_maquinas_pisoBAJO', to: 'A_144_L2', weight:  getDistanceBetweenPoints('nodo_lab_maquinas_pisoBAJO','A_144_L2', nodosPlanta5) },
        
-        { from: 'A-144-L2', to: 'taller', weight:  getDistanceBetweenPoints('A-144-L2','taller', nodosPlanta5)},
+        { from: 'A_144_L2', to: 'taller', weight:  getDistanceBetweenPoints('A_144_L2','taller', nodosPlanta5)},
 
 
 
@@ -738,40 +738,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A -140', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A -140', nodosPlanta5)},
-        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-139', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-139', nodosPlanta5)},
-        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-138-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-138-L', nodosPlanta5) },
-        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-137-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-137-L', nodosPlanta5)},
-        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A-134-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A-134-L', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A_140', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A_140', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A_139', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A_139', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A_138_L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A_138_L', nodosPlanta5) },
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A_137_L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A_137_L', nodosPlanta5)},
+        { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'A_134_L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','A_134_L', nodosPlanta5) },
         { from: 'nodo_entrada_escalera_bloque_A_norte_pisoBAJO', to: 'nodo_mitad_pasillo_A_norte_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_pisoBAJO','nodo_mitad_pasillo_A_norte_pisoBAJO', nodosPlanta5)},
        
     
-        { from: 'A -140', to: 'nodo_labs3_pisoBAJO', weight:  getDistanceBetweenPoints('A -140','nodo_labs3_pisoBAJO', nodosPlanta5)},
+        { from: 'A_140', to: 'nodo_labs3_pisoBAJO', weight:  getDistanceBetweenPoints('A_140','nodo_labs3_pisoBAJO', nodosPlanta5)},
 
-        { from: 'nodo_labs3_pisoBAJO', to: 'A-140-L1', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-140-L1', nodosPlanta5)},
-        { from: 'nodo_labs3_pisoBAJO', to: 'A-140-A', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-140-A', nodosPlanta5)},
-        { from: 'nodo_labs3_pisoBAJO', to: 'A-240-L2', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A-240-L2', nodosPlanta5)},
+        { from: 'nodo_labs3_pisoBAJO', to: 'A_140_L1', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A_140_L1', nodosPlanta5)},
+        { from: 'nodo_labs3_pisoBAJO', to: 'A_140_A', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A_140_A', nodosPlanta5)},
+        { from: 'nodo_labs3_pisoBAJO', to: 'A_240_L2', weight:  getDistanceBetweenPoints('nodo_labs3_pisoBAJO','A_240_L2', nodosPlanta5)},
 
-        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-139', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-139', nodosPlanta5)},
-        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-138-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-138-L', nodosPlanta5) },
-        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-137-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-137-L', nodosPlanta5)},
-        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-134-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-134-L', nodosPlanta5) },
-        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A-133-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A-133-L', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A_139', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A_139', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A_138_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A_138_L', nodosPlanta5) },
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A_137_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A_137_L', nodosPlanta5)},
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A_134_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A_134_L', nodosPlanta5) },
+        { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'A_133_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','A_133_L', nodosPlanta5)},
         { from: 'nodo_mitad_pasillo_A_norte_pisoBAJO', to: 'nodo_labs4_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_pisoBAJO','nodo_labs4_pisoBAJO', nodosPlanta5) },
       
-        { from: 'nodo_labs4_pisoBAJO', to: 'A-133-L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A-133-L', nodosPlanta5)},
-        { from: 'nodo_labs4_pisoBAJO', to: 'A-132-L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A-132-L', nodosPlanta5)},
+        { from: 'nodo_labs4_pisoBAJO', to: 'A_133_L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A_133_L', nodosPlanta5)},
+        { from: 'nodo_labs4_pisoBAJO', to: 'A_132_L', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','A_132_L', nodosPlanta5)},
         { from: 'nodo_labs4_pisoBAJO', to: 'nodo_entrada_salas_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_labs4_pisoBAJO','nodo_entrada_salas_pisoBAJO', nodosPlanta5)},
         
-        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A-132-L', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A-132-L', nodosPlanta5)},
-        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A-131-L1', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A-131-L1', nodosPlanta5)},
+        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A_132_L', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A_132_L', nodosPlanta5)},
+        { from: 'nodo_entrada_salas_pisoBAJO', to: 'A_131_L1', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','A_131_L1', nodosPlanta5)},
         { from: 'nodo_entrada_salas_pisoBAJO', to: 'nodo_final_pasillo_labs_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_salas_pisoBAJO','nodo_final_pasillo_labs_pisoBAJO', nodosPlanta5)},
 
         { from: 'nodo_final_pasillo_labs_pisoBAJO', to: 'nodo_entrada_escalera_principal_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_final_pasillo_labs_pisoBAJO','nodo_entrada_escalera_principal_pisoBAJO', nodosPlanta5)},
                 
-        { from: 'A-131-L1', to: 'A-129-S2', weight:  getDistanceBetweenPoints('A-131-L1','A-129-S2', nodosPlanta5)},
-        { from: 'A-131-L1', to: 'A-129-S1', weight:  getDistanceBetweenPoints('A-131-L1','A-129-S1', nodosPlanta5)},
-        { from: 'A-131-L1', to: 'A-131-L2', weight:  getDistanceBetweenPoints('A-131-L1','A-131-L2', nodosPlanta5)},
+        { from: 'A_131_L1', to: 'A_129_S2', weight:  getDistanceBetweenPoints('A_131_L1','A_129_S2', nodosPlanta5)},
+        { from: 'A_131_L1', to: 'A_129_S1', weight:  getDistanceBetweenPoints('A_131_L1','A_129_S1', nodosPlanta5)},
+        { from: 'A_131_L1', to: 'A_131_L2', weight:  getDistanceBetweenPoints('A_131_L1','A_131_L2', nodosPlanta5)},
        
         { from: 'nodo_entrada_escalera_principal_pisoBAJO', to: 'nodo_escalera_principal_pisoBAJO', weight: getDistanceBetweenPoints('nodo_entrada_escalera_principal_pisoBAJO','nodo_escalera_principal_pisoBAJO', nodosPlanta5) },
         { from: 'nodo_entrada_escalera_principal_pisoBAJO', to: 'nodo_exterior_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_pisoBAJO','nodo_exterior_pisoBAJO', nodosPlanta5) },
@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         { from: 'nodo_3_pasillo_pisoBAJO', to: 'nodo_2_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','nodo_2_pasillo_pisoBAJO', nodosPlanta5) },
         { from: 'nodo_3_pasillo_pisoBAJO', to: 'nodo_4_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','nodo_4_pasillo_pisoBAJO', nodosPlanta5)},
-        { from: 'nodo_3_pasillo_pisoBAJO', to: 'A-125-L', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','A-125-L', nodosPlanta5)},
+        { from: 'nodo_3_pasillo_pisoBAJO', to: 'A_125_L', weight:  getDistanceBetweenPoints('nodo_3_pasillo_pisoBAJO','A_125_L', nodosPlanta5)},
 
         { from: 'nodo_4_pasillo_pisoBAJO', to: 'nodo_5_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_4_pasillo_pisoBAJO','nodo_5_pasillo_pisoBAJO', nodosPlanta5)},
 
@@ -803,23 +803,23 @@ document.addEventListener('DOMContentLoaded', () => {
         { from: 'nodo_6_7_pasillo_pisoBAJO', to: 'nodo_7_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_6_7_pasillo_pisoBAJO','nodo_7_pasillo_pisoBAJO', nodosPlanta5) },
     
 
-        { from: 'nodo_6_pasillo_pisoBAJO', to: 'A-113-L', weight:  getDistanceBetweenPoints('nodo_6_pasillo_pisoBAJO','A-113-L', nodosPlanta5)},
+        { from: 'nodo_6_pasillo_pisoBAJO', to: 'A_113_L', weight:  getDistanceBetweenPoints('nodo_6_pasillo_pisoBAJO','A_113_L', nodosPlanta5)},
     
-        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A-111-L', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A-111-L', nodosPlanta5)},
-        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A-109-S', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A-109-S', nodosPlanta5)},
+        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A_111_L', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A_111_L', nodosPlanta5)},
+        { from: 'nodo_7_pasillo_pisoBAJO', to: 'A_109_S', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','A_109_S', nodosPlanta5)},
         { from: 'nodo_7_pasillo_pisoBAJO', to: 'nodo_8_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_7_pasillo_pisoBAJO','nodo_8_pasillo_pisoBAJO', nodosPlanta5) },
         
 
-        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-111-L', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-111-L', nodosPlanta5)},
-        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-109-S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-109-S', nodosPlanta5)},
-        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A -108', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A -108', nodosPlanta5) },
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A_111_L', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A_111_L', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A_109_S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A_109_S', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A_108', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A_108', nodosPlanta5) },
         { from: 'nodo_8_pasillo_pisoBAJO', to: 'nodo_9_pasillo_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','nodo_9_pasillo_pisoBAJO', nodosPlanta5)},
-        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A-106-S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A-106-S', nodosPlanta5)},
-        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A -105', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A -105', nodosPlanta5) },
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A_106_S', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A_106_S', nodosPlanta5)},
+        { from: 'nodo_8_pasillo_pisoBAJO', to: 'A_105', weight:  getDistanceBetweenPoints('nodo_8_pasillo_pisoBAJO','A_105', nodosPlanta5) },
       
-        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A -108', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A -108', nodosPlanta5) },
-        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A-106-S', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A-106-S', nodosPlanta5)},
-        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A -105', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A -105', nodosPlanta5) },
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A_108', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A_108', nodosPlanta5) },
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A_106_S', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A_106_S', nodosPlanta5)},
+        { from: 'nodo_9_pasillo_pisoBAJO', to: 'A_105', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','A_105', nodosPlanta5) },
         { from: 'nodo_9_pasillo_pisoBAJO', to: 'nodo_salida_ext_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','nodo_salida_ext_pisoBAJO', nodosPlanta5)},
         { from: 'nodo_9_pasillo_pisoBAJO', to: 'nodo_entrada_escalera_cafet_pisoBAJO', weight:  getDistanceBetweenPoints('nodo_9_pasillo_pisoBAJO','nodo_entrada_escalera_cafet_pisoBAJO', nodosPlanta5)},
 
@@ -855,34 +855,34 @@ todasLasPlantas.planta5.edges = edgesPlanta5
 
     const nodosPlanta0=[
         //laboratorios
-        { id: 'A015-L', latlng: [164.973038, 630.064453], name: 'Lab metalográfico y CNC' },
-        { id: 'A012-L', latlng: [137.252833, 571.297852], name: 'Lab de motores' },
-        { id: 'A008-L', latlng: [168.10913, 497.125977], name: 'Lab de medioambiente I' },
-        { id: 'A007-L', latlng: [183.975154, 446.814453], name: 'Lab de fabricación mecánica' },
-        { id: 'A006-L', latlng: [167.109018, 424.625977], name: 'Lab de medioambiente II' },
-        { id: 'A005-L', latlng: [168.10913, 388.375977],  name: 'Lab de hidraúlica' },
-        { id: 'A004-L', latlng: [167.913795, 322.817383],  name: 'Lab de ensayos destructivos - mecánica' },
-        { id: 'A002-L', latlng: [167.913795, 292.567383],  name: 'Lab de mecánica de fluidos' },
+        { id: 'A015_L', latlng: [164.973038, 630.064453], name: 'Lab metalográfico y CNC' },
+        { id: 'A012_L', latlng: [137.252833, 571.297852], name: 'Lab de motores' },
+        { id: 'A008_L', latlng: [168.10913, 497.125977], name: 'Lab de medioambiente I' },
+        { id: 'A007_L', latlng: [183.975154, 446.814453], name: 'Lab de fabricación mecánica' },
+        { id: 'A006_L', latlng: [167.109018, 424.625977], name: 'Lab de medioambiente II' },
+        { id: 'A005_L', latlng: [168.10913, 388.375977],  name: 'Lab de hidraúlica' },
+        { id: 'A004_L', latlng: [167.913795, 322.817383],  name: 'Lab de ensayos destructivos _ mecánica' },
+        { id: 'A002_L', latlng: [167.913795, 292.567383],  name: 'Lab de mecánica de fluidos' },
         { id: 'Fablab', latlng: [176.66477, 274.067383],  name: 'Fablab' },
-        { id: 'A022-L', latlng: [327.767531, 717.157227], name: 'Lab de automatización' },
-        { id: 'A021-L1', latlng: [324.767197, 655.907227], name: 'Lab de electronica I' },
-        { id: 'A021-L2', latlng: [323.767086, 603.407227], name: 'Lab de electronica II' },
-        { id: 'A021-L3', latlng: [302.014664, 561.907227], name: 'Lab de electronica III' },
-        { id: 'A024-L1', latlng: [353.301249, 663.447266], name: 'Lab de elasticidad y resistencia de materiales' },
-        { id: 'A024-L2', latlng: [354.551388, 589.197266],  name: 'Lab de mecánica y teoría de mecanismos' },
-        { id: 'A024-L3', latlng: [344.900137, 581.598633],  name: 'Lab de instalaciones industriales' },
-        { id: 'A024-LP', latlng: [400.555786, 698.447266],  name: 'Lab polivalente' },
-        { id: 'A029-L1', latlng: [468.183556, 676.530273],  name: 'Lab de química-física' },
-        { id: 'A029-L2', latlng: [463.527641, 609.459961],  name: 'Lab de operaciones y reactores' },
-        { id: 'A029-A', latlng: [481.529646, 534.959961],  name: 'cultura de procesos' },
-        { id: 'A032-L1', latlng: [534.168442, 665.282227],  name: 'Lab medidas magnéticas I' },
-        { id: 'A032-L2', latlng: [534.168442, 641.032227],  name: 'Lab medidas magnéticas II' },
-        { id: 'A032-L3', latlng: [533.668386, 606.782227],  name: 'Lab maquinas eléctricas III' },
-        { id: 'A032-L7', latlng: [547.919973, 598.032227],  name: 'Lab instalaciones eléctricas' },
-        { id: 'A032-L6', latlng: [559.171226, 630.782227],  name: 'Lab centrales y subestaciones' },
-        { id: 'A032-L5', latlng: [558.921198, 663.032227],  name: 'Lab protecciones eléctricas' },
-        { id: 'A032-L4', latlng: [559.421254, 686.782227],  name: 'Lab proyectos eléctricos' },
-        { id: 'A032-A1', latlng: [538.168888, 579.782227],  name: 'Aula Schneider' },
+        { id: 'A022_L', latlng: [327.767531, 717.157227], name: 'Lab de automatización' },
+        { id: 'A021_L1', latlng: [324.767197, 655.907227], name: 'Lab de electronica I' },
+        { id: 'A021_L2', latlng: [323.767086, 603.407227], name: 'Lab de electronica II' },
+        { id: 'A021_L3', latlng: [302.014664, 561.907227], name: 'Lab de electronica III' },
+        { id: 'A024_L1', latlng: [353.301249, 663.447266], name: 'Lab de elasticidad y resistencia de materiales' },
+        { id: 'A024_L2', latlng: [354.551388, 589.197266],  name: 'Lab de mecánica y teoría de mecanismos' },
+        { id: 'A024_L3', latlng: [344.900137, 581.598633],  name: 'Lab de instalaciones industriales' },
+        { id: 'A024_LP', latlng: [400.555786, 698.447266],  name: 'Lab polivalente' },
+        { id: 'A029_L1', latlng: [468.183556, 676.530273],  name: 'Lab de química-física' },
+        { id: 'A029_L2', latlng: [463.527641, 609.459961],  name: 'Lab de operaciones y reactores' },
+        { id: 'A029_A', latlng: [481.529646, 534.959961],  name: 'cultura de procesos' },
+        { id: 'A032_L1', latlng: [534.168442, 665.282227],  name: 'Lab medidas magnéticas I' },
+        { id: 'A032_L2', latlng: [534.168442, 641.032227],  name: 'Lab medidas magnéticas II' },
+        { id: 'A032_L3', latlng: [533.668386, 606.782227],  name: 'Lab maquinas eléctricas III' },
+        { id: 'A032_L7', latlng: [547.919973, 598.032227],  name: 'Lab instalaciones eléctricas' },
+        { id: 'A032_L6', latlng: [559.171226, 630.782227],  name: 'Lab centrales y subestaciones' },
+        { id: 'A032_L5', latlng: [558.921198, 663.032227],  name: 'Lab protecciones eléctricas' },
+        { id: 'A032_L4', latlng: [559.421254, 686.782227],  name: 'Lab proyectos eléctricos' },
+        { id: 'A032_A1', latlng: [538.168888, 579.782227],  name: 'Aula Schneider' },
 
         //despachos
         { id: 'B037', latlng: [649.217768, 685.949219],  name: 'Despacho B 037' },
@@ -893,9 +893,9 @@ todasLasPlantas.planta5.edges = edgesPlanta5
         { id: 'A031', latlng: [528.167774, 713.532227], name: 'Despacho A 031' },
         { id: 'A030', latlng: [502.414907, 714.032227],  name: 'Despacho A 030' },
         { id: 'A029', latlng: [485.185449, 677.780273],  name: 'Despacho A 029' },
-        { id: 'A028-3', latlng: [442.011697, 718.170898],  name: 'Despacho A 028-3' },
-        { id: 'A028-2', latlng: [433.51075, 722.170898],  name: 'Despacho A 028-2' },
-        { id: 'A028-1', latlng: [426.009915, 719.670898], name: 'Despacho A 028-1' },
+        { id: 'A028_3', latlng: [442.011697, 718.170898],  name: 'Despacho A 028-3' },
+        { id: 'A028_2', latlng: [433.51075, 722.170898],  name: 'Despacho A 028-2' },
+        { id: 'A028_1', latlng: [426.009915, 719.670898], name: 'Despacho A 028-1' },
         { id: 'A026', latlng: [398.756881, 714.420898],  name: 'Despacho A 026' },
         { id: 'A024', latlng: [435.366206, 696.335449],  name: 'Despacho A 024' },
         { id: 'A021', latlng: [329.517726, 545.407227],  name: 'Despacho A 021' },
@@ -1077,36 +1077,36 @@ todasLasPlantas.planta5.edges = edgesPlanta5
         { from: 'nodo_principio_pasillo_A_norte', to: 'A019', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','A019', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_A_norte', to: 'enfermeria', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_norte','enfermeria', nodosPlanta0) },
         
-        { from: 'nodo_principio_pasillo_A_sur', to: 'A015-L', weight: getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A015-L', nodosPlanta0) },
+        { from: 'nodo_principio_pasillo_A_sur', to: 'A015_L', weight: getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A015_L', nodosPlanta0) },
         { from: 'nodo_principio_pasillo_A_sur', to: 'A01', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A01', nodosPlanta0) },
         { from: 'nodo_principio_pasillo_A_sur', to: 'A02', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','A02', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_A_sur', to: 'nodo_pasillo_A_lab_motores_sur', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','nodo_pasillo_A_lab_motores_sur', nodosPlanta0)},
         { from: 'nodo_principio_pasillo_A_sur', to: 'nodo_acceso_escalera_entrada', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur','nodo_acceso_escalera_entrada', nodosPlanta0)},
     
-        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A015-L', weight: getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A015-L', nodosPlanta0) },
+        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A015_L', weight: getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A015_L', nodosPlanta0) },
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A01', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A01', nodosPlanta0) },
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A02', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A02', nodosPlanta0)},
-        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A012-L', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A012-L', nodosPlanta0)},
+        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A012_L', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A012_L', nodosPlanta0)},
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A03', weight: getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A03', nodosPlanta0) },
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A04', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A04', nodosPlanta0) },
-        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A008-L', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A008-L', nodosPlanta0)},
+        { from: 'nodo_pasillo_A_lab_motores_sur', to: 'A008_L', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','A008_L', nodosPlanta0)},
         { from: 'nodo_pasillo_A_lab_motores_sur', to: 'nodo_medio_pasillo_A_sur', weight:  getDistanceBetweenPoints('nodo_pasillo_A_lab_motores_sur','nodo_medio_pasillo_A_sur', nodosPlanta0)},
     
         { from: 'nodo_medio_pasillo_A_sur', to: 'A03', weight: getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A03', nodosPlanta0) },
         { from: 'nodo_medio_pasillo_A_sur', to: 'A04', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A04', nodosPlanta0) },
-        { from: 'nodo_medio_pasillo_A_sur', to: 'A008-L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A008-L', nodosPlanta0)},
+        { from: 'nodo_medio_pasillo_A_sur', to: 'A008_L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A008_L', nodosPlanta0)},
         { from: 'nodo_medio_pasillo_A_sur', to: 'A006', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A006', nodosPlanta0) },
-        { from: 'nodo_medio_pasillo_A_sur', to: 'A007-L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A007-L', nodosPlanta0)},
-        { from: 'nodo_medio_pasillo_A_sur', to: 'A006-L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A006-L', nodosPlanta0)},
+        { from: 'nodo_medio_pasillo_A_sur', to: 'A007_L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A007_L', nodosPlanta0)},
+        { from: 'nodo_medio_pasillo_A_sur', to: 'A006_L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A006_L', nodosPlanta0)},
         { from: 'nodo_medio_pasillo_A_sur', to: 'A007', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A007', nodosPlanta0)},
-        { from: 'nodo_medio_pasillo_A_sur', to: 'A005-L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A005-L', nodosPlanta0)},
+        { from: 'nodo_medio_pasillo_A_sur', to: 'A005_L', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A005_L', nodosPlanta0)},
         { from: 'nodo_medio_pasillo_A_sur', to: 'A006', weight:  getDistanceBetweenPoints('nodo_medio_pasillo_A_sur','A006', nodosPlanta0) },
     
-        { from: 'nodo_baño_pasillo_A_sur', to: 'A007-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A007-L', nodosPlanta0)},
-        { from: 'nodo_baño_pasillo_A_sur', to: 'A006-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A006-L', nodosPlanta0)},
+        { from: 'nodo_baño_pasillo_A_sur', to: 'A007_L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A007_L', nodosPlanta0)},
+        { from: 'nodo_baño_pasillo_A_sur', to: 'A006_L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A006_L', nodosPlanta0)},
         { from: 'nodo_baño_pasillo_A_sur', to: 'A007', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A007', nodosPlanta0)},
-        { from: 'nodo_baño_pasillo_A_sur', to: 'A005-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A005-L', nodosPlanta0)},
-        { from: 'nodo_baño_pasillo_A_sur', to: 'A004-L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A004-L', nodosPlanta0)},
+        { from: 'nodo_baño_pasillo_A_sur', to: 'A005_L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A005_L', nodosPlanta0)},
+        { from: 'nodo_baño_pasillo_A_sur', to: 'A004_L', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','A004_L', nodosPlanta0)},
         { from: 'nodo_baño_pasillo_A_sur', to: 'nodo_final_pasillo_A_sur', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','nodo_final_pasillo_A_sur', nodosPlanta0)},
         { from: 'nodo_baño_pasillo_A_sur', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_baño_pasillo_A_sur','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
         
@@ -1122,12 +1122,12 @@ todasLasPlantas.planta5.edges = edgesPlanta5
 
         { from: 'nodo_escalera_cafeteria_BAJADA_piso0', to: 'nodo_acceso_escalera_cafeteria', weight:  getDistanceBetweenPoints('nodo_escalera_cafeteria_BAJADA_piso0','nodo_acceso_escalera_cafeteria', nodosPlanta0)},
 
-        { from: 'nodo_final_pasillo_A_sur', to: 'A004-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A004-L', nodosPlanta0)},
-        { from: 'nodo_final_pasillo_A_sur', to: 'A002-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A002-L', nodosPlanta0)},
+        { from: 'nodo_final_pasillo_A_sur', to: 'A004_L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A004_L', nodosPlanta0)},
+        { from: 'nodo_final_pasillo_A_sur', to: 'A002_L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','A002_L', nodosPlanta0)},
         { from: 'nodo_final_pasillo_A_sur', to: 'Fablab', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','Fablab', nodosPlanta0)},
         { from: 'nodo_final_pasillo_A_sur', to: 'nodo_A05_08_sur', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur','nodo_A05_08_sur', nodosPlanta0)},
         
-        { from: 'A002', to: 'A002-L', weight:  getDistanceBetweenPoints('A002','A002-L', nodosPlanta0)},
+        { from: 'A002', to: 'A002_L', weight:  getDistanceBetweenPoints('A002','A002_L', nodosPlanta0)},
 
         { from: 'nodo_A05_08_sur', to: 'pista_deportiva', weight:  getDistanceBetweenPoints('nodo_A05_08_sur','pista_deportiva', nodosPlanta0)},
         { from: 'nodo_A05_08_sur', to: 'A05', weight:  getDistanceBetweenPoints('nodo_A05_08_sur','A05', nodosPlanta0)},
@@ -1139,7 +1139,7 @@ todasLasPlantas.planta5.edges = edgesPlanta5
         { from: 'nodo_pasillo_A021s_norte', to: 'enfermeria', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','enfermeria', nodosPlanta0) },
         { from: 'nodo_pasillo_A021s_norte', to: 'A019', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','A019', nodosPlanta0)},
         { from: 'nodo_pasillo_A021s_norte', to: 'nodo_entrada_A021s_norte', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','nodo_entrada_A021s_norte', nodosPlanta0) },
-        { from: 'nodo_pasillo_A021s_norte', to: 'A022-L', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','A022-L', nodosPlanta0)},
+        { from: 'nodo_pasillo_A021s_norte', to: 'A022_L', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','A022_L', nodosPlanta0)},
         { from: 'nodo_pasillo_A021s_norte', to: 'A023', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','A023', nodosPlanta0)},
         { from: 'nodo_pasillo_A021s_norte', to: 'A025', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','A025', nodosPlanta0)},
         { from: 'nodo_pasillo_A021s_norte', to: 'nodo_entrada_A024s_norte', weight:  getDistanceBetweenPoints('nodo_pasillo_A021s_norte','nodo_entrada_A024s_norte', nodosPlanta0) },
@@ -1147,36 +1147,36 @@ todasLasPlantas.planta5.edges = edgesPlanta5
     
         { from: 'nodo_entrada_A021s_norte', to: 'nodo_medio_A021s_norte', weight: getDistanceBetweenPoints('nodo_entrada_A021s_norte','nodo_medio_A021s_norte', nodosPlanta0) },
 
-        { from: 'nodo_medio_A021s_norte', to: 'A021-L1', weight:  getDistanceBetweenPoints('nodo_medio_A021s_norte','A021-L1', nodosPlanta0) },
-        { from: 'nodo_medio_A021s_norte', to: 'A021-L2', weight:  getDistanceBetweenPoints('nodo_medio_A021s_norte','A021-L2', nodosPlanta0)},
+        { from: 'nodo_medio_A021s_norte', to: 'A021_L1', weight:  getDistanceBetweenPoints('nodo_medio_A021s_norte','A021_L1', nodosPlanta0) },
+        { from: 'nodo_medio_A021s_norte', to: 'A021_L2', weight:  getDistanceBetweenPoints('nodo_medio_A021s_norte','A021_L2', nodosPlanta0)},
         { from: 'nodo_medio_A021s_norte', to: 'nodo_final_A021s_norte', weight:  getDistanceBetweenPoints('nodo_medio_A021s_norte','nodo_final_A021s_norte', nodosPlanta0)},
 
         { from: 'nodo_final_A021s_norte', to: 'A021', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021', nodosPlanta0)},
-        { from: 'nodo_final_A021s_norte', to: 'A021-L3', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021-L3', nodosPlanta0)},
-        { from: 'nodo_final_A021s_norte', to: 'A021-L1', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021-L1', nodosPlanta0) },
-        { from: 'nodo_final_A021s_norte', to: 'A021-L2', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021-L2', nodosPlanta0)},
+        { from: 'nodo_final_A021s_norte', to: 'A021_L3', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021_L3', nodosPlanta0)},
+        { from: 'nodo_final_A021s_norte', to: 'A021_L1', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021_L1', nodosPlanta0) },
+        { from: 'nodo_final_A021s_norte', to: 'A021_L2', weight:  getDistanceBetweenPoints('nodo_final_A021s_norte','A021_L2', nodosPlanta0)},
     
-        { from: 'nodo_entrada_A024s_norte', to: 'A024-L1', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024-L1', nodosPlanta0)},
-        { from: 'nodo_entrada_A024s_norte', to: 'A024-L2', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024-L2', nodosPlanta0)},
-        { from: 'nodo_entrada_A024s_norte', to: 'A024-L3', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024-L3', nodosPlanta0) },
+        { from: 'nodo_entrada_A024s_norte', to: 'A024_L1', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024_L1', nodosPlanta0)},
+        { from: 'nodo_entrada_A024s_norte', to: 'A024_L2', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024_L2', nodosPlanta0)},
+        { from: 'nodo_entrada_A024s_norte', to: 'A024_L3', weight:  getDistanceBetweenPoints('nodo_entrada_A024s_norte','A024_L3', nodosPlanta0) },
         
-        { from: 'nodo_first_half_pasillo_A_norte', to: 'A022-L', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A022-L', nodosPlanta0)},
+        { from: 'nodo_first_half_pasillo_A_norte', to: 'A022_L', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A022_L', nodosPlanta0)},
         { from: 'nodo_first_half_pasillo_A_norte', to: 'A023', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A023', nodosPlanta0)},
         { from: 'nodo_first_half_pasillo_A_norte', to: 'A025', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A025', nodosPlanta0)},
         { from: 'nodo_first_half_pasillo_A_norte', to: 'nodo_entrada_A024s_norte', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','nodo_entrada_A024s_norte', nodosPlanta0) },
-        { from: 'nodo_first_half_pasillo_A_norte', to: 'A024-LP', weight: getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A024-LP', nodosPlanta0) },
+        { from: 'nodo_first_half_pasillo_A_norte', to: 'A024_LP', weight: getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A024_LP', nodosPlanta0) },
         { from: 'nodo_first_half_pasillo_A_norte', to: 'A026', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','A026', nodosPlanta0) },
         { from: 'nodo_first_half_pasillo_A_norte', to: 'nodo_entrada_A028s_norte', weight:  getDistanceBetweenPoints('nodo_first_half_pasillo_A_norte','nodo_entrada_A028s_norte', nodosPlanta0)},
     
         { from: 'nodo_entrada_A028s_norte', to: 'A024', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A024', nodosPlanta0)},
-        { from: 'nodo_entrada_A028s_norte', to: 'A028-1', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028-1', nodosPlanta0) },
-        { from: 'nodo_entrada_A028s_norte', to: 'A028-2', weight: getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028-2', nodosPlanta0) },
-        { from: 'nodo_entrada_A028s_norte', to: 'A028-3', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028-3', nodosPlanta0) },
+        { from: 'nodo_entrada_A028s_norte', to: 'A028_1', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028_1', nodosPlanta0) },
+        { from: 'nodo_entrada_A028s_norte', to: 'A028_2', weight: getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028_2', nodosPlanta0) },
+        { from: 'nodo_entrada_A028s_norte', to: 'A028_3', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A028_3', nodosPlanta0) },
         { from: 'nodo_entrada_A028s_norte', to: 'nodo_entrada_A029s_norte', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','nodo_entrada_A029s_norte', nodosPlanta0)},
-        { from: 'nodo_entrada_A028s_norte', to: 'A024-LP', weight: getDistanceBetweenPoints('nodo_entrada_A028s_norte','A024-LP', nodosPlanta0) },
+        { from: 'nodo_entrada_A028s_norte', to: 'A024_LP', weight: getDistanceBetweenPoints('nodo_entrada_A028s_norte','A024_LP', nodosPlanta0) },
         { from: 'nodo_entrada_A028s_norte', to: 'A026', weight:  getDistanceBetweenPoints('nodo_entrada_A028s_norte','A026', nodosPlanta0) },
         
-        { from: 'nodo_entrada_A029s_norte', to: 'A029-L1', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','A029-L1', nodosPlanta0)},
+        { from: 'nodo_entrada_A029s_norte', to: 'A029_L1', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','A029_L1', nodosPlanta0)},
 
 
         { from: 'nodo_entrada_A029s_norte', to: 'nodo_escalera_bloque_A_BAJADA_piso0', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_escalera_bloque_A_BAJADA_piso0', nodosPlanta0) },
@@ -1193,9 +1193,9 @@ todasLasPlantas.planta5.edges = edgesPlanta5
         { from: 'nodo_entrada_A029s_norte', to: 'A031', weight: getDistanceBetweenPoints('nodo_entrada_A029s_norte','A031', nodosPlanta0) },
         { from: 'nodo_entrada_A029s_norte', to: 'nodo_second_half_pasillo_A_norte', weight:  getDistanceBetweenPoints('nodo_entrada_A029s_norte','nodo_second_half_pasillo_A_norte', nodosPlanta0) },
         
-        { from: 'A029-L1', to: 'A029', weight:  getDistanceBetweenPoints('A029-L1','A029', nodosPlanta0)},
-        { from: 'A029-L1', to: 'A029-L2', weight:  getDistanceBetweenPoints('A029-L1','A029-L2', nodosPlanta0) },
-        { from: 'A029-L1', to: 'A029-A', weight:  getDistanceBetweenPoints('A029-L1','A029-A', nodosPlanta0)},
+        { from: 'A029_L1', to: 'A029', weight:  getDistanceBetweenPoints('A029_L1','A029', nodosPlanta0)},
+        { from: 'A029_L1', to: 'A029_L2', weight:  getDistanceBetweenPoints('A029_L1','A029_L2', nodosPlanta0) },
+        { from: 'A029_L1', to: 'A029_A', weight:  getDistanceBetweenPoints('A029_L1','A029_A', nodosPlanta0)},
     
         { from: 'nodo_second_half_pasillo_A_norte', to: 'A030', weight:  getDistanceBetweenPoints('nodo_second_half_pasillo_A_norte','A030', nodosPlanta0)},
         { from: 'nodo_second_half_pasillo_A_norte', to: 'A031', weight: getDistanceBetweenPoints('nodo_second_half_pasillo_A_norte','A031', nodosPlanta0) },
@@ -1205,14 +1205,14 @@ todasLasPlantas.planta5.edges = edgesPlanta5
         { from: 'nodo_second_half_pasillo_A_norte', to: 'nodo_final_pasillo_A_norte', weight:  getDistanceBetweenPoints('nodo_second_half_pasillo_A_norte','nodo_final_pasillo_A_norte', nodosPlanta0) },
         
         { from: 'nodo_entrada_A032s_norte', to: 'A032', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032', nodosPlanta0)},
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L1', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L1', nodosPlanta0)},
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L2', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L2', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L3', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L3', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L4', weight: getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L4', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L5', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L5', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L6', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L6', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-L7', weight: getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-L7', nodosPlanta0) },
-        { from: 'nodo_entrada_A032s_norte', to: 'A032-A1', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032-A1', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L1', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L1', nodosPlanta0)},
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L2', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L2', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L3', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L3', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L4', weight: getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L4', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L5', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L5', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L6', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L6', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_L7', weight: getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_L7', nodosPlanta0) },
+        { from: 'nodo_entrada_A032s_norte', to: 'A032_A1', weight:  getDistanceBetweenPoints('nodo_entrada_A032s_norte','A032_A1', nodosPlanta0) },
 
         { from: 'nodo_final_pasillo_A_norte', to: 'B033', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte','B033', nodosPlanta0) },
         { from: 'nodo_final_pasillo_A_norte', to: 'B034', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte','B034', nodosPlanta0) },
@@ -1280,15 +1280,15 @@ todasLasPlantas.planta0.edges = edgesPlanta0
 
 const nodosPlanta1=[
     //laboratorios
-    { id: 'A139-L1', latlng: [519.943627, 591.736328], name: 'Lab de medidas eléctricas I' },
-    { id: 'A139-L2', latlng: [516.235802, 602.934082], name: 'Lab de medidas eléctricas II' },
-    { id: 'A108-L', latlng: [167.943295, 455.095703], name: 'Lab de análisis químico I' },
-    { id: 'A110-L', latlng: [168.10913, 497.125977], name: 'Lab de análisis químico II' },
-    { id: 'A112-L', latlng: [168.193323, 555.095703], name: 'Lab de análisis químico III' },
-    { id: 'A134-L', latlng: [434.179202, 560.444336],  name: 'Lab de informática industrial' },
-    { id: 'A133-L', latlng: [428.928617, 585.444336],  name: 'Lab de automatización II' },
-    { id: 'A132-L', latlng: [428.428561, 629.694336],  name: 'Lab de automatización III' },
-    { id: 'A130-L', latlng: [428.928617, 670.944336],  name: 'Lab de regulación automática' },
+    { id: 'A139_L1', latlng: [519.943627, 591.736328], name: 'Lab de medidas eléctricas I' },
+    { id: 'A139_L2', latlng: [516.235802, 602.934082], name: 'Lab de medidas eléctricas II' },
+    { id: 'A108_L', latlng: [167.943295, 455.095703], name: 'Lab de análisis químico I' },
+    { id: 'A110_L', latlng: [168.10913, 497.125977], name: 'Lab de análisis químico II' },
+    { id: 'A112_L', latlng: [168.193323, 555.095703], name: 'Lab de análisis químico III' },
+    { id: 'A134_L', latlng: [434.179202, 560.444336],  name: 'Lab de informática industrial' },
+    { id: 'A133_L', latlng: [428.928617, 585.444336],  name: 'Lab de automatización II' },
+    { id: 'A132_L', latlng: [428.428561, 629.694336],  name: 'Lab de automatización III' },
+    { id: 'A130_L', latlng: [428.928617, 670.944336],  name: 'Lab de regulación automática' },
 
     //despachos
     { id: 'A140', latlng: [530.786205, 713.844238], name: 'Despacho A 140' },
@@ -1335,7 +1335,7 @@ const nodosPlanta1=[
     { id: 'A15', latlng: [167.634788, 428.62793],  name: 'A15' },
     { id: 'A16', latlng: [167.38476, 383.12793], name: 'A16' },
     { id: 'A17', latlng: [167.634788, 346.12793],  name: 'A17' },
-    { id: 'A124-S1', latlng: [308.355603, 606.788818],  name: 'Sala de ordenadores' },
+    { id: 'A124_S1', latlng: [308.355603, 606.788818],  name: 'Sala de ordenadores' },
     { id: 'B11', latlng: [667.113303, 643.226318],  name: 'B11' },
     { id: 'B12', latlng: [678.051158, 562.976318],  name: 'B12' },
 
@@ -1533,9 +1533,9 @@ const edgesPlanta1 = [
     { from: 'nodo_entrada_A139s_norte', to: 'A137', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','A137', nodosPlanta1)},
     { from: 'nodo_entrada_A139s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A139s_norte','nodo_entrada_escalera_bloque_A_norte_piso1', nodosPlanta1)},
 
-    { from: 'A139', to: 'A139-L1', weight: getDistanceBetweenPoints('A139','A139-L1', nodosPlanta1) },
-    { from: 'A139', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139','A139-L2', nodosPlanta1) },
-    { from: 'A139-L1', to: 'A139-L2', weight:  getDistanceBetweenPoints('A139-L1','A139-L2', nodosPlanta1)},
+    { from: 'A139', to: 'A139_L1', weight: getDistanceBetweenPoints('A139','A139_L1', nodosPlanta1) },
+    { from: 'A139', to: 'A139_L2', weight:  getDistanceBetweenPoints('A139','A139_L2', nodosPlanta1) },
+    { from: 'A139_L1', to: 'A139_L2', weight:  getDistanceBetweenPoints('A139_L1','A139_L2', nodosPlanta1)},
 
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_escalera_bloque_A_BAJADA_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_escalera_bloque_A_BAJADA_piso1', nodosPlanta1) },
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_bloque_A_subida_escalera_1_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_bloque_A_subida_escalera_1_piso1', nodosPlanta1) },
@@ -1548,13 +1548,13 @@ const edgesPlanta1 = [
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso1', to: 'nodo_entrada_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso1','nodo_entrada_A130_134_piso1', nodosPlanta1)},
 
     { from: 'nodo_entrada_A130_134_piso1', to: 'nodo_medio_A130_134_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','nodo_medio_A130_134_piso1', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A130-L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130-L', nodosPlanta1)},
-    { from: 'nodo_entrada_A130_134_piso1', to: 'A130-L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130-L', nodosPlanta1)},
+    { from: 'nodo_entrada_A130_134_piso1', to: 'A130_L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130_L', nodosPlanta1)},
+    { from: 'nodo_entrada_A130_134_piso1', to: 'A130_L', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','A130_L', nodosPlanta1)},
 
 
-    { from: 'nodo_medio_A130_134_piso1', to: 'A132-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A132-L', nodosPlanta1)},
-    { from: 'nodo_medio_A130_134_piso1', to: 'A133-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A133-L', nodosPlanta1) },
-    { from: 'nodo_medio_A130_134_piso1', to: 'A134-L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A134-L', nodosPlanta1)},
+    { from: 'nodo_medio_A130_134_piso1', to: 'A132_L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A132_L', nodosPlanta1)},
+    { from: 'nodo_medio_A130_134_piso1', to: 'A133_L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A133_L', nodosPlanta1) },
+    { from: 'nodo_medio_A130_134_piso1', to: 'A134_L', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A134_L', nodosPlanta1)},
     { from: 'nodo_medio_A130_134_piso1', to: 'A137', weight:  getDistanceBetweenPoints('nodo_medio_A130_134_piso1','A137', nodosPlanta1)},
 
     { from: 'nodo_entrada_A130_134_piso1', to: 'proyecto_mentor', weight:  getDistanceBetweenPoints('nodo_entrada_A130_134_piso1','proyecto_mentor', nodosPlanta1)},
@@ -1571,9 +1571,9 @@ const edgesPlanta1 = [
     { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'A123', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','A123', nodosPlanta1)},
     { from: 'nodo_mitad_pasillo_A_norte_piso1', to: 'nodo_entrada_A124s_norte', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_norte_piso1','nodo_entrada_A124s_norte', nodosPlanta1)},
     
-    { from: 'A124-S1', to: 'A124', weight:  getDistanceBetweenPoints('A124-S1','A124', nodosPlanta1)},
+    { from: 'A124_S1', to: 'A124', weight:  getDistanceBetweenPoints('A124_S1','A124', nodosPlanta1)},
     
-    { from: 'nodo_entrada_A124s_norte', to: 'A124-S1', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A124-S1', nodosPlanta1)},
+    { from: 'nodo_entrada_A124s_norte', to: 'A124_S1', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A124_S1', nodosPlanta1)},
     { from: 'nodo_entrada_A124s_norte', to: 'A124', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A124', nodosPlanta1)},
     { from: 'nodo_entrada_A124s_norte', to: 'A127', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A127', nodosPlanta1)},
     { from: 'nodo_entrada_A124s_norte', to: 'A126', weight:  getDistanceBetweenPoints('nodo_entrada_A124s_norte','A126', nodosPlanta1)},
@@ -1635,24 +1635,24 @@ const edgesPlanta1 = [
     { from: 'nodo_entrada_despachos_A115', to: 'A115', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A115', nodosPlanta1)},
     { from: 'nodo_entrada_despachos_A115', to: 'A114', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A114', nodosPlanta1) },
     { from: 'nodo_entrada_despachos_A115', to: 'A11', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A11', nodosPlanta1)},
-    { from: 'nodo_entrada_despachos_A115', to: 'A112-L', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A112-L', nodosPlanta1) },
+    { from: 'nodo_entrada_despachos_A115', to: 'A112_L', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A112_L', nodosPlanta1) },
     { from: 'nodo_entrada_despachos_A115', to: 'A12', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','A12', nodosPlanta1)},
     { from: 'nodo_entrada_despachos_A115', to: 'nodo_mitad_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A115','nodo_mitad_pasillo_A_sur_piso1', nodosPlanta1)},
 
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A114', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A114', nodosPlanta1) },
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A11', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A11', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A112-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A112-L', nodosPlanta1) },
+    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A112_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A112_L', nodosPlanta1) },
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A12', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A12', nodosPlanta1)},
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A13', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A13', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A110-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A110-L', nodosPlanta1)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A108-L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A108-L', nodosPlanta1) },
+    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A110_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A110_L', nodosPlanta1)},
+    { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A108_L', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A108_L', nodosPlanta1) },
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A14', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A14', nodosPlanta1)},
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'A15', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','A15', nodosPlanta1)},
     { from: 'nodo_mitad_pasillo_A_sur_piso1', to: 'nodo_final_pasillo_A_sur_piso1', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso1','nodo_final_pasillo_A_sur_piso1', nodosPlanta1)},
 
     { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A13', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A13', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A110-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A110-L', nodosPlanta1)},
-    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A108-L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A108-L', nodosPlanta1) },
+    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A110_L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A110_L', nodosPlanta1)},
+    { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A108_L', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A108_L', nodosPlanta1) },
     { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A14', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A14', nodosPlanta1)},
     { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A15', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A15', nodosPlanta1)},
     { from: 'nodo_final_pasillo_A_sur_piso1', to: 'A16', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_sur_piso1','A16', nodosPlanta1) },
@@ -1706,19 +1706,19 @@ todasLasPlantas.planta1.edges = edgesPlanta1
 
 const nodosPlanta2=[
     //laboratorios
-    { id: 'A239-L', latlng: [519.98622, 641.184082], name: 'Lab de química general' },
-    { id: 'B241-L', latlng: [651.42291, 696.436035],  name: 'Lab de regulación de control y procesos químicos' },
-    { id: 'A224-L', latlng: [292.785542, 565.447754], name: 'Lab de termodinámica y transmisión de calor' },
-    { id: 'A215-L', latlng: [155.539847, 738.46936], name: 'Lab de óptica' },
-    { id: 'A211-L', latlng: [157.309326, 622.9375], name: 'Lab de ampliación de física' },
-    { id: 'A210-L', latlng: [156.923126, 547.334473], name: 'Lab de física I y II' },
-    { id: 'A202-L', latlng: [168.643652, 314.407227], name: 'Lab de electrónica IV' },
+    { id: 'A239_L', latlng: [519.98622, 641.184082], name: 'Lab de química general' },
+    { id: 'B241_L', latlng: [651.42291, 696.436035],  name: 'Lab de regulación de control y procesos químicos' },
+    { id: 'A224_L', latlng: [292.785542, 565.447754], name: 'Lab de termodinámica y transmisión de calor' },
+    { id: 'A215_L', latlng: [155.539847, 738.46936], name: 'Lab de óptica' },
+    { id: 'A211_L', latlng: [157.309326, 622.9375], name: 'Lab de ampliación de física' },
+    { id: 'A210_L', latlng: [156.923126, 547.334473], name: 'Lab de física I y II' },
+    { id: 'A202_L', latlng: [168.643652, 314.407227], name: 'Lab de electrónica IV' },
    
    
     
     //despachos
-    { id: 'A238-2', latlng: [534.286595, 714.094238], name: 'Despacho A 238-2' },
-    { id: 'A238-1', latlng: [517.704865, 711.609619],  name: 'Despacho A 238-1' },
+    { id: 'A238_2', latlng: [534.286595, 714.094238], name: 'Despacho A 238-2' },
+    { id: 'A238_1', latlng: [517.704865, 711.609619],  name: 'Despacho A 238-1' },
     { id: 'A238', latlng: [501.140521, 711.797119],  name: 'Despacho A 238' },
     { id: 'A239', latlng: [519.534953, 686.983398],  name: 'Despacho A 239' },
     { id: 'B248', latlng: [669.466776, 499.614746], name: 'Despacho B 248' },
@@ -1732,9 +1732,9 @@ const nodosPlanta2=[
     { id: 'A227', latlng: [296.071739, 711.7146],  name: 'Despacho A 227' },
     { id: 'A225', latlng: [298.870618, 573.34375],  name: 'Despacho A 225' },
     { id: 'A224', latlng: [286.427614, 669.188965],  name: 'Despacho A 224' },
-    { id: 'A222-1', latlng: [250.209498, 686.313721], name: 'Despacho A 222-1' },
-    { id: 'A222-2', latlng: [231.16316, 685.049805],  name: 'Despacho A 222-2' },
-    { id: 'A222-3', latlng: [215.036364, 685.549805],  name: 'Despacho A 222-3' },
+    { id: 'A222_1', latlng: [250.209498, 686.313721], name: 'Despacho A 222-1' },
+    { id: 'A222_2', latlng: [231.16316, 685.049805],  name: 'Despacho A 222-2' },
+    { id: 'A222_3', latlng: [215.036364, 685.549805],  name: 'Despacho A 222-3' },
     { id: 'A220', latlng: [155.296359, 753.510254],  name: 'Despacho A 220' },
     { id: 'A219', latlng: [143.661853, 757.507324], name: 'Despacho A 219' },
     { id: 'A218', latlng: [136.643023, 760.316162],  name: 'Despacho A 218' },
@@ -1763,7 +1763,7 @@ const nodosPlanta2=[
     { id: 'A23', latlng: [297.604406, 635.288818],  name: 'A23' },
     { id: 'A211', latlng: [158.028863, 633.650635], name: 'seminario A211' },
     { id: 'ADI1', latlng: [168.10913, 497.125977],  name: 'ADI 1' },
-    { id: 'A208-S', latlng: [167.634788, 428.62793],  name: 'Sala de informática de libre acceso' },
+    { id: 'A208_S', latlng: [167.634788, 428.62793],  name: 'Sala de informática de libre acceso' },
     { id: 'servicios_informaticos', latlng: [167.634788, 346.12793],  name: 'servicios informaticos' },
     { id: 'B21', latlng: [667.113303, 643.226318],  name: 'B21' },
     { id: 'B22', latlng: [678.051158, 562.976318],  name: 'B22' },
@@ -1913,23 +1913,23 @@ const edgesPlanta2 = [
     { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'nodo_escalera_bloque_B_BAJADA_piso2', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','nodo_escalera_bloque_B_BAJADA_piso2', nodosPlanta2)},
 
 
-    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'B241-L', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','B241-L', nodosPlanta2)},
+    { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'B241_L', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','B241_L', nodosPlanta2)},
     { from: 'nodo_salida_escalera_bloque_B_piso2', to: 'nodo_principio_pasillo_B_piso2', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso2','nodo_principio_pasillo_B_piso2', nodosPlanta2)},
 
-    { from: 'nodo_principio_pasillo_B_piso2', to: 'B241-L', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso2','B241-L', nodosPlanta2) },
+    { from: 'nodo_principio_pasillo_B_piso2', to: 'B241_L', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso2','B241_L', nodosPlanta2) },
     { from: 'nodo_principio_pasillo_B_piso2', to: 'nodo_final_pasillo_A_norte_piso2', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_piso2','nodo_final_pasillo_A_norte_piso2', nodosPlanta2) },
 
-    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238-2', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238-2', nodosPlanta2)},
-    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238-1', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238-1', nodosPlanta2)},
+    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238_2', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238_2', nodosPlanta2)},
+    { from: 'nodo_final_pasillo_A_norte_piso2', to: 'A238_1', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','A238_1', nodosPlanta2)},
     { from: 'nodo_final_pasillo_A_norte_piso2', to: 'nodo_entrada_A239s_norte', weight: getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso2','nodo_entrada_A239s_norte', nodosPlanta2) },
     
-    { from: 'nodo_entrada_A239s_norte', to: 'A238-2', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238-2', nodosPlanta2) },
-    { from: 'nodo_entrada_A239s_norte', to: 'A238-1', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238-1', nodosPlanta2)},
+    { from: 'nodo_entrada_A239s_norte', to: 'A238_2', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238_2', nodosPlanta2) },
+    { from: 'nodo_entrada_A239s_norte', to: 'A238_1', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238_1', nodosPlanta2)},
     { from: 'nodo_entrada_A239s_norte', to: 'A238', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A238', nodosPlanta2)},
     { from: 'nodo_entrada_A239s_norte', to: 'A239', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','A239', nodosPlanta2)},
     { from: 'nodo_entrada_A239s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_A239s_norte','nodo_entrada_escalera_bloque_A_norte_piso2', nodosPlanta2)},
 
-    { from: 'A239-L', to: 'A239', weight:  getDistanceBetweenPoints('A239-L','A239', nodosPlanta2)},
+    { from: 'A239_L', to: 'A239', weight:  getDistanceBetweenPoints('A239_L','A239', nodosPlanta2)},
     
 
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso2', to: 'nodo_escalera_bloque_A_BAJADA_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso2','nodo_escalera_bloque_A_BAJADA_piso2', nodosPlanta2) },
@@ -1980,15 +1980,15 @@ const edgesPlanta2 = [
     { from: 'nodo_entrada_A224s', to: 'A224', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A224', nodosPlanta2)},
     { from: 'nodo_entrada_A224s', to: 'A23', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A23', nodosPlanta2)},
     { from: 'nodo_entrada_A224s', to: 'A225', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A225', nodosPlanta2)},
-    { from: 'nodo_entrada_A224s', to: 'A224-L', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A224-L', nodosPlanta2)},
+    { from: 'nodo_entrada_A224s', to: 'A224_L', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','A224_L', nodosPlanta2)},
     { from: 'nodo_entrada_A224s', to: 'nodo_entrada_despachos_A222s', weight:  getDistanceBetweenPoints('nodo_entrada_A224s','nodo_entrada_despachos_A222s', nodosPlanta2)},
 
-    { from: 'A224-L', to: 'A225', weight:  getDistanceBetweenPoints('A224-L','A225', nodosPlanta2)},
-    { from: 'A224-L', to: 'A224', weight:  getDistanceBetweenPoints('A224-L','A224', nodosPlanta2)},
+    { from: 'A224_L', to: 'A225', weight:  getDistanceBetweenPoints('A224_L','A225', nodosPlanta2)},
+    { from: 'A224_L', to: 'A224', weight:  getDistanceBetweenPoints('A224_L','A224', nodosPlanta2)},
 
     { from: 'A224', to: 'A23', weight:  getDistanceBetweenPoints('A224','A23', nodosPlanta2)},
 
-    { from: 'nodo_entrada_despachos_A222s', to: 'A222-1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','A222-1', nodosPlanta2)},
+    { from: 'nodo_entrada_despachos_A222s', to: 'A222_1', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','A222_1', nodosPlanta2)},
     { from: 'nodo_entrada_despachos_A222s', to: 'nodo_entrada_escalera_principal_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','nodo_entrada_escalera_principal_piso2', nodosPlanta2)},
     { from: 'nodo_entrada_despachos_A222s', to: 'nodo_principio_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_despachos_A222s','nodo_principio_pasillo_A_sur_piso2', nodosPlanta2)},
 
@@ -2010,11 +2010,11 @@ const edgesPlanta2 = [
     { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_entrada_juntas', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_entrada_juntas', nodosPlanta2) },
     { from: 'nodo_entrada_escalera_principal_piso2', to: 'nodo_principio_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso2','nodo_principio_pasillo_A_sur_piso2', nodosPlanta2) },
 
-    { from: 'A222-1', to: 'A222-2', weight:  getDistanceBetweenPoints('A222-1','A222-2', nodosPlanta2)},
-    { from: 'A222-2', to: 'A222-3', weight:  getDistanceBetweenPoints('A222-2','A222-3', nodosPlanta2)},
+    { from: 'A222_1', to: 'A222_2', weight:  getDistanceBetweenPoints('A222_1','A222_2', nodosPlanta2)},
+    { from: 'A222_2', to: 'A222_3', weight:  getDistanceBetweenPoints('A222_2','A222_3', nodosPlanta2)},
 
     { from: 'nodo_sala_juntas_norte', to: 'nodo_entrada_juntas', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','nodo_entrada_juntas', nodosPlanta2) },
-    { from: 'nodo_sala_juntas_norte', to: 'A215-L', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','A215-L', nodosPlanta2) },
+    { from: 'nodo_sala_juntas_norte', to: 'A215_L', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','A215_L', nodosPlanta2) },
     { from: 'nodo_sala_juntas_norte', to: 'A220', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','A220', nodosPlanta2)},
     { from: 'nodo_sala_juntas_norte', to: 'sala_de_juntas', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','sala_de_juntas', nodosPlanta2)},
     { from: 'nodo_sala_juntas_norte', to: 'nodo_sala_juntas_sur', weight:  getDistanceBetweenPoints('nodo_sala_juntas_norte','nodo_sala_juntas_sur', nodosPlanta2)},
@@ -2052,22 +2052,22 @@ const edgesPlanta2 = [
 
     { from: 'nodo_entrada_A211s', to: 'nodo_entrada_dcha_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','nodo_entrada_dcha_terraza', nodosPlanta2) },
     { from: 'nodo_entrada_A211s', to: 'A211', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','A211', nodosPlanta2)},
-    { from: 'nodo_entrada_A211s', to: 'A211-L', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','A211-L', nodosPlanta2)},
+    { from: 'nodo_entrada_A211s', to: 'A211_L', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','A211_L', nodosPlanta2)},
     { from: 'nodo_entrada_A211s', to: 'nodo_entrada_A210s', weight:  getDistanceBetweenPoints('nodo_entrada_A211s','nodo_entrada_A210s', nodosPlanta2)},
 
-    { from: 'nodo_entrada_A210s', to: 'A210-L', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','A210-L', nodosPlanta2) },
+    { from: 'nodo_entrada_A210s', to: 'A210_L', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','A210_L', nodosPlanta2) },
     { from: 'nodo_entrada_A210s', to: 'nodo_mitad_pasillo_A_sur_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','nodo_mitad_pasillo_A_sur_piso2', nodosPlanta2)},
     { from: 'nodo_entrada_A210s', to: 'nodo_entrada_medio_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_A210s','nodo_entrada_medio_terraza', nodosPlanta2) },
 
-    { from: 'A210', to: 'A210-L', weight:  getDistanceBetweenPoints('A210','A210-L', nodosPlanta2)},
+    { from: 'A210', to: 'A210_L', weight:  getDistanceBetweenPoints('A210','A210_L', nodosPlanta2)},
 
     { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'nodo_entrada_medio_terraza', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','nodo_entrada_medio_terraza', nodosPlanta2)},
     { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'ADI1', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','ADI1', nodosPlanta2)},
-    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'A208-S', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','A208-S', nodosPlanta2) },
+    { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'A208_S', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','A208_S', nodosPlanta2) },
     { from: 'nodo_mitad_pasillo_A_sur_piso2', to: 'nodo_entrada_terrza_izq', weight:  getDistanceBetweenPoints('nodo_mitad_pasillo_A_sur_piso2','nodo_entrada_terrza_izq', nodosPlanta2)},
    
     { from: 'nodo_entrada_terrza_izq', to: 'nodo_acceso_bloque_C_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','nodo_acceso_bloque_C_piso2', nodosPlanta2)},
-    { from: 'nodo_entrada_terrza_izq', to: 'A208-S', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','A208-S', nodosPlanta2)},
+    { from: 'nodo_entrada_terrza_izq', to: 'A208_S', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','A208_S', nodosPlanta2)},
     { from: 'nodo_entrada_terrza_izq', to: 'nodo_entrada_izq_terraza', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','nodo_entrada_izq_terraza', nodosPlanta2)},
     { from: 'nodo_entrada_terrza_izq', to: 'ADI1', weight:  getDistanceBetweenPoints('nodo_entrada_terrza_izq','ADI1', nodosPlanta2)},
 
@@ -2075,7 +2075,7 @@ const edgesPlanta2 = [
     { from: 'nodo_acceso_bloque_C_piso2', to: 'servicios_informaticos', weight:  getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','servicios_informaticos', nodosPlanta2)},
     { from: 'nodo_acceso_bloque_C_piso2', to: 'nodo_entrada_escalera_cafeteria_piso2', weight:  getDistanceBetweenPoints('nodo_acceso_bloque_C_piso2','nodo_entrada_escalera_cafeteria_piso2', nodosPlanta2)},
 
-    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'A202-L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','A202-L', nodosPlanta2) },
+    { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'A202_L', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','A202_L', nodosPlanta2) },
     { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'salon_de_actos', weight: getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','salon_de_actos', nodosPlanta2) },
     { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'nodo_escalera_cafeteria_piso2', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','nodo_escalera_cafeteria_piso2', nodosPlanta2) },
     { from: 'nodo_entrada_escalera_cafeteria_piso2', to: 'servicios_informaticos', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_cafeteria_piso2','servicios_informaticos', nodosPlanta2) },
@@ -2119,34 +2119,34 @@ todasLasPlantas.planta2.edges = edgesPlanta2
 
 const nodosPlanta3=[
     //laboratorios
-    { id: 'A324-L', latlng: [518.278894, 630.256348], name: 'Lab de teoría de mécanismos síntesis y simulación de mecanismos diseño de máquinas' },
+    { id: 'A324_L', latlng: [518.278894, 630.256348], name: 'Lab de teoría de mécanismos síntesis y simulación de mecanismos diseño de máquinas' },
     { id: 'EG1_EG2', latlng: [304.180516, 700.112305],  name: 'EG1 y EG2' },
     { id: 'EG3', latlng: [398.359364, 623.891602],  name: 'EG3' },
     { id: 'EG4', latlng: [399.359475, 690.891602],  name: 'EG4' },
-    { id: 'A309-L', latlng: [233.663438, 700.424805], name: 'Lab de fabricación aditiva y digitalización industrial' },
-    { id: 'A305-L', latlng: [182.020584, 744.163086], name: 'Ecolab' },
-    { id: 'A303-L', latlng: [166.41582, 691.514648], name: 'Lab de ampliación de física' },
+    { id: 'A309_L', latlng: [233.663438, 700.424805], name: 'Lab de fabricación aditiva y digitalización industrial' },
+    { id: 'A305_L', latlng: [182.020584, 744.163086], name: 'Ecolab' },
+    { id: 'A303_L', latlng: [166.41582, 691.514648], name: 'Lab de ampliación de física' },
     { id: 'ADIpi', latlng: [165.915764, 737.014648], name: 'ADI π' },
 
     //despachos
     { id: 'B335', latlng: [669.466776, 499.614746], name: 'Despacho B 335' },
     { id: 'B336', latlng: [642.088727, 507.364746],  name: 'Despacho B 336' },
-    { id: 'B328-S', latlng: [651.42291, 696.436035],  name: 'Sala polivalente' },
+    { id: 'B328_S', latlng: [651.42291, 696.436035],  name: 'Sala polivalente' },
     { id: 'A326', latlng: [517.704865, 711.609619],  name: 'Despacho A 326' },
     { id: 'A325', latlng: [501.140521, 711.797119],  name: 'Despacho A 325' },
     { id: 'A324', latlng: [519.534953, 686.983398],  name: 'Despacho A 324' },
-    { id: 'A324-S', latlng: [523.343417, 669.117676],  name: 'Sala de reuniones' },
+    { id: 'A324_S', latlng: [523.343417, 669.117676],  name: 'Sala de reuniones' },
     { id: 'A320', latlng: [392.693092, 713.761475],  name: 'Despacho A 320' },
     { id: 'A318', latlng: [398.376037, 638.788574],  name: 'Sala de control' },
     { id: 'A317', latlng: [377.884803, 711.979736],  name: 'Despacho A 317' },
     { id: 'A316', latlng: [345.974512, 711.861328],  name: 'Despacho A 316' },
     { id: 'A315', latlng: [328.777285, 711.959229],  name: 'Despacho A 315' },
     { id: 'A314', latlng: [296.071739, 711.7146],  name: 'Despacho A 314' },
-    { id: 'A331-1', latlng: [296.408532, 611.268555],  name: 'Despacho A 331-1' },
-    { id: 'A331-2', latlng: [296.408532, 611.268555],  name: 'Despacho A 331-2' },
+    { id: 'A311_1', latlng: [296.408532, 611.268555],  name: 'Despacho A 311-1' },
+    { id: 'A311_2', latlng: [296.408532, 611.268555],  name: 'Despacho A 311-2' },
     { id: 'A308', latlng: [213.536197, 700.174805],  name: 'Despacho A 308' },
-    { id: 'A308-1', latlng: [213.536197, 700.174805],  name: 'Despacho A 308-1' },
-    { id: 'A302-1', latlng: [192.872349, 699.971069],  name: 'Despacho A 302-1' },
+    { id: 'A308_1', latlng: [213.536197, 700.174805],  name: 'Despacho A 308-1' },
+    { id: 'A302_1', latlng: [192.872349, 699.971069],  name: 'Despacho A 302-1' },
     { id: 'A307', latlng: [225.401879, 744.870605], name: 'Despacho A 307' },
     { id: 'A305', latlng: [174.144707, 752.788086],  name: 'Despacho A 305' },
   
@@ -2154,10 +2154,10 @@ const nodosPlanta3=[
     
     { id: 'A31', latlng: [288.657669, 603.268555],  name: 'A31' },
     { id: 'A32', latlng: [392.858752, 581.141602],  name: 'A32' },
-    { id: 'A301-S3', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.2' },
-    { id: 'A301-S2', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.1' },
-    { id: 'A301-S1', latlng: [163.518209, 524.220459],  name: 'Sala de trabajo 1' },
-    { id: 'A301-S4', latlng: [167.634788, 428.62793],  name: 'Biblioteca' },
+    { id: 'A301_S3', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.2' },
+    { id: 'A301_S2', latlng: [168.10913, 497.125977],  name: 'Sala de trabajo 2.1' },
+    { id: 'A301_S1', latlng: [163.518209, 524.220459],  name: 'Sala de trabajo 1' },
+    { id: 'A301_S4', latlng: [167.634788, 428.62793],  name: 'Biblioteca' },
     { id: 'B31', latlng: [667.113303, 643.226318],  name: 'B31' },
     { id: 'B32', latlng: [678.051158, 562.976318],  name: 'B32' },
 
@@ -2244,10 +2244,10 @@ const edgesPlanta3 = [
     { from: 'nodo_B31_aseos', to: 'nodo_salida_escalera_bloque_B_piso3', weight:  getDistanceBetweenPoints('nodo_B31_aseos','nodo_salida_escalera_bloque_B_piso3', nodosPlanta3) },
 
     { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'nodo_escalera_bloque_B_piso3', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','nodo_escalera_bloque_B_piso3', nodosPlanta3)},
-    { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'B328-S', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','B328-S', nodosPlanta3)},
+    { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'B328_S', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','B328_S', nodosPlanta3)},
     { from: 'nodo_salida_escalera_bloque_B_piso3', to: 'nodo_principio_pasillo_B_piso3', weight:  getDistanceBetweenPoints('nodo_salida_escalera_bloque_B_piso3','nodo_principio_pasillo_B_piso3', nodosPlanta3)},
 
-    { from: 'nodo_principio_pasillo_B_piso3', to: 'B328-S', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso3','B328-S', nodosPlanta3) },
+    { from: 'nodo_principio_pasillo_B_piso3', to: 'B328_S', weight: getDistanceBetweenPoints('nodo_principio_pasillo_B_piso3','B328_S', nodosPlanta3) },
     { from: 'nodo_principio_pasillo_B_piso3', to: 'nodo_final_pasillo_A_norte_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_B_piso3','nodo_final_pasillo_A_norte_piso3', nodosPlanta3) },
 
     { from: 'nodo_final_pasillo_A_norte_piso3', to: 'A326', weight:  getDistanceBetweenPoints('nodo_final_pasillo_A_norte_piso3','A326', nodosPlanta3)},
@@ -2258,8 +2258,8 @@ const edgesPlanta3 = [
     { from: 'nodo_entrada_A324s_norte', to: 'A325', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','A325', nodosPlanta3)},
     { from: 'nodo_entrada_A324s_norte', to: 'nodo_entrada_escalera_bloque_A_norte_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_A324s_norte','nodo_entrada_escalera_bloque_A_norte_piso3', nodosPlanta3)},
    
-    { from: 'A324-S', to: 'A324', weight:  getDistanceBetweenPoints('A324-S','A324', nodosPlanta3)},
-    { from: 'A324-L', to: 'A324', weight:  getDistanceBetweenPoints('A324-L','A324', nodosPlanta3)},
+    { from: 'A324_S', to: 'A324', weight:  getDistanceBetweenPoints('A324_S','A324', nodosPlanta3)},
+    { from: 'A324_L', to: 'A324', weight:  getDistanceBetweenPoints('A324_L','A324', nodosPlanta3)},
     
 
     { from: 'nodo_entrada_escalera_bloque_A_norte_piso3', to: 'nodo_escalera_bloque_A_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_bloque_A_norte_piso3','nodo_escalera_bloque_A_piso3', nodosPlanta3) },
@@ -2287,18 +2287,18 @@ const edgesPlanta3 = [
 
     { from: 'nodo_entrada_A311s', to: 'A314', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A314', nodosPlanta3)},
     { from: 'nodo_entrada_A311s', to: 'EG1_EG2', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','EG1_EG2', nodosPlanta3)},
-    { from: 'nodo_entrada_A311s', to: 'A331-2', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A331-2', nodosPlanta3)},
-    { from: 'nodo_entrada_A311s', to: 'A331-1', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A331-2', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'A311_2', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A311_2', nodosPlanta3)},
+    { from: 'nodo_entrada_A311s', to: 'A311_1', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A311_1', nodosPlanta3)},
     { from: 'nodo_entrada_A311s', to: 'A31', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','A31', nodosPlanta3)},
     { from: 'nodo_entrada_A311s', to: 'nodo_final_pasilloA_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_A311s','nodo_final_pasilloA_piso3', nodosPlanta3)},
    
 
-    { from: 'nodo_final_pasilloA_piso3', to: 'A309-L', weight:  getDistanceBetweenPoints('nodo_final_pasilloA_piso3','A309-L', nodosPlanta3)},
+    { from: 'nodo_final_pasilloA_piso3', to: 'A309_L', weight:  getDistanceBetweenPoints('nodo_final_pasilloA_piso3','A309_L', nodosPlanta3)},
     { from: 'nodo_final_pasilloA_piso3', to: 'nodo_hall2_piso3', weight:  getDistanceBetweenPoints('nodo_final_pasilloA_piso3','nodo_hall2_piso3', nodosPlanta3)},
 
-    { from: 'nodo_hall2_piso3', to: 'A309-L', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A309-L', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'A309_L', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A309_L', nodosPlanta3)},
     { from: 'nodo_hall2_piso3', to: 'nodo_entrada_escalera_principal_piso3', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','nodo_entrada_escalera_principal_piso3', nodosPlanta3)},
-    { from: 'nodo_hall2_piso3', to: 'A308-1', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A308-1', nodosPlanta3)},
+    { from: 'nodo_hall2_piso3', to: 'A308_1', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A308_1', nodosPlanta3)},
     { from: 'nodo_hall2_piso3', to: 'A308', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','A308', nodosPlanta3)},
     { from: 'nodo_hall2_piso3', to: 'nodo_zona_hall_piso3', weight:  getDistanceBetweenPoints('nodo_hall2_piso3','nodo_zona_hall_piso3', nodosPlanta3)},
 
@@ -2317,24 +2317,24 @@ const edgesPlanta3 = [
     { from: 'nodo_entrada_escalera_principal_piso3', to: 'nodo_zona_hall_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_principal_piso3','nodo_zona_hall_piso3', nodosPlanta3)},
 
 
-    { from: 'nodo_zona_hall_piso3', to: 'A308-1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A308-1', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'A308_1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A308_1', nodosPlanta3)},
     { from: 'nodo_zona_hall_piso3', to: 'A308', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A308', nodosPlanta3)},
-    { from: 'nodo_zona_hall_piso3', to: 'A302-1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A302-1', nodosPlanta3)},
+    { from: 'nodo_zona_hall_piso3', to: 'A302_1', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','A302_1', nodosPlanta3)},
     { from: 'nodo_zona_hall_piso3', to: 'nodo_adipi_piso3', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','nodo_adipi_piso3', nodosPlanta3)},
     { from: 'nodo_zona_hall_piso3', to: 'nodo_principio_pasillo_A_sur_piso3', weight:  getDistanceBetweenPoints('nodo_zona_hall_piso3','nodo_principio_pasillo_A_sur_piso3', nodosPlanta3)},
 
-    { from: 'nodo_adipi_piso3', to: 'A305-L', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','A305-L', nodosPlanta3)},
+    { from: 'nodo_adipi_piso3', to: 'A305_L', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','A305_L', nodosPlanta3)},
     { from: 'nodo_adipi_piso3', to: 'A305', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','A305', nodosPlanta3)},
     { from: 'nodo_adipi_piso3', to: 'ADIpi', weight:  getDistanceBetweenPoints('nodo_adipi_piso3','ADIpi', nodosPlanta3)},
     { from: 'nodo_adipi_piso3', to: 'nodo_principio_pasillo_A_sur_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','nodo_adipi_piso3', nodosPlanta3)},
 
-    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A302-1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A302-1', nodosPlanta3)},
-    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A303-L', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A303-L', nodosPlanta3)},
+    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A302_1', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A302_1', nodosPlanta3)},
+    { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'A303_L', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','A303_L', nodosPlanta3)},
     { from: 'nodo_principio_pasillo_A_sur_piso3', to: 'nodo_pasillo_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_principio_pasillo_A_sur_piso3','nodo_pasillo_escalera_entrada_piso3', nodosPlanta3)},
 
     { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'nodo_entrada_sala_trabajo1', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','nodo_entrada_sala_trabajo1', nodosPlanta3)},
     { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'nodo_entrada_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','nodo_entrada_escalera_entrada_piso3', nodosPlanta3)},
-    { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'A303-L', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','A303-L', nodosPlanta3)},
+    { from: 'nodo_pasillo_escalera_entrada_piso3', to: 'A303_L', weight:  getDistanceBetweenPoints('nodo_pasillo_escalera_entrada_piso3','A303_L', nodosPlanta3)},
 
     { from: 'nodo_entrada_escalera_entrada_piso3', to: 'nodo_acceso_escalera_entrada_piso3', weight:  getDistanceBetweenPoints('nodo_entrada_escalera_entrada_piso3','nodo_acceso_escalera_entrada_piso3', nodosPlanta3)},
 
@@ -2347,15 +2347,15 @@ const edgesPlanta3 = [
 
 
 
-    { from: 'nodo_entrada_sala_trabajo1', to: 'A301-S1', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo1','A301-S1', nodosPlanta3)},
+    { from: 'nodo_entrada_sala_trabajo1', to: 'A301_S1', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo1','A301_S1', nodosPlanta3)},
     { from: 'nodo_entrada_sala_trabajo1', to: 'nodo_entrada_sala_trabajo2', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo1','nodo_entrada_sala_trabajo2', nodosPlanta3)},
 
 
-    { from: 'nodo_entrada_sala_trabajo2', to: 'A301-S2', weight: getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301-S2', nodosPlanta3) },
-    { from: 'nodo_entrada_sala_trabajo2', to: 'A301-S3', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301-S3', nodosPlanta3) },
+    { from: 'nodo_entrada_sala_trabajo2', to: 'A301_S2', weight: getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301_S2', nodosPlanta3) },
+    { from: 'nodo_entrada_sala_trabajo2', to: 'A301_S3', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','A301_S3', nodosPlanta3) },
     { from: 'nodo_entrada_sala_trabajo2', to: 'nodo_entrada_biblioteca', weight:  getDistanceBetweenPoints('nodo_entrada_sala_trabajo2','nodo_entrada_biblioteca', nodosPlanta3) },
 
-    { from: 'nodo_entrada_biblioteca', to: 'A301-S4', weight:  getDistanceBetweenPoints('nodo_entrada_biblioteca','A301-S4', nodosPlanta3) },
+    { from: 'nodo_entrada_biblioteca', to: 'A301_S4', weight:  getDistanceBetweenPoints('nodo_entrada_biblioteca','A301_S4', nodosPlanta3) },
 
 ]
 
@@ -2367,14 +2367,14 @@ todasLasPlantas.planta3.edges = edgesPlanta3
 
 const nodosPlanta4=[
     //laboratorios
-    { id: 'A404-L', latlng: [250.601713, 706.594727],  name: 'Lab de energía solar fotovoltaica' },
-   { id: 'A402-L', latlng: [123.141036, 682.261719],  name: 'Lab de energía solar térmica' },
-    { id: 'A401-L', latlng: [117.640424, 679.324219],  name: 'Lab de proyectos 2' },
+    { id: 'A404_L', latlng: [250.601713, 706.594727],  name: 'Lab de energía solar fotovoltaica' },
+   { id: 'A402_L', latlng: [123.141036, 682.261719],  name: 'Lab de energía solar térmica' },
+    { id: 'A401_L', latlng: [117.640424, 679.324219],  name: 'Lab de proyectos 2' },
     
     //despachos
     
     // //Aulas
-    { id: 'A403-A', latlng: [129.64176, 678.324219],  name: 'Aula de energía solar térmica' },
+    { id: 'A403_A', latlng: [129.64176, 678.324219],  name: 'Aula de energía solar térmica' },
    
     // //Otros
   
@@ -2391,13 +2391,13 @@ const nodosPlanta4=[
 
 
 const edgesPlanta4 = [
-    { from: 'nodo_escalera_principal_piso4', to: 'A404-L', weight: getDistanceBetweenPoints('nodo_escalera_principal_piso4','A404-L', nodosPlanta4) },
+    { from: 'nodo_escalera_principal_piso4', to: 'A404_L', weight: getDistanceBetweenPoints('nodo_escalera_principal_piso4','A404_L', nodosPlanta4) },
 
     { from: 'nodo_escalera_entrada_piso4', to: 'nodo_piso4', weight:  getDistanceBetweenPoints('nodo_escalera_entrada_piso4','nodo_piso4', nodosPlanta4)  },
 
-    { from: 'nodo_piso4', to: 'A403-A', weight:  getDistanceBetweenPoints('nodo_piso4','A403-A', nodosPlanta4) },
-    { from: 'nodo_piso4', to: 'A402-L', weight:  getDistanceBetweenPoints('nodo_piso4','A402-L', nodosPlanta4)},
-    { from: 'nodo_piso4', to: 'A401-L', weight:  getDistanceBetweenPoints('nodo_piso4','A401-L', nodosPlanta4) },
+    { from: 'nodo_piso4', to: 'A403_A', weight:  getDistanceBetweenPoints('nodo_piso4','A403_A', nodosPlanta4) },
+    { from: 'nodo_piso4', to: 'A402_L', weight:  getDistanceBetweenPoints('nodo_piso4','A402_L', nodosPlanta4)},
+    { from: 'nodo_piso4', to: 'A401_L', weight:  getDistanceBetweenPoints('nodo_piso4','A401_L', nodosPlanta4) },
 
 ]
 
@@ -2488,7 +2488,7 @@ const markers = {};
 //     markers[node.id].bindPopup(node.id); // Optional: bind popup with node id
 // });
 
-// nodosPlanta1.forEach(node => {
+// nodosPlanta3.forEach(node => {
 //     markers[node.id] = L.marker(node.latlng).addTo(map);
 //     markers[node.id].bindPopup(node.id); // Optional: bind popup with node id
 // });
@@ -2549,13 +2549,13 @@ const markers = {};
 
 //GET COORIDINATES ON CLICKING MARKER
 map.on('layeradd', function(event) {
-    if (event.layer instanceof L.Marker) {
-        const marker = event.layer;
-        marker.on('click', function() {
-            console.log(`Marker clicked. Coordinates: ${marker.getLatLng().toString()}`);
-            // Replace alert and console.log with your desired handling of coordinates
-        });
-    }
+    // if (event.layer instanceof L.Marker) {
+    //     const marker = event.layer;
+    //     marker.on('click', function() {
+    //         console.log(`Marker clicked. Coordinates: ${marker.getLatLng().toString()}`);
+    //         // Replace alert and console.log with your desired handling of coordinates
+    //     });
+    // }
     if (event.layer instanceof L.Polygon) {
         const layer = event.layer;
         layer.on('click', function() {
@@ -3116,7 +3116,282 @@ const layerGroupPlanta1 = L.layerGroup([
     C101
 ])
 
+//PLANTA 2 AULAS CLICKABLES
 
+const B248 = L.polygon([[{"lat":689.3149676505906,"lng":486.330078125},{"lat":689.8150662221983,"lng":500.017578125},{"lat":665.7478224635734,"lng":500.080078125},{"lat":665.6853101421224,"lng":483.017578125}]]);
+
+const B249 = L.polygon([[{"lat":640.5001702600498,"lng":503.017822265625},{"lat":640.5001702600498,"lng":517.705322265625},{"lat":611.7506071114934,"lng":517.705322265625},{"lat":611.7506071114934,"lng":502.955322265625}]]);
+
+const B22 = L.polygon([[{"lat":603.3614217610266,"lng":521},{"lat":603.4864464039285,"lng":574.875},{"lat":675.1148224814954,"lng":574.73681640625},{"lat":674.9897978385935,"lng":521.11181640625}]]);
+
+const B21 = L.polygon([[{"lat":674.9394949549259,"lng":578.33935546875},{"lat":674.9394949549259,"lng":642.08935546875},{"lat":603.6754485008155,"lng":642.08935546875},{"lat":603.6754485008155,"lng":578.46435546875}]]);
+
+const B241_L = L.polygon([[{"lat":695.8718949943545,"lng":684},{"lat":695.8718949943545,"lng":693.125},{"lat":680.9939624890227,"lng":710.4375},{"lat":654.4191443984444,"lng":714.37939453125},{"lat":654.2941197555424,"lng":684.00439453125}]]);
+
+const A239_L = L.polygon([[{"lat":545.560590175099,"lng":640},{"lat":494.95051705288813,"lng":640.133544921875},{"lat":494.99293980859187,"lng":518.125},{"lat":545.5587173145509,"lng":518.125}]]);
+
+
+const A239 = L.polygon([[{"lat":545.5169408749574,"lng":643.559326171875},{"lat":545.4544285535064,"lng":659.184326171875},{"lat":526.4506828324104,"lng":659.246826171875},{"lat":526.4506828324104,"lng":643.496826171875}],[{"lat":545.3936255533451,"lng":661.469970703125},{"lat":545.4561378747961,"lng":676.032470703125},{"lat":526.3898798322491,"lng":676.094970703125},{"lat":526.3273675107981,"lng":661.407470703125}],[{"lat":545.3936255533451,"lng":678.282470703125},{"lat":545.4561378747961,"lng":691.907470703125},{"lat":526.4523921537,"lng":691.844970703125},{"lat":526.514904475151,"lng":678.344970703125}],[{"lat":515.6052834381777,"lng":642.722900390625},{"lat":515.4177464738248,"lng":658.472900390625},{"lat":495.03872968080725,"lng":658.285400390625},{"lat":494.97621735935627,"lng":642.847900390625}],[{"lat":515.4177464738248,"lng":660.660400390625},{"lat":515.5427711167267,"lng":675.347900390625},{"lat":495.03872968080725,"lng":675.160400390625},{"lat":495.03872968080725,"lng":660.660400390625}],[{"lat":515.6052834381777,"lng":677.544189453125},{"lat":515.5427711167267,"lng":691.856689453125},{"lat":495.1012420022582,"lng":691.856689453125},{"lat":495.16375432370916,"lng":677.544189453125}]]);
+
+const A238_2 = L.polygon([[{"lat":545.5129543255014,"lng":716.9697265625},{"lat":545.4903243005897,"lng":730.6787109375},{"lat":531.5500766170225,"lng":732.8662109375},{"lat":531.4250519741205,"lng":716.9912109375}]]);
+
+const A238_1 = L.polygon([[{"lat":529.2371207233364,"lng":717.1162109375},{"lat":529.2371207233364,"lng":733.1162109375},{"lat":513.4215033962399,"lng":735.4912109375},{"lat":513.4215033962399,"lng":716.9287109375}]]);
+
+const A238 = L.polygon([[{"lat":511.20109504095205,"lng":717.077392578125},{"lat":511.263607362403,"lng":735.764892578125},{"lat":495.69803932111046,"lng":738.264892578125},{"lat":495.4479900353066,"lng":717.202392578125}]]);
+
+
+const A22 = L.polygon([[{"lat":440.7160980877108,"lng":518.28955078125},{"lat":440.7160980877108,"lng":628.53955078125},{"lat":391.3313641414413,"lng":628.53955078125},{"lat":391.7064380701471,"lng":518.53955078125}]]);
+
+const A21 = L.polygon([[{"lat":426.4892556947506,"lng":632},{"lat":426.4892556947506,"lng":695.25},{"lat":391.6073803251071,"lng":695.375},{"lat":391.85742961091097,"lng":632.125}]]);
+
+const A233 = L.polygon([[{"lat":406.3585665447963,"lng":716.9986572265625},{"lat":406.3215965912146,"lng":734.9056396484375},{"lat":395.125,"lng":734.8687744140625},{"lat":395.0858077047153,"lng":717.0147705078125}]]);
+
+const ADI2 = L.polygon([[{"lat":337.3681671953689,"lng":646.2744140625},{"lat":337.3681671953689,"lng":696.1494140625},{"lat":301.9861932541176,"lng":696.2744140625},{"lat":301.73614396831374,"lng":646.3994140625}]]);
+
+
+const A23 = L.polygon([[{"lat":337.67926367008977,"lng":581.896484375},{"lat":337.55423902718786,"lng":643.521484375},{"lat":301.7971911572307,"lng":643.646484375},{"lat":301.7971911572307,"lng":582.021484375}]]);
+
+const A225 = L.polygon([[{"lat":337.55423902718786,"lng":564.8583984375},{"lat":337.4292143842859,"lng":579.2333984375},{"lat":303.29748687205404,"lng":579.2333984375},{"lat":303.1724622291521,"lng":564.8583984375}]]);
+
+const A224_L = L.polygon([[{"lat":337.61479783859346,"lng":517.5},{"lat":337.61479783859346,"lng":562},{"lat":287.72996532071613,"lng":562.125},{"lat":287.47991603491226,"lng":517.625}]]);
+
+const A232 = L.polygon([[{"lat":392.84066179633317,"lng":717.005126953125},{"lat":392.84066179633317,"lng":735.25},{"lat":375.86048533075257,"lng":735.25},{"lat":375.86048533075257,"lng":717.005126953125}]]);
+
+const A231 = L.polygon([[{"lat":357.73434839686723,"lng":717.229736328125},{"lat":373.4249410810617,"lng":717.229736328125},{"lat":373.4249410810617,"lng":735.229736328125},{"lat":357.73434839686723,"lng":735.229736328125}]]);
+
+const A230 = L.polygon([[{"lat":339.6660897987347,"lng":717.229736328125},{"lat":355.4817071258311,"lng":717.229736328125},{"lat":355.4817071258311,"lng":735.354736328125},{"lat":339.6660897987347,"lng":735.354736328125}]]);
+
+const A229 = L.polygon([[{"lat":323.4145955427711,"lng":717.104736328125},{"lat":337.6048925121422,"lng":717.104736328125},{"lat":337.6048925121422,"lng":735.229736328125},{"lat":323.4145955427711,"lng":735.229736328125}]]);
+
+const A228 = L.polygon([[{"lat":304.5637119827231,"lng":717.042236328125},{"lat":321.06696484578026,"lng":717.042236328125},{"lat":321.06696484578026,"lng":735.229736328125},{"lat":304.5637119827231,"lng":735.229736328125}]]);
+
+const A227 = L.polygon([[{"lat":286.60680345717515,"lng":716.917236328125},{"lat":302.42242078427154,"lng":716.917236328125},{"lat":302.42242078427154,"lng":735.292236328125},{"lat":286.60680345717515,"lng":735.292236328125}]]);
+
+const A224 = L.polygon([[{"lat":263.61371355090773,"lng":664.625},{"lat":282.6174592720039,"lng":664.625},{"lat":282.6174592720039,"lng":683.25},{"lat":263.61371355090773,"lng":683.25}]]);
+
+const A222_1 = L.polygon([[{"lat":245.2350910443214,"lng":659.625},{"lat":260.73814676416293,"lng":659.625},{"lat":260.73814676416293,"lng":683.375},{"lat":245.2350910443214,"lng":683.375}]]);
+
+const A222_2 = L.polygon([[{"lat":226.4749448895102,"lng":659.6875},{"lat":243.30492230765094,"lng":659.6875},{"lat":243.30492230765094,"lng":682.59814453125},{"lat":226.4749448895102,"lng":682.59814453125}]]);
+
+const A222_3 = L.polygon([[{"lat":207.57229331326056,"lng":659.689453125},{"lat":224.95071867663134,"lng":659.689453125},{"lat":224.95071867663134,"lng":682.814453125},{"lat":207.57229331326056,"lng":682.814453125}]]);
+
+const A214 = L.polygon([[{"lat":186.9371225155474,"lng":659.748779296875},{"lat":204.0654985931143,"lng":659.748779296875},{"lat":204.0654985931143,"lng":681.811279296875},{"lat":186.9371225155474,"lng":681.811279296875}]]);
+
+const A220 = L.polygon([[{"lat":184.60749457856156,"lng":757.256103515625},{"lat":184.60749457856156,"lng":784.881103515625},{"lat":164.66606403570086,"lng":787.943603515625},{"lat":164.66606403570086,"lng":757.381103515625}]]);
+
+const A219 = L.polygon([[{"lat":161.71748481101136,"lng":757.227294921875},{"lat":161.71748481101136,"lng":788.352294921875},{"lat":147.46467552018927,"lng":790.602294921875},{"lat":147.52718784164023,"lng":757.289794921875}]]);
+
+const A218 = L.polygon([[{"lat":145.11655644568705,"lng":763.973876953125},{"lat":144.99153180278512,"lng":790.848876953125},{"lat":121.5494112586698,"lng":794.473876953125},{"lat":121.48689893721883,"lng":764.098876953125}]]);
+
+const A217 = L.polygon([[{"lat":119.29896768643476,"lng":756.473876953125},{"lat":119.29896768643476,"lng":794.661376953125},{"lat":110.45957892001366,"lng":796.2099609375},{"lat":95.7691833790347,"lng":784.3349609375},{"lat":95.83169570048568,"lng":756.5224609375}]]);
+
+const A215_L = L.polygon([[{"lat":146.59030615445278,"lng":679.58447265625},{"lat":163.78119455347064,"lng":679.58447265625},{"lat":163.78119455347064,"lng":734.20947265625},{"lat":146.59030615445278,"lng":734.20947265625}]]);
+
+const sala_de_juntas = L.polygon([[{"lat":143.36042148323386,"lng":679.62939453125},{"lat":143.36042148323386,"lng":734.19189453125},{"lat":106.4796169596932,"lng":734.216064453125},{"lat":106.66715392404609,"lng":679.716064453125}]]);
+
+const A211 = L.polygon([[{"lat":164.36865445274836,"lng":638.125},{"lat":164.4311667741993,"lng":656.0625},{"lat":117.38771461727333,"lng":655.933349609375},{"lat":117.26268997437138,"lng":626.433349609375},{"lat":153.89515453339786,"lng":626.433349609375},{"lat":153.83264221194688,"lng":638.120849609375}]]);
+
+const A211_L = L.polygon([[{"lat":117.22697120812947,"lng":594.17236328125},{"lat":153.92170389985125,"lng":594.17236328125},{"lat":153.92170389985125,"lng":624.29736328125},{"lat":117.22697120812947,"lng":624.29736328125}]]);
+
+const A210_L = L.polygon([[{"lat":117.34063435310142,"lng":542.086181640625},{"lat":154.16039168772514,"lng":542.086181640625},{"lat":154.16039168772514,"lng":590.711181640625},{"lat":117.34063435310142,"lng":590.711181640625}]]);
+
+
+const A210 = L.polygon([[{"lat":117.27812203165044,"lng":525.773681640625},{"lat":136.53191703855046,"lng":525.773681640625},{"lat":136.53191703855046,"lng":540.398681640625},{"lat":117.27812203165044,"lng":540.398681640625}]]);
+
+const ADI1 = L.polygon([[{"lat":117.41691309568614,"lng":476.59912109375},{"lat":164.8012527555245,"lng":476.59912109375},{"lat":164.8012527555245,"lng":523.22412109375},{"lat":117.41691309568614,"lng":523.22412109375}]]);
+
+const A208_S = L.polygon([[{"lat":117.16149165725756,"lng":411.27392578125},{"lat":164.67085595999785,"lng":411.27392578125},{"lat":164.67085595999785,"lng":472.89892578125},{"lat":117.16149165725756,"lng":472.89892578125}]]);
+
+const servicios_informaticos = L.polygon([[{"lat":117.04135078946896,"lng":325.9521484375},{"lat":164.80076437801316,"lng":325.9521484375},{"lat":164.80076437801316,"lng":407.5771484375},{"lat":117.04135078946896,"lng":407.5771484375}]]);
+
+const A202_L = L.polygon([[{"lat":117.11016497302722,"lng":278.125},{"lat":164.86957856157142,"lng":278.125},{"lat":164.86957856157142,"lng":322.75},{"lat":117.11016497302722,"lng":322.75}]]);
+
+const salon_de_actos = L.polygon([[{"lat":287.0936318260838,"lng":235.8935546875},{"lat":286.9686071831819,"lng":288.6435546875},{"lat":197.8592464648637,"lng":288.4736328125},{"lat":197.8592464648637,"lng":239.5986328125},{"lat":215.61274575694034,"lng":239.7236328125},{"lat":215.73777039984228,"lng":232.0986328125},{"lat":281.4377318673047,"lng":228.810546875},{"lat":281.31270722440274,"lng":236.060546875}]]);
+
+const A206 = L.polygon([{"lat":187.39624666200692,"lng":384.7822265625},{"lat":205.14974595408356,"lng":384.7822265625},{"lat":205.14974595408356,"lng":402.6572265625},{"lat":187.39624666200692,"lng":402.6572265625}]);
+
+const terraza = L.polygon([[{"lat":224.74507141961038,"lng":653.74169921875},{"lat":190.61334390737852,"lng":653.74169921875},{"lat":191.113590336398,"lng":421.125},{"lat":225.24531784862984,"lng":421}]]);
+
+
+const layerGroupPlanta2 = L.layerGroup([
+    B248,
+    B249,
+    B22,
+    B21,
+    B241_L,
+    A239_L,
+    A239,
+    A238_2,
+    A238_1,
+    A238,
+    A22,
+    A21,
+    A233,
+    ADI2,
+    A23,
+    A225,
+    A224_L,
+    A232,
+    A231,
+    A230,
+    A229,
+    A228,
+    A227,
+    A224,
+    A222_1,
+    A222_2,
+    A222_3,
+    A214,
+    A220,
+    A219,
+    A218,
+    A217,
+    A215_L,
+    sala_de_juntas,
+    A211,
+    A211_L,
+    A210_L,
+    A210,
+    ADI1,
+    A208_S,
+    servicios_informaticos,
+    A202_L,
+    salon_de_actos,
+    A206,
+    terraza
+])
+
+//PLANTA 3 AULAS CLICKABLES
+
+const B335 = L.polygon([[{"lat":686.3103191031776,"lng":487.0625},{"lat":686.6853930318835,"lng":500.0625},{"lat":664.3684942738857,"lng":500.1875},{"lat":664.3059819524348,"lng":483.875}]]);
+
+const B336 = L.polygon([[{"lat":607.3158536749288,"lng":503.150390625},{"lat":637.8218665430041,"lng":503.150390625},{"lat":637.8218665430041,"lng":517.837890625},{"lat":607.3158536749288,"lng":517.837890625}]]);
+
+const B32 = L.polygon([[{"lat":599.4818628241662,"lng":520.875},{"lat":672.9963528505117,"lng":520.875},{"lat":672.9963528505117,"lng":573.625},{"lat":599.4818628241662,"lng":573.625}]]);
+
+const B31 = L.polygon([[{"lat":599.6068874670682,"lng":576.5},{"lat":672.9963528505117,"lng":576.5},{"lat":672.9963528505117,"lng":642.625},{"lat":599.6068874670682,"lng":642.625}]]);
+
+const B328_S = L.polygon([[{"lat":693.3092841012958,"lng":683.5625},{"lat":693.5593333870996,"lng":688.1875},{"lat":687.4331258849043,"lng":701.375},{"lat":675.4932724877682,"lng":709.375},{"lat":651.7742418947255,"lng":712.74169921875},{"lat":651.8367542161765,"lng":683.74169921875}]]);
+
+const A324_L = L.polygon([[{"lat":544.1152167679265,"lng":517},{"lat":544.1152167679265,"lng":580.875},{"lat":522.4859535458895,"lng":580.875},{"lat":522.6109781887915,"lng":629.25},{"lat":493.39086330806316,"lng":629.197265625},{"lat":493.359327114361,"lng":517.125}]]);
+
+const A324 = L.polygon([[{"lat":543.8839375324839,"lng":631.125},{"lat":543.8839375324839,"lng":646.7578125},{"lat":524.8845972901769,"lng":646.7578125},{"lat":524.8845972901769,"lng":631.125}],[{"lat":543.7163204338943,"lng":648.40625},{"lat":543.7163204338943,"lng":662.39990234375},{"lat":524.6254766161263,"lng":662.39990234375},{"lat":524.6254766161263,"lng":648.40625}],[{"lat":493.1994058820367,"lng":631.292236328125},{"lat":514.5161074968188,"lng":631.292236328125},{"lat":514.5161074968188,"lng":646.917236328125},{"lat":493.1994058820367,"lng":646.917236328125}],[{"lat":493.26191820348765,"lng":648.354736328125},{"lat":514.7036444611717,"lng":648.354736328125},{"lat":514.7036444611717,"lng":662.354736328125},{"lat":493.26191820348765,"lng":662.354736328125}],[{"lat":493.26191820348765,"lng":663.792236328125},{"lat":514.7036444611717,"lng":663.792236328125},{"lat":514.7036444611717,"lng":678.479736328125},{"lat":493.26191820348765,"lng":678.479736328125}],[{"lat":492.94935659623275,"lng":679.979736328125},{"lat":514.7036444611717,"lng":679.979736328125},{"lat":514.7036444611717,"lng":696.167236328125},{"lat":492.94935659623275,"lng":696.167236328125}]]);
+
+const A324_S = L.polygon([[{"lat":524.7669896006954,"lng":696.127197265625},{"lat":524.7669896006954,"lng":664.0721435546875},{"lat":543.8955101752782,"lng":664.0721435546875},{"lat":543.8955101752782,"lng":696.127197265625}]]);
+
+const A325 = L.polygon([[{"lat":509.4078131440758,"lng":716.674560546875},{"lat":509.2827885011739,"lng":734.862060546875},{"lat":493.7797327813323,"lng":737.362060546875},{"lat":493.7797327813323,"lng":716.737060546875}]]);
+
+const A326 = L.polygon([[{"lat":544.0682093123286,"lng":716.69140625},{"lat":543.9431846694267,"lng":729.69140625},{"lat":511.1242159076653,"lng":734.75390625},{"lat":511.1867282291163,"lng":716.62890625}]]);
+
+const EG4 = L.polygon([[{"lat":402.2412640912594,"lng":647.625},{"lat":439.43609535458893,"lng":647.625},{"lat":439.43609535458893,"lng":696.0625},{"lat":402.2412640912594,"lng":696.0625}]]);
+
+const EG3 = L.polygon([[{"lat":402.2031404018137,"lng":629.1875},{"lat":402.2031404018137,"lng":582.2236328125},{"lat":439.6870362653906,"lng":582.2236328125},{"lat":439.6870362653906,"lng":629.1875}]]);
+
+const A318 = L.polygon([[{"lat":439.42068794021185,"lng":631.499755859375},{"lat":439.42068794021185,"lng":645.492431640625},{"lat":402.2549733856659,"lng":645.492431640625},{"lat":402.2549733856659,"lng":631.499755859375}]]);
+
+const A32 = L.polygon([[{"lat":388.14773419717903,"lng":518.6474609375},{"lat":439.53286242987974,"lng":518.6474609375},{"lat":439.53286242987974,"lng":579.3974609375},{"lat":388.14773419717903,"lng":579.3974609375}]]);
+
+
+const EG1_EG2 = L.polygon([[{"lat":299.6336866229367,"lng":619.75},{"lat":335.6223755309425,"lng":619.75},{"lat":335.6223755309425,"lng":696.043212890625},{"lat":299.6336866229367,"lng":696.043212890625}]]);
+
+const A311_1 = L.polygon([[{"lat":299.4277414108285,"lng":602.5625},{"lat":316.3685805240425,"lng":602.5625},{"lat":316.3685805240425,"lng":617.625},{"lat":299.4277414108285,"lng":617.625}]]);
+
+
+const A311_2 = L.polygon([[{"lat":318.5565117748266,"lng":602.6875},{"lat":335.49735088804056,"lng":602.6875},{"lat":335.49735088804056,"lng":617.6875},{"lat":318.5565117748266,"lng":617.6875}]]);
+
+const A31 = L.polygon([[{"lat":284.8042323063964,"lng":517},{"lat":335.49802856784413,"lng":517},{"lat":335.49802856784413,"lng":599.9375},{"lat":284.8042323063964,"lng":599.9375}]]);
+
+
+const A320 = L.polygon([[{"lat":389.7439132032188,"lng":717.0625},{"lat":404.18425945839385,"lng":717.0625},{"lat":404.18425945839385,"lng":734.5},{"lat":389.7439132032188,"lng":734.5}]]);
+
+const A317 = L.polygon([[{"lat":372.1872300482105,"lng":716.909912109375},{"lat":387.4402364822481,"lng":716.909912109375},{"lat":387.4402364822481,"lng":734.409912109375},{"lat":372.1872300482105,"lng":734.409912109375}]]);
+
+const A316 = L.polygon([[{"lat":370.1875,"lng":716.963623046875},{"lat":370.1875,"lng":734.4375},{"lat":337.5533698048282,"lng":734.4375},{"lat":337.5533698048282,"lng":716.963623046875}]]);
+
+const A315 = L.polygon([[{"lat":317.14456198361916,"lng":717.015869140625},{"lat":335.58569681165653,"lng":717.015869140625},{"lat":335.58569681165653,"lng":734.578369140625},{"lat":317.14456198361916,"lng":734.578369140625}]]);
+
+const A314 = L.polygon([[{"lat":285.6177673082782,"lng":716.9375},{"lat":314.93604606878506,"lng":716.9375},{"lat":314.93604606878506,"lng":734.625},{"lat":285.6177673082782,"lng":734.625}]]);
+
+const A309_L = L.polygon([[{"lat":280.18529446027566,"lng":664.25},{"lat":280.18529446027566,"lng":695.3125},{"lat":224.75347016864706,"lng":695.400390625},{"lat":224.81598249009804,"lng":659.462890625},{"lat":260.49423356094417,"lng":659.375},{"lat":260.5567458823951,"lng":664.3125}]]);
+
+const A308 = L.polygon([[{"lat":205.20522272702834,"lng":678.587646484375},{"lat":222.70867273330106,"lng":678.587646484375},{"lat":222.70867273330106,"lng":695.400146484375},{"lat":205.20522272702834,"lng":695.400146484375}]]);
+
+const A308_1 = L.polygon([[{"lat":205.14271040557736,"lng":659.400146484375},{"lat":222.6461604118501,"lng":659.400146484375},{"lat":222.6461604118501,"lng":677.150146484375},{"lat":205.14271040557736,"lng":677.150146484375}]]);
+
+const A302_1 = L.polygon([[{"lat":185.6886806190297,"lng":659.178955078125},{"lat":203.31715526820437,"lng":659.178955078125},{"lat":203.31715526820437,"lng":695.428955078125},{"lat":185.6886806190297,"lng":695.428955078125}]]);
+
+const A307 = L.polygon([[{"lat":204.0369497912074,"lng":736.478515625},{"lat":223.16572015520546,"lng":736.478515625},{"lat":223.16572015520546,"lng":754.103515625},{"lat":204.0369497912074,"lng":754.103515625}]]);
+
+const A305_L = L.polygon([[{"lat":184.99266873667042,"lng":736.4375},{"lat":202.05853249278636,"lng":736.4375},{"lat":202.05853249278636,"lng":754.125},{"lat":184.99266873667042,"lng":754.125}]]);
+
+const A305 = L.polygon([[{"lat":183.48944275677906,"lng":756.34033203125},{"lat":183.55195507823,"lng":782.40283203125},{"lat":166.61111596501604,"lng":785.09033203125},{"lat":166.69013679050846,"lng":756.38525390625}]]);
+
+const ADIpi = L.polygon([[{"lat":163.85342625947632,"lng":717.3482666015625},{"lat":163.8332806871337,"lng":785.45751953125},{"lat":108.367973972615,"lng":794.1036376953125},{"lat":93.99270514095741,"lng":781.9581298828125},{"lat":94.03333792587415,"lng":737.20751953125},{"lat":105.06149244134988,"lng":737.2027587890625},{"lat":105.07152882323422,"lng":717.3946533203125}]]);
+
+const A303_L = L.polygon([[{"lat":105.13710414538417,"lng":679.23046875},{"lat":163.84467130849328,"lng":679.23046875},{"lat":163.84467130849328,"lng":714.406494140625},{"lat":105.13710414538417,"lng":714.406494140625}]]);
+
+const A301_S1 = L.polygon([[{"lat":115.33566320769933,"lng":509.73193359375},{"lat":163.77624469057477,"lng":509.73193359375},{"lat":163.77624469057477,"lng":539.051513671875},{"lat":115.33566320769933,"lng":539.051513671875}]]);
+
+const A301_S2 = L.polygon([[{"lat":115.3125,"lng":507.517333984375},{"lat":115.3125,"lng":491.5625},{"lat":159.31006035270713,"lng":491.5625},{"lat":159.31006035270713,"lng":507.517333984375}]]);
+
+const A301_S3 = L.polygon([[{"lat":115.24020668673943,"lng":473.75},{"lat":159.37146374357044,"lng":473.75},{"lat":159.37146374357044,"lng":489.195068359375},{"lat":115.24020668673943,"lng":489.195068359375}]]);
+
+const A301_S4 = L.polygon([[{"lat":115.30322194741652,"lng":279.8125},{"lat":163.8093210656487,"lng":279.8125},{"lat":163.8093210656487,"lng":471.5625},{"lat":115.30322194741652,"lng":471.5625}]]);
+
+
+const layerGroupPlanta3 = L.layerGroup([
+    B335,
+    B336,
+    B32,
+    B31,
+    B328_S,
+    A324_L,
+    A324,
+    A324_S,
+    A325,
+    A326,
+    EG4,
+    EG3,
+    A318,
+    A32,
+    EG1_EG2,
+    A311_1,
+    A311_2,
+    A31,
+    A320,
+    A317,
+    A316,
+    A315,
+    A314,
+    A309_L,
+    A308,
+    A308_1,
+    A302_1,
+    A307,
+    A305_L,
+    A305,
+    ADIpi,
+    A303_L,
+    A301_S1,
+    A301_S2,
+    A301_S3,
+    A301_S4
+])
+
+
+//PLANTA 4 AULAS CLICKABLES
+
+const A404_L = L.polygon([[{"lat":264.0164922621288,"lng":657.6630859375},{"lat":264.0164922621288,"lng":662.2568359375},{"lat":269.54883271054,"lng":662.3193359375},{"lat":269.61696137337134,"lng":679.643798828125},{"lat":263.99085244278365,"lng":679.643798828125},{"lat":264.0280094583938,"lng":704.3125},{"lat":245.18393293994302,"lng":704.3125},{"lat":245.15258436833523,"lng":669.15625},{"lat":239.49521927702207,"lng":669.15625},{"lat":239.49521927702207,"lng":657.65625}]]);
+
+const A403_A = L.polygon([[{"lat":147.8612111762281,"lng":657.3125},{"lat":147.8612111762281,"lng":699.125},{"lat":128.48239152642614,"lng":699.1875},{"lat":128.3573668835242,"lng":683},{"lat":130.85785974156317,"lng":683},{"lat":130.7953474201122,"lng":657.375}]]);
+
+const A402_L = L.polygon([[{"lat":147.9432585981325,"lng":701.82275390625},{"lat":148.0223757549689,"lng":735.974365234375},{"lat":153.96104629281143,"lng":735.974365234375},{"lat":153.96104629281143,"lng":753.849365234375},{"lat":119.77120185673066,"lng":753.974365234375},{"lat":119.8049962363568,"lng":682.9375},{"lat":125.68115445274836,"lng":683},{"lat":125.74366677419933,"lng":701.8125}]]);
+
+const A401_L = L.polygon([[{"lat":117.2241652777031,"lng":676.375},{"lat":117.18153641772855,"lng":734.8125},{"lat":96.11488408875029,"lng":734.8125},{"lat":96.24029069663243,"lng":676.4375}]]);
+
+
+
+const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 
     // const A21 = L.polygon([
     //     [692.36, 591.75],
@@ -3193,7 +3468,8 @@ const layerGroupPlanta1 = L.layerGroup([
             
             if (layer instanceof L.Polygon) {
                 layer.setStyle({
-                    opacity: '100',
+                    color:'blue',
+                    opacity: ' 0',
                     fillOpacity: '0'
                 });
             }
@@ -3232,72 +3508,78 @@ const layerGroupPlanta1 = L.layerGroup([
     
     
 //--------FOR CREATING------------------------------------------------------------------------------
-    var options = {
-        position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
-        drawMarker: true,  // adds button to draw markers
-        drawPolygon: true,  // adds button to draw a polygon
-        drawPolyline: true,  // adds button to draw a polyline
-        drawCircle: true,  // adds button to draw a cricle
-        editPolygon: true,  // adds button to toggle global edit mode
-        deleteLayer: true   // adds a button to delete layers
-    };
+//     var options = {
+//         position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
+//         drawMarker: true,  // adds button to draw markers
+//         drawPolygon: true,  // adds button to draw a polygon
+//         drawPolyline: true,  // adds button to draw a polyline
+//         drawCircle: true,  // adds button to draw a cricle
+//         editPolygon: true,  // adds button to toggle global edit mode
+//         deleteLayer: true   // adds a button to delete layers
+//     };
 
-    // add leaflet.pm controls to the map
-    map.pm.addControls(options);
+//     // add leaflet.pm controls to the map
+//     map.pm.addControls(options);
     
 
-    // get array of all available shapes
-    map.pm.Draw.getShapes()
+//     // get array of all available shapes
+//     map.pm.Draw.getShapes()
 
-    // disable drawing mode
-    map.pm.disableDraw('Polygon');
+//     // disable drawing mode
+//     map.pm.disableDraw('Polygon');
 
-    // listen to when drawing mode gets enabled
-    map.on('pm:drawstart', function(e) {
-    	console.log(e)
-    });
+//     // listen to when drawing mode gets enabled
+//     map.on('pm:drawstart', function(e) {
+//     	console.log(e)
+//     });
     
-    // listen to when drawing mode gets disabled
-    map.on('pm:drawend', function(e) {
-    	console.log(e)
-    });
+//     // listen to when drawing mode gets disabled
+//     map.on('pm:drawend', function(e) {
+//     	console.log(e)
+//     });
     
-// listen to when a new layer is created
-map.on('pm:create', function(e) {
-  console.log(e)
+// // listen to when a new layer is created
+// map.on('pm:create', function(e) {
+//   console.log(e)
 
-  // listen to changes on the new layer
-  e.layer.on('pm:edit', function(x) {
-    console.log('edit', x)
-  });
-});
-map.pm.setGlobalOptions({pathOptions:{color:'red'}});
+//   // listen to changes on the new layer
+//   e.layer.on('pm:edit', function(x) {
+//     console.log('edit', x)
+//   });
+// });
+// map.pm.setGlobalOptions({pathOptions:{color:'red'}});
 //-----------------------------------------------------------------------------------------
-  
+
+
+
     $(document).on('click', '#button-see-all', async function (event) {
 
-        //funcion que te dirige al objeto especificado en getbounds
-        // map.fitBounds(B01.getBounds());
+        changeDisplay( event, "floor-select" ) 
 
-        const estado_boton = $(event.currentTarget).val();
-        const elements = document.getElementsByClassName("controles")  
-        
-        if(estado_boton === 'hidden'){
-            for (const element of elements) {
-                element.style.display = "";
-            }
-            document.getElementById('button-see-all').value= ""
-        } 
-        else{
-            for (const element of elements) {
-                element.style.display = "none";
-            }
-            document.getElementById('button-see-all').value= "hidden"
-        }
+    })
+    
+    $(document).on('click', '#button-search', async function (event) {
+    
+        changeDisplay( event, "route-finding" ) 
     })
 
-    const startPointSelect = document.getElementById('start-point');
-    const endPointSelect = document.getElementById('end-point');
+
+    function changeDisplay(event,elementToChange){
+        const button = $(event.currentTarget);
+        const estado_boton = button.attr('value');
+        const elementTarget = document.getElementById(elementToChange);
+    
+        if (estado_boton === 'hidden') {
+            elementTarget.style.display = "";
+            button.attr('value', "");
+        } else {
+            elementTarget.style.display = "none";
+            button.attr('value', "hidden");
+        }
+    }
+
+    // const startPointSelect = document.getElementById('start-point');
+    // const endPointSelect = document.getElementById('end-point');
     const findRouteButton = document.getElementById('find-route');
 
 
@@ -3350,19 +3632,144 @@ Object.values(todasLasPlantas).forEach(planta => {
 allNodes.sort((a, b) => a.name.localeCompare(b.name));
 
 // Clear startPointSelect and endPointSelect before appending sorted options
-startPointSelect.innerHTML = '';
-endPointSelect.innerHTML = '';
+// startPointSelect.innerHTML = '';
+// endPointSelect.innerHTML = '';
 
-// Create and append sorted options
+// // Create and append sorted options
+// allNodes.forEach(node => {
+//     const option1 = document.createElement('option');
+//     const option2 = document.createElement('option');
+//     option1.value = option2.value = node.id;
+//     option1.text = option2.text = node.name;
+//     startPointSelect.appendChild(option1);
+//     endPointSelect.appendChild(option2);
+// });
+
+const dropdownStart = document.getElementById('combo-dropdown-start');
+const dropdownEnd = document.getElementById('combo-dropdown-end');
+
+// Clear existing content before appending new items
+dropdownStart.innerHTML = '';
+dropdownEnd.innerHTML = '';
+
 allNodes.forEach(node => {
-    const option1 = document.createElement('option');
-    const option2 = document.createElement('option');
-    option1.value = option2.value = node.id;
-    option1.text = option2.text = node.name;
-    startPointSelect.appendChild(option1);
-    endPointSelect.appendChild(option2);
+    const dropdownItem1 = document.createElement('div');
+    dropdownItem1.classList.add('dropdown-item');
+    dropdownItem1.textContent = node.name;
+    dropdownItem1.setAttribute('value', node.id);
+
+    const dropdownItem2 = dropdownItem1.cloneNode(true);
+
+    dropdownItem1.addEventListener('click', () => {
+        document.getElementById('combo-input-start').value = node.name;
+        dropdownStart.style.display = 'none';
+    });
+
+    dropdownItem2.addEventListener('click', () => {
+        document.getElementById('combo-input-end').value = node.name;
+        dropdownEnd.style.display = 'none';
+    });
+
+    dropdownStart.appendChild(dropdownItem1);
+    dropdownEnd.appendChild(dropdownItem2);
 });
 
+
+const inputStart = document.getElementById('combo-input-start');
+const inputEnd = document.getElementById('combo-input-end');
+
+// const dropdownItems = Array.from(dropdown.getElementsByClassName('dropdown-item'));
+
+$(document).on('input','#combo-input-start', function() {
+    filterOptions('combo-input-start','combo-dropdown-start')
+});
+
+$(document).on('input','#combo-input-end', function() {
+    filterOptions('combo-input-end','combo-dropdown-end')
+});
+
+function filterOptions (inputVar,dropdownVar) {
+
+   const dropdown = document.getElementById(dropdownVar)
+   const input = document.getElementById(inputVar)
+
+   const dropdownItems = Array.from(dropdown.getElementsByClassName('dropdown-item'));
+
+   const searchText = input.value.trim().toLowerCase();
+
+   dropdownItems.forEach(item => {
+       const itemText = item.textContent.toLowerCase();
+       if (itemText.includes(searchText) || searchText === '') {
+           item.style.display = 'block';
+       } else {
+           item.style.display = 'none';
+       }
+   });
+
+   dropdown.style.display = 'block';
+}
+
+
+$(document).on('click', '#combo-input-start', function(){
+    $('#combo-input-start').trigger('input')
+})
+
+$(document).on('click', '#combo-input-end', function(){
+    $('#combo-input-end').trigger('input')
+})
+
+
+// Close dropdown if user clicks outside
+document.addEventListener('click', function(event) {
+ if (!inputStart.contains(event.target) && !dropdownStart.contains(event.target)) {
+        dropdownStart.style.display = 'none';
+    }
+    if (!inputEnd.contains(event.target) && !dropdownEnd.contains(event.target)) {
+        dropdownEnd.style.display = 'none';
+    }
+});
+
+document.getElementById('combo-dropdown-start').addEventListener('click', function(event) {
+    if (event.target.classList.contains('dropdown-item')) {
+        inputStart.value =  event.target.textContent;
+        inputStart.setAttribute('data-attribute',event.target.getAttribute('value'));
+        dropdownStart.style.display = 'none';
+    }
+});
+
+document.getElementById('combo-dropdown-end').addEventListener('click', function(event) {
+    if (event.target.classList.contains('dropdown-item')) {
+        inputEnd.value = event.target.textContent;
+        inputEnd.setAttribute('data-attribute',event.target.getAttribute('value'));
+        dropdownEnd.style.display = 'none';
+    }
+});
+
+$(document).on('click','#change-route', function() {
+    const temporaryValue = inputStart.value
+    inputStart.value = inputEnd.value
+    inputEnd.value = temporaryValue
+
+    const temporaryAttr = inputStart.getAttribute('data-attribute');
+    inputStart.setAttribute('data-attribute', inputEnd.getAttribute('data-attribute'));
+    inputEnd.setAttribute('data-attribute', temporaryAttr);
+});
+
+$(document).on('click','#dismiss-finder', function() {
+    const elementTarget = document.getElementById("route-finding");
+    const searchButton =  document.getElementById("button-search");
+        elementTarget.style.display = "none";
+        searchButton.setAttribute('value', "hidden");
+    
+});
+
+// Handle selection of dropdown item
+// dropdown.addEventListener('click', function(event) {
+//     if (event.target.classList.contains('dropdown-item')) {
+//         input.value = event.target.textContent;
+//         dropdown.style.display = 'none';
+//     }
+// });
 
 // Dijkstra's algorithm to find the shortest path
    
@@ -3435,50 +3842,66 @@ allNodes.forEach(node => {
     function addOverlayAulas(floor) {
 
     let layerGroup
+
+    const allLayerGroups = [
+        layerGroupPlanta0,
+        layerGroupPlanta1,
+        layerGroupPlanta2,
+        layerGroupPlanta3,
+        layerGroupPlanta4,
+        layerGroupPlanta5
+    ];
+
+    allLayerGroups.forEach(group => map.removeLayer(group));
+
         switch (floor) {
             
             case '0':
                layerGroup = layerGroupPlanta0
-               layerGroupPlanta1.remove()
-               layerGroupPlanta5.remove()
+               console.log(layerGroup)
+              
                 break;
             case '1':
                 console.log(floor)
                 layerGroup = layerGroupPlanta1
-                layerGroupPlanta0.remove()
-                layerGroupPlanta5.remove()
+               
                 break;
             case '2':
                 console.log(floor)
-
+                layerGroup = layerGroupPlanta2
                 break;
             case '3':
                 console.log(floor)
-
+                layerGroup = layerGroupPlanta3
                 break;
             case '4':
                 console.log(floor)
-
+                layerGroup = layerGroupPlanta4
                 break;
             case '5':
                 console.log(floor)
-            layerGroup = layerGroupPlanta5
-            layerGroupPlanta0.remove()
-            layerGroupPlanta1.remove()
+                layerGroup = layerGroupPlanta5
                 break;
         
             default:
+                console.log('invalid')
                 break;
         }
 
         layerGroup.eachLayer(function (layer) {
          if (layer instanceof L.Polygon) {
+          
              changeAllPolygonsOpacity(layerGroup);
+
+               // Remove existing event listeners
+               layer.off('click');
+               layer.off('dblclick');
+
              layer.on('click', function() {
                  changeAllPolygonsOpacity(layerGroup);
              });
              layer.on('click', changeColorDestino);
-             layer.on('dblclick', changeColorOrigen);
+            //  layer.on('dblclick', changeColorOrigen);
    
          }
          
@@ -3549,8 +3972,8 @@ allNodes.forEach(node => {
 
 
     findRouteButton.addEventListener('click', () => {
-        const startPoint = document.getElementById('start-point').value;
-        const endPoint = document.getElementById('end-point').value;
+        const startPoint = document.getElementById('combo-input-start').getAttribute('data-attribute');
+        const endPoint = document.getElementById('combo-input-end').getAttribute('data-attribute');
     
         //redirige a la planta en la que se encutra el pto de salida
         // document.querySelector(`#floor-select .floor-button[value="${getFloorById(startPoint,todasLasPlantas)}"]`).click()
@@ -3652,6 +4075,7 @@ allNodes.forEach(node => {
              
         }
         drawPathPart(currentPartIndex);
+        $('#dismiss-finder').trigger('click')
     });
     
     async function loadLottieAnimation(path, container) {

@@ -312,6 +312,9 @@
               <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
                 <i class="fa-solid fa-layer-group"></i>
               </a>
+              <a id="button-search" class="btn" role="button" aria-expanded="false" value="hidden">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </a>
           
             <div id="floor-select" class="controles" style="display: none;">
               <button class="btn btn-light floor-button" value="5">-1</button>
@@ -321,11 +324,32 @@
               <button class="btn btn-light floor-button" value="3">3</button>
               <button class="btn btn-light floor-button" value="4">4</button>
             </div>
-            <div id="route-finding" class="controles" style="display: none;" class="p-3 bg-white rounded shadow">
-              <select id="start-point" class="form-control mb-2"></select>
-              <select id="end-point" class="form-control mb-2"></select>
-              <button id="find-route" class="btn btn-primary w-100">Find Route</button>
+            <div id="route-finding" class='container justify-content-between' style="display: none;">
+              <div class= "row" style="align-items: center; width: 10px;">
+                <i class="fa-regular fa-circle" style="padding: 0%; margin-left: 8px" ></i>
+
+                <i class="fa-solid fa-location-dot" style="color: rgb(24, 158, 82); padding: 0%; margin-left: 8px;"></i>
+              </div>
+              <div class="'row">
+                <input autocomplete="off" type="text" id="combo-input-start" placeholder="Origen...">
+                <div class="dropdown" id="combo-dropdown-start">
+                </div>
+                <input autocomplete="off" type="text" id="combo-input-end" placeholder="Destino...">
+                <div class="dropdown" id="combo-dropdown-end">
+                </div>
+              </div>
+              <div class= "row"  style="align-items: center">
+                <button id="change-route" ><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+              </div>
+            <div class= "row" style="align-items: center;">
+              <button id="find-route" class="btn btn-primary"><i class="fa-solid fa-person-walking"></i></button>
             </div>
+            <div class= "row"  style="align-items: start" >
+              <button id="dismiss-finder"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            </div>
+        
+    
         </div>
     </div>
     
