@@ -55,8 +55,18 @@ For local, run the migrations to get the needed tables on your database
 cd server/database/
 npx sequelize-cli db:migrate
  ```
+And finally we will clone the submodules horarios and misc.
 
-You're ready!
+For that to happen you will have to write two commands.
+```sh
+git submodule init
+ ```
+and 
+```sh
+git submodule update
+ ```
+
+Now you're all set!
 
 ## ⛏️ Built Using
 - [PostgresSQL](https://www.postgresql.org/) - Database
