@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'development') {
 			}),
 			secret:process.env.COOKIE_SECRET,
 			// proxy: true,
-			cookie: { maxAge:172800000, secure:false, sameSite: 'lax', httpOnly: true},
+			cookie: { maxAge:86400000, secure:false, sameSite: 'lax', httpOnly: true},
 			resave: false,
 			saveUninitialized: false,
 			

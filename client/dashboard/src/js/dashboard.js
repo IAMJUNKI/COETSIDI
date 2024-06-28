@@ -2653,6 +2653,45 @@ const A_105_2 = L.polygon([[{"lat":226.4326083839633,"lng":422.3125},{"lat":226.
 
 const A_101 = L.polygon([[{"lat":179.26499408570353,"lng":308.670166015625},{"lat":179.2739551409574,"lng":328.625},{"lat":166.54558936860406,"lng":328.890869140625},{"lat":166.56441654569244,"lng":308.625}]]);
 
+B_150_L2.options.name = "B_150_L2";
+B_150_L1.options.name = "B_150_L1";
+B_150b.options.name = "B_150b";
+B_150_2.options.name = "B_150_2";
+B_150_1.options.name = "B_150_1";
+B_148.options.name = "B_148";
+A_146_L.options.name = "A_146_L";
+A_146.options.name = "A_146";
+taller2.options.name = "taller2";
+taller1.options.name = "taller1";
+A_144.options.name = "A_144";
+A_144_L2.options.name = "A_144_L2";
+A_144_L1.options.name = "A_144_L1";
+A_140_L2.options.name = "A_140_L2";
+A_140_L1.options.name = "A_140_L1";
+A_140_A.options.name = "A_140_A";
+A_140.options.name = "A_140";
+A_139.options.name = "A_139";
+A_138_L.options.name = "A_138_L";
+A_137_L.options.name = "A_137_L";
+A_134_L.options.name = "A_134_L";
+A_133_L.options.name = "A_133_L";
+A_132_L.options.name = "A_132_L";
+A_131_L1.options.name = "A_131_L1";
+A_131_L2.options.name = "A_131_L2";
+A_129_S1.options.name = "A_129_S1";
+A_129_S2.options.name = "A_129_S2";
+club_deportivo.options.name = "club_deportivo";
+A_125_L.options.name = "A_125_L";
+A_113_L.options.name = "A_113_L";
+A_111_L.options.name = "A_111_L";
+A_109_S.options.name = "A_109_S";
+A_108.options.name = "A_108";
+A_106_S.options.name = "A_106_S";
+A_105.options.name = "A_105";
+A_105_1.options.name = "A_105_1";
+A_105_2.options.name = "A_105_2";
+A_101.options.name = "A_101";
+
 
 const layerGroupPlanta5 = L.layerGroup([
     B_150_L2,
@@ -2864,7 +2903,79 @@ const layerGroupPlanta5 = L.layerGroup([
 
     const C009 = L.polygon([[{"lat":340.60948729322365,"lng":411.3282470703125},{"lat":338.17150675663567,"lng":432.3594970703125},{"lat":319.9553918669463,"lng":430.3546142578125},{"lat":317.0173127587505,"lng":430.0108642578125},{"lat":314.95440615086835,"lng":429.3858642578125},{"lat":312.78820769933867,"lng":428.2779541015625},{"lat":311.0378626987114,"lng":427.0592041015625},{"lat":309.6938477875155,"lng":425.6842041015625},{"lat":308.4748575192215,"lng":424.0904541015625},{"lat":307.4434042152804,"lng":422.2779541015625},{"lat":306.56823171496677,"lng":419.6529541015625},{"lat":306.3494385898884,"lng":417.1529541015625},{"lat":306.3806947506138,"lng":415.2154541015625},{"lat":306.69325635786873,"lng":412.4967041015625},{"lat":309.0283975840995,"lng":393.1875},{"lat":330.0856486459846,"lng":395.6820068359375},{"lat":328.92917069914154,"lng":405.3695068359375},{"lat":328.83540221696506,"lng":406.7132568359375},{"lat":329.05419534204344,"lng":407.6820068359375},{"lat":329.4605254314748,"lng":408.4945068359375},{"lat":329.9606240030826,"lng":409.2757568359375},{"lat":330.77328418194526,"lng":409.8382568359375},{"lat":331.6172005215334,"lng":410.2757568359375},{"lat":332.617397664749,"lng":410.4632568359375}]]);
 
-
+    B01.options.name = "B01";
+    B02.options.name = "B02";
+    B042.options.name = "B042";
+    B041.options.name = "B041";
+    B037.options.name = "B037";
+    B036.options.name = "B036";
+    B034.options.name = "B034";
+    B033.options.name = "B033";
+    A031.options.name = "A031";
+    A032.options.name = "A032";
+    A032_L1.options.name = "A032_L1";
+    A032_L2.options.name = "A032_L2";
+    A032_L3.options.name = "A032_L3";
+    A032_L4.options.name = "A032_L4";
+    A032_L5.options.name = "A032_L5";
+    A032_L6.options.name = "A032_L6";
+    A032_L7.options.name = "A032_L7";
+    A032_A1.options.name = "A032_A1";
+    A030.options.name = "A030";
+    A029.options.name = "A029";
+    A029_L1.options.name = "A029_L1";
+    A029_L2.options.name = "A029_L2";
+    A029_A.options.name = "A029_A";
+    A028_3.options.name = "A028_3";
+    A028_2.options.name = "A028_2";
+    A028_1.options.name = "A028_1";
+    A026.options.name = "A026";
+    A025.options.name = "A025";
+    A023.options.name = "A023";
+    A022_L.options.name = "A022_L";
+    A024.options.name = "A024";
+    A024_LP.options.name = "A024_LP";
+    A024_L1.options.name = "A024_L1";
+    A024_L2.options.name = "A024_L2";
+    A024_L3.options.name = "A024_L3";
+    A021.options.name = "A021";
+    A021_L1.options.name = "A021_L1";
+    A021_L2.options.name = "A021_L2";
+    A021_L3.options.name = "A021_L3";
+    enfermeria.options.name = "enfermeria";
+    A019.options.name = "A019";
+    hall_entrada.options.name = "hall_entrada";
+    A01.options.name = "A01";
+    A02.options.name = "A02";
+    A03.options.name = "A03";
+    A04.options.name = "A04";
+    A05.options.name = "A05";
+    A06.options.name = "A06";
+    A07.options.name = "A07";
+    A08.options.name = "A08";
+    pista_deportiva.options.name = "pista_deportiva";
+    A015_L.options.name = "A015_L";
+    A012_L.options.name = "A012_L";
+    A008_L.options.name = "A008_L";
+    A007_L.options.name = "A007_L";
+    A006_L.options.name = "A006_L";
+    A005_L.options.name = "A005_L";
+    A004_L.options.name = "A004_L";
+    A002_L.options.name = "A002_L";
+    Fablab.options.name = "Fablab";
+    A006.options.name = "A006";
+    A007.options.name = "A007";
+    A002.options.name = "A002";
+    C009.options.name = "C009";
+    C008.options.name = "C008";
+    C007.options.name = "C007";
+    C006.options.name = "C006";
+    C005.options.name = "C005";
+    C004.options.name = "C004";
+    C003.options.name = "C003";
+    C002.options.name = "C002";
+    C001.options.name = "C001";
+    
     const layerGroupPlanta0 = L.layerGroup([
         B01,
         B02,
@@ -3058,6 +3169,63 @@ const C102 = L.polygon([[{"lat":453.43447564385184,"lng":424.31689453125},{"lat"
 
 const C101 = L.polygon([[{"lat":470.2502901141638,"lng":426.19189453125},{"lat":467.56226029177196,"lng":449.25439453125},{"lat":453.05940171514595,"lng":447.69189453125},{"lat":455.74743153753786,"lng":424.37939453125}]]);
 
+B149.options.name = "B149";
+B150.options.name = "B150";
+B12.options.name = "B12";
+B11.options.name = "B11";
+B142.options.name = "B142";
+A139_L1.options.name = "A139_L1";
+A139_L2.options.name = "A139_L2";
+A139.options.name = "A139";
+A140.options.name = "A140";
+A138.options.name = "A138";
+A137.options.name = "A137";
+proyecto_mentor.options.name = "proyecto_mentor";
+A129.options.name = "A129";
+A128.options.name = "A128";
+A127.options.name = "A127";
+A126.options.name = "A126";
+A125.options.name = "A125";
+A123.options.name = "A123";
+A122.options.name = "A122";
+A124_S1.options.name = "A124_S1";
+A124_S2.options.name = "A124_S2";
+A124.options.name = "A124";
+A121.options.name = "A121";
+A120.options.name = "A120";
+A118.options.name = "A118";
+direccion.options.name = "direccion";
+A117.options.name = "A117";
+oficina_de_practicas.options.name = "oficina_de_practicas";
+A114.options.name = "A114";
+A115.options.name = "A115";
+A112_L.options.name = "A112_L";
+A110_L.options.name = "A110_L";
+A108_L.options.name = "A108_L";
+A11.options.name = "A11";
+A12.options.name = "A12";
+A13.options.name = "A13";
+A14.options.name = "A14";
+A15.options.name = "A15";
+A16.options.name = "A16";
+A17.options.name = "A17";
+cafeteria.options.name = "cafeteria";
+comedor.options.name = "comedor";
+A130_L.options.name = "A130_L";
+A132_L.options.name = "A132_L";
+A133_L.options.name = "A133_L";
+A134_L.options.name = "A134_L";
+C109.options.name = "C109";
+C108.options.name = "C108";
+C107.options.name = "C107";
+C106.options.name = "C106";
+C105.options.name = "C105";
+C104.options.name = "C104";
+C103.options.name = "C103";
+C102.options.name = "C102";
+C101.options.name = "C101";
+
+
 const layerGroupPlanta1 = L.layerGroup([
     B149,
     B150,
@@ -3212,6 +3380,52 @@ const A206 = L.polygon([{"lat":187.39624666200692,"lng":384.7822265625},{"lat":2
 
 const terraza = L.polygon([[{"lat":224.74507141961038,"lng":653.74169921875},{"lat":190.61334390737852,"lng":653.74169921875},{"lat":191.113590336398,"lng":421.125},{"lat":225.24531784862984,"lng":421}]]);
 
+B248.options.name = "B248";
+B249.options.name = "B249";
+B22.options.name = "B22";
+B21.options.name = "B21";
+B241_L.options.name = "B241_L";
+A239_L.options.name = "A239_L";
+A239.options.name = "A239";
+A238_2.options.name = "A238_2";
+A238_1.options.name = "A238_1";
+A238.options.name = "A238";
+A22.options.name = "A22";
+A21.options.name = "A21";
+A233.options.name = "A233";
+ADI2.options.name = "ADI2";
+A23.options.name = "A23";
+A225.options.name = "A225";
+A224_L.options.name = "A224_L";
+A232.options.name = "A232";
+A231.options.name = "A231";
+A230.options.name = "A230";
+A229.options.name = "A229";
+A228.options.name = "A228";
+A227.options.name = "A227";
+A224.options.name = "A224";
+A222_1.options.name = "A222_1";
+A222_2.options.name = "A222_2";
+A222_3.options.name = "A222_3";
+A214.options.name = "A214";
+A220.options.name = "A220";
+A219.options.name = "A219";
+A218.options.name = "A218";
+A217.options.name = "A217";
+A215_L.options.name = "A215_L";
+sala_de_juntas.options.name = "sala_de_juntas";
+A211.options.name = "A211";
+A211_L.options.name = "A211_L";
+A210_L.options.name = "A210_L";
+A210.options.name = "A210";
+ADI1.options.name = "ADI1";
+A208_S.options.name = "A208_S";
+servicios_informaticos.options.name = "servicios_informaticos";
+A202_L.options.name = "A202_L";
+salon_de_actos.options.name = "salon_de_actos";
+A206.options.name = "A206";
+terraza.options.name = "terraza";
+
 
 const layerGroupPlanta2 = L.layerGroup([
     B248,
@@ -3338,6 +3552,43 @@ const A301_S3 = L.polygon([[{"lat":115.24020668673943,"lng":473.75},{"lat":159.3
 
 const A301_S4 = L.polygon([[{"lat":115.30322194741652,"lng":279.8125},{"lat":163.8093210656487,"lng":279.8125},{"lat":163.8093210656487,"lng":471.5625},{"lat":115.30322194741652,"lng":471.5625}]]);
 
+B335.options.name = "B335";
+B336.options.name = "B336";
+B32.options.name = "B32";
+B31.options.name = "B31";
+B328_S.options.name = "B328_S";
+A324_L.options.name = "A324_L";
+A324.options.name = "A324";
+A324_S.options.name = "A324_S";
+A325.options.name = "A325";
+A326.options.name = "A326";
+EG4.options.name = "EG4";
+EG3.options.name = "EG3";
+A318.options.name = "A318";
+A32.options.name = "A32";
+EG1_EG2.options.name = "EG1_EG2";
+A311_1.options.name = "A311_1";
+A311_2.options.name = "A311_2";
+A31.options.name = "A31";
+A320.options.name = "A320";
+A317.options.name = "A317";
+A316.options.name = "A316";
+A315.options.name = "A315";
+A314.options.name = "A314";
+A309_L.options.name = "A309_L";
+A308.options.name = "A308";
+A308_1.options.name = "A308_1";
+A302_1.options.name = "A302_1";
+A307.options.name = "A307";
+A305_L.options.name = "A305_L";
+A305.options.name = "A305";
+ADIpi.options.name = "ADIpi";
+A303_L.options.name = "A303_L";
+A301_S1.options.name = "A301_S1";
+A301_S2.options.name = "A301_S2";
+A301_S3.options.name = "A301_S3";
+A301_S4.options.name = "A301_S4";
+
 
 const layerGroupPlanta3 = L.layerGroup([
     B335,
@@ -3390,6 +3641,10 @@ const A402_L = L.polygon([[{"lat":147.9432585981325,"lng":701.82275390625},{"lat
 const A401_L = L.polygon([[{"lat":117.2241652777031,"lng":676.375},{"lat":117.18153641772855,"lng":734.8125},{"lat":96.11488408875029,"lng":734.8125},{"lat":96.24029069663243,"lng":676.4375}]]);
 
 
+A404_L.options.name = "A404_L"
+A403_A.options.name = "A403_A"
+A402_L.options.name = "A402_L"
+A401_L.options.name = "A401_L"
 
 const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 
@@ -3443,16 +3698,19 @@ const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 
 //------------------------------------------------------------------------
 
-    function changeColorDestino(e) {
-        var layer = e.target;
-        if (layer instanceof L.Polygon) {
-            layer.setStyle({
-                color: 'green',
-                opacity:'1'
-            });
-        }
-    }
+    // function changeColorDestino(e) {
+    //     var layer = e.target;
+    //     const polygonName = e.target.options.name;
+    // console.log('Polygon name:', polygonName);
+    //     if (layer instanceof L.Polygon) {
+    //         layer.setStyle({
+    //             color: 'green',
+    //             opacity:'1'
+    //         });
+    //     }
+    // }
 
+   
     function changeColorOrigen(e) {
         var layer = e.target;
         if (layer instanceof L.Polygon) {
@@ -3551,6 +3809,24 @@ const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 //-----------------------------------------------------------------------------------------
 
 
+$(document).on('click', '#clickable-origen-location', async function () {
+    const OrigenIcon = this.querySelector("i");
+    OrigenIcon.style.color = 'rgb(24, 158, 82)'
+   
+const DestinoIcon = document.getElementById("icon-destino-location");
+    DestinoIcon.setAttribute('selected-mode','false');
+    DestinoIcon.style.color =  'rgb(3, 3, 3)'
+})
+
+$(document).on('click', '#clickable-destino-location', async function () {
+    const DestinoIcon = this.querySelector("i");
+    DestinoIcon.style.color = 'rgb(24, 158, 82)'
+    DestinoIcon.setAttribute('selected-mode','true');
+    
+    const OrigenIcon = document.getElementById("icon-origen-location");
+    OrigenIcon.style.color =  'rgb(3, 3, 3)'
+})
+
 
     $(document).on('click', '#button-see-all', async function (event) {
 
@@ -3562,6 +3838,13 @@ const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
     
         changeDisplay( event, "route-finding" ) 
     })
+
+    function showSearchDisplay(){
+        const elementTarget = document.getElementById("route-finding");
+        const searchButton =  document.getElementById("button-search");
+            elementTarget.style.display = "";
+            searchButton.setAttribute('value', "");
+    }
 
 
     function changeDisplay(event,elementToChange){
@@ -3580,7 +3863,7 @@ const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 
     // const startPointSelect = document.getElementById('start-point');
     // const endPointSelect = document.getElementById('end-point');
-    const findRouteButton = document.getElementById('find-route');
+    // const findRouteButton = document.getElementById('find-route');
 
 
     const bounds = [[0, 0], [1000, 1000]];
@@ -3616,6 +3899,106 @@ const layerGroupPlanta4 = L.layerGroup([A404_L, A403_A, A402_L, A401_L])
 //         }
 //     });
 // });
+
+
+//funcion para cambiar el valor del destino o origen en el buscador del mapa dependiendo del parametro input
+async function changeDestinoOrOrigenMapa(aula){
+    const inputStart = document.getElementById('combo-input-start');
+    const inputEnd = document.getElementById('combo-input-end');
+    
+    const DestinoIcon = document.getElementById("icon-destino-location");
+
+    let input
+    
+    if (DestinoIcon.getAttribute('selected-mode') === 'true') input = inputEnd
+
+    else input = inputStart
+  
+try {
+     const allNodes = await getAllNodes()
+    const nodeFound = await iterateAndMatch(allNodes,aula, input)
+    if (nodeFound === true) console.log('worked')
+} catch (error) {
+    console.error('Something went wrong ', error.response ? error.response.data : error.message);
+
+}
+}
+//function que itera sobre los nodos que se pueden seleccionar y si encuentra match con el seleccionado en el mapa lo mete
+async function iterateAndMatch(allNodes, nodeId, input){
+
+    try {
+        allNodes.forEach(node => {
+        
+            if (node.id === nodeId) {
+                input.value = node.name;
+                input.setAttribute('data-attribute',node.id);
+              return true
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error iterating nodes ', error.response ? error.response.data : error.message);
+    }
+}
+
+//function que itera sobre el objeto todasLasPlantas y devuelve un array con los nodos en orden alfabetico de la propiedad node.name
+async function getAllNodes(){
+    try {
+        let allNodes = [];
+        Object.values(todasLasPlantas).forEach(planta => {
+            planta.nodes.forEach(node => {
+                if (!node.id.startsWith('nodo')) {
+                    allNodes.push({ id: node.id, name: node.name });
+                }
+            });
+        });
+        
+        // Sort allNodes alphabetically by node.name
+        allNodes.sort((a, b) => a.name.localeCompare(b.name));
+            return allNodes
+        
+    } catch (error) {
+        console.error('Error getting node: ', error.response ? error.response.data : error.message);
+    }
+   
+}
+
+//funcion que añade los valores de nodos posibles al dropdown
+function addNodesToDropdown (allNodes){
+
+    const dropdownStart = document.getElementById('combo-dropdown-start');
+    const dropdownEnd = document.getElementById('combo-dropdown-end');
+    
+    // Clear existing content before appending new items
+    dropdownStart.innerHTML = '';
+    dropdownEnd.innerHTML = '';
+    
+
+
+
+allNodes.forEach(node => {
+    const dropdownItem1 = document.createElement('div');
+    dropdownItem1.classList.add('dropdown-item');
+    dropdownItem1.textContent = node.name;
+    dropdownItem1.setAttribute('value', node.id);
+
+    const dropdownItem2 = dropdownItem1.cloneNode(true);
+
+    dropdownItem1.addEventListener('click', () => {
+        document.getElementById('combo-input-start').value = node.name;
+        dropdownStart.style.display = 'none';
+    });
+
+    dropdownItem2.addEventListener('click', () => {
+        document.getElementById('combo-input-end').value = node.name;
+        dropdownEnd.style.display = 'none';
+    });
+
+    dropdownStart.appendChild(dropdownItem1);
+    dropdownEnd.appendChild(dropdownItem2);
+});
+
+}
 
 
 //CARGA OPCIONES EN EL BUSCADOR
@@ -3763,6 +4146,24 @@ $(document).on('click','#dismiss-finder', function() {
     
 });
 
+//function que se le aplica a todos los layers(aulas) una vez son clickadas
+function CambiaAulaSeleccionada(e) {
+    var layer = e.target;
+    const nombreAula = e.target.options.name;
+
+    changeDestinoOrOrigenMapa(nombreAula)
+    showSearchDisplay()
+
+    if (layer instanceof L.Polygon) {
+        layer.setStyle({
+            color: 'green',
+            opacity:'1'
+        });
+    }
+}
+
+
+
 // Handle selection of dropdown item
 // dropdown.addEventListener('click', function(event) {
 //     if (event.target.classList.contains('dropdown-item')) {
@@ -3858,7 +4259,6 @@ $(document).on('click','#dismiss-finder', function() {
             
             case '0':
                layerGroup = layerGroupPlanta0
-               console.log(layerGroup)
               
                 break;
             case '1':
@@ -3900,7 +4300,7 @@ $(document).on('click','#dismiss-finder', function() {
              layer.on('click', function() {
                  changeAllPolygonsOpacity(layerGroup);
              });
-             layer.on('click', changeColorDestino);
+             layer.on('click', CambiaAulaSeleccionada);
             //  layer.on('dblclick', changeColorOrigen);
    
          }
@@ -3938,6 +4338,7 @@ $(document).on('click','#dismiss-finder', function() {
         }
         $(event.currentTarget).addClass("active")
         loadFloor(selectedFloor);
+        removeLayers()
     })
 
     // Initializar mapa en el piso 0
@@ -3959,7 +4360,7 @@ $(document).on('click','#dismiss-finder', function() {
         return parts;
     }
 
-
+//en funcion del nodeId que se le entrega te dice el piso en le que se encuentra ese nodo
     function getFloorById(id, todasLasPlantas) {
         for (const planta in todasLasPlantas) {
             if (todasLasPlantas[planta].nodes.some(node => node.id === id)) {
@@ -3971,7 +4372,7 @@ $(document).on('click','#dismiss-finder', function() {
     }
 
 
-    findRouteButton.addEventListener('click', () => {
+    document.getElementById('find-route').addEventListener('click', () => {
         const startPoint = document.getElementById('combo-input-start').getAttribute('data-attribute');
         const endPoint = document.getElementById('combo-input-end').getAttribute('data-attribute');
     
@@ -3987,7 +4388,7 @@ $(document).on('click','#dismiss-finder', function() {
         }
     
         const pathParts = splitPathByEscalera(path);
-        console.log(pathParts, 'pathParts');
+        console.log(pathParts.length, 'pathParts');
     
         // Remove existing route if any
         if (window.currentRoute) {
@@ -3997,22 +4398,9 @@ $(document).on('click','#dismiss-finder', function() {
         let currentPartIndex = 0;
     
         function drawPathPart(index) {
-            if (window.currentRoute) {
-                map.removeLayer(window.currentRoute);
-            }
-            if (window.startMarker) {
-                map.removeLayer(window.startMarker);
-            }
-            if (window.endMarker) {
-                map.removeLayer(window.endMarker);
-            }
-            if (window.escalatorMarker) {
-                map.removeLayer(window.escalatorMarker);
-            }
-            if (window.secondEscalatorMarker) {
-                map.removeLayer(window.secondEscalatorMarker);
-            }
-    
+
+            // removeLayers()
+
             const part = pathParts[index];
 
             const latlngs = part.map(id => {
@@ -4023,10 +4411,9 @@ $(document).on('click','#dismiss-finder', function() {
                 return null;
             }).filter(latlng => latlng !== null);
     
-
+            //click en el selector de pisos para el path correspondiente, triggerea tambien removelayers()
             document.querySelector(`#floor-select .floor-button[value="${getFloorById(part[0],todasLasPlantas)}"]`).click()
            
-          
 
             window.currentRoute = L.polyline(latlngs, { color: '#50C153', dashArray: '5,10' }).addTo(map);
             map.fitBounds(window.currentRoute.getBounds());
@@ -4088,6 +4475,24 @@ $(document).on('click','#dismiss-finder', function() {
             autoplay: true, // Optional, defaults to true
             name: "Animation" // Name for future reference
         });
+    }
+
+    function removeLayers(){
+        if (window.currentRoute) {
+            map.removeLayer(window.currentRoute);
+        }
+        if (window.startMarker) {
+            map.removeLayer(window.startMarker);
+        }
+        if (window.endMarker) {
+            map.removeLayer(window.endMarker);
+        }
+        if (window.escalatorMarker) {
+            map.removeLayer(window.escalatorMarker);
+        }
+        if (window.secondEscalatorMarker) {
+            map.removeLayer(window.secondEscalatorMarker);
+        }
     }
     
 //---------------------------------------------------------------------------------------------------------------
