@@ -19,7 +19,8 @@ const debug = require('debug')('&:INDEX JS')
 const authRouter = require('@auth/router.js')
 const gestorDataRouter = require('@gestorData/router.js')
 const googleCalendarRouter = require('@googleCalendar/router.js')
-
+const calendarioRouter = require('@calendario/router.js');
+const inicioRouter = require('@inicio/router');
 
 
 globalRouter.use(express.json());
@@ -51,7 +52,7 @@ if (process.env.NODE_ENV === 'development') {
 			}),
 			secret:process.env.COOKIE_SECRET,
 			// proxy: true,
-			cookie: { maxAge:172800000, secure:false, sameSite: 'lax', httpOnly: true},
+			cookie: { maxAge:86400000, secure:false, sameSite: 'lax', httpOnly: true},
 			resave: false,
 			saveUninitialized: false,
 			
@@ -159,7 +160,9 @@ globalRouter.get('/logout', (req, res) => {
 })
 
 globalRouter.use('/gestorData',gestorDataRouter)
-globalRouter.use('/calendar',googleCalendarRouter)
+globalRouter.use('/googleCalendar',googleCalendarRouter)
+globalRouter.use('/calendario',calendarioRouter)
+globalRouter.use('/inicio',inicioRouter)
 
 const port = process.env.PORT || 5050;
 

@@ -1,5 +1,5 @@
 
-const {getDataUser} = require('@gestorData/services.js')
+const {getDataUser} = require('@utils/utils.js')
 
 
 
@@ -10,7 +10,6 @@ const {getDataUser} = require('@gestorData/services.js')
     return events
 
 }
-
 
 function parseHorario(horario) {
     const events = []; //donde se creará cada evento

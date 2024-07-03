@@ -1,25 +1,14 @@
 const debug = require('debug')('&:GESTORDATA: handlers')
-const services = require('./services.js')
+const services = require('@gestorData/services/services.js')
 
 const checkDB = async (req, res, next) => {
     try {
         const userId = req.user.id
+        console.log(req.user,'a')
         const response =await services.isDBEmpty(userId)
         res.status(200).send(response)
     } catch (e) {
         debug('Error en handlers/checkDB ' + e)
-        throw e
-    }
-};
-
-const generarHorarios = async (req, res, next) => {
-    try {
-        const userId = req.user.id
-        const dataUser =await services.getDataUser(userId)
-        // console.log(JSON.stringify(dataUser,null,2),'datauser')
-        res.status(200).send(dataUser)
-    } catch (e) {
-        debug('Error en handlers/getAllSubjects ' + e)
         throw e
     }
 };
@@ -65,5 +54,5 @@ const saveSubjects = async (req, res, next) => {
 };
 
 module.exports = {
-    getAllSubjects, saveSubjects, checkDB, generarHorarios
+    getAllSubjects, saveSubjects, checkDB
 }
