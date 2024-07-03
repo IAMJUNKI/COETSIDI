@@ -36,7 +36,7 @@ async function login(username, password, done) {
                     return done(null, false, { message: 'Incorrect username or password' })
                         };
         } else {
-			return done(null, { id: result.id, newuser: result.newuser })
+			return done(null, { id: result.id})
 		}
 		} catch (error) {
 			return done(error)
@@ -46,7 +46,7 @@ async function login(username, password, done) {
 const checkUserAndPassword = async (username, password) => {
     try {
         const userToBeFound = username.toLowerCase()
-        const infoUser = await knex('t_usuarios').where({ username: userToBeFound }).first('id', 'password') || {}
+        const infoUser = await knex('t_usuarios').where({ username: userToBeFound }).first('id', 'password', 'role') || {}
         console.log(infoUser,'infousers')
         let response
         
@@ -54,7 +54,7 @@ const checkUserAndPassword = async (username, password) => {
             const valid = await bcrypt.compare(password, infoUser.password);
             if (valid) {
               
-                response = { validated: true, id: infoUser.id }
+                response = { validated: true, id: infoUser.id}
                 // const isFirstTime = await funnel.primerLoginUsuario(infoUser.id)
                 // response.newuser = isFirstTime
             } else {
@@ -82,7 +82,7 @@ const checkUserAndPassword = async (username, password) => {
     passport.deserializeUser( async function (userToBeFound, done) {
         console.log(userToBeFound,'deserialized user')
             const userFound = userToBeFound.id || userToBeFound
-            const user = await knex('t_usuarios').first('id').where({ id: userFound })
+            const user = await knex('t_usuarios').first('id','role').where({ id: userFound })
                     if (user) {
                         return done(null, user)
                     } else {
@@ -92,6 +92,7 @@ const checkUserAndPassword = async (username, password) => {
 
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
+        console.log(req.user,'rq.user')
         console.log('\x1b[31m%s\x1b[0m', 'Logged in');
         return next()
     } else {

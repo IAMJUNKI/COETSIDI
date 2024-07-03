@@ -24,6 +24,9 @@ $(function() {
            console.error(error)
         }
     })
+
+    insertarBienvenida()
+    cargarClasesPendientes()
 });
 
 
@@ -48,21 +51,79 @@ function showSpinner(element) {
     spinner.innerHTML =  `<span class="visually-hidden">Loading...</span>`
     document.getElementById(element).append(spinner)  
 }  
-//CAMBIO DE PAGINAS Y GESTION OFFCANVAS-------------------------------------------------------------
-
-$(document).on('click', '#boton_inicio', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    document.getElementById("pagina_horario").style.display = "none";
-    document.getElementById("pagina_inicio").style.display = "";
-})
+//GESTION OFFCANVAS-------------------------------------------------------------
 
 //todos los nav item triggerean el click salvo el que tiene la clase dropdown (muy util)
 $(document).on('click', '.nav-item:not(.dropdown)', async function () {
     document.getElementById("boton-cerrar-offcanvas").click();
 })
 
-//INICIO-----------------------------------------------------------------------------------------
+
+
+//INICIO---------------------------------------------------------------------------------------------------
+
+$(document).on('click', '#boton_inicio', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    document.getElementById("pagina_horario").style.display = "none";
+    document.getElementById("pagina_mapa").style.display = "none";
+    document.getElementById("pagina_inicio").style.display = "";
+})
+
+
+function insertarBienvenida (){
+
+    $.ajax({
+        url: '/inicio/getUserName',
+        type: 'get',
+        success: function (name) {
+         document.getElementById('bienvenida').innerHTML = `¡Hola, ${name}! 👋`
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+
+}
+
+function cargarClasesPendientes (){
+
+
+    $.ajax({
+        url: '/inicio/getCoursesNowAndAfter',
+        type: 'get',
+        success:async function (clases) {
+       
+            await insertarClasesInicio(clases)
+           
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+}
+
+
+$(document).on('click', '#button-link-to-map', async function (event) {
+
+    let aulaClase = event.currentTarget.querySelector('.contenido-cards-meeting-class')?.textContent;
+    if(aulaClase){
+
+        if (aulaClase.includes('+')) {
+            aulaClase = aulaClase.substring(0, aulaClase.indexOf('+'));
+        }
+    
+        $('#boton_mapa').trigger('click')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,aulaClase, inputEnd)
+        findClassOnMap(nodeFound)
+        showSearchDisplay()
+        
+    }
+   })
+
+
+//MODAL ASIGNATURAS-----------------------------------------------------------------------------------------
 $(document).on('change', '#selector-grados', async function (event) {
 
     console.log($(event.currentTarget).val())
@@ -232,18 +293,19 @@ $(document).on('click', '#boton_horario', async function (event) {
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
     document.getElementById("pagina_inicio").style.display = "none";
+    document.getElementById("pagina_mapa").style.display = "none";
     document.getElementById("pagina_horario").style.display = "";
 })
 
 function generarHorario(){
     $.ajax({
-        url: '/gestorData/generarHorario',
+        url: '/calendario/generarHorario',
         type: 'get',
-        success: function (data) {
+        success: async function (sessionArray) {
         
-        renderSchedule(data);
-
-        if (window.innerWidth < 992) showDay('lunes'); // Lunes es el default
+        renderSchedule(sessionArray);
+        await getPersonalizacion()
+        if (window.innerWidth < 992) showDay(); // Lunes es el default
         else showAllDays()
 
         },
@@ -261,8 +323,8 @@ $(document).on('change', '#day-select', async function (event) {
 })
 
 
-
 function showDay() {
+
     const day=document.getElementById('day-select').value
     const semestre = document.getElementById('elegir-semestre').value
     const schedule = document.querySelector('.schedule');
@@ -276,195 +338,560 @@ function showDay() {
         session.style.display = 'none';
       }
     });
-  }
+}
 
-  function showAllDays() {
-    const semestre = document.getElementById('elegir-semestre').value
-    // console.log(semestre,'semestre')
+
+function showAllDays() {
+        const schedule = document.querySelector('.schedule');
+        const sessions = schedule.querySelectorAll('.session');
+        const semestre = document.getElementById('elegir-semestre').value
+   
+        sessions.forEach(session => {
+            const className = session.className
+            if (className.includes(semestre)) {
+                session.style.display = 'block';
+            } else {
+                session.style.display = 'none';
+            }
+        });           
+}
+
+async function getPersonalizacion() {
+    try {
+        $.ajax({
+            url: '/calendario/personalizacion',
+            type: 'get',
+            success: function (datos) {
+                 $('#elegir-semestre').val(datos.semestre_horario)
+                 $('#elegir-color').val(datos.paleta_horario)
+
+                 changeColorHorario(datos.paleta_horario)
+            },
+            error: function (error) {
+               console.error(error)
+            }
+        }) 
+    } catch (error) {
+        console.error(error)
+    } 
+}
+
+function changeColorHorario(color) {
     const schedule = document.querySelector('.schedule');
     const sessions = schedule.querySelectorAll('.session');
     sessions.forEach(session => {
-        session.style.display = 'none';
+        let colorNumber
+        let semestre
+        session.classList.forEach(cls => {
+            if (cls.includes('color')) {
+                colorNumber = cls.substring(cls.lastIndexOf('-') + 1);
+            }
+            if (cls.includes('semestre')) {
+                semestre = cls;
+            }
+        })
+        session.className = `session ${color}-${colorNumber} ${semestre}`
     });
-    const semestreElegido = schedule.querySelectorAll(`.${semestre}`);
-    semestreElegido.forEach(session => {
-        session.style.display = 'block';
-    });
-   
-  }
-
-
-  function shortenSentence(sentence) {
-    const wordsToIgnore = ["de", "y", "en", "la", "el", "a", "con","and","for"]; // Common words to ignore
-    const maxCharsPerWord = 4; // Maximum characters to take from each word
-
-    return sentence.split(' ').map(word => {
-        if (wordsToIgnore.includes(word.toLowerCase())) {
-            return word;
-        }
-        return word.slice(0, maxCharsPerWord) + '.';
-    }).join(' ');
 }
 
-  function createScheduleElement(asignatura, horaInicio, horaFinal, aula, grupo, dia, tipo, colorClass, semesterClass, columnSpan) {
+
+  //cambiar semestre horario
+  $(document).on('change', '#elegir-semestre', async function (event) {
+
+ const semestre =  $(event.currentTarget).val()
+    try {
+        $.ajax({
+            url: `/calendario/guardarSemestre/${semestre}`,
+            type: 'post',
+            success: async function () {
+
+                if (window.innerWidth < 992) showDay(); // Lunes es el default
+                else showAllDays()
+            },
+            error: function (error) {
+               console.error(error)
+            }
+        }) 
+    } catch (error) {
+        
+    }   
+})
+
+  //cambiar color horario
+  $(document).on('change', '#elegir-color', async function (event) {
+
+    const color =  $(event.currentTarget).val()
+       try {
+           $.ajax({
+               url: `/calendario/guardarColor/${color}`,
+               type: 'post',
+               success: async function () {
+
+                changeColorHorario(color)
+    
+               },
+               error: function (error) {
+                  console.error(error)
+               }
+           }) 
+       } catch (error) {
+           
+       }   
+   })
+
+   $(document).on('click', '.session', async function (event) {
+
+    let sessionAula = event.currentTarget.querySelector('.session-aula').textContent;
+
+
+    console.log('Clicked session-aula:', sessionAula);
+
+    if (sessionAula) {
+        
+        if (sessionAula.includes('+')) {
+            sessionAula = sessionAula.substring(0, sessionAula.indexOf('+'));
+        }
+    
+        $('#boton_mapa').trigger('click')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,sessionAula, inputEnd)
+        findClassOnMap(nodeFound)
+        showSearchDisplay()
+        
+    }
+    
+   })
+
+   function renderSchedule(sessionArray){
+    $('.session').remove()
+    const scheduleContainer = document.getElementById('schedule-container');
+
+    sessionArray.forEach(miniSession => {
+            const elementos = miniSession.element
+        const sessionElement = createScheduleElement(elementos.asignatura, elementos.hora_inicio,  elementos.hora_final,  elementos.aula, elementos.grupo, elementos.dia, elementos.tipo, elementos.color, elementos.semestre, elementos.column_span);
+
+        scheduleContainer.appendChild(sessionElement);
+      });
+   }
+
+
+   async function insertarClasesInicio(clases) {
+    // console.log('Current Courses:', clases.clasesActuales);
+    // console.log('Next Course:', clases.proximaClase);
+    // console.log('hoy:', clases.diaActual);
+
+    const clasesActuales =  clases.clasesActuales
+    const proximaClase = clases.proximaClase
+    const diaActual = clases.diaActual
+
+    const containerWrapper = document.getElementById('container-inicio-clases')
+    
+    const rowWrapper = document.createElement('div')
+    rowWrapper.className ='row'
+    
+        const cardClasesActuales = await createCard (clasesActuales, 'Clase Actual')
+        const cardClasesProximas =  await createCard (proximaClase, 'Próxima Clase', diaActual)
+
+        rowWrapper.appendChild(cardClasesActuales)
+        rowWrapper.appendChild(cardClasesProximas)
+
+        containerWrapper.appendChild(rowWrapper)
+}
+
+async function createCard(clasesActualesOProximas,cardTitleContent, diaActual = '') {
+
+    const cardHeader = document.createElement('div')
+    cardHeader.className = "card-header no-border"
+
+    const cardTitle = document.createElement('h5')
+    cardTitle.className = "card-title"
+    cardTitle.textContent = `${cardTitleContent}`
+
+    cardHeader.appendChild(cardTitle)
+
+    if(cardTitleContent === 'Próxima Clase' && clasesActualesOProximas.length >= 1 ){
+
+        let diaProximoContent = clasesActualesOProximas[0]['Dia']
+
+        if(diaActual === clasesActualesOProximas[0]['Dia']) diaProximoContent = 'Hoy'
+
+        const cardInfoDiaProxima = document.createElement('h7')
+        cardInfoDiaProxima.className = "card-day-info"
+        cardInfoDiaProxima.textContent = `${diaProximoContent}`
+
+        cardHeader.appendChild(cardInfoDiaProxima)
+    }
+
+  
+    if (clasesActualesOProximas.length > 1) {
+        const badgePill = document.createElement('span')
+        badgePill.className = "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        badgePill.textContent = `${clasesActualesOProximas.length}`
+
+        cardHeader.appendChild(badgePill)
+    }
+
+
+    const card = document.createElement('div');
+    card.className = 'card card-margin';
+    
+    card.appendChild(cardHeader)
+
+    let tipo
+    if (cardTitleContent === 'Próxima Clase') {
+        tipo= 'Proximo'
+    }
+    else {
+        tipo = 'Actual'
+    }
+    
+    if(clasesActualesOProximas.length > 1){
+        let carouselId 
+        if (cardTitleContent === 'Próxima Clase') carouselId = 'carouselProximasClases'
+        else carouselId = 'carouselClasesActuales'
+
+        const extendedCard = await extendCardCarousel(clasesActualesOProximas,carouselId, tipo)
+
+        card.appendChild(extendedCard)
+    }
+    else {
+        let textoGenericoNoClase
+        if (cardTitleContent === 'Próxima Clase') textoGenericoNoClase = 'Este mes no tienes clases'
+        else  textoGenericoNoClase = 'Actualmente no tienes clase'
+
+        const extendedCard = await extendCardNoCarousel(clasesActualesOProximas, textoGenericoNoClase, tipo)
+
+        card.appendChild(extendedCard)
+    }
+
+
+    const cardGridSystem = document.createElement('div')
+    cardGridSystem.className = "col-lg-4"
+
+    cardGridSystem.appendChild(card)
+    
+    return cardGridSystem
+}
+
+async function extendCardNoCarousel(clasesActualesOProximas, textoGenericoNoClase, tipo) {
+    
+    if (clasesActualesOProximas.length === 0) {
+
+
+        clasesActualesOProximas.push({Asignatura: `${textoGenericoNoClase}`, Tipo: '', Aula: ''})
+        
+    }
     
 
-    const sessionDiv = document.createElement('div');
+        //CARD TITLE
+    const cardMeetingTitle= document.createElement('span')
+    cardMeetingTitle.className = "contenido-cards-pro-title"
+    cardMeetingTitle.textContent=`${clasesActualesOProximas[0]['Asignatura']}`
+    
+    const cardMeetingInfo= document.createElement('div')
+    cardMeetingInfo.className = "contenido-cards-meeting-info"
+    
+    cardMeetingInfo.appendChild(cardMeetingTitle)
+     //CARD TIME
+     if (clasesActualesOProximas[0]['HoraFinal']){
+       
+         const cardMeetingTime= document.createElement('span')
+         cardMeetingTime.className = "contenido-cards-meeting-time"
+
+         if (tipo === 'Actual') cardMeetingTime.textContent = `Hasta las ${clasesActualesOProximas[0]['HoraFinal']}`
+         else cardMeetingTime.textContent = `De ${clasesActualesOProximas[0]['HoraInicio']} a ${clasesActualesOProximas[0]['HoraFinal']}`
+         
+         const cardMeetingClass= document.createElement('span')
+         cardMeetingClass.className = "contenido-cards-meeting-class"
+          cardMeetingClass.textContent = `${clasesActualesOProximas[0]['Aula']}`
+         
+        cardMeetingInfo.appendChild(cardMeetingTime)
+        cardMeetingInfo.appendChild(cardMeetingClass)
+     }
+    
+    const cardAnchorToMap= document.createElement('a')
+    cardAnchorToMap.id = "button-link-to-map"
+    cardAnchorToMap.setAttribute('role', 'button')
+    cardAnchorToMap.setAttribute('aria-expanded', 'false')
+    cardAnchorToMap.setAttribute('value', 'hidden')
+    
+    cardAnchorToMap.appendChild(cardMeetingInfo)
+    
+    
+    let tipeContenidoCards
+    let tipeIcon
+    switch (clasesActualesOProximas[0]['Tipo']) {
+        case 'Teoría y Problemas':
+            tipeContenidoCards = "contenido-cards-teoria"
+            tipeIcon = "fa-solid fa-book-open"
+            break;
+         case 'Laboratorio':
+            tipeContenidoCards = "contenido-cards-laboratorio"
+            tipeIcon = "fa-solid fa-flask"
+            break;
+         case 'Acciones Cooperativas':
+            tipeContenidoCards = "contenido-cards-cooperativas"
+            tipeIcon = "fa-solid fa-users-gear"
+            break;
+    
+        default:
+            tipeContenidoCards = "contenido-cards-noclass"
+            tipeIcon = "fa-regular fa-clock"
+            break;
+    }
+    
+    
+    
+    const cardIconWrapper= document.createElement('span')
+    cardIconWrapper.className = "contenido-cards-icon"
+    
+    
+    const cardIcon= document.createElement('i')
+    cardIcon.className = `${tipeIcon}`
+    
+    cardIconWrapper.appendChild(cardIcon)
+    
+    const cardContentTipeClass= document.createElement('div')
+    cardContentTipeClass.className = `${tipeContenidoCards}`
+    
+    cardContentTipeClass.appendChild(cardIconWrapper)
+    
+    const cardContentTitleWrapper= document.createElement('div')
+    cardContentTitleWrapper.className = "contenido-cards-title-wrapper"
+    
+    cardContentTitleWrapper.appendChild(cardContentTipeClass)
+    cardContentTitleWrapper.appendChild(cardAnchorToMap)
+    
+     const cardContent = document.createElement('div')
+    cardContent.className = "contenido-cards"
+    
+    cardContent.appendChild(cardContentTitleWrapper)
+    
+    const cardBody = document.createElement('div')
+    cardBody.className = "card-body pt-0"
+    
+    cardBody.appendChild(cardContent)
+
+    return cardBody
+    
+}
+
+
+ async function extendCardCarousel(clasesActualesOProximas,carouselId,tipo) {
+    
+    const carouselCard= document.createElement('div')
+    carouselCard.className = "carousel slide"
+    carouselCard.id = `${carouselId}`
+    
+    const carouselInner= document.createElement('div')
+    carouselInner.className = "carousel-inner"
+    
+    
+    clasesActualesOProximas.forEach((course,index)=>{
+    
+        //CARD TITLE
+    const cardMeetingTitle= document.createElement('span')
+    cardMeetingTitle.className = "contenido-cards-pro-title"
+    cardMeetingTitle.textContent=`${course['Asignatura']}`
+    
+     //CARD TIME
+    const cardMeetingTime= document.createElement('span')
+    cardMeetingTime.className = "contenido-cards-meeting-time"
+
+    if (tipo === 'Actual') cardMeetingTime.textContent = `Hasta las ${course['HoraFinal']}`
+    else cardMeetingTime.textContent = `De ${course['HoraInicio']} a ${course['HoraFinal']}`
+
+    
+    const cardMeetingClass= document.createElement('span')
+    cardMeetingClass.className = "contenido-cards-meeting-class"
+     cardMeetingClass.textContent = `${course['Aula']}`
+    
+    const cardMeetingInfo= document.createElement('div')
+    cardMeetingInfo.className = "contenido-cards-meeting-info"
+    
+    cardMeetingInfo.appendChild(cardMeetingTitle)
+    cardMeetingInfo.appendChild(cardMeetingTime)
+    cardMeetingInfo.appendChild(cardMeetingClass)
+    
+    const cardAnchorToMap= document.createElement('a')
+    cardAnchorToMap.id = "button-link-to-map"
+    cardAnchorToMap.setAttribute('role', 'button')
+    cardAnchorToMap.setAttribute('aria-expanded', 'false')
+    cardAnchorToMap.setAttribute('value', 'hidden')
+    
+    cardAnchorToMap.appendChild(cardMeetingInfo)
+    
+    
+    let tipeContenidoCards
+    let tipeIcon
+    switch (course['Tipo']) {
+        case 'Teoría y Problemas':
+            tipeContenidoCards = "contenido-cards-teoria"
+            tipeIcon = "fa-solid fa-book-open"
+            break;
+         case 'Laboratorio':
+            tipeContenidoCards = "contenido-cards-laboratorio"
+            tipeIcon = "fa-solid fa-flask"
+            break;
+         case 'Acciones Cooperativas':
+            tipeContenidoCards = "contenido-cards-cooperativas"
+            tipeIcon = "fa-solid fa-users-gear"
+            break;
+    
+        default:
+            tipeContenidoCards = "contenido-cards-noclass"
+            tipeIcon = "fa-regular fa-clock"
+            break;
+    }
+    
+    
+    
+    const cardIconWrapper= document.createElement('span')
+    cardIconWrapper.className = "contenido-cards-icon"
+    
+    
+    const cardIcon= document.createElement('i')
+    cardIcon.className = `${tipeIcon}`
+    
+    cardIconWrapper.appendChild(cardIcon)
+    
+    const cardContentTipeClass= document.createElement('div')
+    cardContentTipeClass.className = `${tipeContenidoCards}`
+    
+    cardContentTipeClass.appendChild(cardIconWrapper)
+    
+    const cardContentTitleWrapper= document.createElement('div')
+    cardContentTitleWrapper.className = "contenido-cards-title-wrapper"
+    
+    cardContentTitleWrapper.appendChild(cardContentTipeClass)
+    cardContentTitleWrapper.appendChild(cardAnchorToMap)
+    
+     const cardContent = document.createElement('div')
+    cardContent.className = "contenido-cards"
+    
+    cardContent.appendChild(cardContentTitleWrapper)
+    
+    const cardBody = document.createElement('div')
+    cardBody.className = "card-body pt-0"
+    
+    cardBody.appendChild(cardContent)
+    
+    const carouselItem = document.createElement('div');
+    carouselItem.className = 'carousel-item';
+    if (index === 0) {
+      carouselItem.classList.add('active');
+    }
+    carouselItem.appendChild(cardBody)
+    carouselInner.appendChild(carouselItem)
+    })
+    
+    carouselCard.appendChild(carouselInner)
+
+    const buttonPrevCarousel = document.createElement('button')
+    buttonPrevCarousel.className = "carousel-control-prev"
+    buttonPrevCarousel.setAttribute('type', 'button')
+    buttonPrevCarousel.setAttribute('data-bs-target', `#${carouselId}`)
+    buttonPrevCarousel.setAttribute('data-bs-slide', 'prev')
+
+    const buttonNextCarousel = document.createElement('button')
+    buttonNextCarousel.className = "carousel-control-next"
+    buttonNextCarousel.setAttribute('type', 'button')
+    buttonNextCarousel.setAttribute('data-bs-target', `#${carouselId}`)
+    buttonNextCarousel.setAttribute('data-bs-slide', 'next')
+
+    const buttonControlNext= document.createElement('span')
+    buttonControlNext.className = "carousel-control-next-icon"
+    buttonControlNext.setAttribute('aria-hidden', 'true')
+
+    const nextText = document.createElement('span');
+    nextText.className = 'visually-hidden';
+    nextText.textContent = 'Next';
+
+    const buttonControlPrev= document.createElement('span')
+    buttonControlPrev.className = "carousel-control-prev-icon"
+    buttonControlPrev.setAttribute('aria-hidden', 'true')
+
+    const prevText = document.createElement('span');
+    prevText.className = 'visually-hidden';
+    prevText.textContent = 'Previous';
+
+    buttonNextCarousel.appendChild(buttonControlNext)
+    buttonNextCarousel.appendChild(nextText)
+
+    buttonPrevCarousel.appendChild(buttonControlPrev)
+    buttonPrevCarousel.appendChild(prevText)
+
+
+    carouselCard.appendChild(buttonPrevCarousel)
+    carouselCard.appendChild(buttonNextCarousel)
+    
+    return carouselCard
+}
+
+
+   function createScheduleElement(asignatura, horaInicio, horaFinal, aula, grupo, dia, tipo, colorClass, semesterClass, columnSpan) {
+    
+    const sessionDiv = document.createElement('a');
     sessionDiv.className = `session ${colorClass} ${semesterClass}`;
     sessionDiv.style.gridColumn = `${columnSpan}`; // Lowercase the day and add column span
     sessionDiv.style.gridRow = `time-${horaInicio.replace(':', '')} / time-${horaFinal.replace(':', '')}`;
+
+    const sessionWrapper = document.createElement('div')
+    sessionWrapper.className ='session-title-wrapper'
+
+    const sessionInfo = document.createElement('div')
+    sessionInfo.className ='session-info-wrapper'
+
+
     const timeElement = document.createElement('span');
     timeElement.className = 'session-time';
     timeElement.textContent = `${horaInicio} - ${horaFinal} ${tipo}`;
-
-    const titleElement = document.createElement('h3');
-    titleElement.className = 'session-asignatura';
-    titleElement.textContent = asignatura;
 
     const aulaElement = document.createElement('span');
     aulaElement.className = 'session-aula';
     aulaElement.textContent = `${aula}`;
   
+    const titleElement = document.createElement('h3');
+    titleElement.className = 'session-asignatura';
+    titleElement.textContent = asignatura;
+
    
   
     const tipoElement = document.createElement('span');
     tipoElement.className = 'session-tipo';
     tipoElement.textContent = tipo;
   
-    sessionDiv.appendChild(titleElement);
-    sessionDiv.appendChild(aulaElement);
-    sessionDiv.appendChild(timeElement);
+    sessionInfo.appendChild(titleElement)
+    sessionInfo.appendChild(aulaElement);
+
+    sessionWrapper.appendChild(sessionInfo);
+    sessionWrapper.appendChild(timeElement);
+
+    sessionDiv.appendChild(sessionWrapper);
+
+    // sessionDiv.appendChild(titleElement);
+    // sessionDiv.appendChild(aulaElement);
+    // sessionDiv.appendChild(timeElement);
     // sessionDiv.appendChild(tipoElement);
   
     return sessionDiv;
   }
 
-  //cambiar semestre horario
-  $(document).on('change', '#elegir-semestre', async function (event) {
-
-    showAllDays()
-    
-})
-
-
-  function renderSchedule(scheduleData) {
-      $('.session').remove()
-    const scheduleContainer = document.getElementById('schedule-container');
-    const subjectColorMap = {};
-    let colorIndex = 1;
-  
-    for (const semestre in scheduleData) {
-      const diasDeLaSemana = scheduleData[semestre];
-  
-      for (const dia in diasDeLaSemana) {
-        const sessions = diasDeLaSemana[dia];
-       
-        const collisionMap = {};
-        // console.log(dia,'dia')
-// Iterate through scheduleData to calculate collision indices
-sessions.forEach( (session, index) => {
-    let {Asignatura, HoraInicio, HoraFinal, Aula, Grupo, Tipo } = session;
-  const startSession = session.HoraInicio.replace(":", "");
-  const endSession = session.HoraFinal.replace(":", "");
-  let collisions = 0
-  const collidedBuddy = []
-  for (let j = 0; j < sessions.length; j++) {
-
-    const start2 = sessions[j].HoraInicio.replace(":", "");
-    const end2 = sessions[j].HoraFinal.replace(":", "");
-
-    if(j === index) continue
-    else if ((startSession >= start2 && startSession < end2) || (endSession > start2 && endSession <= end2) || startSession<= start2 && endSession >= end2|| startSession>= start2 && endSession <= end2) {
-        collisions ++
-        collidedBuddy.push(j)
-
-          }
-  }
-
- const collisionHandler = {}
- collisionHandler.collidedBuddy = collidedBuddy
- collisionHandler.collisions = collisions
- collisionMap[index]=collisionHandler
-
-          if (!subjectColorMap[Asignatura]) {
-            subjectColorMap[Asignatura] = `default-color-${colorIndex}`;
-            colorIndex = colorIndex === 12 ? 1 : colorIndex + 1; // Reset or increment color index
-          }
-          const diaSinAcento = dia.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-          const colorClass = subjectColorMap[Asignatura];
-          const columnSpan =  handlerForCollisions(collisionMap,index, collidedBuddy,collisions, `${diaSinAcento}`)
-          if(columnSpan !== `${dia}-start / ${dia}-end` && Asignatura.length>15) Asignatura = shortenSentence(Asignatura)
-        switch (Tipo) {
-            case 'Teoría y Problemas':
-                Tipo = 'TyP'
-                break;
-            case 'Laboratorio':
-                Tipo = 'Lab'
-                break;
-            case 'Acciones Cooperativas':
-                Tipo = 'AC'
-                break;
-        
-            default:
-                break;
-        }
-          const sessionElement = createScheduleElement(Asignatura, HoraInicio, HoraFinal, Aula, Grupo, diaSinAcento, Tipo, colorClass, semestre, columnSpan);
-          scheduleContainer.appendChild(sessionElement);
-        });
-      }
-    }
-  }
-
- function handlerForCollisions(collisionMap,index,collidedBuddy,collisions, dia) {
-    let counter = 0;
-    let counter2 = 0;
-    let greatestCollision = collisions;
-
-    if (collisions === 0) return `${dia}-start / ${dia}-end`
-    else{ 
-        // Iterate through all values in the collisionMap
-        for (let key in collisionMap) {
-            let value = collisionMap[key];
-  
-            // Check if the current index is in the collidedBuddy array of the current key
-            if (value.collidedBuddy.includes(index)) {
-                // Determine the greatest collision number
-                greatestCollision = Math.max(greatestCollision, value.collisions);
-                        counter++;
-            }
-            if(collidedBuddy.includes(key)) counter2++
-        }
-
-        counter = Math.max(counter, counter2);    
-        switch (greatestCollision) {
-            case 1:
-                if(counter === 0) return `${dia}-start / ${dia}-half`
-                else return `${dia}-half / ${dia}-end`
-                break;
-            case 2:
-                if(counter === 0 ) return `${dia}-start / ${dia}-first-third`
-                else if(counter === 1)return `${dia}-first-third / ${dia}-second-third`
-                else return `${dia}-second-third / ${dia}-end`
-                break;
-            case 3:
-                if(counter === 0 ) return `${dia}-start / ${dia}-first-third`
-                else if(counter === 1)return `${dia}-first-third / ${dia}-second-third`
-                else return `${dia}-second-third / ${dia}-end`
-                break;
- 
-            default:
-                break;
-        }
-    }
-}
-  
 
 //FUNCIONES RESPONSIVE
 
+//para retrasar una funcion activada con click o input por ejemlo
+const debounce = (fn, delay = 1000) => {
+    let timerId = null
+    return (...args) => {
+        clearTimeout(timerId)
+        timerId = setTimeout(() => fn(...args), delay)
+    }
+}
 
-    window.addEventListener('resize', function() {
-        handleScreenWidthChange();
-    });
+
+window.addEventListener('resize', debounce(handleScreenWidthChange, 100));
+
 
     function handleScreenWidthChange() {
         if (window.innerWidth >= 992) {
@@ -479,28 +906,123 @@ sessions.forEach( (session, index) => {
 $(document).on('click', '#auth_calendar', async function (event) {
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
-console.log('ee')
+    showSpinner('auth_calendar')
+try {
     $.ajax({
-        url: '/calendar/authCalendar',
+        url: '/googleCalendar/authCalendar',
         type: 'get',
-        success: function (response) {
-        //  if (response === true){
-        //     const elements = document.getElementsByClassName("newUser");
-        //     for (const element of elements) {
-        //         element.style.display = "none";
-        //     }
-        //     document.getElementById("cambiar_asignaturas").click();
-        //  }
+        success: function (done) {
+            console.log(done)
+            destroySpinner()
+            document.getElementById("cerrar_modal_google_calendar").click();
         },
         error: function (error) {
            console.error(error)
         }
     })
+} catch (error) {
+    console.error('AJAX request falied',error)
+}
+    
    
 })
 
+//MAPA-----------------------------------------------------------------------------------
 
-document.addEventListener('DOMContentLoaded', () => {
+$(document).on('click', '#boton_mapa', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    const paginaMapa = document.getElementById("pagina_mapa")
+    document.getElementById("pagina_inicio").style.display = "none";
+    document.getElementById("pagina_horario").style.display = "none";
+    paginaMapa.style.display = "";
+
+     
+    if (paginaMapa.getAttribute('content-loaded') === 'false') {
+
+        loadFloor('0');
+        await loadDropdownSearch()
+
+        paginaMapa.setAttribute('content-loaded','true');
+    }
+
+})
+
+
+
+
+// <div class="btn-group"><button type="button" title="Previous month" aria-pressed="false" class="fc-prev-button btn btn-primary"><span class="bi bi-chevron-left"></span></button><button type="button" title="Next month" aria-pressed="false" class="fc-next-button btn btn-primary"><span class="bi bi-chevron-right"></span></button></div>
+
+
+// async function loadDropdownSearch (){
+//     try {
+//         $.ajax({
+//             url: '/mapa/guardarAsignaturas',
+//             type: 'post',
+//             data,
+//             cache: false,
+//             contentType: false,
+//             processData: false,
+//             success:  function () {
+            
+              
+
+//             },
+//             error: function (error) {
+//                 $('#js_form_asignaturas_usuario').empty()
+//                 document.getElementById('js_form_asignaturas_usuario').innerHTML='Error sending the data'
+//             console.error(error)
+//             }
+//         })
+
+//         const allNodes = await getAllNodes()
+//         await addNodesToDropdown(allNodes)  
+//     } catch (error) {
+        
+//     }
+ 
+// }
+
+// async function changeDestinoOrOrigenMapa(aula){
+//     try {
+
+//         $.ajax({
+//             url: '/mapa/guardarAsignaturas',
+//             type: 'post',
+//             data,
+//             cache: false,
+//             contentType: false,
+//             processData: false,
+//             success: async function (allNodes) {
+            
+//                 const inputStart = document.getElementById('combo-input-start');
+//                 const inputEnd = document.getElementById('combo-input-end');
+                
+//                 const DestinoIcon = document.getElementById("icon-destino-location");
+            
+//                 let input
+                
+//                 if (DestinoIcon.getAttribute('selected-mode') === 'true') input = inputEnd
+            
+//                 else input = inputStart
+            
+            
+//                 const allNodes = await getAllNodes()
+//                 const nodeFound = await iterateAndMatch(allNodes,aula, input)
+//                 if (nodeFound === true) console.log('worked')
+
+//             },
+//             error: function (error) {
+//                 $('#js_form_asignaturas_usuario').empty()
+//                 document.getElementById('js_form_asignaturas_usuario').innerHTML='Error sending the data'
+//             console.error(error)
+//             }
+//         })
+// } catch (error) {
+//     console.error('Something went wrong ', error.response ? error.response.data : error.message);
+
+// }
+// }
 
    
     const finalIcon = L.divIcon({
@@ -2476,6 +2998,8 @@ const ascensores = [
         return distance;
     }
     
+
+    
 //ADD MARKERS MAPS FLOOR 0 FOR NOW
 const markers = {};
 // nodes.forEach(node => {
@@ -2547,23 +3071,23 @@ const markers = {};
 
 //HELPERS FOR CREATION OF MAP-------------------------------------------------------------------------------------
 
-//GET COORIDINATES ON CLICKING MARKER
+//GET COORDINATES ON CLICKING MARKER
 map.on('layeradd', function(event) {
-    // if (event.layer instanceof L.Marker) {
-    //     const marker = event.layer;
-    //     marker.on('click', function() {
-    //         console.log(`Marker clicked. Coordinates: ${marker.getLatLng().toString()}`);
-    //         // Replace alert and console.log with your desired handling of coordinates
-    //     });
-    // }
-    if (event.layer instanceof L.Polygon) {
-        const layer = event.layer;
-        layer.on('click', function() {
-            console.log(`${JSON.stringify(layer.getLatLngs())}`)
+    if (event.layer instanceof L.Marker) {
+        const marker = event.layer;
+        marker.on('click', function() {
+            console.log(`Marker clicked. Coordinates: ${marker.getLatLng().toString()}`);
+    
         });
     }
-});
-
+    });
+    
+    // if (event.layer instanceof L.Polygon) {
+    //     const layer = event.layer;
+    //     layer.on('click', function() {
+    //         console.log(`${JSON.stringify(layer.getLatLngs())}`)
+    //     });
+    // }
 // GET POLYGONE COORDINATES INFO
 function getInfoXY(e) {
     var layer = e.target
@@ -3822,7 +4346,7 @@ $(document).on('click', '#clickable-destino-location', async function () {
     const DestinoIcon = this.querySelector("i");
     DestinoIcon.style.color = 'rgb(24, 158, 82)'
     DestinoIcon.setAttribute('selected-mode','true');
-    
+   
     const OrigenIcon = document.getElementById("icon-origen-location");
     OrigenIcon.style.color =  'rgb(3, 3, 3)'
 })
@@ -3917,7 +4441,8 @@ async function changeDestinoOrOrigenMapa(aula){
 try {
      const allNodes = await getAllNodes()
     const nodeFound = await iterateAndMatch(allNodes,aula, input)
-    if (nodeFound === true) console.log('worked')
+    
+    // if (nodeFound === true) console.log('worked')
 } catch (error) {
     console.error('Something went wrong ', error.response ? error.response.data : error.message);
 
@@ -3927,17 +4452,56 @@ try {
 async function iterateAndMatch(allNodes, nodeId, input){
 
     try {
+        let nodeFound
         allNodes.forEach(node => {
         
-            if (node.id === nodeId) {
+            if (node.id.toLowerCase() === nodeId.toLowerCase()||node.name.toLowerCase() === nodeId.toLowerCase()) {
                 input.value = node.name;
                 input.setAttribute('data-attribute',node.id);
-              return true
+                nodeFound = node.id
             }
+
         });
+
+        return nodeFound
         
     } catch (error) {
         console.error('Error iterating nodes ', error.response ? error.response.data : error.message);
+    }
+}
+
+async function findClassOnMap(nodeId){
+
+    try {
+
+    const allLayerGroups = [
+        layerGroupPlanta0,
+        layerGroupPlanta1,
+        layerGroupPlanta2,
+        layerGroupPlanta3,
+        layerGroupPlanta4,
+        layerGroupPlanta5
+    ];
+
+    allLayerGroups.forEach((layerGroup, index) => 
+          layerGroup.eachLayer(async function(layer) {
+        if (layer.options.name === nodeId) {
+
+              //click en el selector de pisos para el path correspondiente, triggerea tambien removelayers()
+              document.querySelector(`#floor-select .floor-button[value="${index.toString()}"]`).click()
+           
+
+            //  loadFloor(index.toString())
+            layer.setStyle({
+                color: 'green',
+                opacity:'1'
+            });
+             map.flyToBounds(layer.getBounds());
+        }
+    })
+);
+    } catch (error) {
+        console.error('Error finding node ', error.response ? error.response.data : error.message);
     }
 }
 
@@ -3963,8 +4527,21 @@ async function getAllNodes(){
    
 }
 
+
+async function loadDropdownSearch (){
+    try {
+        const allNodes = await getAllNodes()
+        await addNodesToDropdown(allNodes)  
+    } catch (error) {
+        
+    }
+ 
+}
+
+
+
 //funcion que añade los valores de nodos posibles al dropdown
-function addNodesToDropdown (allNodes){
+async function addNodesToDropdown (allNodes){
 
     const dropdownStart = document.getElementById('combo-dropdown-start');
     const dropdownEnd = document.getElementById('combo-dropdown-end');
@@ -3973,8 +4550,6 @@ function addNodesToDropdown (allNodes){
     dropdownStart.innerHTML = '';
     dropdownEnd.innerHTML = '';
     
-
-
 
 allNodes.forEach(node => {
     const dropdownItem1 = document.createElement('div');
@@ -4002,17 +4577,17 @@ allNodes.forEach(node => {
 
 
 //CARGA OPCIONES EN EL BUSCADOR
-let allNodes = [];
-Object.values(todasLasPlantas).forEach(planta => {
-    planta.nodes.forEach(node => {
-        if (!node.id.startsWith('nodo')) {
-            allNodes.push({ id: node.id, name: node.name });
-        }
-    });
-});
+// let allNodes = [];
+// Object.values(todasLasPlantas).forEach(planta => {
+//     planta.nodes.forEach(node => {
+//         if (!node.id.startsWith('nodo')) {
+//             allNodes.push({ id: node.id, name: node.name });
+//         }
+//     });
+// });
 
-// Sort allNodes alphabetically by node.name
-allNodes.sort((a, b) => a.name.localeCompare(b.name));
+// // Sort allNodes alphabetically by node.name
+// allNodes.sort((a, b) => a.name.localeCompare(b.name));
 
 // Clear startPointSelect and endPointSelect before appending sorted options
 // startPointSelect.innerHTML = '';
@@ -4032,30 +4607,30 @@ const dropdownStart = document.getElementById('combo-dropdown-start');
 const dropdownEnd = document.getElementById('combo-dropdown-end');
 
 // Clear existing content before appending new items
-dropdownStart.innerHTML = '';
-dropdownEnd.innerHTML = '';
+// dropdownStart.innerHTML = '';
+// dropdownEnd.innerHTML = '';
 
-allNodes.forEach(node => {
-    const dropdownItem1 = document.createElement('div');
-    dropdownItem1.classList.add('dropdown-item');
-    dropdownItem1.textContent = node.name;
-    dropdownItem1.setAttribute('value', node.id);
+// allNodes.forEach(node => {
+//     const dropdownItem1 = document.createElement('div');
+//     dropdownItem1.classList.add('dropdown-item');
+//     dropdownItem1.textContent = node.name;
+//     dropdownItem1.setAttribute('value', node.id);
 
-    const dropdownItem2 = dropdownItem1.cloneNode(true);
+//     const dropdownItem2 = dropdownItem1.cloneNode(true);
 
-    dropdownItem1.addEventListener('click', () => {
-        document.getElementById('combo-input-start').value = node.name;
-        dropdownStart.style.display = 'none';
-    });
+//     dropdownItem1.addEventListener('click', () => {
+//         document.getElementById('combo-input-start').value = node.name;
+//         dropdownStart.style.display = 'none';
+//     });
 
-    dropdownItem2.addEventListener('click', () => {
-        document.getElementById('combo-input-end').value = node.name;
-        dropdownEnd.style.display = 'none';
-    });
+//     dropdownItem2.addEventListener('click', () => {
+//         document.getElementById('combo-input-end').value = node.name;
+//         dropdownEnd.style.display = 'none';
+//     });
 
-    dropdownStart.appendChild(dropdownItem1);
-    dropdownEnd.appendChild(dropdownItem2);
-});
+//     dropdownStart.appendChild(dropdownItem1);
+//     dropdownEnd.appendChild(dropdownItem2);
+// });
 
 
 const inputStart = document.getElementById('combo-input-start');
@@ -4112,21 +4687,41 @@ document.addEventListener('click', function(event) {
     }
 });
 
-document.getElementById('combo-dropdown-start').addEventListener('click', function(event) {
+document.getElementById('combo-dropdown-start').addEventListener('click', async function(event) {
     if (event.target.classList.contains('dropdown-item')) {
-        inputStart.value =  event.target.textContent;
-        inputStart.setAttribute('data-attribute',event.target.getAttribute('value'));
+        const inputValue = event.target.getAttribute('value')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,inputValue, inputStart)
+        await findClassOnMap(nodeFound)
         dropdownStart.style.display = 'none';
     }
 });
 
-document.getElementById('combo-dropdown-end').addEventListener('click', function(event) {
+document.getElementById('combo-dropdown-end').addEventListener('click', async function(event) {
     if (event.target.classList.contains('dropdown-item')) {
-        inputEnd.value = event.target.textContent;
-        inputEnd.setAttribute('data-attribute',event.target.getAttribute('value'));
+        const inputValue = event.target.getAttribute('value')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,inputValue, inputEnd)
+        await findClassOnMap(nodeFound)
         dropdownEnd.style.display = 'none';
     }
 });
+
+
+
+
+
+$(document).on('input','#combo-input-end, #combo-input-start', debounce(async function(event) {
+ const inputField = $(event.currentTarget)
+
+    const inputValue = inputField.val()
+  const allNodes = await getAllNodes()
+  const nodeFound = await iterateAndMatch(allNodes,inputValue, inputField[0])
+
+}, 300))
+
+
+
 
 $(document).on('click','#change-route', function() {
     const temporaryValue = inputStart.value
@@ -4146,11 +4741,39 @@ $(document).on('click','#dismiss-finder', function() {
     
 });
 
+ function removeCurrentSelection(e) {
+
+    const inputStart = document.getElementById('combo-input-start');
+    const inputEnd = document.getElementById('combo-input-end');
+    const DestinoIcon = document.getElementById("icon-destino-location");
+
+    let input
+    
+    if (DestinoIcon.getAttribute('selected-mode') === 'true') input = inputEnd
+
+    else input = inputStart
+
+    if(window.currentClickedLayer){
+        
+        window.currentClickedLayer.setStyle({
+                        opacity:'0'
+                    });   
+        if (input.getAttribute('data-attribute') === window.currentClickedLayer.options.name){
+            input.setAttribute('data-attribute','')
+            input.value = ''
+        }   
+    }
+}
+    
+    map.on('click', removeCurrentSelection);
+
 //function que se le aplica a todos los layers(aulas) una vez son clickadas
 function CambiaAulaSeleccionada(e) {
+    L.DomEvent.stopPropagation(e) //evitamos que el evento se propague, de esta manera el map.on click no se triggerea al clickar en las capas de las aulas
     var layer = e.target;
+    window.currentClickedLayer = layer // guardamos la capa clickada como variable global asi podemos acceder a ella para modificarla 
     const nombreAula = e.target.options.name;
-
+    console.log(nombreAula)
     changeDestinoOrOrigenMapa(nombreAula)
     showSearchDisplay()
 
@@ -4160,6 +4783,12 @@ function CambiaAulaSeleccionada(e) {
             opacity:'1'
         });
     }
+}
+
+function getCurrentFloor(){
+
+    const activeFloorValue = $('#floor-select .floor-button.active').attr('value');
+    return activeFloorValue
 }
 
 
@@ -4262,24 +4891,24 @@ function CambiaAulaSeleccionada(e) {
               
                 break;
             case '1':
-                console.log(floor)
+                // console.log(floor)
                 layerGroup = layerGroupPlanta1
                
                 break;
             case '2':
-                console.log(floor)
+                // console.log(floor)
                 layerGroup = layerGroupPlanta2
                 break;
             case '3':
-                console.log(floor)
+                // console.log(floor)
                 layerGroup = layerGroupPlanta3
                 break;
             case '4':
-                console.log(floor)
+                // console.log(floor)
                 layerGroup = layerGroupPlanta4
                 break;
             case '5':
-                console.log(floor)
+                // console.log(floor)
                 layerGroup = layerGroupPlanta5
                 break;
         
@@ -4342,7 +4971,6 @@ function CambiaAulaSeleccionada(e) {
     })
 
     // Initializar mapa en el piso 0
-    loadFloor('0');
 
     
      // Function to split the path based on consecutive 'nodo_escalera' IDs
@@ -4497,6 +5125,5 @@ function CambiaAulaSeleccionada(e) {
     
 //---------------------------------------------------------------------------------------------------------------
 
-});
 
 

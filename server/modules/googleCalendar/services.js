@@ -145,9 +145,16 @@ async function getEventIds(user_id) {
   return eventIds.calendar_event_ids;
 }
 
-function authentification(userId) {
-  return authorize().then(auth => createEvent(auth, userId))
-    .then(eventIds => guardarEventIds(eventIds, userId)).catch(console.error);
+async function authentification(userId) {
+  try {
+    const auth = await authorize();
+    const eventIds = await createEvent(auth, userId);
+    await guardarEventIds(eventIds, userId);
+    return 'done'
+  } catch (error) {
+    console.error('Error in authentication: ', error);
+  }
 }
+
 
 module.exports = { authentification };

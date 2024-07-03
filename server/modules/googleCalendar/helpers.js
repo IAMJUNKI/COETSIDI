@@ -1,5 +1,5 @@
 
-const {getDataUser} = require('@gestorData/services.js')
+const {getDataUser} = require('@utils/utils.js')
 
 
 

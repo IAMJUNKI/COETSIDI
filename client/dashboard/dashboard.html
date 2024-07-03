@@ -24,7 +24,6 @@
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 
     <!-- CSS Leaflet -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
    
     <link
@@ -42,7 +41,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
-      <a class="navbar-brand p-0 me-0 me-lg-2">
+      <a class="navbar-brand p-0 me-0 me-lg-2" >
         <img src="/img/letra-m.png" alt="Logo" width="40" height="32" class="d-block my-1" viewBox="0 0 118 94"  role="img">  
       </a>
       <div class="d-flex">
@@ -73,7 +72,7 @@
               </button>
             </li>
             <li class="nav-item">
-              <button class="nav-link d-flex align-items-center gap-2" href="#">
+              <button class="nav-link d-flex align-items-center gap-2" id="boton_mapa">
                 <i class="fa-solid fa-map-location-dot"></i>
                 Mapa
               </button>
@@ -226,7 +225,7 @@
             Se te redigirá para que inicies sesión en tu cuenta de google.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">volver</button>
+          <button type="button" class="btn btn-secondary" id="cerrar_modal_google_calendar" data-bs-dismiss="modal">volver</button>
           <button type="button" class="btn btn-primary" id="auth_calendar">confirmar</button>
         </div>
       </div>
@@ -237,17 +236,20 @@
 
     <main class=" container-xxl bd-gutter mt-3 my-md-4 bd-layout">
       <!-- PAGINA INICIO -->
-      <!-- <div id="pagina_inicio"> 
+      <div id="pagina_inicio"> 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Inicio</h1>
+          <h1 class="h2" id="bienvenida">Cargando...</h1>
         </div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-      
-          <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
+
+          <div class="container" id="container-inicio-clases">
+          </div>
+
+          <!-- <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
             Cambiar asignaturas
-          </button>
+          </button> -->
         </div>
-      </div>  -->
+      </div> 
       <!-- PAGINA HORARIO -->
       <div id="pagina_horario" style="display: none">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -256,11 +258,11 @@
             <a class="btn google-calendar" data-bs-toggle="modal" href="#modalGoogleCalendar" role="button" aria-expanded="false" aria-controls="modalGoogleCalendar">
               <img src="/img/google_calendar.png" alt="Logo" width="30" height="30" class="d-block my-1" role="img">  
             </a>
-              <select class="form-select horario-selectors" aria-label="Default select example">
-                <option selected>normal</option>
-                <option value="1">oscuro</option>
-                <option value="2">claro</option>
-                <option value="3">muy claro</option>
+              <select class="form-select horario-selectors" id="elegir-color" aria-label="Default select example">
+                <option value= "default-color" selected>normal</option>
+                <option value="dark-color">oscuro</option>
+                <option value="color">claro</option>
+                <option value="light-color">muy claro</option>
               </select>
             <select class="form-select horario-selectors" id="elegir-semestre" aria-label="Default select example">
               <option value="semestre_1" selected>semestre 1</option>
@@ -305,52 +307,51 @@
 
     <!-- PAGINA MAPA -->
       <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-      
-       <div class="container-fluid p-0">
-        <div id="map-container" class="position-relative">
-            <div id="map"></div>
-              <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
-                <i class="fa-solid fa-layer-group"></i>
-              </a>
-              <a id="button-search" class="btn" role="button" aria-expanded="false" value="hidden">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </a>
-          
-            <div id="floor-select" class="controles" style="display: none;">
-              <button class="btn btn-light floor-button" value="5">-1</button>
-              <button class="btn btn-light active floor-button"  value="0">0</button>
-              <button class="btn btn-light floor-button" value="1">1</button>
-              <button class="btn btn-light floor-button" value="2">2</button>
-              <button class="btn btn-light floor-button" value="3">3</button>
-              <button class="btn btn-light floor-button" value="4">4</button>
-            </div>
-            <div id="route-finding" class='container justify-content-between' style="display: none;">
-              <div class= "row" style="align-items: center; width: 10px;">
-                <button id="clickable-origen-location" ><i class="fa-regular fa-circle" id="icon-origen-location" style="padding: 0%;" ></i></button>
-                <button id="clickable-destino-location" ><i class="fa-solid fa-location-dot" id="icon-destino-location" selected-mode="true" style="color: rgb(24, 158, 82); padding: 0%;"></i></button>
-                </div>
-              <div class="'row">
-                <input autocomplete="off" type="text" id="combo-input-start" placeholder="Origen...">
-                <div class="dropdown" id="combo-dropdown-start">
-                </div>
-                <input autocomplete="off" type="text" id="combo-input-end" placeholder="Destino...">
-                <div class="dropdown" id="combo-dropdown-end">
-                </div>
+      <div id="pagina_mapa" style="display: none" content-loaded="false"> 
+          <div class="container-fluid p-0">
+              <div id="map-container" class="position-relative">
+                  <div id="map"></div>
+                    <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
+                      <i class="fa-solid fa-layer-group"></i>
+                    </a>
+                    <a id="button-search" class="btn" role="button" aria-expanded="false" value="hidden">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                
+                  <div id="floor-select" class="controles" style="display: none;">
+                    <button class="btn btn-light floor-button" value="5">-1</button>
+                    <button class="btn btn-light active floor-button"  value="0">0</button>
+                    <button class="btn btn-light floor-button" value="1">1</button>
+                    <button class="btn btn-light floor-button" value="2">2</button>
+                    <button class="btn btn-light floor-button" value="3">3</button>
+                    <button class="btn btn-light floor-button" value="4">4</button>
+                  </div>
+                  <div id="route-finding" class='container justify-content-between' style="display: none;">
+                    <div class= "row" style="align-items: center; width: 10px;">
+                      <button id="clickable-origen-location" ><i class="fa-regular fa-circle" id="icon-origen-location" style="padding: 0%;" ></i></button>
+                      <button id="clickable-destino-location" ><i class="fa-solid fa-location-dot" id="icon-destino-location" selected-mode="true" style="color: rgb(24, 158, 82); padding: 0%;"></i></button>
+                      </div>
+                    <div class="'row">
+                      <input autocomplete="off" type="text" id="combo-input-start" placeholder="Origen...">
+                      <div class="dropdown-combo" id="combo-dropdown-start">
+                      </div>
+                      <input autocomplete="off" type="text" id="combo-input-end" placeholder="Destino...">
+                      <div class="dropdown-combo" id="combo-dropdown-end">
+                      </div>
+                    </div>
+                    <div class= "row"  style="align-items: center">
+                      <button id="change-route" ><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+                    </div>
+                  <div class= "row" style="align-items: center;">
+                    <button id="find-route" class="btn btn-primary"><i class="fa-solid fa-person-walking"></i></button>
+                  </div>
+                  <div class= "row"  style="align-items: start" >
+                    <button id="dismiss-finder"><i class="fa-solid fa-xmark"></i></button>
+                  </div>
+                  </div>
               </div>
-              <div class= "row"  style="align-items: center">
-                <button id="change-route" ><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
-              </div>
-            <div class= "row" style="align-items: center;">
-              <button id="find-route" class="btn btn-primary"><i class="fa-solid fa-person-walking"></i></button>
-            </div>
-            <div class= "row"  style="align-items: start" >
-              <button id="dismiss-finder"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            </div>
-        
-    
-        </div>
-    </div>
+          </div>
+      </div> 
     
     </main>
 

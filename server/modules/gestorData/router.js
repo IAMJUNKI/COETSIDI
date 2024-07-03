@@ -8,7 +8,6 @@ const gestorDataRouter = express.Router();
 
 gestorDataRouter.post('/buscarAsignaturas', upload.none(),handlers.getAllSubjects);
 gestorDataRouter.post('/guardarAsignaturas', upload.none(),handlers.saveSubjects);
-gestorDataRouter.get('/generarHorario', handlers.generarHorarios);
 gestorDataRouter.get('/checkIfDataUserEmpty', handlers.checkDB);
 
 module.exports = gestorDataRouter;
