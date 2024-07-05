@@ -35,16 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-$(document).on('submit', '#form_login_usuarios', async function (event) {
+$(document).on('submit', '#form_signup_usuarios', async function (event) {
     event.preventDefault();
 
-    console.log('Form submitted'); // Debugging line to check if the event is triggered
+    const password = $('#floatingpassword').val();
+    const passwordRepeat = $('#floatingpasswordRepeat').val();
+
+    if (password !== passwordRepeat) {
+        $('.cartel-error').text('Las contraseñas no coinciden.').show();
+        return;
+    } else {
+        $('.cartel-error').hide();
+    }
 
     const formData = new FormData(event.target);
     const data = {};
+    console.log(formData,'formData')
     formData.forEach((value, key) => {
-        if (key === 'username') {
+        if (key === 'email') {
             if(value !='')    value += '@alumnos.upm.es';
         }
         data[key] = value;
@@ -53,14 +61,14 @@ $(document).on('submit', '#form_login_usuarios', async function (event) {
     console.log('Form data:', data); // Debugging line to check the form data
 
     $.ajax({
-        url: '/auth/login',
+        url: '/auth/signup',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
             console.log('Success:', response); // Debugging line to check the response
-            if (response.message === 'Login successful') {
-                window.location.href = '/dashboard';
+            if (response.message === 'Signup successful') {
+                window.location.href = '/mailVerification';
             }
         },
         error: function (e) {

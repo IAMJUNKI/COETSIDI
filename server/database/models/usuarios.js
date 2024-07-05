@@ -27,9 +27,18 @@ const Usuarios = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        validated: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
+        codigo: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
-        tableName: 't_users',
+        tableName: 't_usuarios',
         timestamps: true,
     },
 );

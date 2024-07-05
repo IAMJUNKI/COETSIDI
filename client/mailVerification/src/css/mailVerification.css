@@ -1,0 +1,74 @@
+body {
+  background-color: #ebecf0;
+}
+
+.card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.container {
+  height: 100vh;
+}
+
+.mobile-text {
+  color: #c5c5c5;
+  font-size: 15px;
+}
+
+
+.links-container a {
+  text-decoration: none;
+  padding-right: 5px;
+  transition: color 0.3s;
+}
+
+.links-container a:hover,
+.links-container a:focus {
+  color: #0056b3; /* Darken link color on hover/focus */
+  outline: none;
+}
+
+
+.d-flex.flex-row {
+  justify-content: center;
+}
+
+
+input[name="codigo"] {
+  width: 200px; /* Adjust width as needed */
+  /* text-align: center; */
+}
+
+@media (max-width: 320px) {
+  input[name="codigo"] {
+    width: 150px; /* Further reduce width for very small screens */
+  }
+}
+
+@media screen and (min-width:440px) {
+  .input-group-text{
+    font-size: medium;
+    padding: 2%;
+  }
+}
+
+@media screen and (max-width:440px) {
+  .input-group-text{
+    font-size: 3.5vw;
+    padding: 1.5%;
+  }
+}
+
+.cartel-error{
+  display: flex;
+  justify-content: center;
+  padding: 0.7rem 2rem;
+  border-radius: 7px;
+  font-size: 15px;
+  width: 100%;
+  margin-top: 1rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}

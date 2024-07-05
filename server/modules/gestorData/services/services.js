@@ -3,7 +3,7 @@ const path = require('path');
 const Papa = require('papaparse');
 const { knex } = require('@db/knex.js')
 const Horarios = require('@db/models/horarios.js')
-const csvDirPath = path.join(__dirname, '../../../horarios/csv');
+const csvDirPath = path.join(__dirname, '../../../../horarios/csv');
 const {gradosPorCurso} = require('@gestorData/services/gradosPorCurso.js')
 
 
