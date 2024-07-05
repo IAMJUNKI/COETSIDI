@@ -20,7 +20,6 @@ const Usuarios = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
             notEmpty: true,
-            unique:true,
         },
         password: DataTypes.STRING,
         role: {
