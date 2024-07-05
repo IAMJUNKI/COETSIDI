@@ -18,15 +18,15 @@ $(function() {
          }
          else {
             generarHorario()
-         }
-        },
-        error: function (error) {
-           console.error(error)
-        }
-    })
-
-    insertarBienvenida()
-    cargarClasesPendientes()
+            cargarClasesPendientes()
+            }
+            },
+            error: function (error) {
+                console.error(error)
+                }
+                })
+                
+                insertarBienvenida()
 });
 
 
@@ -112,6 +112,9 @@ $(document).on('click', '#button-link-to-map', async function (event) {
         if (aulaClase.includes('+')) {
             aulaClase = aulaClase.substring(0, aulaClase.indexOf('+'));
         }
+        // else if(aulaClase.includes('')){
+        //     aulaClase = aulaClase.substring(0, aulaClase.indexOf(''));
+        // }
     
         $('#boton_mapa').trigger('click')
         const allNodes = await getAllNodes()
@@ -259,6 +262,7 @@ $(document).on('submit', '#js_form_asignaturas_usuario', async function (event) 
           destroySpinner()
           document.getElementById("cerrar_modal_asignaturas_2").click();
           generarHorario()
+          cargarClasesPendientes()
     
         },
         error: function (error) {
@@ -305,9 +309,11 @@ function generarHorario(){
         
         renderSchedule(sessionArray);
         await getPersonalizacion()
-        if (window.innerWidth < 992) showDay(); // Lunes es el default
-        else showAllDays()
-
+        if (window.innerWidth >= 992) {
+            showAllDays();
+        } else {
+            showDay()
+        }
         },
         error: function (error) {
            console.error(error)
@@ -329,6 +335,7 @@ function showDay() {
     const semestre = document.getElementById('elegir-semestre').value
     const schedule = document.querySelector('.schedule');
     const sessions = schedule.querySelectorAll('.session');
+    console.log(semestre,'semestreee')
     sessions.forEach(session => {
       const gridColumn = session.style.gridColumn;
       const className = session.className
@@ -345,7 +352,7 @@ function showAllDays() {
         const schedule = document.querySelector('.schedule');
         const sessions = schedule.querySelectorAll('.session');
         const semestre = document.getElementById('elegir-semestre').value
-   
+   console.log(semestre,'semestreee')
         sessions.forEach(session => {
             const className = session.className
             if (className.includes(semestre)) {
@@ -355,25 +362,24 @@ function showAllDays() {
             }
         });           
 }
-
 async function getPersonalizacion() {
-    try {
+    return new Promise((resolve, reject) => {
         $.ajax({
             url: '/calendario/personalizacion',
             type: 'get',
             success: function (datos) {
-                 $('#elegir-semestre').val(datos.semestre_horario)
-                 $('#elegir-color').val(datos.paleta_horario)
+                $('#elegir-semestre').val(datos.semestre_horario);
+                $('#elegir-color').val(datos.paleta_horario);
 
-                 changeColorHorario(datos.paleta_horario)
+                changeColorHorario(datos.paleta_horario);
+                resolve();
             },
             error: function (error) {
-               console.error(error)
+                console.error(error);
+                reject(error);
             }
-        }) 
-    } catch (error) {
-        console.error(error)
-    } 
+        });
+    });
 }
 
 function changeColorHorario(color) {
@@ -420,14 +426,15 @@ function changeColorHorario(color) {
   //cambiar color horario
   $(document).on('change', '#elegir-color', async function (event) {
 
-    const color =  $(event.currentTarget).val()
-       try {
-           $.ajax({
-               url: `/calendario/guardarColor/${color}`,
-               type: 'post',
-               success: async function () {
-
-                changeColorHorario(color)
+      const color =  $(event.currentTarget).val()
+      
+      try {
+          $.ajax({
+              url: `/calendario/guardarColor/${color}`,
+              type: 'post',
+              success: async function () {
+                  
+                  changeColorHorario(color)
     
                },
                error: function (error) {
@@ -485,7 +492,9 @@ function changeColorHorario(color) {
     const diaActual = clases.diaActual
 
     const containerWrapper = document.getElementById('container-inicio-clases')
-    
+
+    containerWrapper.innerHTML= ''
+
     const rowWrapper = document.createElement('div')
     rowWrapper.className ='row'
     
@@ -689,6 +698,8 @@ async function extendCardNoCarousel(clasesActualesOProximas, textoGenericoNoClas
     
     clasesActualesOProximas.forEach((course,index)=>{
     
+     if (course['Asignatura'] === 'English for Professional and Academic Communication') course['Asignatura'] = 'EPAC'
+        
         //CARD TITLE
     const cardMeetingTitle= document.createElement('span')
     cardMeetingTitle.className = "contenido-cards-pro-title"

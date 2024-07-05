@@ -27,42 +27,22 @@
                 <p class="text-center h5 ">Enviar correo de verificación</p>
                 <form class="mx-1 mx-md-4" id="form_enviar_correo">
                   <div class="mb-4 input-group" style="padding: 10px;">
-                    <input type="text"  class="form-control" id="floatingInput" placeholder="correo" name="email" required>
+                    <input type="text"  class="form-control" id="email-input" placeholder="correo" name="email" required>
                     <span class="input-group-text">@alumnos.upm.es</span>
                   </div>
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button class="btn btn-primary w-100 py-2 boton-form" type="submit">Enviar</button>
+                    <button class="btn btn-primary w-100 py-2 boton-form" id="submit_enviar_correo" type="submit">Enviar</button>
                   </div>
-                  <div class="cartel-error" id="login_error_message" style="display: none; color: red;"></div>
+                  <div class="cartel-error" id="error_message" style="display: none; color: red;"></div>
                   <div class="d-flex justify-content-center mt-3 t-100 links-container">
                     <a href="/login" class="resalte">Volver al login</a>
                   </div>
                 </form>
               </div>
-                <!-- <div class="row justify-content-center" id="verify-email-code">
-                      <p class="text-center text-primary" style="font-size: 5.5rem;"><i class="fa-solid fa-envelope-circle-check"></i></p>
-                      <p class="text-center h5 ">Revisa tu correo</p>
-                      <p class="text-muted text-center" style="margin: 0%;">Hemos enviado un código a</p>
-                      <form id="form_verificar_correo">
-                        <input class="form-control-plaintext text-muted text-center"  type="text" value="d.junquera@alumnos.upm.es" name="email" aria-label="correo readonly"  readonly>
-                        
-                        <div class="d-flex flex-row " style="margin: 20px;">
-                          <input type="text" class="form-control" autofocus=""  name="codigo" required/>
-                        </div>
-                        <div class="d-flex justify-content-center mt-3 t-100 links-container">
-                            <a href="#" id="resend" class="resalte ">Reenviar código</a>
-                            <span class="mobile-text" id="countdown"></span>
-                        </div>
-                        <div class="row pt-5">
-                            <div class="col-6">
-                                <button class="btn btn-outline-secondary w-100" type="button">Volver</button>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn btn-primary w-100" type="submit">Verificar</button>
-                            </div> 
-                        </div>
-                      </form>
-                </div> -->
+              <div class="row justify-content-center" id="verify-email-code">
+              </div>
+               <div class="row justify-content-center" id="account-verified">
+              </div>
           </div>
         </div>
       </div>

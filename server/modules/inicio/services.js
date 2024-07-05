@@ -66,7 +66,7 @@ const nombreDeUsuario = async (id) => {
     const processCourses = (dia, horaActualX) => {
 
 
-      if (dias[dia]) {
+      if (dias?.[dia]) {
           for (const asignatura of dias[dia]) {
               const [startHours, startMinutes] = asignatura.HoraInicio.split(':').map(Number);
               const [endHours, endMinutes] = asignatura.HoraFinal.split(':').map(Number);

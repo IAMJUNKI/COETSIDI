@@ -14,10 +14,14 @@ function enviarCorreoDeVerificacion(req, res, next) {
     authService.enviarCorreo(req, res, next);
 }
 
+function verificarCodigo(req, res, next) {
+    authService.verificarCodigo(req, res, next);
+}
 
 module.exports = {
     loginUserHandler,
     signupNewUser,
-    enviarCorreoDeVerificacion
+    enviarCorreoDeVerificacion,
+    verificarCodigo
 };
 

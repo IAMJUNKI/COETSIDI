@@ -26,6 +26,8 @@ async function login(username, password, done) {
                 }
                 case 'not_user':
                     return done(null, false, { message: 'El usuario no existe' })
+                case 'email_not_validated': 
+                    return done(null, false, { message: 'Falta la verificación del correo' })
                 default:
                     return done(null, false, { message: 'Contraseña o correo incorrecto' })
                         };

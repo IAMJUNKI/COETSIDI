@@ -123,9 +123,13 @@ const crearObjetoEstructurado = async (CSVFiltrado, tipoDeEstructura ,objetoGrad
 
 const separarGradoYAsignaturas = async (arrayForm) => {
 
+  let arrayToParse
+if (typeof arrayForm === 'string') arrayToParse = [arrayForm]
+else arrayToParse = arrayForm
+
   const objetoBonito = {};
 
-  arrayForm.forEach(asignatura => {
+  arrayToParse.forEach(asignatura => {
    
     const [key, value] = asignatura.split('_');
 
