@@ -6,8 +6,8 @@ const globalRouter = express();
 
 // Middleware session cookie en el navegador
 const session = require("express-session");
-const redis = require('redis');
-const RedisStore = require('connect-redis').default;
+// const redis = require('redis');
+// const RedisStore = require('connect-redis').default;
 // const cors = require('cors');
 
 const { passport, isLoggedIn } = require('@auth/helpers/passportStrategies');
@@ -52,9 +52,47 @@ if (process.env.NODE_ENV === 'development') {
     );
 } else if (process.env.NODE_ENV === 'production') {
     // Store for the cookie
-    // const redisClient = redis.createClient();
-    // redisClient.connect().catch(console.error);
-    // const store = new RedisStore({ client: redisClient });
+    const {createClient}  = require('redis')
+    const RedisStore = require('connect-redis').default 
+    const redisClient = createClient({
+        password: process.env.REDIS_PASSWORD,
+        socket: {
+            host: 'redis-16734.c232.us-east-1-2.ec2.redns.redis-cloud.com',
+            port: 16734
+        }
+    })
+
+    redisClient.on('error', (err) => {
+    console.error('Redis error:', err);
+    });
+
+    redisClient.connect()
+    .then(() => {
+        console.log('Connected to Redis');
+    })
+    .catch((err) => {
+        console.error('Failed to connect to Redis:', err);
+    });
+
+    const store = new RedisStore({ client: redisClient })
+    /// ////// SESSION CONTROL
+    globalRouter.use(session({
+        name: 'session',
+        store,
+        secret: process.env.COOKIE_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        proxy: true,
+        cookie: {
+            // secure:false, //process.env.NODE_ENV=== 'production',
+            secure: true,
+            maxAge: 86400000 * 7, // 24h * 7
+            // maxAge:20000,
+            httpOnly: true,
+            sameSite: 'lax',
+            name: 'sessionId'
+        }// THIS MIGHT/SHOULD CHANGE WHEN USING HTTPS!!!!!!!!
+    }))
 }
 
 globalRouter.use(passport.initialize());

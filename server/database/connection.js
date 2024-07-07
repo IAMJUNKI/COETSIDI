@@ -1,19 +1,49 @@
 const { Sequelize } = require('sequelize');
+const path = require('path');
+const fs = require('fs');
+
+const certPath = path.resolve(__dirname, 'certificate_Bundle_AWS/eu-north-1-bundle.pem');
+
 
 function createSequelize(databaseName, databaseUser, databasePassword, databaseHost) {
-    return new Sequelize(
-        databaseName,
-        databaseUser,
-        databasePassword,
-        {
-            host: databaseHost,
-            dialect: 'postgres',
-            // schema: process.env.NODE_ENV === 'test' ? 'test' : 'public',
-            port: 5432,
-            logging: false,
-        },
-    );
+    if (process.env.NODE_ENV === 'development') {
+        return new Sequelize(
+            databaseName,
+            databaseUser,
+            databasePassword,
+            {
+                host: databaseHost,
+                dialect: 'postgres',
+                // schema: process.env.NODE_ENV === 'test' ? 'test' : 'public',
+                port: 5432,
+                logging: false,
+            },
+        );
+    }
+    else{
+        return new Sequelize(
+            databaseName,
+            databaseUser,
+            databasePassword,
+            {
+                host: databaseHost,
+                dialect: 'postgres',
+                // schema: process.env.NODE_ENV === 'test' ? 'test' : 'public',
+                port: 5432,
+                logging: false,
+                dialectOptions: {
+                    ssl: {
+                      require: true,
+                      rejectUnauthorized: true,
+                      ca: fs.readFileSync(certPath).toString(),
+                    }
+                }
+            },
+        );
+
+    }
 }
+
 
 const sequelize = createSequelize(
         process.env.DATABASE_NAME,

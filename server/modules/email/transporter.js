@@ -16,7 +16,7 @@ const debug = require('debug')('&:MAILTRANSPORTER')
 
 let transporter
 
-if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'development') {
     transporter = nodemailer.createTransport({ // Yes. SMTP!
         host: process.env.UPM_MAILER_HOST,
         secureConnection: true, // use SSL
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'development') {
             console.log('\x1b[36m%s\x1b[0m','Server with NodeMailer is ready --> emails');
         }
     });
-} 
+// } 
 
 // else if (process.env.NODE_ENV === 'dev_local' && process.env.DATABASE_NAME === 'analytics') {
 
@@ -59,12 +59,6 @@ if (process.env.NODE_ENV === 'development') {
 //         }
 //     })
 // }
-else {
-    transporter = {
-        sendMail (data) {
-            debug('THIS IS A FAKE MAIL FOR LOCAL DEV', data)
-        }
-    }
-}
+
 
 module.exports = { transporter }

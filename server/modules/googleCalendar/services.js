@@ -35,6 +35,7 @@ async function authorize() {
 }
 
 async function getAccessCode(authUrl, redirectUri) {
+  console.log(authUrl)
   const { default: open } = await import('open');
   return new Promise((resolve, reject) => {
     const oauthRouter = express();
