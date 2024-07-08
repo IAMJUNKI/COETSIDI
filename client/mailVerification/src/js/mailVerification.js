@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+//UNCOMMENT FOR PRODUCTION
+    // console.log = function () {};
     // Check if the signup was successful
     if (sessionStorage.getItem('signupSuccess') === 'true') {
         // Clear the localStorage flag

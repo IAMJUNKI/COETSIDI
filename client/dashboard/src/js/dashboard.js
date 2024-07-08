@@ -4,7 +4,9 @@
 
 // //initializes as soon as the DOM is safe to manipulate
 $(function() {
-    
+    //UNCOMMENT FOR PRODUCTION
+    // console.log = function () {};
+
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
         type: 'get',
@@ -292,6 +294,82 @@ $(document).on('click', '#cambiar_asignaturas', async function (event) {
     
 })
 
+//OTROS MODALES
+
+
+$(document).on('submit', '#js_form_cambiar_contrasena', async function (event) {
+    event.preventDefault();
+
+    const password = $('#floatingpassword').val();
+    const passwordRepeat = $('#floatingpasswordRepeat').val();
+
+    if (password !== passwordRepeat) {
+        $('.cartel-error').text('Las contraseñas no coinciden.').show();
+        return;
+    } else {
+        $('.cartel-error').hide();
+    }
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    console.log('Form data:', data); // Debugging line to check the form data
+    $('#error_message').hide();
+    $.ajax({
+        url: '/inicio/cambiarContrasena',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                document.getElementById("cerrar_modal_contrasena").click();
+                $('#floatingpassword').val('');
+                $('#floatingpasswordRepeat').val('');
+           
+        },
+        error: function (e) {
+           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
+        }
+    });
+});
+
+
+$(document).on('submit', '#js_form_cambiar_nombre', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    console.log('Form data:', data); // Debugging line to check the form data
+    $('#error_message').hide();
+    $.ajax({
+        url: '/inicio/cambiarNombre',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                document.getElementById("cerrar_modal_nombre").click();
+                $('#floatingName').val('');
+                window.location.href = '/dashboard';
+
+        },
+        error: function (e) {
+           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
+        }
+    });
+});
+
 //HORARIO-----------------------------------------------------------------------------------------------------
 $(document).on('click', '#boton_horario', async function (event) {
     event.preventDefault()
@@ -309,6 +387,7 @@ function generarHorario(){
         
         renderSchedule(sessionArray);
         await getPersonalizacion()
+        await todaysDay()
         if (window.innerWidth >= 992) {
             showAllDays();
         } else {
@@ -321,12 +400,28 @@ function generarHorario(){
     })
 }
 
+async function todaysDay(){
+    let currentDay = new Date().getDay();
+    
+    const dayMap = {
+        1: 'lunes',
+        2: 'martes',
+        3: 'miercoles',
+        4: 'jueves',
+        5: 'viernes',
+    };
+    
+    if (currentDay === 0 || currentDay === 6) currentDay = 1
 
+    // Get the corresponding day value
+    const dayValue = dayMap[currentDay];
 
-$(document).on('change', '#day-select', async function (event) {
-    // const dia = $(event.currentTarget).val()
-    showDay()
-})
+    // Set the value of the day dropdown
+    const daySelect = document.getElementById('day-select');
+    daySelect.value = dayValue;
+    
+}
+
 
 
 function showDay() {
@@ -346,6 +441,131 @@ function showDay() {
       }
     });
 }
+
+//  document.addEventListener('DOMContentLoaded', function() {
+//       const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+//       const paginaHorario = document.getElementById('pagina_horario');
+//       const daySelect = document.getElementById('day-select');
+//       const scheduleContainer = document.getElementById('schedule-container');
+//       const hammer = new Hammer(document.body);
+
+//       function setSelectedDay(day) {
+//         daySelect.value = day;
+//         const event = new Event('change');
+//         daySelect.dispatchEvent(event);
+//       }
+
+//       function updateSwipeDetection() {
+//         if (paginaHorario.style.display !== 'none') {
+//           hammer.on('swipeleft swiperight', handleSwipe);
+//         } else {
+//           hammer.off('swipeleft swiperight', handleSwipe);
+//         }
+//       }
+
+//       function handleSwipe(ev) {
+//         const currentDay = daySelect.value;
+//         const currentIndex = days.indexOf(currentDay);
+
+//         if (ev.type === 'swipeleft' && currentIndex < days.length - 1) {
+//           setSelectedDay(days[currentIndex + 1]);
+//         } else if (ev.type === 'swiperight' && currentIndex > 0) {
+//           setSelectedDay(days[currentIndex - 1]);
+//         }
+//       }
+
+//       daySelect.addEventListener('change', function() {
+//         const selectedDay = this.value;
+//         const sessions = document.querySelectorAll('.session');
+
+//         sessions.forEach(session => {
+//           const sessionStyle = session.getAttribute('style');
+//           if (sessionStyle.includes(selectedDay)) {
+//             session.style.display = 'block';
+//           } else {
+//             session.style.display = 'none';
+//           }
+//         });
+
+//         // Show the schedule container if any session is visible
+//         const anyVisible = Array.from(sessions).some(session => session.style.display === 'block');
+//         scheduleContainer.style.display = anyVisible ? 'block' : 'none';
+
+//         // Update swipe detection based on visibility
+//         updateSwipeDetection();
+//       });
+
+//       // Observe changes in the display property of pagina_horario
+//       const observer = new MutationObserver(() => {
+//         updateSwipeDetection();
+//       });
+
+//       observer.observe(paginaHorario, { attributes: true, attributeFilter: ['style'] });
+
+//       // Initial trigger to show the sessions of the first selected day
+//       const event = new Event('change');
+//       daySelect.dispatchEvent(event);
+//     });
+
+
+    // Function to set the selected day in the dropdown
+    function setSelectedDay(day) {
+      const daySelect = document.getElementById('day-select');
+      daySelect.value = day;
+  
+      // Trigger change event to update displayed sessions
+      const evento = new Event('change');
+      daySelect.dispatchEvent(evento);
+    }
+  
+    // Initialize Hammer.js on the schedule container
+    
+    const PaginaContainer = document.getElementById('pagina_horario');
+    const hammer = new Hammer(PaginaContainer);
+  
+    // Detect swipe left and swipe right
+    hammer.on('swipeleft swiperight', function(event) {
+
+    const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+        
+      const daySelect = document.getElementById('day-select');
+      const currentDay = daySelect.value;
+      const currentIndex = days.indexOf(currentDay);
+  
+      if (event.type === 'swipeleft' && currentIndex < days.length - 1) {
+        // Swipe left, go to the next day
+        setSelectedDay(days[currentIndex + 1]);
+      } else if (event.type === 'swiperight' && currentIndex > 0) {
+        // Swipe right, go to the previous day
+        setSelectedDay(days[currentIndex - 1]);
+      }
+    });
+  
+    // Initial trigger to show the sessions of the first selected day
+    const daySelect = document.getElementById('day-select');
+    const evento = new Event('change');
+    daySelect.dispatchEvent(evento);
+
+
+
+
+  daySelect.addEventListener('change', function() {
+    const selectedDay = this.value;
+    const sessions = document.querySelectorAll('.session');
+    const semestre = document.getElementById('elegir-semestre').value
+  
+    sessions.forEach(session => {
+        const className = session.className
+      const sessionStyle = session.getAttribute('style');
+      if (sessionStyle.includes(selectedDay)&& className.includes(semestre)) {
+        session.style.display = 'block';
+      } else {
+        session.style.display = 'none';
+      }
+    });
+  });
+
+
 
 
 function showAllDays() {

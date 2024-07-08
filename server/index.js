@@ -24,6 +24,10 @@ const inicioRouter = require('@inicio/router');
 globalRouter.use(express.json());
 globalRouter.use(express.urlencoded({ extended: false }));
 
+// if (process.env.NODE_ENV === 'development') {
+//     console.log = function () {};
+//   }
+
 // Cookies session
 if (process.env.NODE_ENV === 'development') {
     const pgSession = require('connect-pg-simple')(session);

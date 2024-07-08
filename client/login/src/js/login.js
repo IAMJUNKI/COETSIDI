@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+    //UNCOMMENT FOR PRODUCTION
+    // console.log = function () {};
     const images = [
         'fondo_signup_1.jpg',
         'fondo_signup_2.jpg',

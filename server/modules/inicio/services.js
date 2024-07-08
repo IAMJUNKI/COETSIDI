@@ -1,8 +1,8 @@
 
 const { knex } = require('@db/knex.js');
 const {getDataUser} = require('@utils/utils.js');
-const { compareSync } = require('bcrypt');
-
+// const { compareSync } = require('bcrypt');
+const {encryptPassword} = require("@auth/helpers/encryptDecrypt")
 
 
 const nombreDeUsuario = async (id) => {
@@ -110,11 +110,44 @@ const nombreDeUsuario = async (id) => {
         diaActual: hoy
     };
 }
-   
 
+const cambiarContrasena = async (id,password) => {
+  
+  try {
     
+  const encryptedPassword = await encryptPassword(password)
+  
+  const done =await changePasswordDB(encryptedPassword,id)
+
+  return done
+
+  } catch (error) {
+    console.error(error)
+  }
+  
+   }
+   
+async function changePasswordDB(password,id) {
+
+  await knex('t_usuarios').update({password}).where({ id })
+  
+}
+    
+
+const cambiarNombre = async (id,name) => {
+  try {
+    const done = await knex('t_usuarios').update({ username: name }).where({ id });
+    console.log('Update result:', done); // Log the result
+    return 'done';
+} catch (error) {
+    console.error('Error in cambiarNombre:', error);
+    throw error; // Ensure the error is thrown so it can be caught by the caller
+}
+}
 
 module.exports = {
   obtenerClasesEnCurso,
   nombreDeUsuario,
+  cambiarContrasena,
+  cambiarNombre
 }
