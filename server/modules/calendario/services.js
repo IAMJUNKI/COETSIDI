@@ -86,6 +86,7 @@ const createSchedule = async (scheduleData) => {
         }
         const colorClass = subjectColorMap[Asignatura];
         const columnSpan =  handlerForCollisions(collisionMap,index, collidedBuddy,collisions, diaSinAcento)
+        if(Asignatura === 'English for Professional and Academic Communication') Asignatura = 'EPAC'
        if(columnSpan !== `${dia}-start / ${dia}-end` && Asignatura.length>15) Asignatura = shortenSentence(Asignatura)
       switch (Tipo) {
           case 'Teoría y Problemas':

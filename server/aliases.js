@@ -4,6 +4,7 @@ moduleAlias.addAliases({
     '@auth': path.join(__dirname, 'modules','auth'),
     '@calendario': path.join(__dirname,  'modules','calendario'),
     '@db': path.join(__dirname, 'database'),
+    '@email': path.join(__dirname, 'modules','email'),
     '@gestorData': path.join(__dirname, 'modules','gestorData'),
     '@inicio': path.join(__dirname, 'modules','inicio'),
     '@mapa': path.join(__dirname, 'modules','mapa'),

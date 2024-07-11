@@ -1,8 +1,8 @@
 
 const { knex } = require('@db/knex.js');
 const {getDataUser} = require('@utils/utils.js');
-const { compareSync } = require('bcrypt');
-
+// const { compareSync } = require('bcrypt');
+const {encryptPassword} = require("@auth/helpers/encryptDecrypt")
 
 
 const nombreDeUsuario = async (id) => {
@@ -26,6 +26,7 @@ const nombreDeUsuario = async (id) => {
       function obtenerClasesActualesYSiguientes(horario) {
         // Get the current date and time
         const now = new Date();
+        console.log(now,'now')
         const diaActual = now.toLocaleDateString('es-ES', { weekday: 'long' });
         const horaActual = now.getHours() * 60 + now.getMinutes(); // convert current time to minutes
         const mesActual = now.getMonth() + 1; // getMonth() returns 0-11, so we add 1
@@ -57,7 +58,7 @@ const nombreDeUsuario = async (id) => {
           break;
       }
   }
-
+console.log(horaActual,'horactual')
     const dias = horario[semestre];
 
     // console.log(indexHoy,'hoysindex')
@@ -66,7 +67,7 @@ const nombreDeUsuario = async (id) => {
     const processCourses = (dia, horaActualX) => {
 
 
-      if (dias[dia]) {
+      if (dias?.[dia]) {
           for (const asignatura of dias[dia]) {
               const [startHours, startMinutes] = asignatura.HoraInicio.split(':').map(Number);
               const [endHours, endMinutes] = asignatura.HoraFinal.split(':').map(Number);
@@ -110,11 +111,44 @@ const nombreDeUsuario = async (id) => {
         diaActual: hoy
     };
 }
-   
 
+const cambiarContrasena = async (id,password) => {
+  
+  try {
     
+  const encryptedPassword = await encryptPassword(password)
+  
+  const done =await changePasswordDB(encryptedPassword,id)
+
+  return done
+
+  } catch (error) {
+    console.error(error)
+  }
+  
+   }
+   
+async function changePasswordDB(password,id) {
+
+  await knex('t_usuarios').update({password}).where({ id })
+  
+}
+    
+
+const cambiarNombre = async (id,name) => {
+  try {
+    const done = await knex('t_usuarios').update({ username: name }).where({ id });
+    console.log('Update result:', done); // Log the result
+    return 'done';
+} catch (error) {
+    console.error('Error in cambiarNombre:', error);
+    throw error; // Ensure the error is thrown so it can be caught by the caller
+}
+}
 
 module.exports = {
   obtenerClasesEnCurso,
   nombreDeUsuario,
+  cambiarContrasena,
+  cambiarNombre
 }

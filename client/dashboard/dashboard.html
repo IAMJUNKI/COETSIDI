@@ -5,7 +5,7 @@
      <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <meta name="description" content="no"> -->
+    <meta name="description" content="no">
    
     <title>Dashboard Coetsidi</title>
 
@@ -45,12 +45,13 @@
         <img src="/img/letra-m.png" alt="Logo" width="40" height="32" class="d-block my-1" viewBox="0 0 118 94"  role="img">  
       </a>
       <div class="d-flex">
-        <button class="navbar-toggler border-0 d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas">
+        <!-- <button class="navbar-toggler border-0 d-flex d-lg-none order-3 p-2" type="button">
           <i class="fa-solid fa-gear"></i>
-        </button>
-        <button class="navbar-toggler border-0 d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas">
+        </button> -->
+      
+        <a class="navbar-toggler border-0 d-flex d-lg-none order-3 p-2" type="button" style=" text-decoration: none;"  href="/logout">
           <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
+        </a>
       </div>
       <div class="offcanvas-lg offcanvas-start flex-grow-1" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
@@ -83,18 +84,18 @@
               </button>
               <ul class="dropdown-menu">
                 <li class="nav-item">
-                  <button class="dropdown-item" >
+                  <button class="dropdown-item" disabled>
                     <i class="fa-solid fa-users"></i>
                       Asociaciones
                   </button>
                 </li>
                 <li class="nav-item">
-                  <button class="dropdown-item" >
+                  <button class="dropdown-item" disabled>
                     <i class="fa-regular fa-newspaper"></i>
                     Noticias
                   </button>
                 </li>
-                <li>
+                <!-- <li>
                   <hr class="dropdown-divider">
                 </li>
                 <li class="nav-item">
@@ -102,21 +103,48 @@
                     <i class="fa-solid fa-chalkboard-user"></i>
                       Tablon de anuncios
                   </button>
-              </li>
+              </li> -->
               </ul>
             </li>
           </ul>
           <hr class="my-3">
 
       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-        <li class="nav-item ajuste-sesion">
-          <button class="nav-link d-flex align-items-center gap-2" >
-            <i class="fa-solid fa-gear"></i>
-            <span class="d-lg-none" >Ajustes</span>
-          </button>
-        </li>
-        <li class="nav-item ajuste-sesion">
-          <a class="nav-link d-flex align-items-center gap-2"href="/logout">
+        
+         
+         <li class="nav-item dropdown">
+           <button class="nav-link d-flex align-items-center gap-2 " role="button" data-bs-auto-close="outside" data-bs-toggle="dropdown"  aria-expanded="true" >
+             <i class="fa-solid fa-gear"></i>
+             <span class="d-lg-none" >Ajustes</span>
+           </button>
+           <ul class="dropdown-menu dropdown-menu-end">
+             <li class="nav-item">
+               <button class="dropdown-item" id="cambiar_nombre_perfil" data-bs-toggle="modal" data-bs-target="#modalCambiarNombre">
+                <i class="fa-solid fa-user"></i>
+                   Perfil
+               </button>
+             </li>
+             <hr class="dropdown-divider">
+             <li class="nav-item">
+               <button class="dropdown-item" id="cambiar_contrasena" data-bs-toggle="modal" data-bs-target="#modalCambiarContrasena">
+                <i class="fa-solid fa-lock"></i>
+                 Contraseña
+               </button>
+             </li>
+             <li>
+               <hr class="dropdown-divider">
+             </li>
+             <li class="nav-item">
+               <button class="dropdown-item" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
+                <i class="fa-solid fa-book"></i>
+                   Asignaturas
+               </button>
+           </li>
+           </ul>
+         </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2" href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span class="d-lg-none" >Cerrar sesion </span>
           </a>
@@ -154,7 +182,7 @@
                   <option value="56DD">Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto</option>
                   <option value="56DM">Grado en Ingeniería en Diseño Industrial y en Ingeniería Mecánica</option>
                   <option value="56EE">Grado en Ingeniería Eléctrica y en Ingeniería Electrónica</option>
-                  <option value="erasmus">Estudiante internacional</option>
+                  <option value="erasmus" disabled>Estudiante internacional</option>
                 </select>
             </div>
             <div id="segundaParteFormulario" style="display: none">
@@ -223,10 +251,80 @@
           <h6 class="modal-title fs-5" id="staticBackdropLabel">¿Quieres añadir este horario a tu Google Calendar?</h6>
           <hr>
             Se te redigirá para que inicies sesión en tu cuenta de google.
+            <br>
+            <span style="color: red;">En estos momentos no está disponible, pendiente de verificación por Google</span>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cerrar_modal_google_calendar" data-bs-dismiss="modal">volver</button>
-          <button type="button" class="btn btn-primary" id="auth_calendar">confirmar</button>
+          <button type="button" class="btn btn-primary" id="auth_calendar" disabled>confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal cambiar contraseña -->
+  <div class="modal fade" id="modalCambiarContrasena" tabindex="-1" aria-labelledby="modalCambiarContrasenaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalCambiarContrasenaLabel">Cambiar Contraseña</h1>
+          <!-- <img src="/img/google_calendar.png" alt="Logo" width="30" height="30" class="d-block my-1 google-calendar" role="img">   -->
+           
+          <button type="button" class="btn-close" id="cerrar_modal_contrasena" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="'innerModalBody">
+          <!-- <h6 class="modal-title fs-5" id="staticBackdropLabel">¿Quieres añadir este horario a tu Google Calendar?</h6>
+          <hr> -->
+            <!-- Se te redigirá para que inicies sesión en tu cuenta de google. -->
+            <form  id="js_form_cambiar_contrasena">
+              <div class="d-flex flex-row align-items-center mb-4">
+                <div data-mdb-input-init class="form-floating flex-fill mb-0">
+                  <input type="password" id="floatingpassword" class="form-control" placeholder="contraseña" name="password" required/>
+                  <label for="floatingpassword">Contraseña</label>
+                </div>
+              </div>
+  
+              <div class="d-flex flex-row align-items-center mb-4">
+                <div data-mdb-input-init class="form-floating flex-fill mb-0">
+                  <input type="password" id="floatingpasswordRepeat" class="form-control" placeholder="repetir contraseña" name="passwordRepeat" required/>
+                  <label for="floatingpasswordRepeat">Repetir contraseña</label>
+                </div>
+              </div>
+              <div class="cartel-error" id="error_message" style="display: none; color: red;"></div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button  class="btn btn-primary" form="js_form_cambiar_contrasena" type="submit">cambiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal cambiar nombre -->
+  <div class="modal fade" id="modalCambiarNombre" tabindex="-1" aria-labelledby="modalCambiarNombreLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalCambiarNombreLabel">Cambiar Nombre</h1> 
+          <button type="button" class="btn-close" id='cerrar_modal_nombre' data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form  id="js_form_cambiar_nombre">
+            <div class="d-flex flex-row align-items-center mb-4">
+              <div data-mdb-input-init class="form-floating flex-fill mb-0">
+                <input type="text" id="floatingName" class="form-control" placeholder="nombre" name="name" required/>
+                <label for="floatingName">Nombre</label>
+              </div>
+            </div>
+            <div class="cartel-error" id="error_message" style="display: none; color: red;"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+         <button type="submit" class="btn btn-primary" form="js_form_cambiar_nombre">cambiar</button>
         </div>
       </div>
     </div>
@@ -245,13 +343,15 @@
           <div class="container" id="container-inicio-clases">
           </div>
 
-          <!-- <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
-            Cambiar asignaturas
-          </button> -->
+<!--                
+       <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
+        Cambiar asignaturas
+      </button> -->
+
         </div>
       </div> 
       <!-- PAGINA HORARIO -->
-      <div id="pagina_horario" style="display: none">
+      <div id="pagina_horario" style="display: none; height: 90vh;">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2" id="titulo_pagina_horario">Horario</h1>
           <div class="btn-toolbar mb-2 mb-md-0 align-items-center">
@@ -271,7 +371,7 @@
           </div>
         </div>
         <div id="day-selector">
-          <select class="form-select selector-days" id="day-select">
+          <select class="form-select selector-days" id="day-select" disabled style=" background-color: transparent;">
             <option value="lunes">Lunes</option>
             <option value="martes">Martes</option>
             <option value="miercoles">Miércoles</option>

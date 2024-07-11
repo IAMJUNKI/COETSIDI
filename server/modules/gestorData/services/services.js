@@ -3,7 +3,7 @@ const path = require('path');
 const Papa = require('papaparse');
 const { knex } = require('@db/knex.js')
 const Horarios = require('@db/models/horarios.js')
-const csvDirPath = path.join(__dirname, '../../../horarios/csv');
+const csvDirPath = path.join(__dirname, '../../../../horarios/csv');
 const {gradosPorCurso} = require('@gestorData/services/gradosPorCurso.js')
 
 
@@ -123,9 +123,13 @@ const crearObjetoEstructurado = async (CSVFiltrado, tipoDeEstructura ,objetoGrad
 
 const separarGradoYAsignaturas = async (arrayForm) => {
 
+  let arrayToParse
+if (typeof arrayForm === 'string') arrayToParse = [arrayForm]
+else arrayToParse = arrayForm
+
   const objetoBonito = {};
 
-  arrayForm.forEach(asignatura => {
+  arrayToParse.forEach(asignatura => {
    
     const [key, value] = asignatura.split('_');
 

@@ -21,11 +21,13 @@ const Horarios = sequelize.define(
         },
         semestre_horario: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
+            defaultValue: 'semestre_1'
         },
         paleta_horario: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
+            defaultValue:'default-color'
         },
         calendar_event_ids: {
             type: DataTypes.JSON,

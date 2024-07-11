@@ -1,3 +1,7 @@
+const path = require('path');
+const fs = require('fs');
+
+const certPath = path.resolve(__dirname, 'certificate_Bundle_AWS/eu-north-1-bundle.pem');
 
 
 const dbCredentials = {
@@ -10,7 +14,8 @@ const dbCredentials = {
 
 
 
-const knex = require('knex')({
+const knex = require('knex')(
+    {
     client: 'pg',
     version: '5.7',
     connection: {
@@ -18,7 +23,12 @@ const knex = require('knex')({
         port: 5432,
         user: dbCredentials.user,
         password: dbCredentials.password,
-        database: dbCredentials.database
+        database: dbCredentials.database,
+        // ssl: {
+        //     require: true,
+        //     rejectUnauthorized: true,
+        //     ca: fs.readFileSync(certPath).toString(),
+        // }
     }
 })
 

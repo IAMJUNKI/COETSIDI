@@ -5,11 +5,7 @@
    * Navbar
    */
  
-   .ajuste-sesion {
-    display: flex;
-    align-items: center;
-    height: 100%; 
-  }
+
   
   .navbar-brand {
     padding-top: .75rem;
@@ -29,13 +25,26 @@
   .selector-days{
     margin-top: 5px;
     margin-bottom: 20px;
-    width: 125px;
+    border: transparent;
+    /* background-color: transparent;  */
+    background: none;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    width: 150px;
   }
+  
+  .navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
 
 /* -----------horario---------- */
 
 
-@media screen and (max-width:450px) {
+@media screen and (max-width:700px) {
  #titulo_pagina_horario{
   display: none;
  }
@@ -121,6 +130,8 @@
     justify-content: center;
   }
 }
+
+
 
 .horas-por-dia {
   grid-column: times;
@@ -532,7 +543,7 @@
 
 #route-finding {
   position: absolute;
-    bottom: 20px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 800;
@@ -664,10 +675,6 @@
     border-radius: 8px;
 }
 
-/* .card-body {
-  height: 111px;
-  width: 406px ;
-} */
 
 .card .card-header.no-border {
     border: 0;
@@ -856,28 +863,3 @@
   opacity: 1; 
 }
 
-/* .carousel-control-width            15%; */
-
-/* .carousel-control-prev-icon,
-.carousel-control-next-icon {
-  height: 100px;
-  width: 100px;
-  outline: black;
-  background-size: 100%, 100%;
-  border-radius: 50%;
-  border: 1px solid black;
-  background-image: none;
-}
-
-.carousel-control-next-icon:after
-{
-  content: '>';
-  font-size: 55px;
-  color: red;
-}
-
-.carousel-control-prev-icon:after {
-  content: '<';
-  font-size: 55px;
-  color: red;
-} */
