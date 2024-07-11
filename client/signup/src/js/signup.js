@@ -61,7 +61,7 @@ $(document).on('submit', '#form_signup_usuarios', async function (event) {
                 value += '@alumnos.upm.es';
             }   
         }
-        data[key] = value;
+        data[key] = value.toLowerCase();
     });
 
     console.log('Form data:', data); // Debugging line to check the form data

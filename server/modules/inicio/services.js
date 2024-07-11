@@ -26,6 +26,7 @@ const nombreDeUsuario = async (id) => {
       function obtenerClasesActualesYSiguientes(horario) {
         // Get the current date and time
         const now = new Date();
+        console.log(now,'now')
         const diaActual = now.toLocaleDateString('es-ES', { weekday: 'long' });
         const horaActual = now.getHours() * 60 + now.getMinutes(); // convert current time to minutes
         const mesActual = now.getMonth() + 1; // getMonth() returns 0-11, so we add 1
@@ -57,7 +58,7 @@ const nombreDeUsuario = async (id) => {
           break;
       }
   }
-
+console.log(horaActual,'horactual')
     const dias = horario[semestre];
 
     // console.log(indexHoy,'hoysindex')

@@ -84,13 +84,13 @@
               </button>
               <ul class="dropdown-menu">
                 <li class="nav-item">
-                  <button class="dropdown-item" >
+                  <button class="dropdown-item" disabled>
                     <i class="fa-solid fa-users"></i>
                       Asociaciones
                   </button>
                 </li>
                 <li class="nav-item">
-                  <button class="dropdown-item" >
+                  <button class="dropdown-item" disabled>
                     <i class="fa-regular fa-newspaper"></i>
                     Noticias
                   </button>
@@ -182,7 +182,7 @@
                   <option value="56DD">Grado en Ingeniería en Diseño Industrial y Desarrollo de Producto</option>
                   <option value="56DM">Grado en Ingeniería en Diseño Industrial y en Ingeniería Mecánica</option>
                   <option value="56EE">Grado en Ingeniería Eléctrica y en Ingeniería Electrónica</option>
-                  <option value="erasmus">Estudiante internacional</option>
+                  <option value="erasmus" disabled>Estudiante internacional</option>
                 </select>
             </div>
             <div id="segundaParteFormulario" style="display: none">
@@ -251,10 +251,12 @@
           <h6 class="modal-title fs-5" id="staticBackdropLabel">¿Quieres añadir este horario a tu Google Calendar?</h6>
           <hr>
             Se te redigirá para que inicies sesión en tu cuenta de google.
+            <br>
+            <span style="color: red;">En estos momentos no está disponible, pendiente de verificación por Google</span>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cerrar_modal_google_calendar" data-bs-dismiss="modal">volver</button>
-          <button type="button" class="btn btn-primary" id="auth_calendar">confirmar</button>
+          <button type="button" class="btn btn-primary" id="auth_calendar" disabled>confirmar</button>
         </div>
       </div>
     </div>

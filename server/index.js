@@ -6,9 +6,6 @@ const globalRouter = express();
 
 // Middleware session cookie en el navegador
 const session = require("express-session");
-// const redis = require('redis');
-// const RedisStore = require('connect-redis').default;
-// const cors = require('cors');
 
 const { passport, isLoggedIn } = require('@auth/helpers/passportStrategies');
 const { connectToDatabase, syncDatabase } = require('@db/connection.js');
@@ -21,10 +18,11 @@ const googleCalendarRouter = require('@googleCalendar/router.js');
 const calendarioRouter = require('@calendario/router.js');
 const inicioRouter = require('@inicio/router');
 
+
 globalRouter.use(express.json());
 globalRouter.use(express.urlencoded({ extended: false }));
 
-// if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'production') {
 //     console.log = function () {};
 //   }
 
@@ -56,28 +54,9 @@ if (process.env.NODE_ENV === 'development') {
     );
 } else if (process.env.NODE_ENV === 'production') {
     // Store for the cookie
-    const {createClient}  = require('redis')
+    const {redisClient} = require('@utils/redisClient.js');
     const RedisStore = require('connect-redis').default 
-    const redisClient = createClient({
-        password: process.env.REDIS_PASSWORD,
-        socket: {
-            host: 'redis-16734.c232.us-east-1-2.ec2.redns.redis-cloud.com',
-            port: 16734
-        }
-    })
-
-    redisClient.on('error', (err) => {
-    console.error('Redis error:', err);
-    });
-
-    redisClient.connect()
-    .then(() => {
-        console.log('Connected to Redis');
-    })
-    .catch((err) => {
-        console.error('Failed to connect to Redis:', err);
-    });
-
+   
     const store = new RedisStore({ client: redisClient })
     /// ////// SESSION CONTROL
     globalRouter.use(session({

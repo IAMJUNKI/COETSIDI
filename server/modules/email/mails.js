@@ -1,4 +1,4 @@
-const { transporter } = require('./transporter.js')
+const { createTransporter } = require('./transporter.js')
 const path = require('path');
 const fs = require('fs');
 
@@ -18,9 +18,29 @@ const debug = require('debug')('&:Mails')
 
 const imagePath = path.resolve(__dirname, 'img', 'codigo_correo.png');
 
+// let transporter = await createTransporter()
+
+const emailBloqueo = async function (datosEmail) {
+    try {
+		let transporter = await createTransporter()
+        // send mail with defined transport object
+        const info = await transporter.sendMail({
+            from: `"BLOQUEO 🚨" <${process.env.UPM_MAILER_USER}>`, // sender address
+            to: 'd.junquera@alumnos.upm.es', // list of receivers
+            subject: `¡¡¡Se ha bloqueado un usuario!!!! ${datetime()}`, // Subject line
+            text: `${datosEmail}` // plain text body
+        })
+		return info
+    } catch (e) {
+        debug('error emial bloqueo');debug(e);
+       
+    };
+}
+
 
 const sendEmailCodigoVerificacion = async function (datosEmail) {
     try {
+		let transporter = await createTransporter()
         // send mail with defined transport object
 		console.log('heeey', datosEmail)
         await transporter.sendMail({
@@ -519,8 +539,10 @@ const sendEmailCodigoVerificacion = async function (datosEmail) {
 
 const sendEmailForgotPassword = async function (datosEmail) {
     try {
+		let transporter = await createTransporter()
+		
         await transporter.sendMail({
-            from: '"MY-ETSIDI 📩" <my.etsidi@upm.es>',
+            from: `"MY-ETSIDI 📩" <${process.env.UPM_MAILER_USER}>`,
             to: `${datosEmail.email}`, // list of receivers
             subject: 'Your new password', // Subject line
             text: `<p>Email: ${datosEmail.email}</p>`, // plain text body
@@ -538,4 +560,5 @@ const sendEmailForgotPassword = async function (datosEmail) {
 module.exports = {
     sendEmailForgotPassword,
     sendEmailCodigoVerificacion,
+	emailBloqueo
 }

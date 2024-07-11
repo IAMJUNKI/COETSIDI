@@ -8,6 +8,11 @@ const {encryptPassword} = require("@auth/helpers/encryptDecrypt")
 const {createRandomString} = require('@utils/utils.js')
 const {sendEmailCodigoVerificacion} = require('@email/mails.js')
 
+if (process.env.NODE_ENV === 'production') {
+const limiter = require('@auth/helpers/passportStrategies.js');
+}
+
+
 async function authenticateUser(req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
@@ -95,21 +100,58 @@ return done
 async function enviarCorreo(req, res) {
     try {
         const {email} = req.body
-    
+        
         const existingUser = await verifyUserAlreadyExists(email)
         console.log(existingUser,'existingUser')
         if (!existingUser)  return res.status(400).json({ message: 'El usuario no existe' });
-
+        
         if ( existingUser.validated === true)  return res.status(400).json({ message: 'Ya se ha verificado' });
+        
+        if (process.env.NODE_ENV === 'production') {
+            
+            const ipAddr = req.headers['X-Real-IP']
     
-        const codigo = createRandomString(8)
+            const [resUsernameAndIP, resSlowByIP, rlResUsername] = await Promise.all([
+                limiter.limiterFastBruteByIP.get(ipAddr),
+                limiter.limiterSlowBruteByIP.get(ipAddr),
+            ])
+    
+            let retrySecs = 0
+            // Check if IP or Username + IP is already blocked
+            if (resSlowByIP !== null && resSlowByIP.consumedPoints > limiter.maxWrongAttemptsByIPperDay) {
+                retrySecs = Math.round(resSlowByIP.msBeforeNext / 1000) || 1
+            } else if (resFastByIP !== null && resFastByIP.consumedPoints > limiter.maxWrongAttemptsByIPperMinute) {
+                retrySecs = Math.round(resFastByIP.msBeforeNext / 1000) || 1;
+              }
+            if (retrySecs > 0) {
+                const email = '1resUsernameAndIP: ' + usernameIPkey + '    ' + resUsernameAndIP + '    ' + '2resSlowByIP: ' + ipAddr + '    ' + resSlowByIP + '    ' + '3relResUserName: ' + username + '    ' + rlResUsername
+             
+                await emailBloqueo(email)
+                return done(null, false, { message: 'Bloqueado' })
+            }
+            else{
+                const codigo = createRandomString(8)
+        
+                await guardarCodigoDB(email, codigo)
+        
+                const confirmedEmail = await sendEmailCodigoVerificacion({ email, codigo }) //TODO crear en helpers, mirar api google
+                // const confirmedEmail = 'done'
+        
+               if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email })    
+            }
+        }
+        else {
+            const codigo = createRandomString(8)
+        
+            await guardarCodigoDB(email, codigo)
+    
+            const confirmedEmail = await sendEmailCodigoVerificacion({ email, codigo }) //TODO crear en helpers, mirar api google
+            // const confirmedEmail = 'done'
+    
+           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email })    
+       
+        }
 
-        await guardarCodigoDB(email, codigo)
-
-        const confirmedEmail = await sendEmailCodigoVerificacion({ email, codigo }) //TODO crear en helpers, mirar api google
-        // const confirmedEmail = 'done'
-
-       if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email })
 
     } catch (error) {
         debug('SIGN UP NEW USER')

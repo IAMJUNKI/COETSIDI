@@ -48,7 +48,7 @@ $(document).on('submit', '#form_login_usuarios', async function (event) {
         if (key === 'username') {
             if(value !='')    value += '@alumnos.upm.es';
         }
-        data[key] = value;
+        data[key] = value.toLowerCase();
     });
 
     console.log('Form data:', data); // Debugging line to check the form data
