@@ -53,15 +53,8 @@ $(document).on('submit', '#form_signup_usuarios', async function (event) {
     const formData = new FormData(event.target);
     const data = {};
     console.log(formData,'formData')
-    let emailNoArroba 
     formData.forEach((value, key) => {
-        if (key === 'email') {
-            if(value !='') {
-                emailNoArroba = value
-                value += '@alumnos.upm.es';
-            }   
-        }
-        data[key] = value.toLowerCase();
+        data[key] = value;
     });
 
     console.log('Form data:', data); // Debugging line to check the form data
@@ -75,7 +68,7 @@ $(document).on('submit', '#form_signup_usuarios', async function (event) {
             console.log('Success:', response); // Debugging line to check the response
             if (response.message === 'Signup successful') {
 
-            sessionStorage.setItem('email', emailNoArroba);
+            sessionStorage.setItem('email', response.email);
             sessionStorage.setItem('signupSuccess', 'true');
 
                 window.location.href = '/mailVerification';
@@ -83,7 +76,7 @@ $(document).on('submit', '#form_signup_usuarios', async function (event) {
             }
         },
         error: function (e) {
-            let mensaje = e.responseJSON?.message || 'Something went wrong, please try later.';
+            let mensaje = e.responseJSON?.message || 'Algo fue mal... Prueba más tarde.';
             console.error('Error:', mensaje); // Debugging line to check the error
             $('#error_message').text(mensaje).show();
         }

@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
 //UNCOMMENT FOR PRODUCTION
-    // console.log = function () {};
-    // Check if the signup was successful
+// console.log = function () {};
+// Check if the signup was successful
     if (sessionStorage.getItem('signupSuccess') === 'true') {
-        // Clear the localStorage flag
+        // Clear the sessionStorage flag
         sessionStorage.removeItem('signupSuccess');
         // Retrieve and set the email value
         const email = sessionStorage.getItem('email');
@@ -45,27 +45,20 @@ function timer(remaining) {
 
 $(document).on('submit', '#form_enviar_correo', async function (event) {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const data = {};
     console.log(formData,'formData')
     formData.forEach((value, key) => {
-        if (key === 'email') {
-            if(value !='')    value += '@alumnos.upm.es';
-        }
         data[key] = value;
     });
-
-    console.log('Form data:', data); // Debugging line to check the form data
     $('#error_message').hide();
-    
+
     $.ajax({
         url: '/auth/enviarCorreoVerificacion',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
-            console.log('Success:', response); // Debugging line to check the response
             if (response.message === 'succesfully sent email') {
 
                 document.getElementById('send-verification-code').innerHTML=''
@@ -96,12 +89,10 @@ $(document).on('submit', '#form_enviar_correo', async function (event) {
                       </form>
                 `
                 timer(60)
-
             }
         },
         error: function (e) {
-            let mensaje = e.responseJSON?.message || 'Something went wrong, please try later.';
-            console.error('Error:', mensaje); // Debugging line to check the error
+            let mensaje = e.responseJSON?.message || 'Algo fue mal... Prueba más tarde.';
             $('#error_message').text(mensaje).show();
         }
     });
@@ -162,7 +153,6 @@ $(document).on('submit', '#form_verificar_correo', async function (event) {
         data[key] = value;
     });
 
-    console.log('Form data:', data); // Debugging line to check the form data
     $('#error_message').hide();
 
     $.ajax({
