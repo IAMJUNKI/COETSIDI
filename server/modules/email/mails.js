@@ -16,37 +16,37 @@ const debug = require('debug')('&:Mails')
 //     return new Date().today() + ' ' + new Date().timeNow()
 // }
 
-const imagePath = path.resolve(__dirname, 'img', 'codigo_correo.png');
 
 // let transporter = await createTransporter()
 
 const emailBloqueo = async function (datosEmail) {
-    try {
+	try {
 		let transporter = await createTransporter()
-        // send mail with defined transport object
+		
         const info = await transporter.sendMail({
-            from: `"BLOQUEO 🚨" <${process.env.UPM_MAILER_USER}>`, // sender address
-            to: 'd.junquera@alumnos.upm.es', // list of receivers
-            subject: `¡¡¡Se ha bloqueado un usuario!!!! ${datetime()}`, // Subject line
-            text: `${datosEmail}` // plain text body
+			from: `"BLOQUEO 🚨" <${process.env.UPM_MAILER_USER}>`, 
+            to: 'd.junquera@alumnos.upm.es',
+            subject: `¡¡¡Se ha bloqueado un usuario!!!! ${datetime()}`, 
+            text: `${datosEmail}` 
         })
 		return info
     } catch (e) {
-        debug('error emial bloqueo');debug(e);
-       
+		debug('error emial bloqueo');debug(e);
+		
     };
 }
 
 
-const sendEmailCodigoVerificacion = async function (datosEmail) {
-    try {
+const sendEmailCodigo = async function (datosEmail) {
+	try {
+		const imagePath = path.resolve(__dirname, 'img', `${datosEmail.imagen}`);
 		let transporter = await createTransporter()
         // send mail with defined transport object
 		console.log('heeey', datosEmail)
         await transporter.sendMail({
             from: `"MY-ETSIDI 📩" <${process.env.UPM_MAILER_USER}>`, 
             to: `${datosEmail.email}`,
-            subject: 'Código de verificación de correo', // Subject line
+            subject: `${datosEmail.subject}`, // Subject line
             text: '', // plain text body
             html: ` 
 <style type="text/css">
@@ -265,7 +265,7 @@ const sendEmailCodigoVerificacion = async function (datosEmail) {
 <tr>
 <td class="pad" style="padding-bottom:10px;padding-left:40px;padding-right:40px;padding-top:10px;">
 <div style="color:#555555;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:30px;line-height:120%;text-align:center;mso-line-height-alt:36px;">
-<p style="margin: 0; word-break: break-word;"><span style="word-break: break-word; color: #2b303a;"><strong>Código de verificación</strong></span></p>
+<p style="margin: 0; word-break: break-word;"><span style="word-break: break-word; color: #2b303a;"><strong>${datosEmail.titulo}</strong></span></p>
 </div>
 </td>
 </tr>
@@ -274,7 +274,7 @@ const sendEmailCodigoVerificacion = async function (datosEmail) {
 <tr>
 <td class="pad" style="padding-bottom:10px;padding-left:40px;padding-right:40px;padding-top:10px;">
 <div style="color:#555555;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;line-height:150%;text-align:center;mso-line-height-alt:22.5px;">
-<p style="margin: 0; word-break: break-word;"><span style="word-break: break-word; color: #808389;">Para poder usar tu cuenta necesitas verificarla. Este es tu código, cópialo y pégalo en la pantalla de verificación.</span></p>
+<p style="margin: 0; word-break: break-word;"><span style="word-break: break-word; color: #808389;">${datosEmail.contenido}</span></p>
 </div>
 </td>
 </tr>
@@ -525,40 +525,22 @@ const sendEmailCodigoVerificacion = async function (datosEmail) {
 </div>
             `,
             attachments: [{
-                filename: 'codigo_correo.png',
+                filename: `${datosEmail.imagen}`,
                 path: imagePath,
                 cid: 'codigo_correo' //same cid value as in the html img src
             }]
         })
         return 'done'
     } catch (e) {
-        debug('error Correo de verificación');debug(e);
+        debug('error Correo con código');debug(e);
         console.error('error al enviar correo',e)
     }
 }
 
-const sendEmailForgotPassword = async function (datosEmail) {
-    try {
-		let transporter = await createTransporter()
-		
-        await transporter.sendMail({
-            from: `"MY-ETSIDI 📩" <${process.env.UPM_MAILER_USER}>`,
-            to: `${datosEmail.email}`, // list of receivers
-            subject: 'Your new password', // Subject line
-            text: `<p>Email: ${datosEmail.email}</p>`, // plain text body
-            // html: htmlVerificarProveedor(datosEmail), // html body
-            html: htmlForgetPassword(datosEmail) // html body
-        })
-        return 'hola'
-    } catch (e) {
-        // debug('error mailContacto');debug(e);
-        const er = errorBreadcrumbs(e, 'mailForget'); throw er
-    }
-}
+
 
 
 module.exports = {
-    sendEmailForgotPassword,
-    sendEmailCodigoVerificacion,
+    sendEmailCodigo,
 	emailBloqueo
 }

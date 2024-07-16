@@ -123,6 +123,7 @@ globalRouter.use(express.static(path.join(__dirname, '../client/login/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/signup/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/dashboard/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/mailVerification/src')));
+globalRouter.use(express.static(path.join(__dirname, '../client/forget/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/errorPage/src')));
 
 // Serve login page
@@ -157,6 +158,19 @@ globalRouter.get('/mailVerification', (req, res, next) => {
     try {
         const file = 'mailVerification.html';
         res.sendFile(file, { root: path.join(__dirname, '../client/mailVerification') }, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } catch (err) {
+        console.log(err, 'error');
+    }
+});
+
+globalRouter.get('/forget', (req, res, next) => {
+    try {
+        const file = 'forget.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/forget') }, function (err) {
             if (err) {
                 console.log(err);
             }

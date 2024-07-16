@@ -11,6 +11,10 @@ authRouter.post('/signup', authHandlers.signupNewUser);
 
 authRouter.post('/enviarCorreoVerificacion', authHandlers.enviarCorreoDeVerificacion);
 
+authRouter.post('/enviarCorreoRecuperarContrasena', authHandlers.enviarCorreoRecuperarContrasena);
+
+authRouter.post('/cambiarContrasena', authHandlers.cambiarContrasena);
+
 authRouter.post('/verificarCodigo', authHandlers.verificarCodigo);
 		
 module.exports = authRouter;

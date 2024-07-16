@@ -11,8 +11,17 @@ function signupNewUser(req, res, next) {
 }
 
 function enviarCorreoDeVerificacion(req, res, next) {
-    authService.enviarCorreo(req, res, next);
+    authService.enviarCorreoDeVerificacion(req, res, next);
 }
+
+function enviarCorreoRecuperarContrasena(req, res, next) {
+    authService.enviarCorreoRecuperarContrasena(req, res, next);
+}
+
+function cambiarContrasena(req, res, next) {
+    authService.cambiarContrasena(req, res, next);
+}
+
 
 function verificarCodigo(req, res, next) {
     authService.verificarCodigo(req, res, next);
@@ -22,6 +31,8 @@ module.exports = {
     loginUserHandler,
     signupNewUser,
     enviarCorreoDeVerificacion,
-    verificarCodigo
+    enviarCorreoRecuperarContrasena,
+    verificarCodigo,
+    cambiarContrasena
 };
 

@@ -1,8 +1,6 @@
 const nodemailer = require('nodemailer')
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
-const debug = require('debug')('&:MAILTRANSPORTER')
-
 
 const oauth2Client = new OAuth2(
     process.env.MAIL_CLIENT_ID, // ClientID
@@ -14,7 +12,6 @@ oauth2Client.setCredentials({
     refresh_token: process.env.MAIL_REFRESH_TOKEN
 });
 
-let transporter
 
 // if (process.env.NODE_ENV === 'development') {
     // transporter = nodemailer.createTransport({ // Yes. SMTP!
