@@ -3,6 +3,8 @@ require('./aliases');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const express = require('express');
 const globalRouter = express();
+const cors = require('cors');
+const helmet = require('helmet');
 
 // Middleware session cookie en el navegador
 const session = require("express-session");
@@ -16,15 +18,52 @@ const authRouter = require('@auth/router.js');
 const gestorDataRouter = require('@gestorData/router.js');
 const googleCalendarRouter = require('@googleCalendar/router.js');
 const calendarioRouter = require('@calendario/router.js');
-const inicioRouter = require('@inicio/router');
-
+const inicioRouter = require('@inicio/router.js');
+// const mapaRouter = require('@mapa/router.js')
 
 globalRouter.use(express.json());
 globalRouter.use(express.urlencoded({ extended: false }));
 
-// if (process.env.NODE_ENV === 'production') {
-//     console.log = function () {};
-//   }
+const corsOptions = {
+    origin: ['https://myetsidi.com', 'https://calendar.myetsidi.com', 'http://localhost:3000',],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+  };
+  
+globalRouter.use(cors(corsOptions));
+
+
+switch (process.env.NODE_ENV) {
+    case 'development': {
+        console.log('\x1b[31m%s\x1b[0m', 'Not using helmet in development');
+        break;
+    }
+    case 'production':
+        console.log('\x1b[33m%s\x1b[0m', 'Using helmet in production environment');
+        globalRouter.use(helmet({
+            referrerPolicy: { policy: 'no-referrer' },
+            contentSecurityPolicy: {
+                directives: {
+                    defaultSrc: ["'self'",'https://*.googleapis.com'],
+                    scriptSrc: ["'self'", 'https://*.googleapis.com', 'https://*.myetsidi.com','https://www.google.com/'],
+                    objectSrc: ["'none'"],
+                    baseUri: ["'none'"],
+                    formAction: ["'none'"],
+                    frameAncestors: ["'none'"],
+                },
+            },
+            hidePoweredBy: true, //Remove the X-Powered-By header which can reveal information about the server
+            noSniff: true, //Prevent browsers from MIME-sniffing a response away from the declared content type
+            frameguard: { //Prevent clickjacking attacks by ensuring that the content is not embedded in a frame
+            action: 'deny'
+            },
+            xssFilter: true, //prevent reflected XSS attacks
+        }));
+        break;
+    default:
+        console.log('No environment provided');
+    }
 
 // Cookies session
 if (process.env.NODE_ENV === 'development') {
@@ -58,7 +97,7 @@ if (process.env.NODE_ENV === 'development') {
     const RedisStore = require('connect-redis').default 
    
     const store = new RedisStore({ client: redisClient })
-    /// ////// SESSION CONTROL
+
     globalRouter.use(session({
         name: 'session',
         store,
@@ -67,14 +106,12 @@ if (process.env.NODE_ENV === 'development') {
         saveUninitialized: false,
         proxy: true,
         cookie: {
-            // secure:false, //process.env.NODE_ENV=== 'production',
             secure: true,
             maxAge: 86400000 * 7, // 24h * 7
-            // maxAge:20000,
             httpOnly: true,
             sameSite: 'lax',
             name: 'sessionId'
-        }// THIS MIGHT/SHOULD CHANGE WHEN USING HTTPS!!!!!!!!
+        }
     }))
 }
 
@@ -192,6 +229,7 @@ globalRouter.use('/gestorData', gestorDataRouter);
 globalRouter.use('/googleCalendar', googleCalendarRouter);
 globalRouter.use('/calendario', calendarioRouter);
 globalRouter.use('/inicio', inicioRouter);
+// globalRouter.use('/mapa', mapaRouter);
 
 
 globalRouter.all('*', (req, res) => {

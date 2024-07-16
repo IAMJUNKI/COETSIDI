@@ -7,7 +7,7 @@ async function createLimiters() {
   const maxWrongAttemptsByIPperMinute = 5;
   const maxWrongAttemptsByIPperDay = 20;
   const maxConsecutiveFailsByUsernameAndIP = 10;
-  const maxConsecutiveFailsByUsername = 15;
+  const maxConsecutiveFailsByUsername = 30;
 
   const limiterSlowBruteByIP = new RateLimiterRedis({
     storeClient: redisClient,

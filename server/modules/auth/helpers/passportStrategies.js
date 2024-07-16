@@ -26,13 +26,14 @@ passport.use(new LocalStrategy({
 				
 async function login(req, username, password, done) {
 	try {
+        const sanitizedEmail = username.toLowerCase() + '@alumnos.upm.es'
         if (process.env.NODE_ENV === 'production') {
             const ipAddr = req.headers['X-Real-IP']
-            const usernameIPkey = `${username}_${ipAddr}`
+            const usernameIPkey = `${sanitizedEmail}_${ipAddr}`
             const [resUsernameAndIP, resSlowByIP, rlResUsername] = await Promise.all([
                 limiter.limiterConsecutiveFailsByUsernameAndIP.get(usernameIPkey),
                 limiter.limiterSlowBruteByIP.get(ipAddr),
-                limiter.limiterConsecutiveFailsByUsername.get(username)
+                limiter.limiterConsecutiveFailsByUsername.get(sanitizedEmail)
             ])
     
             let retrySecs = 0
@@ -45,14 +46,14 @@ async function login(req, username, password, done) {
                 retrySecs = Math.round(rlResUsername.msBeforeNext / 1000) || 1
             }
             if (retrySecs > 0) {
-                const email = '1resUsernameAndIP: ' + usernameIPkey + '    ' + resUsernameAndIP + '    ' + '2resSlowByIP: ' + ipAddr + '    ' + resSlowByIP + '    ' + '3relResUserName: ' + username + '    ' + rlResUsername
+                const email = '1resUsernameAndIP: ' + usernameIPkey + '    ' + resUsernameAndIP + '    ' + '2resSlowByIP: ' + ipAddr + '    ' + resSlowByIP + '    ' + '3relResUserName: ' + sanitizedEmail + '    ' + rlResUsername
              
                 await emailBloqueo(email)
                 return done(null, false, { message: 'Bloqueado' })
     
             } else {
-                const result = await checkUserAndPassword(username, password)
-                console.log('aaaaaha',result,password, username)
+                const result = await checkUserAndPassword(sanitizedEmail, password)
+                console.log('aaaaaha',result,password, sanitizedEmail)
                 if(!result.validated){
                     switch (result.error_code) {
                         case 'bad_password': {
@@ -61,7 +62,7 @@ async function login(req, username, password, done) {
                             const promises = []
                             promises.push(limiter.limiterConsecutiveFailsByUsernameAndIP.consume(usernameIPkey))
                             promises.push(limiter.limiterSlowBruteByIP.consume(ipAddr))
-                            promises.push(limiter.limiterConsecutiveFailsByUsername.consume(username))
+                            promises.push(limiter.limiterConsecutiveFailsByUsername.consume(sanitizedEmail))
                             await Promise.all(promises)
                             return done(null, false, { message: `Contraseña erronea` })
                         }
@@ -77,7 +78,7 @@ async function login(req, username, password, done) {
                     Promise.all([
                         limiter.limiterConsecutiveFailsByUsernameAndIP.delete(usernameIPkey),
                         limiter.limiterSlowBruteByIP.delete(ipAddr),
-                        limiter.limiterConsecutiveFailsByUsername.delete(username)
+                        limiter.limiterConsecutiveFailsByUsername.delete(sanitizedEmail)
     
                     ])
                     return done(null, { id: result.id})
@@ -86,8 +87,8 @@ async function login(req, username, password, done) {
 
         }
         else{
-            const result = await checkUserAndPassword(username, password)
-                console.log('aaaaaha',result,password, username)
+            const result = await checkUserAndPassword(sanitizedEmail, password)
+                console.log('aaaaaha',result,password, sanitizedEmail)
                 if(!result.validated){
                     switch (result.error_code) {
                         case 'bad_password': {

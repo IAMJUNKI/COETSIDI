@@ -1,6 +1,11 @@
 require('dotenv').config({ path: '../../.env' });
+const path = require('path');
+const fs = require('fs');
 
-// console.info('\x1b[33m%s\x1b[0m', 'ATENTION! If running production migrations uncomment the dialect in database/config.js');
+const certPath = path.resolve(__dirname, 'certificate_Bundle_AWS/eu-north-1-bundle.pem');
+
+
+
 
 module.exports = {
     development: {
@@ -16,5 +21,12 @@ module.exports = {
         database: process.env.DATABASE_NAME,
         host: process.env.DATABASE_HOST,
         dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: true,
+                ca: fs.readFileSync(certPath).toString(),
+            }
+        }
     }
 };

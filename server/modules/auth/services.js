@@ -9,7 +9,7 @@ const {createRandomString} = require('@utils/utils.js')
 const {sendEmailCodigoVerificacion} = require('@email/mails.js')
 
 if (process.env.NODE_ENV === 'production') {
-const limiter = require('@auth/helpers/passportStrategies.js');
+const {limiter} = require('@auth/helpers/passportStrategies.js');
 }
 
 
@@ -39,7 +39,10 @@ async function signupNewUser(req, res) {
     try {
         const {name, email, password} = req.body
 
-        const existingUser = await verifyUserAlreadyExists(email)
+        const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+        
+        console.log(sanitizedEmail,'sanitizedemail--------')
+        const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
         if (existingUser) {
 
             return res.status(400).json({ message: 'Usuario ya existe' });
@@ -50,10 +53,10 @@ async function signupNewUser(req, res) {
         else{
             const encryptedPassword = await encryptPassword(password)
         
-             const done = await createNewUser(name, email, encryptedPassword)
+             const done = await createNewUser(name, sanitizedEmail, encryptedPassword)
         
              console.log(done,'done')
-            return res.status(200).json({ message: 'Signup successful' })
+            return res.status(200).json({ message: 'Signup successful', email:email.toLowerCase() })
             
         }
     } catch (error) {
@@ -101,56 +104,60 @@ async function enviarCorreo(req, res) {
     try {
         const {email} = req.body
         
-        const existingUser = await verifyUserAlreadyExists(email)
+        const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+
+        console.log(sanitizedEmail,'sanitized email v2')
+        const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
         console.log(existingUser,'existingUser')
         if (!existingUser)  return res.status(400).json({ message: 'El usuario no existe' });
         
         if ( existingUser.validated === true)  return res.status(400).json({ message: 'Ya se ha verificado' });
         
-        if (process.env.NODE_ENV === 'production') {
-            
-            const ipAddr = req.headers['X-Real-IP']
-    
-            const [resUsernameAndIP, resSlowByIP, rlResUsername] = await Promise.all([
-                limiter.limiterFastBruteByIP.get(ipAddr),
-                limiter.limiterSlowBruteByIP.get(ipAddr),
-            ])
-    
-            let retrySecs = 0
-            // Check if IP or Username + IP is already blocked
-            if (resSlowByIP !== null && resSlowByIP.consumedPoints > limiter.maxWrongAttemptsByIPperDay) {
-                retrySecs = Math.round(resSlowByIP.msBeforeNext / 1000) || 1
-            } else if (resFastByIP !== null && resFastByIP.consumedPoints > limiter.maxWrongAttemptsByIPperMinute) {
-                retrySecs = Math.round(resFastByIP.msBeforeNext / 1000) || 1;
-              }
-            if (retrySecs > 0) {
-                const email = '1resUsernameAndIP: ' + usernameIPkey + '    ' + resUsernameAndIP + '    ' + '2resSlowByIP: ' + ipAddr + '    ' + resSlowByIP + '    ' + '3relResUserName: ' + username + '    ' + rlResUsername
+        // if (process.env.NODE_ENV === 'production') {
+
+        //     const ipAddr = req.headers['X-Real-IP']
+
+
+        //     const [resFastByIP, resSlowByIP] = await Promise.all([
+        //         limiter.limiterFastBruteByIP.get(ipAddr),
+        //         limiter.limiterSlowBruteByIP.get(ipAddr),
+        //     ])
+
+        //     let retrySecs = 0
+        //     // Check if IP or Username + IP is already blocked
+        //     if (resSlowByIP !== null && resSlowByIP.consumedPoints > limiter.maxWrongAttemptsByIPperDay) {
+        //         retrySecs = Math.round(resSlowByIP.msBeforeNext / 1000) || 1
+        //     } else if (resFastByIP !== null && resFastByIP.consumedPoints > limiter.maxWrongAttemptsByIPperMinute) {
+        //         retrySecs = Math.round(resFastByIP.msBeforeNext / 1000) || 1;
+        //       }
+        //     if (retrySecs > 0) {
+        //         const email = '1resUsernameAndIP: ' + resUsernameAndIP + '    ' + '2resSlowByIP: ' + ipAddr + '    ' + resSlowByIP + '    ' + '3relResUserName: ' + sanitizedEmail  
              
-                await emailBloqueo(email)
-                return done(null, false, { message: 'Bloqueado' })
-            }
-            else{
-                const codigo = createRandomString(8)
+        //         await emailBloqueo(email)
+        //         return done(null, false, { message: 'Bloqueado' })
+        //     }
+        //     else{
+        //         const codigo = createRandomString(8)
+        //         console.log('eeeeeeeooooooooooo')
+        //         await guardarCodigoDB(sanitizedEmail, codigo)
         
-                await guardarCodigoDB(email, codigo)
+        //         const confirmedEmail = await sendEmailCodigoVerificacion({ email: sanitizedEmail, codigo }) //TODO crear en helpers, mirar api google
+        //         // const confirmedEmail = 'done'
         
-                const confirmedEmail = await sendEmailCodigoVerificacion({ email, codigo }) //TODO crear en helpers, mirar api google
-                // const confirmedEmail = 'done'
-        
-               if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email })    
-            }
-        }
-        else {
+        //        if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail })    
+        //     }
+        // }
+        // else {
             const codigo = createRandomString(8)
         
-            await guardarCodigoDB(email, codigo)
+            await guardarCodigoDB(sanitizedEmail, codigo)
     
-            const confirmedEmail = await sendEmailCodigoVerificacion({ email, codigo }) //TODO crear en helpers, mirar api google
+            const confirmedEmail = await sendEmailCodigoVerificacion({ email:sanitizedEmail, codigo }) //TODO crear en helpers, mirar api google
             // const confirmedEmail = 'done'
     
-           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email })    
+           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail })    
        
-        }
+        // }
 
 
     } catch (error) {

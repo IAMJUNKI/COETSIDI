@@ -2,10 +2,8 @@
 
 // const { preventDoubleClick, hideSpinner, showSpinner } = require('@utils/utils.js');
 
-// //initializes as soon as the DOM is safe to manipulate
+
 $(function() {
-    //UNCOMMENT FOR PRODUCTION
-    // console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -126,580 +124,6 @@ $(document).on('click', '#button-link-to-map', async function (event) {
         
     }
    })
-
-
-//MODAL ASIGNATURAS-----------------------------------------------------------------------------------------
-$(document).on('change', '#selector-grados', async function (event) {
-
-    console.log($(event.currentTarget).val())
-    const gradoElegido = $(event.currentTarget).val()
-    if(gradoElegido === '56DM'||gradoElegido === '56EE' || gradoElegido === 'erasmus'){
-        $( "#curso5" ).prop( "disabled", false );
-    } else{
-        $( "#curso5" ).prop( "disabled", true );
-        $( "#curso5" ).prop( "checked", false );
-    }
-    document.getElementById("segundaParteFormulario").style.display = "";
-    
-})
-
-//verifica si algun checkbox está clickado para dejar buscar asignaturas (submit el form)
-$(document).on('change', '.checkboxChanger', async function () {
-
-    const checkboxes = document.querySelectorAll('.checkboxChanger');
-    let anyChecked = false
-    
-    checkboxes.forEach((checkbox) => {
-        if(checkbox.checked) anyChecked = true //verifica el valor de la propiedad checked
-    });
-
-    if(anyChecked)   $( "#buscarAsignaturas" ).prop( "disabled", false ); //si alguno está checkeado permitimos usar el buscador
-
-    else   $( "#buscarAsignaturas" ).prop( "disabled", true );  
-})
-
-//misma funcion pero para el segundo form
-$(document).on('change', '.checkSubjectChanger', async function () {
-
-    const checkboxes = document.querySelectorAll('.checkSubjectChanger');
-    let anyChecked = false
-    
-    checkboxes.forEach((checkbox) => {
-        if(checkbox.checked) anyChecked = true 
-    });
-
-    if(anyChecked)   $( "#submit_asignaturas_info" ).prop( "disabled", false ); 
-
-    else   $( "#submit_asignaturas_info" ).prop( "disabled", true );  
-})
-
-$(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
-
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    showSpinner('buscarAsignaturas')
-    // showSpinner('js_form_asignaturas_usuario')
-    const data = new FormData(event.target)
-    // console.log(data)
-    for (let [key, value] of data.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-
-    $.ajax({
-        url: '/gestorData/buscarAsignaturas',
-        type: 'post',
-        data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (objetoEstructurado) {
-            destroySpinner()
-            $('#js_form_asignaturas_usuario').empty()
-            const selectorAsignaturas = document.createElement('div')
-
-           const arrayHtml = [
-                `<hr>
-                <h2 class="fs-5">Selecciona tus asignaturas</h2>`
-            ];
-  
-        Object.keys(objetoEstructurado).forEach(semestre => {
-
-            arrayHtml.push(`<h4 class="fs-5">Semestre ${semestre.split('_')[1]}</h4>`)
-          const semestreInfo = objetoEstructurado[semestre];
-        //   console.log(semestre.split('_')[1],'semestre')
-
-          Object.keys(semestreInfo).forEach(curso => {
-     
-            arrayHtml.push(`<h6>${curso} curso</h6>`)
-            const arrayDeAsignaturas = semestreInfo[curso];
-            console.log(curso,'curso')
- 
-            arrayDeAsignaturas.forEach(item => {
-
-                const grupo = item.Grupo;
-                const asignatura = item.Asignatura;
-
-                arrayHtml.push(`
-                <input type="checkbox" class="btn-check checkSubjectChanger" id="${grupo}_${asignatura}" value="${grupo}_${asignatura}" autocomplete="off" name="asignaturasSeleccionadas">
-                <label class="btn btn-outline-primary" for="${grupo}_${asignatura}">${grupo}: ${asignatura}</label>
-                `)
-            });
-          });
-        });
-        
-            arrayHtml.forEach(function(array) {
-                selectorAsignaturas.innerHTML += array;
-            });
-    
-            document.getElementById('js_form_asignaturas_usuario').append(selectorAsignaturas)  
-            
-        },
-        error: function (error) {
-            $('#js_form_asignaturas_usuario').empty()
-           console.error(error)
-        }
-    })
-})
-
-
-$(document).on('submit', '#js_form_asignaturas_usuario', async function (event) {
-
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    showSpinner('submit_asignaturas_info')
-    const data = new FormData(event.target)
-    // console.log(data)
-    for (let [key, value] of data.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-
-    $.ajax({
-        url: '/gestorData/guardarAsignaturas',
-        type: 'post',
-        data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function () {
-          destroySpinner()
-          document.getElementById("cerrar_modal_asignaturas_2").click();
-          generarHorario()
-          cargarClasesPendientes()
-    
-        },
-        error: function (error) {
-            $('#js_form_asignaturas_usuario').empty()
-            document.getElementById('js_form_asignaturas_usuario').innerHTML='Error sending the data'
-           console.error(error)
-        }
-    })
-})
-
-$(document).on('click', '#cerrar_modal_asignaturas_1, #cerrar_modal_asignaturas_2', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    const elements = document.getElementsByClassName("newUser");
-            for (const element of elements) {
-                element.style.display = "";
-            }  
-            
-   
-})
-
-$(document).on('click', '#cambiar_asignaturas', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    $('#js_form_asignaturas_usuario').empty();
-    document.getElementById("segundaParteFormulario").style.display = "none";
-    
-})
-
-//OTROS MODALES
-
-
-$(document).on('submit', '#js_form_cambiar_contrasena', async function (event) {
-    event.preventDefault();
-
-    const password = $('#floatingpassword').val();
-    const passwordRepeat = $('#floatingpasswordRepeat').val();
-
-    if (password !== passwordRepeat) {
-        $('.cartel-error').text('Las contraseñas no coinciden.').show();
-        return;
-    } else {
-        $('.cartel-error').hide();
-    }
-
-    const formData = new FormData(event.target);
-    const data = {};
-    console.log(formData,'formData')
-    formData.forEach((value, key) => { 
-        data[key] = value;
-    });
-
-    console.log('Form data:', data); // Debugging line to check the form data
-    $('#error_message').hide();
-    $.ajax({
-        url: '/inicio/cambiarContrasena',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log('Success:', response); // Debugging line to check the response
-          
-                document.getElementById("cerrar_modal_contrasena").click();
-                $('#floatingpassword').val('');
-                $('#floatingpasswordRepeat').val('');
-           
-        },
-        error: function (e) {
-           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
-        }
-    });
-});
-
-
-$(document).on('submit', '#js_form_cambiar_nombre', async function (event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = {};
-    console.log(formData,'formData')
-    formData.forEach((value, key) => { 
-        data[key] = value;
-    });
-
-    console.log('Form data:', data); // Debugging line to check the form data
-    $('#error_message').hide();
-    $.ajax({
-        url: '/inicio/cambiarNombre',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log('Success:', response); // Debugging line to check the response
-          
-                document.getElementById("cerrar_modal_nombre").click();
-                $('#floatingName').val('');
-                window.location.href = '/dashboard';
-
-        },
-        error: function (e) {
-           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
-        }
-    });
-});
-
-//HORARIO-----------------------------------------------------------------------------------------------------
-$(document).on('click', '#boton_horario', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    document.getElementById("pagina_inicio").style.display = "none";
-    document.getElementById("pagina_mapa").style.display = "none";
-    document.getElementById("pagina_horario").style.display = "";
-})
-
-function generarHorario(){
-    $.ajax({
-        url: '/calendario/generarHorario',
-        type: 'get',
-        success: async function (sessionArray) {
-        
-        renderSchedule(sessionArray);
-        await getPersonalizacion()
-        await todaysDay()
-        if (window.innerWidth >= 992) {
-            showAllDays();
-        } else {
-            showDay()
-        }
-        },
-        error: function (error) {
-           console.error(error)
-        }
-    })
-}
-
-async function todaysDay(){
-    let currentDay = new Date().getDay();
-    
-    const dayMap = {
-        1: 'lunes',
-        2: 'martes',
-        3: 'miercoles',
-        4: 'jueves',
-        5: 'viernes',
-    };
-    
-    if (currentDay === 0 || currentDay === 6) currentDay = 1
-
-    // Get the corresponding day value
-    const dayValue = dayMap[currentDay];
-
-    // Set the value of the day dropdown
-    const daySelect = document.getElementById('day-select');
-    daySelect.value = dayValue;
-    
-}
-
-
-
-function showDay() {
-
-    const day=document.getElementById('day-select').value
-    const semestre = document.getElementById('elegir-semestre').value
-    const schedule = document.querySelector('.schedule');
-    const sessions = schedule.querySelectorAll('.session');
-    console.log(semestre,'semestreee')
-    sessions.forEach(session => {
-      const gridColumn = session.style.gridColumn;
-      const className = session.className
-      if (gridColumn.includes(day) && className.includes(semestre)) {
-        session.style.display = 'block';
-      } else {
-        session.style.display = 'none';
-      }
-    });
-}
-
-//  document.addEventListener('DOMContentLoaded', function() {
-//       const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-//       const paginaHorario = document.getElementById('pagina_horario');
-//       const daySelect = document.getElementById('day-select');
-//       const scheduleContainer = document.getElementById('schedule-container');
-//       const hammer = new Hammer(document.body);
-
-//       function setSelectedDay(day) {
-//         daySelect.value = day;
-//         const event = new Event('change');
-//         daySelect.dispatchEvent(event);
-//       }
-
-//       function updateSwipeDetection() {
-//         if (paginaHorario.style.display !== 'none') {
-//           hammer.on('swipeleft swiperight', handleSwipe);
-//         } else {
-//           hammer.off('swipeleft swiperight', handleSwipe);
-//         }
-//       }
-
-//       function handleSwipe(ev) {
-//         const currentDay = daySelect.value;
-//         const currentIndex = days.indexOf(currentDay);
-
-//         if (ev.type === 'swipeleft' && currentIndex < days.length - 1) {
-//           setSelectedDay(days[currentIndex + 1]);
-//         } else if (ev.type === 'swiperight' && currentIndex > 0) {
-//           setSelectedDay(days[currentIndex - 1]);
-//         }
-//       }
-
-//       daySelect.addEventListener('change', function() {
-//         const selectedDay = this.value;
-//         const sessions = document.querySelectorAll('.session');
-
-//         sessions.forEach(session => {
-//           const sessionStyle = session.getAttribute('style');
-//           if (sessionStyle.includes(selectedDay)) {
-//             session.style.display = 'block';
-//           } else {
-//             session.style.display = 'none';
-//           }
-//         });
-
-//         // Show the schedule container if any session is visible
-//         const anyVisible = Array.from(sessions).some(session => session.style.display === 'block');
-//         scheduleContainer.style.display = anyVisible ? 'block' : 'none';
-
-//         // Update swipe detection based on visibility
-//         updateSwipeDetection();
-//       });
-
-//       // Observe changes in the display property of pagina_horario
-//       const observer = new MutationObserver(() => {
-//         updateSwipeDetection();
-//       });
-
-//       observer.observe(paginaHorario, { attributes: true, attributeFilter: ['style'] });
-
-//       // Initial trigger to show the sessions of the first selected day
-//       const event = new Event('change');
-//       daySelect.dispatchEvent(event);
-//     });
-
-
-    // Function to set the selected day in the dropdown
-    function setSelectedDay(day) {
-      const daySelect = document.getElementById('day-select');
-      daySelect.value = day;
-  
-      // Trigger change event to update displayed sessions
-      const evento = new Event('change');
-      daySelect.dispatchEvent(evento);
-    }
-  
-    // Initialize Hammer.js on the schedule container
-    
-    const PaginaContainer = document.getElementById('pagina_horario');
-    const hammer = new Hammer(PaginaContainer);
-  
-    // Detect swipe left and swipe right
-    hammer.on('swipeleft swiperight', function(event) {
-
-    const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-        
-      const daySelect = document.getElementById('day-select');
-      const currentDay = daySelect.value;
-      const currentIndex = days.indexOf(currentDay);
-  
-      if (event.type === 'swipeleft' && currentIndex < days.length - 1) {
-        // Swipe left, go to the next day
-        setSelectedDay(days[currentIndex + 1]);
-      } else if (event.type === 'swiperight' && currentIndex > 0) {
-        // Swipe right, go to the previous day
-        setSelectedDay(days[currentIndex - 1]);
-      }
-    });
-  
-    // Initial trigger to show the sessions of the first selected day
-    const daySelect = document.getElementById('day-select');
-    const evento = new Event('change');
-    daySelect.dispatchEvent(evento);
-
-
-
-
-  daySelect.addEventListener('change', function() {
-    const selectedDay = this.value;
-    const sessions = document.querySelectorAll('.session');
-    const semestre = document.getElementById('elegir-semestre').value
-  
-    sessions.forEach(session => {
-        const className = session.className
-      const sessionStyle = session.getAttribute('style');
-      if (sessionStyle.includes(selectedDay)&& className.includes(semestre)) {
-        session.style.display = 'block';
-      } else {
-        session.style.display = 'none';
-      }
-    });
-  });
-
-
-
-
-function showAllDays() {
-        const schedule = document.querySelector('.schedule');
-        const sessions = schedule.querySelectorAll('.session');
-        const semestre = document.getElementById('elegir-semestre').value
-   console.log(semestre,'semestreee')
-        sessions.forEach(session => {
-            const className = session.className
-            if (className.includes(semestre)) {
-                session.style.display = 'block';
-            } else {
-                session.style.display = 'none';
-            }
-        });           
-}
-async function getPersonalizacion() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: '/calendario/personalizacion',
-            type: 'get',
-            success: function (datos) {
-                $('#elegir-semestre').val(datos.semestre_horario);
-                $('#elegir-color').val(datos.paleta_horario);
-
-                changeColorHorario(datos.paleta_horario);
-                resolve();
-            },
-            error: function (error) {
-                console.error(error);
-                reject(error);
-            }
-        });
-    });
-}
-
-function changeColorHorario(color) {
-    const schedule = document.querySelector('.schedule');
-    const sessions = schedule.querySelectorAll('.session');
-    sessions.forEach(session => {
-        let colorNumber
-        let semestre
-        session.classList.forEach(cls => {
-            if (cls.includes('color')) {
-                colorNumber = cls.substring(cls.lastIndexOf('-') + 1);
-            }
-            if (cls.includes('semestre')) {
-                semestre = cls;
-            }
-        })
-        session.className = `session ${color}-${colorNumber} ${semestre}`
-    });
-}
-
-
-  //cambiar semestre horario
-  $(document).on('change', '#elegir-semestre', async function (event) {
-
- const semestre =  $(event.currentTarget).val()
-    try {
-        $.ajax({
-            url: `/calendario/guardarSemestre/${semestre}`,
-            type: 'post',
-            success: async function () {
-
-                if (window.innerWidth < 992) showDay(); // Lunes es el default
-                else showAllDays()
-            },
-            error: function (error) {
-               console.error(error)
-            }
-        }) 
-    } catch (error) {
-        
-    }   
-})
-
-  //cambiar color horario
-  $(document).on('change', '#elegir-color', async function (event) {
-
-      const color =  $(event.currentTarget).val()
-      
-      try {
-          $.ajax({
-              url: `/calendario/guardarColor/${color}`,
-              type: 'post',
-              success: async function () {
-                  
-                  changeColorHorario(color)
-    
-               },
-               error: function (error) {
-                  console.error(error)
-               }
-           }) 
-       } catch (error) {
-           
-       }   
-   })
-
-   $(document).on('click', '.session', async function (event) {
-
-    let sessionAula = event.currentTarget.querySelector('.session-aula').textContent;
-
-
-    console.log('Clicked session-aula:', sessionAula);
-
-    if (sessionAula) {
-        
-        if (sessionAula.includes('+')) {
-            sessionAula = sessionAula.substring(0, sessionAula.indexOf('+'));
-        }
-    
-        $('#boton_mapa').trigger('click')
-        const allNodes = await getAllNodes()
-        const nodeFound = await iterateAndMatch(allNodes,sessionAula, inputEnd)
-        findClassOnMap(nodeFound)
-        showSearchDisplay()
-        
-    }
-    
-   })
-
-   function renderSchedule(sessionArray){
-    $('.session').remove()
-    const scheduleContainer = document.getElementById('schedule-container');
-
-    sessionArray.forEach(miniSession => {
-            const elementos = miniSession.element
-        const sessionElement = createScheduleElement(elementos.asignatura, elementos.hora_inicio,  elementos.hora_final,  elementos.aula, elementos.grupo, elementos.dia, elementos.tipo, elementos.color, elementos.semestre, elementos.column_span);
-
-        scheduleContainer.appendChild(sessionElement);
-      });
-   }
 
 
    async function insertarClasesInicio(clases) {
@@ -1058,6 +482,514 @@ async function extendCardNoCarousel(clasesActualesOProximas, textoGenericoNoClas
     
     return carouselCard
 }
+
+
+
+//MODAL ASIGNATURAS-----------------------------------------------------------------------------------------
+$(document).on('change', '#selector-grados', async function (event) {
+
+    console.log($(event.currentTarget).val())
+    const gradoElegido = $(event.currentTarget).val()
+    if(gradoElegido === '56DM'||gradoElegido === '56EE' || gradoElegido === 'erasmus'){
+        $( "#curso5" ).prop( "disabled", false );
+    } else{
+        $( "#curso5" ).prop( "disabled", true );
+        $( "#curso5" ).prop( "checked", false );
+    }
+    document.getElementById("segundaParteFormulario").style.display = "";
+    
+})
+
+//verifica si algun checkbox está clickado para dejar buscar asignaturas (submit el form)
+$(document).on('change', '.checkboxChanger', async function () {
+
+    const checkboxes = document.querySelectorAll('.checkboxChanger');
+    let anyChecked = false
+    
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked) anyChecked = true //verifica el valor de la propiedad checked
+    });
+
+    if(anyChecked)   $( "#buscarAsignaturas" ).prop( "disabled", false ); //si alguno está checkeado permitimos usar el buscador
+
+    else   $( "#buscarAsignaturas" ).prop( "disabled", true );  
+})
+
+//misma funcion pero para el segundo form
+$(document).on('change', '.checkSubjectChanger', async function () {
+
+    const checkboxes = document.querySelectorAll('.checkSubjectChanger');
+    let anyChecked = false
+    
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.checked) anyChecked = true 
+    });
+
+    if(anyChecked)   $( "#submit_asignaturas_info" ).prop( "disabled", false ); 
+
+    else   $( "#submit_asignaturas_info" ).prop( "disabled", true );  
+})
+
+$(document).on('submit', '#js_form_buscar_asignaturas', async function (event) {
+
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    showSpinner('buscarAsignaturas')
+    // showSpinner('js_form_asignaturas_usuario')
+    const data = new FormData(event.target)
+    // console.log(data)
+    for (let [key, value] of data.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+    $.ajax({
+        url: '/gestorData/buscarAsignaturas',
+        type: 'post',
+        data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (objetoEstructurado) {
+            destroySpinner()
+            $('#js_form_asignaturas_usuario').empty()
+            const selectorAsignaturas = document.createElement('div')
+
+           const arrayHtml = [
+                `<hr>
+                <h2 class="fs-5">Selecciona tus asignaturas</h2>`
+            ];
+  
+        Object.keys(objetoEstructurado).forEach(semestre => {
+
+            arrayHtml.push(`<h4 class="fs-5">Semestre ${semestre.split('_')[1]}</h4>`)
+          const semestreInfo = objetoEstructurado[semestre];
+
+          Object.keys(semestreInfo).forEach(curso => {
+     
+            arrayHtml.push(`<h6>${curso} curso</h6>`)
+            const arrayDeAsignaturas = semestreInfo[curso];
+            console.log(curso,'curso')
+ 
+            arrayDeAsignaturas.forEach(item => {
+
+                const grupo = item.Grupo;
+                const asignatura = item.Asignatura;
+
+                arrayHtml.push(`
+                <input type="checkbox" class="btn-check checkSubjectChanger" id="${grupo}_${asignatura}" value="${grupo}_${asignatura}" autocomplete="off" name="asignaturasSeleccionadas">
+                <label class="btn btn-outline-primary" for="${grupo}_${asignatura}">${grupo}: ${asignatura}</label>
+                `)
+            });
+          });
+        });
+        
+            arrayHtml.forEach(function(array) {
+                selectorAsignaturas.innerHTML += array;
+            });
+    
+            document.getElementById('js_form_asignaturas_usuario').append(selectorAsignaturas)  
+            
+        },
+        error: function (error) {
+            $('#js_form_asignaturas_usuario').empty()
+           console.error(error)
+        }
+    })
+})
+
+
+$(document).on('submit', '#js_form_asignaturas_usuario', async function (event) {
+
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    showSpinner('submit_asignaturas_info')
+    const data = new FormData(event.target)
+    // console.log(data)
+    for (let [key, value] of data.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+    $.ajax({
+        url: '/gestorData/guardarAsignaturas',
+        type: 'post',
+        data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function () {
+          destroySpinner()
+          document.getElementById("cerrar_modal_asignaturas_2").click();
+          generarHorario()
+          cargarClasesPendientes()
+    
+        },
+        error: function (error) {
+            $('#js_form_asignaturas_usuario').empty()
+            document.getElementById('js_form_asignaturas_usuario').innerHTML='Error sending the data'
+           console.error(error)
+        }
+    })
+})
+
+$(document).on('click', '#cerrar_modal_asignaturas_1, #cerrar_modal_asignaturas_2', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    const elements = document.getElementsByClassName("newUser");
+            for (const element of elements) {
+                element.style.display = "";
+            }  
+            
+   
+})
+
+$(document).on('click', '#cambiar_asignaturas', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    $('#js_form_asignaturas_usuario').empty();
+    document.getElementById("segundaParteFormulario").style.display = "none";
+    
+})
+
+//OTROS MODALES
+
+
+$(document).on('submit', '#js_form_cambiar_contrasena', async function (event) {
+    event.preventDefault();
+
+    const password = $('#floatingpassword').val();
+    const passwordRepeat = $('#floatingpasswordRepeat').val();
+
+    if (password !== passwordRepeat) {
+        $('.cartel-error').text('Las contraseñas no coinciden.').show();
+        return;
+    } else {
+        $('.cartel-error').hide();
+    }
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    console.log('Form data:', data); // Debugging line to check the form data
+    $('#error_message').hide();
+    $.ajax({
+        url: '/inicio/cambiarContrasena',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                document.getElementById("cerrar_modal_contrasena").click();
+                $('#floatingpassword').val('');
+                $('#floatingpasswordRepeat').val('');
+           
+        },
+        error: function (e) {
+           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
+        }
+    });
+});
+
+
+$(document).on('submit', '#js_form_cambiar_nombre', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    console.log('Form data:', data); // Debugging line to check the form data
+    $('#error_message').hide();
+    $.ajax({
+        url: '/inicio/cambiarNombre',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                document.getElementById("cerrar_modal_nombre").click();
+                $('#floatingName').val('');
+                window.location.href = '/dashboard';
+
+        },
+        error: function (e) {
+           console.error('Error cambiadno contraseña:', e); // Debugging line to check the error
+        }
+    });
+});
+
+//HORARIO-----------------------------------------------------------------------------------------------------
+$(document).on('click', '#boton_horario', async function (event) {
+    event.preventDefault()
+    if (preventDoubleClick(event)) { return };
+    document.getElementById("pagina_inicio").style.display = "none";
+    document.getElementById("pagina_mapa").style.display = "none";
+    document.getElementById("pagina_horario").style.display = "";
+})
+
+function generarHorario(){
+    $.ajax({
+        url: '/calendario/generarHorario',
+        type: 'get',
+        success: async function (sessionArray) {
+        
+        renderSchedule(sessionArray);
+        await getPersonalizacion()
+        await todaysDay()
+        if (window.innerWidth >= 992) {
+            showAllDays();
+        } else {
+            showDay()
+        }
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+}
+
+async function todaysDay(){
+    let currentDay = new Date().getDay();
+    
+    const dayMap = {
+        1: 'lunes',
+        2: 'martes',
+        3: 'miercoles',
+        4: 'jueves',
+        5: 'viernes',
+    };
+    
+    if (currentDay === 0 || currentDay === 6) currentDay = 1
+
+    // Get the corresponding day value
+    const dayValue = dayMap[currentDay];
+
+    // Set the value of the day dropdown
+    const daySelect = document.getElementById('day-select');
+    daySelect.value = dayValue;
+    
+}
+
+
+
+function showDay() {
+
+    const day=document.getElementById('day-select').value
+    const semestre = document.getElementById('elegir-semestre').value
+    const schedule = document.querySelector('.schedule');
+    const sessions = schedule.querySelectorAll('.session');
+    console.log(semestre,'semestreee')
+    sessions.forEach(session => {
+      const gridColumn = session.style.gridColumn;
+      const className = session.className
+      if (gridColumn.includes(day) && className.includes(semestre)) {
+        session.style.display = 'block';
+      } else {
+        session.style.display = 'none';
+      }
+    });
+}
+
+    // Function to set the selected day in the dropdown
+    function setSelectedDay(day) {
+      const daySelect = document.getElementById('day-select');
+      daySelect.value = day;
+  
+      // Trigger change event to update displayed sessions
+      const evento = new Event('change');
+      daySelect.dispatchEvent(evento);
+    }
+  
+    // Initialize Hammer.js on the schedule container
+    
+    const PaginaContainer = document.getElementById('pagina_horario');
+    const hammer = new Hammer(PaginaContainer);
+  
+    // Detect swipe left and swipe right
+    hammer.on('swipeleft swiperight', function(event) {
+
+    const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+        
+      const daySelect = document.getElementById('day-select');
+      const currentDay = daySelect.value;
+      const currentIndex = days.indexOf(currentDay);
+  
+      if (event.type === 'swipeleft' && currentIndex < days.length - 1) {
+        // Swipe left, go to the next day
+        setSelectedDay(days[currentIndex + 1]);
+      } else if (event.type === 'swiperight' && currentIndex > 0) {
+        // Swipe right, go to the previous day
+        setSelectedDay(days[currentIndex - 1]);
+      }
+    });
+  
+    // Initial trigger to show the sessions of the first selected day
+    const daySelect = document.getElementById('day-select');
+    const evento = new Event('change');
+    daySelect.dispatchEvent(evento);
+
+
+
+
+  daySelect.addEventListener('change', function() {
+    const selectedDay = this.value;
+    const sessions = document.querySelectorAll('.session');
+    const semestre = document.getElementById('elegir-semestre').value
+  
+    sessions.forEach(session => {
+        const className = session.className
+      const sessionStyle = session.getAttribute('style');
+      if (sessionStyle.includes(selectedDay)&& className.includes(semestre)) {
+        session.style.display = 'block';
+      } else {
+        session.style.display = 'none';
+      }
+    });
+  });
+
+
+
+
+function showAllDays() {
+        const schedule = document.querySelector('.schedule');
+        const sessions = schedule.querySelectorAll('.session');
+        const semestre = document.getElementById('elegir-semestre').value
+   console.log(semestre,'semestreee')
+        sessions.forEach(session => {
+            const className = session.className
+            if (className.includes(semestre)) {
+                session.style.display = 'block';
+            } else {
+                session.style.display = 'none';
+            }
+        });           
+}
+async function getPersonalizacion() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/calendario/personalizacion',
+            type: 'get',
+            success: function (datos) {
+                $('#elegir-semestre').val(datos.semestre_horario);
+                $('#elegir-color').val(datos.paleta_horario);
+
+                changeColorHorario(datos.paleta_horario);
+                resolve();
+            },
+            error: function (error) {
+                console.error(error);
+                reject(error);
+            }
+        });
+    });
+}
+
+function changeColorHorario(color) {
+    const schedule = document.querySelector('.schedule');
+    const sessions = schedule.querySelectorAll('.session');
+    sessions.forEach(session => {
+        let colorNumber
+        let semestre
+        session.classList.forEach(cls => {
+            if (cls.includes('color')) {
+                colorNumber = cls.substring(cls.lastIndexOf('-') + 1);
+            }
+            if (cls.includes('semestre')) {
+                semestre = cls;
+            }
+        })
+        session.className = `session ${color}-${colorNumber} ${semestre}`
+    });
+}
+
+
+  //cambiar semestre horario
+  $(document).on('change', '#elegir-semestre', async function (event) {
+
+ const semestre =  $(event.currentTarget).val()
+    try {
+        $.ajax({
+            url: `/calendario/guardarSemestre/${semestre}`,
+            type: 'post',
+            success: async function () {
+
+                if (window.innerWidth < 992) showDay(); // Lunes es el default
+                else showAllDays()
+            },
+            error: function (error) {
+               console.error(error)
+            }
+        }) 
+    } catch (error) {
+        
+    }   
+})
+
+  //cambiar color horario
+  $(document).on('change', '#elegir-color', async function (event) {
+
+      const color =  $(event.currentTarget).val()
+      
+      try {
+          $.ajax({
+              url: `/calendario/guardarColor/${color}`,
+              type: 'post',
+              success: async function () {
+                  
+                  changeColorHorario(color)
+    
+               },
+               error: function (error) {
+                  console.error(error)
+               }
+           }) 
+       } catch (error) {
+           
+       }   
+   })
+
+   $(document).on('click', '.session', async function (event) {
+
+    let sessionAula = event.currentTarget.querySelector('.session-aula').textContent;
+
+
+    console.log('Clicked session-aula:', sessionAula);
+
+    if (sessionAula) {
+        
+        if (sessionAula.includes('+')) {
+            sessionAula = sessionAula.substring(0, sessionAula.indexOf('+'));
+        }
+    
+        $('#boton_mapa').trigger('click')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,sessionAula, inputEnd)
+        findClassOnMap(nodeFound)
+        showSearchDisplay()
+        
+    }
+    
+   })
+
+   function renderSchedule(sessionArray){
+    $('.session').remove()
+    const scheduleContainer = document.getElementById('schedule-container');
+
+    sessionArray.forEach(miniSession => {
+            const elementos = miniSession.element
+        const sessionElement = createScheduleElement(elementos.asignatura, elementos.hora_inicio,  elementos.hora_final,  elementos.aula, elementos.grupo, elementos.dia, elementos.tipo, elementos.color, elementos.semestre, elementos.column_span);
+
+        scheduleContainer.appendChild(sessionElement);
+      });
+   }
 
 
    function createScheduleElement(asignatura, horaInicio, horaFinal, aula, grupo, dia, tipo, colorClass, semesterClass, columnSpan) {
@@ -5161,11 +5093,8 @@ function getCurrentFloor(){
                  changeAllPolygonsOpacity(layerGroup);
              });
              layer.on('click', CambiaAulaSeleccionada);
-            //  layer.on('dblclick', changeColorOrigen);
-   
-         }
-         
-         });
+         }  
+        });
        layerGroup.addTo(map)
     }
 

@@ -41,6 +41,7 @@ const processCSVs = async (filtroGrupos, filtroExtra = 'Teoría y Problemas', fi
 
       for (const file of files) {
           const filePath = path.join(dirPath, file);
+          console.log(filePath,'filePath')
           const data = await readCSV(filePath);
           const filteredData = filterCSVData(data, filtroGrupos, filtroExtra, filtroExtraKey);
           
@@ -141,7 +142,7 @@ else arrayToParse = arrayForm
     objetoBonito[key].push(value);
   });
 
-console.log(objetoBonito);
+console.log(objetoBonito,'objetoBonito');
  return objetoBonito;
 }
 
