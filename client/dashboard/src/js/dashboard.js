@@ -4,6 +4,7 @@
 
 
 $(function() {
+ console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -634,6 +635,11 @@ $(document).on('submit', '#js_form_asignaturas_usuario', async function (event) 
 $(document).on('click', '#cerrar_modal_asignaturas_1, #cerrar_modal_asignaturas_2', async function (event) {
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
+
+    $('#selector-grados').prop('selectedIndex', 0);
+    $( "#submit_asignaturas_info" ).prop( "disabled", true )
+    $('.checkboxChanger').prop('checked', false);
+
     const elements = document.getElementsByClassName("newUser");
             for (const element of elements) {
                 element.style.display = "";

@@ -45,8 +45,8 @@ switch (process.env.NODE_ENV) {
             referrerPolicy: { policy: 'no-referrer' },
             contentSecurityPolicy: {
                 directives: {
-                    defaultSrc: ["'self'",'https://*.googleapis.com'],
-                    scriptSrc: ["'self'", 'https://*.googleapis.com', 'https://*.myetsidi.com','https://www.google.com/'],
+                    defaultSrc: ["'self'",'https://*.googleapis.com', 'https://ka-f.fontawesome.com'],
+                    scriptSrc: ["'self'", 'https://*.myetsidi.com', 'https://*.googleapis.com','https://apis.google.com', 'https://www.google.com/','https://cdn.jsdelivr.net','https://cdnjs.cloudflare.com','https://kit.fontawesome.com','https://unpkg.com'],
                     objectSrc: ["'none'"],
                     baseUri: ["'none'"],
                     formAction: ["'none'"],

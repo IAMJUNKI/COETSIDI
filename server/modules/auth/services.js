@@ -7,7 +7,8 @@ const debug = require('debug')('&:SIGNUP_LOGIN_SERVICES')
 const {encryptPassword} = require("@auth/helpers/encryptDecrypt")
 const {createRandomString} = require('@utils/utils.js')
 const {sendEmailCodigo} = require('@email/mails.js')
-const {correoVerificacion, correoRecuperarContrasena} = require('@email/templatesCorreoCodigo.js')
+const {correoVerificacion, correoRecuperarContrasena} = require('@email/templatesCorreoCodigo.js');
+const { upmAccounts } = require('@utils/upmAccounts');
 
 if (process.env.NODE_ENV === 'production') {
 const {limiter} = require('@auth/helpers/passportStrategies.js');
@@ -39,7 +40,7 @@ async function authenticateUser(req, res, next) {
 async function signupNewUser(req, res) {
     try {
         const {name, email, password} = req.body
-
+        
         const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
         
         console.log(sanitizedEmail,'sanitizedemail--------')
@@ -104,8 +105,11 @@ return done
 async function enviarCorreoVerificacion(req, res) {
     try {
         const {email} = req.body
+
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
         
-        const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
 
         console.log(sanitizedEmail,'sanitized email v2')
         const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
@@ -174,8 +178,11 @@ async function enviarCorreoRecuperarContrasena(req, res) {
     try {
         const {email} = req.body
         
-        const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
-
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+        
+console.log(sanitizedEmail,'sanitized emial')
         const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
   
         if (!existingUser)  return res.status(400).json({ message: 'El usuario no existe' });
@@ -209,9 +216,8 @@ async function guardarCodigoDB(email, codigo) {
 
 async function getCodigoFromDB(email) {
 
-    const codigoDatabase = await knex('t_usuarios').first('codigo').where({ email })
+    return await knex('t_usuarios').first('codigo').where({ email })
 
-    return codigoDatabase
 }
 
 async function verificarCodigo(req, res) {
@@ -219,8 +225,12 @@ async function verificarCodigo(req, res) {
  try {
     const { email, codigo} = req.body
 
-  
-    const codigoDatabase = await getCodigoFromDB(email)
+    let sanitizedEmail
+    if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+    else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+    
+
+    const codigoDatabase = await getCodigoFromDB(sanitizedEmail)
 
     if (!codigoDatabase)  return res.status(400).json({ message: 'El usuario no existe' });
      
@@ -229,7 +239,7 @@ async function verificarCodigo(req, res) {
         return res.status(400).json({ message: 'Código incorrecto' })
     }
    else {
-        await updateValidationStatus(email)
+        await updateValidationStatus(sanitizedEmail)
         return res.status(200).json({ message: 'mail validated' })
    }
     
@@ -247,8 +257,12 @@ async function cambiarContrasena(req, res) {
     try {
         const { email, codigo, password} = req.body
     
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+        
       
-        const codigoDatabase = await getCodigoFromDB(email)
+        const codigoDatabase = await getCodigoFromDB(sanitizedEmail)
     
         if (!codigoDatabase)  return res.status(400).json({ message: 'El usuario no existe' });
          
@@ -258,7 +272,7 @@ async function cambiarContrasena(req, res) {
         }
        else {
             const encryptedPassword = await encryptPassword(password)
-            await cambiarContrasenaAlumno(email, encryptedPassword)
+            await cambiarContrasenaAlumno(sanitizedEmail, encryptedPassword)
             return res.status(200).json({ message: 'contrasena cambiada' })
        }
         

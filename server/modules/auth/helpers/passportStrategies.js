@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const {checkUserAndPassword} = require("@auth/helpers/encryptDecrypt")
 const {emailBloqueo} = require('@email/mails.js')
-// var limiter = require('@utils/limiter.js') // ES CON VAR A POSTA!
+const { upmAccounts } = require('@utils/upmAccounts');
 
 let limiter;
 if (process.env.NODE_ENV === 'production') {
@@ -26,7 +26,12 @@ passport.use(new LocalStrategy({
 				
 async function login(req, username, password, done) {
 	try {
-        const sanitizedEmail = username.toLowerCase() + '@alumnos.upm.es'
+
+        let sanitizedEmail
+        if (upmAccounts.includes(username.toLowerCase())) sanitizedEmail = username.toLowerCase() + '@upm.es'
+        else sanitizedEmail = username.toLowerCase() + '@alumnos.upm.es'
+
+        
         if (process.env.NODE_ENV === 'production') {
             const ipAddr = req.headers['X-Real-IP']
             const usernameIPkey = `${sanitizedEmail}_${ipAddr}`
