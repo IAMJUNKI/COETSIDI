@@ -100,3 +100,20 @@ body {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  color: #909090;
+  font-family: 'Times New Roman', Times, serif;
+
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
+
+  p{
+    color: rgb(64, 64, 64);
+  }
+}

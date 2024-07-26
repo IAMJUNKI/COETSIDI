@@ -4,7 +4,7 @@
 
 
 $(function() {
-//  console.log = function () {};
+ console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -1089,29 +1089,70 @@ window.addEventListener('resize', debounce(handleScreenWidthChange, 100));
 
 //Google calendar
 
-$(document).on('click', '#auth_calendar', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    showSpinner('auth_calendar')
-try {
-    $.ajax({
-        url: '/googleCalendar/authCalendar',
-        type: 'get',
-        success: function (done) {
-            console.log(done)
-            destroySpinner()
-            document.getElementById("cerrar_modal_google_calendar").click();
-        },
-        error: function (error) {
-           console.error(error)
-        }
-    })
-} catch (error) {
-    console.error('AJAX request falied',error)
-}
+// $(document).on('click', '#auth_calendar', async function (event) {
+//     event.preventDefault()
+//     if (preventDoubleClick(event)) { return };
+//     showSpinner('auth_calendar')
+// try {
+//     $.ajax({
+//         url: '/googleCalendar/authCalendar',
+//         type: 'get',
+//         success: function (done) {
+//             console.log(done)
+//             destroySpinner()
+//             document.getElementById("cerrar_modal_google_calendar").click();
+//         },
+//         error: function (error) {
+//            console.error(error)
+//         }
+//     })
+// } catch (error) {
+//     console.error('AJAX request falied',error)
+// }
     
    
-})
+// })
+
+// $(document).on('click', '#auth_calendar', async function (event) {
+//     event.preventDefault();
+//     if (preventDoubleClick(event)) { return; }
+//     showSpinner('auth_calendar');
+//     try {
+//         const response = await fetch('/googleCalendar/getAuthUrl');
+//         const data = await response.json();
+//         const authUrl = data.authUrl;
+
+//         // Redirect the user to the Google OAuth screen
+//         window.location.href = authUrl;
+//     } catch (error) {
+//         console.error('Error getting auth URL:', error);
+//         destroySpinner();
+//     }
+// });
+
+$(document).on('click', '#auth_calendar', function (event) {
+    event.preventDefault();
+    if (preventDoubleClick(event)) { return; }
+    // showSpinner('auth_calendar');
+
+    $.ajax({
+        url: '/googleCalendar/authCalendar',
+        type: 'GET',
+        success: function (data) {
+            const authUrl = data.authUrl;
+            const userId = data.userId;
+            // Save userId in sessionStorage to use after OAuth redirect
+            sessionStorage.setItem('userId', userId);
+
+            // Redirect the user to the Google OAuth screen
+            window.location.href = authUrl;
+        },
+        error: function (error) {
+            console.error('Error getting auth URL:', error);
+            // destroySpinner();
+        }
+    });
+});
 
 
 //SOCIAL-ASOCIACIONES-----------------------------------------------------------------------------------
