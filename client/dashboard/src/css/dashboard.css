@@ -863,3 +863,381 @@
   opacity: 1; 
 }
 
+/* ASOCIACIONES CARDS */
+
+
+:root {
+  --main-blue: #0076bd;
+  --main-blue-rgb-015: rgba(0, 118, 189, 0.1);
+}
+
+.dark {
+	background: #110f16;
+}
+
+.light {
+	background: #f3f5f7;
+}
+
+a, a:hover {
+	text-decoration: none;
+	transition: color 0.3s ease-in-out;
+}
+
+
+/* Cards */
+.postcard {
+  flex-wrap: wrap;
+  display: flex;
+  
+  box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+  border-radius: 10px;
+  margin: 0 0 2rem 0;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+
+	&.dark {
+		background-color: #434244;
+	}
+	&.light {
+		background-color: #e1e5ea;
+	}
+	
+	.t-dark {
+		color: #434244;
+	}
+	
+  a {
+    color: inherit;
+  }
+	
+	h1,	.h1 {
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		line-height: 1.2;
+	}
+	
+	.small {
+		font-size: 80%;
+	}
+
+  .postcard__title {
+    font-size: 1.75rem;
+  }
+
+  .postcard__img_image {
+    max-height: 60%;
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+    background-color: white;
+  }
+
+  .postcard__img {
+    display: contents;
+  }
+
+  .postcard__bar {
+    width: 50px;
+    height: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #424242;
+    transition: width 0.2s ease;
+  }
+
+  .postcard__text {
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .postcard__preview-txt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+    height: 100%;
+  }
+
+  .postcard__tagbox {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+		padding: 0;
+    justify-content: center;
+
+
+    .tag__socialmedia {
+      display: inline-block;
+      border-radius: 3px;
+      padding: 2.5px 10px;
+      margin-top: auto;
+      margin-bottom: auto;
+      cursor: default;
+      user-select: none;
+    }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(-70deg, #424242, transparent 50%);
+    opacity: 1;
+    border-radius: 10px;
+  }
+
+  &:hover .postcard__bar {
+    width: 100px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .postcard {
+    flex-wrap: inherit;
+
+    .postcard__title {
+      font-size: 2rem;
+    }
+
+    .postcard__tagbox {
+      justify-content: start;
+    }
+
+    .postcard__img {
+      max-width:300px;
+      max-height:100%;
+      /* transition: transform 0.3s ease; */
+      background-color: white;
+      display: flex;
+      
+    }
+
+    .postcard__img_image {
+      max-width:100%;
+      max-height:100%;
+     align-self: center;
+    transition: transform 0.3s ease;
+    transform: scale(0.9);
+    }
+
+    .postcard__text {
+      padding: 3rem;
+      width: 100%;
+    }
+
+    /* .media.postcard__text:before {
+      content: "";
+      position: absolute;
+      display: block;
+      background: #18151f;
+      top: -20%;
+      height: 130%;
+      width: 55px;
+    } */
+
+    &:hover .postcard__img_image {
+      transform: scale(1);
+    }
+
+    &:nth-child(2n+1) {
+      flex-direction: row;
+    }
+
+    &:nth-child(2n+0) {
+      flex-direction: row-reverse;
+    }
+
+    /* &:nth-child(2n+1) .postcard__text::before {
+      left: -12px !important;
+      transform: rotate(4deg);
+    }
+
+    &:nth-child(2n+0) .postcard__text::before {
+      right: -12px !important;
+      transform: rotate(-4deg);
+    } */
+  }
+}
+/* @media screen and (min-width: 992px){
+		.postcard__text {
+      padding: 2rem 3.5rem;
+    }
+		
+		.postcard__text:before {
+      content: "";
+      position: absolute;
+      display: block;
+      
+      top: -20%;
+      height: 130%;
+      width: 55px;
+    }
+	
+  .postcard.dark {
+		.postcard__text:before {
+			background: #434244;
+		}
+  }
+	.postcard.light {
+		.postcard__text:before {
+			background: #e1e5ea;
+		}
+  }
+} */
+
+
+.postcard .postcard__tagbox .blue.play:hover {
+	background: var(--main-blue);
+}
+.blue .postcard__title:hover {
+	color: var(--main-blue);
+}
+.blue .postcard__bar {
+	background-color: var(--main-blue);
+}
+.blue::before {
+	background-image: linear-gradient(-30deg, var(--main-blue-rgb-015), transparent 50%);
+}
+.blue:nth-child(2n)::before {
+	background-image: linear-gradient(30deg, var(--main-blue-rgb-015), transparent 50%);
+}
+
+@media screen and (min-width: 768px) {
+
+	.blue::before {
+		background-image: linear-gradient(
+			-80deg,
+			var(--main-blue-rgb-015),
+			transparent 50%
+		);
+	}
+	.blue:nth-child(2n)::before {
+		background-image: linear-gradient(80deg, var(--main-blue-rgb-015), transparent 50%);
+	}
+}
+
+/* noticias cards */
+
+.controlNoticias{
+  display: inline-block;
+  width: auto;
+  white-space: nowrap; /* Prevents text from wrapping */
+  margin: 8px;
+}
+
+.linkCardNoticias{
+  text-decoration: none;
+  color: inherit;
+}
+
+.row-striped{
+  background-color: #ddeefd;
+  border-left: 4px #00439b solid;
+  padding: 15px 0;
+  margin-top: 20px;
+
+
+
+  .text-uppercase{
+    color: #003170;
+    font-weight: bold;
+  }
+
+  .dayAndMonth{
+    width: 16.666667%; 
+    float: left; 
+    box-sizing: border-box;
+    text-align: center;
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Arrange children in a column */
+    justify-content: center; /* Center children vertically */
+    align-items: center; /* Center children horizontally */
+    height: 100%; 
+  }
+
+  .day{
+    display: none;
+  }
+
+}
+
+.row-striped:hover{
+  background-color: #e9f3fb;
+  border-left: 4px #006eff solid;
+}
+
+.botonBorrarNoticia{
+  display: block;
+  background-color: #cf0e0e;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.botonBorrarNoticia:hover{
+  background-color: #e11111;
+}
+
+
+.anadirNoticia{
+  align-items: center;  
+  justify-content: center;
+}
+
+.botonAnadirNoticia{
+  display: block;
+  background-color: #1e60d1;
+  color: #ffffff;
+  margin-top: 40px;
+  width: 100px;
+  border-color: transparent;
+  border-radius: 10px;
+}
+
+.botonAnadirNoticia:hover{
+  background-color: #2b7cff;
+}
+
+
+@media screen and (max-width: 500px) {
+
+	
+.row-striped{
+  
+  .dayAndMonth{
+    display: none;
+  }
+
+  .day{
+    display: inline-block;
+    background-color: #006eff;
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+}
+
+}
+
+
+.cartel-error{
+  display: flex;
+  justify-content: center;
+  padding: 0.7rem 2rem;
+  border-radius: 7px;
+  font-size: 15px;
+  width: 100%;
+  margin-top: 1rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}

@@ -66,9 +66,9 @@ $(document).on('submit', '#form_enviar_correo', async function (event) {
                 document.getElementById('verify-email-code').innerHTML = `
                  <p class="text-center text-primary" style="font-size: 5.5rem;"><i class="fa-solid fa-envelope-circle-check"></i></p>
                       <p class="text-center h5 ">Revisa tu correo</p>
-                      <p class="text-muted text-center" style="margin: 0%;">Hemos enviado un código a</p>
+                      <p class="text-muted text-center" style="margin: 0%;">Hemos enviado un código a ${response.email}</p>
                       <form id="form_verificar_correo">
-                        <input class="form-control-plaintext text-muted text-center"  type="text" value="${response.email}" name="email" aria-label="correo readonly"  readonly>
+                        <input class="form-control-plaintext text-muted text-center"  type="hidden" value="${response.realInput}" name="email" aria-label="correo readonly"  readonly>
                         
                         <div class="d-flex flex-row " style="margin: 20px;">
                           <input type="text" class="form-control" autofocus=""  name="codigo" required/>

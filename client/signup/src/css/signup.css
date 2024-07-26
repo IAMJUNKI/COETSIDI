@@ -7,7 +7,7 @@
 .links-container a {
   text-decoration: none;
   color: #007bff; /* Adjust link color */
-  padding: 0.5em 1em; /* Add padding for better touch targets */
+  padding: 0.5em; /* Add padding for better touch targets */
   transition: color 0.3s;
 }
 

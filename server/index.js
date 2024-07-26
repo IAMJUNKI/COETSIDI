@@ -19,6 +19,7 @@ const gestorDataRouter = require('@gestorData/router.js');
 const googleCalendarRouter = require('@googleCalendar/router.js');
 const calendarioRouter = require('@calendario/router.js');
 const inicioRouter = require('@inicio/router.js');
+const noticiasRouter = require('@noticias/router.js');
 // const mapaRouter = require('@mapa/router.js')
 
 globalRouter.use(express.json());
@@ -45,8 +46,8 @@ switch (process.env.NODE_ENV) {
             referrerPolicy: { policy: 'no-referrer' },
             contentSecurityPolicy: {
                 directives: {
-                    defaultSrc: ["'self'",'https://*.googleapis.com'],
-                    scriptSrc: ["'self'", 'https://*.googleapis.com', 'https://*.myetsidi.com','https://www.google.com/'],
+                    defaultSrc: ["'self'",'https://*.googleapis.com', 'https://ka-f.fontawesome.com'],
+                    scriptSrc: ["'self'", 'https://*.myetsidi.com', 'https://*.googleapis.com','https://apis.google.com', 'https://www.google.com/','https://cdn.jsdelivr.net','https://cdnjs.cloudflare.com','https://kit.fontawesome.com','https://unpkg.com'],
                     objectSrc: ["'none'"],
                     baseUri: ["'none'"],
                     formAction: ["'none'"],
@@ -123,6 +124,7 @@ globalRouter.use(express.static(path.join(__dirname, '../client/login/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/signup/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/dashboard/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/mailVerification/src')));
+globalRouter.use(express.static(path.join(__dirname, '../client/forget/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/errorPage/src')));
 
 // Serve login page
@@ -157,6 +159,19 @@ globalRouter.get('/mailVerification', (req, res, next) => {
     try {
         const file = 'mailVerification.html';
         res.sendFile(file, { root: path.join(__dirname, '../client/mailVerification') }, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } catch (err) {
+        console.log(err, 'error');
+    }
+});
+
+globalRouter.get('/forget', (req, res, next) => {
+    try {
+        const file = 'forget.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/forget') }, function (err) {
             if (err) {
                 console.log(err);
             }
@@ -229,6 +244,7 @@ globalRouter.use('/gestorData', gestorDataRouter);
 globalRouter.use('/googleCalendar', googleCalendarRouter);
 globalRouter.use('/calendario', calendarioRouter);
 globalRouter.use('/inicio', inicioRouter);
+globalRouter.use('/noticias', noticiasRouter);
 // globalRouter.use('/mapa', mapaRouter);
 
 

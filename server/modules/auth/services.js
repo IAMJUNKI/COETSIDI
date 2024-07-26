@@ -6,7 +6,9 @@ const Usuarios = require('@db/models/usuarios.js')
 const debug = require('debug')('&:SIGNUP_LOGIN_SERVICES')
 const {encryptPassword} = require("@auth/helpers/encryptDecrypt")
 const {createRandomString} = require('@utils/utils.js')
-const {sendEmailCodigoVerificacion} = require('@email/mails.js')
+const {sendEmailCodigo} = require('@email/mails.js')
+const {correoVerificacion, correoRecuperarContrasena} = require('@email/templatesCorreoCodigo.js');
+const { upmAccounts } = require('@utils/upmAccounts');
 
 if (process.env.NODE_ENV === 'production') {
 const {limiter} = require('@auth/helpers/passportStrategies.js');
@@ -38,7 +40,7 @@ async function authenticateUser(req, res, next) {
 async function signupNewUser(req, res) {
     try {
         const {name, email, password} = req.body
-
+        
         const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
         
         console.log(sanitizedEmail,'sanitizedemail--------')
@@ -100,11 +102,14 @@ return done
 
 
 
-async function enviarCorreo(req, res) {
+async function enviarCorreoVerificacion(req, res) {
     try {
         const {email} = req.body
+
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
         
-        const sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
 
         console.log(sanitizedEmail,'sanitized email v2')
         const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
@@ -141,7 +146,7 @@ async function enviarCorreo(req, res) {
         //         console.log('eeeeeeeooooooooooo')
         //         await guardarCodigoDB(sanitizedEmail, codigo)
         
-        //         const confirmedEmail = await sendEmailCodigoVerificacion({ email: sanitizedEmail, codigo }) //TODO crear en helpers, mirar api google
+        //         const confirmedEmail = await sendEmailCodigo({ email: sanitizedEmail, codigo }) //TODO crear en helpers, mirar api google
         //         // const confirmedEmail = 'done'
         
         //        if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail })    
@@ -152,21 +157,56 @@ async function enviarCorreo(req, res) {
         
             await guardarCodigoDB(sanitizedEmail, codigo)
     
-            const confirmedEmail = await sendEmailCodigoVerificacion({ email:sanitizedEmail, codigo }) //TODO crear en helpers, mirar api google
-            // const confirmedEmail = 'done'
+            correoVerificacion.email = sanitizedEmail
+            correoVerificacion.codigo = codigo
+
+            const confirmedEmail = await sendEmailCodigo(correoVerificacion) 
     
-           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail })    
+           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail, realInput: email.toLowerCase() })    
        
         // }
 
 
     } catch (error) {
-        debug('SIGN UP NEW USER')
+        debug('enviar correo verificacion')
         debug(error)
         res.status(500).json('Algo fue mal, vuelve a intentarlo más tarde!')
     }
 }
 
+async function enviarCorreoRecuperarContrasena(req, res) {
+    try {
+        const {email} = req.body
+        
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+        
+console.log(sanitizedEmail,'sanitized emial')
+        const existingUser = await verifyUserAlreadyExists(sanitizedEmail)
+  
+        if (!existingUser)  return res.status(400).json({ message: 'El usuario no existe' });
+        
+      
+            const codigo = createRandomString(8)
+        
+            await guardarCodigoDB(sanitizedEmail, codigo)
+    
+            correoRecuperarContrasena.email = sanitizedEmail
+            correoRecuperarContrasena.codigo = codigo
+
+            const confirmedEmail = await sendEmailCodigo(correoRecuperarContrasena) 
+       
+           if(confirmedEmail === 'done') return res.status(200).json({ message: 'succesfully sent email', email:sanitizedEmail, realInput: email.toLowerCase() })    
+   
+
+
+    } catch (error) {
+        debug('enviar correo verificacion')
+        debug(error)
+        res.status(500).json('Algo fue mal, vuelve a intentarlo más tarde!')
+    }
+}
 
 async function guardarCodigoDB(email, codigo) {
 
@@ -176,23 +216,78 @@ async function guardarCodigoDB(email, codigo) {
 
 async function getCodigoFromDB(email) {
 
-    const codigoDatabase = await knex('t_usuarios').first('codigo').where({ email })
+    return await knex('t_usuarios').first('codigo').where({ email })
 
-    return codigoDatabase.codigo
 }
 
 async function verificarCodigo(req, res) {
 
+ try {
     const { email, codigo} = req.body
 
-   const codigoDatabase = await getCodigoFromDB(email)
+    let sanitizedEmail
+    if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+    else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+    
 
-   if(codigoDatabase !== codigo) return res.status(400).json({ message: 'Código incorrecto' });
-   else{
-        await updateValidationStatus(email)
+    const codigoDatabase = await getCodigoFromDB(sanitizedEmail)
+
+    if (!codigoDatabase)  return res.status(400).json({ message: 'El usuario no existe' });
+     
+ 
+    if(codigoDatabase.codigo !== codigo) {
+        return res.status(400).json({ message: 'Código incorrecto' })
+    }
+   else {
+        await updateValidationStatus(sanitizedEmail)
         return res.status(200).json({ message: 'mail validated' })
    }
     
+ } catch (error) {
+     debug('verificacion codigos')
+        debug(error)
+        res.status(500).json('Algo fue mal, vuelve a intentarlo más tarde!')
+ }
+ 
+}
+
+
+async function cambiarContrasena(req, res) {
+
+    try {
+        const { email, codigo, password} = req.body
+    
+        let sanitizedEmail
+        if (upmAccounts.includes(email.toLowerCase())) sanitizedEmail = email.toLowerCase() + '@upm.es'
+        else sanitizedEmail = email.toLowerCase() + '@alumnos.upm.es'
+        
+      
+        const codigoDatabase = await getCodigoFromDB(sanitizedEmail)
+    
+        if (!codigoDatabase)  return res.status(400).json({ message: 'El usuario no existe' });
+         
+     
+        if(codigoDatabase.codigo !== codigo) {
+            return res.status(400).json({ message: 'Código incorrecto' })
+        }
+       else {
+            const encryptedPassword = await encryptPassword(password)
+            await cambiarContrasenaAlumno(sanitizedEmail, encryptedPassword)
+            return res.status(200).json({ message: 'contrasena cambiada' })
+       }
+        
+     } catch (error) {
+         debug('cambiando contraseña error:')
+            debug(error)
+            res.status(500).json('Algo fue mal, vuelve a intentarlo más tarde!')
+     }
+}
+
+
+async function cambiarContrasenaAlumno(email, password) {
+
+    await knex('t_usuarios').update({password}).where({ email })
+  
 }
 
 async function updateValidationStatus(email) {
@@ -207,7 +302,9 @@ async function updateValidationStatus(email) {
 module.exports = {
     authenticateUser,
     signupNewUser,
-    enviarCorreo,
-    verificarCodigo
+    enviarCorreoVerificacion,
+    enviarCorreoRecuperarContrasena,
+    verificarCodigo,
+    cambiarContrasena
 
 };
