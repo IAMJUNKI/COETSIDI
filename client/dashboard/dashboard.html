@@ -61,19 +61,19 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav flex-wrap bd-navbar-nav flex-grow-1 pe-3">
             <li class="nav-item">
-              <button class="nav-link d-flex align-items-center gap-2 boton_sidebar" id="boton_inicio" aria-current="page">
+              <button class="nav-link d-flex align-items-center gap-2 boton_sidebar boton-cambio-pagina" id="boton_inicio" data-target="pagina_inicio" aria-current="page">
                 <i class="fa-solid fa-house"></i>
                 Inicio
               </button>
             </li>
             <li class="nav-item">
-              <button class="nav-link d-flex align-items-center gap-2" id="boton_horario">
+              <button class="nav-link d-flex align-items-center gap-2 boton-cambio-pagina" id="boton_horario" data-target="pagina_horario">
                 <i class="fa-solid fa-calendar-days"></i>
                 Horario
               </button>
             </li>
             <li class="nav-item">
-              <button class="nav-link d-flex align-items-center gap-2" id="boton_mapa">
+              <button class="nav-link d-flex align-items-center gap-2 boton-cambio-pagina" id="boton_mapa" data-target="pagina_mapa">
                 <i class="fa-solid fa-map-location-dot"></i>
                 Mapa
               </button>
@@ -84,13 +84,13 @@
               </button>
               <ul class="dropdown-menu">
                 <li class="nav-item">
-                  <button class="dropdown-item" disabled>
+                  <button class="dropdown-item boton-cambio-pagina" data-target="pagina_asociaciones">
                     <i class="fa-solid fa-users"></i>
                       Asociaciones
                   </button>
                 </li>
                 <li class="nav-item">
-                  <button class="dropdown-item" disabled>
+                  <button class="dropdown-item boton-cambio-pagina" id="botonPaginaNoticias" data-target="pagina_noticias">
                     <i class="fa-regular fa-newspaper"></i>
                     Noticias
                   </button>
@@ -256,7 +256,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cerrar_modal_google_calendar" data-bs-dismiss="modal">volver</button>
-          <button type="button" class="btn btn-primary" id="auth_calendar" disabled>confirmar</button>
+          <button type="button" class="btn btn-primary" id="auth_calendar">confirmar</button>
         </div>
       </div>
     </div>
@@ -320,7 +320,7 @@
                 <label for="floatingName">Nombre</label>
               </div>
             </div>
-            <div class="cartel-error" id="error_message" style="display: none; color: red;"></div>
+            <div class="cartel-error" id="error_message_crear_noticia" style="display: none; color: red;"></div>
           </form>
         </div>
         <div class="modal-footer">
@@ -330,28 +330,163 @@
     </div>
   </div>
 
+<!-- Modal Añadir Noticia -->
+<div class="modal fade" id="modalAnadirNoticia" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir Noticia <i class="fa-regular fa-newspaper"></i></h1>
+        <button type="button" class="btn-close" id="cerrar_modal_crear_noticia_1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="body_form_subjects">
+        <p>Rellena los datos necesarios para crear un nuevo bloque de Noticias</p>
+        <form id="js_form_crear_noticia">
+          <div>
+            <h2 class="fs-5">Día de la semana</h2>
+            <select class="form-select" name="dia" aria-label="select day of the week">
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sábado">Sábado</option>
+              <option value="Domingo">Domingo</option>
+            </select>
+            <br>
+            <h2 class="fs-5">Día</h2>
+            <select class="form-select" name="numero" aria-label="select day number">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+            <br>
+            <h2 class="fs-5">Mes</h2>
+            <select class="form-select" name="mes" aria-label="select month">
+              <option value="Enero">Enero</option>
+              <option value="Febrero">Febrero</option>
+              <option value="Marzo">Marzo</option>
+              <option value="Abril">Abril</option>
+              <option value="Mayo">Mayo</option>
+              <option value="Junio">Junio</option>
+              <option value="Julio">Julio</option>
+              <option value="Agosto">Agosto</option>
+              <option value="Septiembre">Septiembre</option>
+              <option value="Octubre">Octubre</option>
+              <option value="Noviembre">Noviembre</option>
+              <option value="Diciembre">Diciembre</option>
+            </select>
+            <br>
+            <h2 class="fs-5">Año</h2>
+            <select class=" form-select" name="ano" aria-label="select year">
+              <option value="2023">2023</option>
+              <option selected value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+            <br>
+
+            <h2 class="fs-5">Título<sup>*</sup></h2>
+            <div class="d-flex flex-row align-items-center mb-4">
+                <input type="text"  class="form-control"  name="titulo" required/>
+            </div>
+
+            <h2 class="fs-5">Texto descriptivo<sup>*</sup></h2>
+            <div class="d-flex flex-row align-items-center mb-4">
+                <textarea type="text"  class="form-control"  rows="4" name="texto" required></textarea>
+            </div>
+           
+            <h2 class="fs-5">Link de redirreción</h2>
+            <div class="d-flex flex-row align-items-center mb-4">
+                <input type="text"  class="form-control"  name="link"/>
+            </div>
+          </div>
+          <div class="cartel-error" id="error_message" style="display: none; color: red;"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cerrar_modal_crear_noticia_2" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" form="js_form_crear_noticia"  id="submit_form_crear_noticia" class="btn btn-primary" >Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Borrar Noticia -->
+<div class="modal fade" id="modalBorrarNoticia" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Borrar Noticia</h1>
+        <button type="button" class="btn-close" id="cerrar_modal_borrar_noticia_1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="body_form_subjects">
+        <p>
+          ¿Estás segur@ de querer borrar esta noticia?
+          <br><br>
+          ¡Una vez borrado no se puede recuperar!
+        </p>
+        <form id="js_form_borrar_noticia">
+          <div>
+            <input class="form-control-plaintext text-muted text-center"  id="UUIDNoticia" type="hidden" value="" name="id" aria-label="UUID hidden"> 
+          </div>
+          <div class="cartel-error" id="error_message_borrar_noticia" style="display: none; color: red;"></div>
+      
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cerrar_modal_borrar_noticia_2" data-bs-dismiss="modal">volver</button>
+        <button type="submit" form="js_form_borrar_noticia"  id="submit_form_borrar_noticia" class="btn btn-danger" >Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- WEB GENERAL -->
 
     <main class=" container-xxl bd-gutter mt-3 my-md-4 bd-layout">
       <!-- PAGINA INICIO -->
-      <div id="pagina_inicio"> 
+      <div id="pagina_inicio" class="todas-las-paginas"> 
+
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2" id="bienvenida">Cargando...</h1>
         </div>
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
 
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
           <div class="container" id="container-inicio-clases">
           </div>
-
-<!--                
-       <button type="button" class="btn btn-primary" id="cambiar_asignaturas" data-bs-toggle="modal" data-bs-target="#formularioAsignaturas">
-        Cambiar asignaturas
-      </button> -->
-
         </div>
+
       </div> 
       <!-- PAGINA HORARIO -->
-      <div id="pagina_horario" style="display: none; height: 90vh;">
+      <div id="pagina_horario" class="todas-las-paginas" style="display: none; height: 90vh;">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2" id="titulo_pagina_horario">Horario</h1>
           <div class="btn-toolbar mb-2 mb-md-0 align-items-center">
@@ -407,7 +542,7 @@
 
     <!-- PAGINA MAPA -->
       <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-      <div id="pagina_mapa" style="display: none" content-loaded="false"> 
+      <div id="pagina_mapa" class="todas-las-paginas" style="display: none" content-loaded="false"> 
           <div class="container-fluid p-0">
               <div id="map-container" class="position-relative">
                   <div id="map"></div>
@@ -452,6 +587,660 @@
               </div>
           </div>
       </div> 
+    <!-- PAGINA ASOCIACIONES -->
+    <div id="pagina_asociaciones" class="todas-las-paginas"  style="display: none"> 
+          
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+        <div class="container" >
+          
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/Club_Deportivo_Logo.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">Club Deportivo</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                Más de 200 personas forman los equipos de Baloncesto, Balonmano, Fútbol Sala, Fútbol 11, Fútbol 7, Rugby y Voleibol.
+              </div>
+
+              <div class="collapse" id="verMasCDEtsidi">
+                <div class="">
+                  Participamos en la Liga Interna UPM durante todo el año y la <b>InterEUITI</b> en octubre, con las ciudades de Valencia y Valladolid.
+                  <br> <br>
+                  Con la <b>GRADA ETSIDI</b> animamos a nuestros equipos y organizamos cada jornada el partido de la semana, donde nos juntamos para pasarlo bien y beber cerveza.
+                  <br> <br>
+                  Organizamos fiestas, torneos 3x3, sangriadas y vendemos sudaderas y camisetas de la ETSIDI.
+                  </div>
+              </div>
+              
+              <a href="#verMasCDEtsidi" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/cdetsidi/"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="https://x.com/cdetsidi"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="mailto:cdeuiti@gmail.com?subject=Club Deportivo"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li>
+                  <!-- <li class="tag__socialmedia">
+                    <a href="#" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                  </li> -->
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image" src="/img/ETSIDI-Design_Logo.jpg" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">ETSIDI DESIGN</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                Somos un equipo creativo multidisciplinar dedicado por una parte a la gestión del blog  <a href="https://etsididesign.com" style="color: #0f83ff;">etsididesign.com</a> y por otra al desarrollo de proyectos de diseño de carácter activo.
+                </div>
+              <div class="collapse" id="verMasEtsidiDesign">
+                <div class="">
+                 Nuestra aspiración es aprender, madurar e inspirarnos en el campo del diseño cubriendo las necesidades educativas, fomentando y facilitando la colaboración con la universidad. Todo ello se plantea a través de diferentes medios:talleres, workshops, cursos, eventos, concursos, etc. Llevando a cabo proyectos reales que nos conecten con el mundo profesional de forma más directa.  
+                 <br> <br>
+                 Nos dividimos en dos ramas:
+                 <br> <br>
+                  <b>Colectivo ED</b>
+                  <br> <br>
+                  El Colectivo de ETSIDI Design es un lugar para aprender y desarrollar diferentes actividades y proyectos colaborativos. Aquí convergen todas las actividades creativas de la asociación, es el sitio donde trasladar las ideas del papel a la realidad. Dentro del colectivo se desarrollan numerosos proyectos:
+                  <br> <br>
+                  <ul>
+                    <li>
+                      <b>Nexo MagazinED</b>: Una revista universitaria donde expresar nuestra creatividad, plasmar la actividad de la escuela e incluir temas de interés para todos los grados, actuando como vínculo de unión entre todos los estudiantes. 
+                    </li>
+                    <li>
+                      <b>Serigrafía</b>: La serigrafía es una técnica de impresión empleada en el método de reproducción de documentos e imágenes sobre cualquier material, y consiste en transferir una tinta a través de una malla tensada en un marco. Hemos creado un taller en la escuela para producir nuestras propias craciones.
+                    </li>
+                    <li>
+                      <b>Taller</b>: Además de desarrollar nuestros productos explorando con la serigrafía, experimentamos con otras técnicas como pueden ser la encuadernación, la cianotipia, la fabricación de muebles DIY y más.
+                    </li>
+                  </ul>
+                  <b>Blog ETSIDI DESIGN</b>
+                  <br> <br>
+                  Dentro de la Web de ETSIDI Design, el blog es el lugar donde puedes encontrar las últimas noticias sobre diseño, cultura y tecnología, y tendencias en el área del diseño industrial. Tratamos de hacer de él un punto de información y referencia de la actualidad en el sector y demostrar al mundo que desde la escuela tenemos mucho que aportar.
+                  <br> <br>
+                  Además, en nuestra web contamos con un Portafolio donde recopilamos los diferentes proyectos que vamos desarrollando.
+                </div>
+              </div>
+              <a href="#verMasEtsidiDesign" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <li class="tag__socialmedia ">
+                  <a href="https://www.instagram.com/etsididesign/"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://x.com/etsididesign"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia">
+                  <a href="mailto:etsididesign@gmail.com?subject=Etsidi Design"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="http://www.etsididesign.com/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li>
+              </ul>
+
+            </div>
+          </article>
+
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/Zinico_logo.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">Zínico</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                <b>Zínico</b> es el grupo de teatro de la  ETSIDI, fundado en 2013 por siete estudiantes y ha ido creciendo con los años.
+                <!-- <br> -->
+                </div>
+
+              <div class="collapse" id="verMasZinico">
+                <div class="">
+                  Desde su creación, la asociación ha participado cada año en el <b>FESTIVAL DE TEATRO UPM</b>, presentando obras como: La Cena de los Idiotas, Arsénico por Compasión, Por Delante y por Detrás o Pesadilla antes de Navidad.
+                  <br><br>
+                  En los años de pandemia,  con los festivales cancelados y los miembros del grupo confinados, las actividades tomaron un rumbo acorde con la situación: se empezaron talleres de doblajes y creación de contenido audiovisual como videoclips a distancia, entre otras cosas.
+                  <br><br>
+                  Entre las características más importantes de <b>Zínico</b> se encuentran la continua adaptación, la implicación del grupo y el compromiso con la vida universitaria.
+                  <br><br>
+                  Cualquiera puede formar parte del grupo: actuar, dirigir, construir decorados, organizar dinámicas... Son algunas de las actividades que se realizan en nuestro grupo.
+                  <br><br>
+                  <b>¿Quieres saber más? ¡Escribenos!</b>
+                  </div>
+              </div>
+              
+              <a href="#verMasZinico" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/zinicoteatro/"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="https://x.com/zinico_teatro"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="mailto:zinicoteatro@gmail.com?subject=Zinico"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li>
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image" src="/img/Logo-MotoStudent.jpg" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">EME - UPM-MotoStudent</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                <b>EME</b> es la Asociación del equipo de motocicletas de competición UPM MotoStudent. Diseñamos y fabricamos prototipos 100% eléctricos y de combustión con los que participamos en la Competición Internacional de Motostudent.
+              </div>
+              <div class="collapse" id="verMasUPMMotostudent">
+                <div>
+                  Estos son nuestros departamentos:
+                  <br><br>
+                  <span style="color:#0f83ff;">EQUIPO ELECTRIC</span>
+                  <br><br>
+                  Departamentos organizados en:
+                  <br><br>
+                  <ul>
+                    <li>Chasis y Diseño</li>
+                    <li>Powertrain y Electrónica</li>
+                    <li>Suspensiones</li>
+                    <li>Análisis y Cálculos</li>
+                    <li>Fabricación y Compras</li>
+                    <li>Comunicación</li>
+                  </ul>
+                  <b>RESULTADOS EN LA COMPETICIÓN MOTOSTUDENT:</b>
+                  <br><br>
+                  <ul>
+                    <li>2ª posición en carrera</li>
+                    <li>Velocidad punta 170km/h</li>
+                    <li>Menores pesos en categoría Electric</li>
+                    <li>Consumo por vuelta 20% inferior al establecido por la organización</li>
+                  </ul>
+  
+                  <span style="color:#0f83ff;">EQUIPO PETROL</span>
+                  <br><br>
+                  Departamentos organizados en:
+                  <br><br>
+                  <ul>
+                    <li>Comunicación</li>
+                    <li>Estructura</li>
+                    <li>Motor y electrónica</li>
+                    <li>Carenado</li>
+                    <li>Innovación</li>
+                    <li>Conocimiento</li>
+                    <li>Fabricación</li>
+                  </ul>
+                  <b>RESULTADOS EN LA COMPETICIÓN MOTOSTUDENT PETROL:</b>
+                  <br><br>
+                  <ul>
+                    <li>EME20: Cuarto mejor diseño, undécima posición en carrera, tercer mejor diseño conceptual, séptimo mejor tiempo de vuelta y segundo puesto en Gymkhana.</li>
+                  </ul>
+                  Anteriores ediciones:
+                  <br><br>
+                  <ul>
+                    <li>EME18: Tercer puesto en Best MotoStudent.</li>
+                    <li>EME16-P: Sexta posición en carrera y tercer mejor proyecto industrial.</li>
+                    <li>EME12: Premio a la mejor innovación tecnológica, segunda mejor puntuación en los cálculos técnicos, cuarta posición en la fase MS1 y décimo mejor tiempo.</li>
+                    <li>EME10: Mejor puntuación en los cálculos técnicos, décimo mejor tiempo, tercer puesto en la fase MS1. 
+                    </li>
+                  </ul>
+                  <b>Si quieres formar parte de cualquiera de nuestros departamentos contacta con nosotros.</b>
+                </div>
+              </div>
+              <a href="#verMasUPMMotostudent" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <li class="tag__socialmedia ">
+                  <a href="https://www.instagram.com/upm_motostudent/"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://x.com/UPM_MotoStudent"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia">
+                  <a href="mailto:eme.etsidi@upm.es?subject=EME"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://blogs.upm.es/upm-motostudent/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li>
+              </ul>
+              
+            </div>
+          </article>
+
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/Crea-logo.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">CREA</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                <b>Bienvenido al Club de Robótica Electrónica Automática, CREA.</b>
+             </div>
+
+              <div class="collapse" id="verMasCrea">
+                <div class="">
+                  En esta asociación universitaria te invitamos a llevar a la práctica y mejorar los conocimientos que vas aprendiendo durante tu vida universitaria y aplicaros para hacer tus ideas e inventos realidad.
+                 <br> <br>
+                 Anímate a traer tus ideas, juntarte con otrxs alumnxs y empezar a crear todo tipo de cosas. Entre casi 100 socios encontrarás gente que comparte tus inquietudes y con quien lo pasarás genial mientras avanzáis con vuestros proyectos.
+                 <br> <br>
+                 Para ello, organizamos cursillos y talleres sobre Arduino, el uso de algunos sensores y software específico, creación de redes informáticas, programación de videojuegos y diseño e impresión 3D, por citar algunas de las tantas cosas que podemos hacer. Por supuesto, como socix, podrías proponer temas de los que te interesaría hacer cursos o talleres. Más información de los cursos y proyectos los puedes encontrar en la página web y redes sociales, véanse enlaces al final.
+                 <br> <br>
+                 Si no tienes ninguno en mente, en el CREA organizamos nuestros propios proyectos, investigando por nuestra cuenta y superando los retos que van apareciendo en el desarrollo. Por otro lado, puedes empezar con algo más sencillo ya que organizamos proyectos guiados por compañeros más experimentados para empezar en el mundillo del DIY.
+                 <br> <br>
+                 Por supuesto, muchas de estas ideas necesitan una estructura, una carcasa, piezas especializadas...  por eso contamos con un servicio de impresión 3D para socixs. Así puedes aprender a crear e imprimir tus propios diseños. Más información respecto del servicio de reprografía 3D en la página web.
+                 <br> <br>
+                 Todas estas actividades se hacen en la escuela en una sala distinta de la sala de asociaciones, un espacio de trabajo libre de horarios y a plena disposición. Además, también contamos con aulas que nos dejan para las actividades más multitudinarias.
+                 <br> <br>
+                 En pocas palabras, si quieres pasártelo bien y sacarle el máximo partido a la universidad ¿a qué esperas para inscribirte?
+                 La inscripción está abierta durante todo el curso, y, por supuesto, para cualquier grado de ingeniería. Puedes inscribirte <a href="https://blogs.upm.es/crea/encuentranos-y-unete/"  style="color:  #007bff;">aquí</a>.
+                </div>
+              </div>
+              
+              <a href="#verMasCrea" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/crea_etsidi/?hl=es"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="https://x.com/crea_etsidi?lang=es"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="mailto:crea.etsidi@upm.es?subject=Crea"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="https://blogs.upm.es/crea/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                  </li>
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image" src="/img/cubo-logo.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">Asociación del Cubo de Rubik</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                Somos la <b>Asociación del Cubo de Rubik</b>, y nuestra pasión son los puzles mecánicos.
+              </div>
+              <div class="collapse" id="verMasEtsidiDesign">
+                <div>
+                  Si tan solo conoces el Cubo de Rubik, ¡no sabes lo que te estás perdiendo! <i>Skewbs, Pyraminx, Megaminx, Ghost, Mirror, Engranajes…</i> ¡Todos derivados del original!
+                   <br> <br>
+                  Únete a nosotros y:
+                 <br> <br>
+                  <ul>
+                    <li>
+                      Te enseñaremos a resolverlo (si, ¡sácalo de ese cajón en el que lleva 30 años deshecho!).
+                    </li>
+                    <li>
+                      Conocerás a muchos amigos de tu universidad con los mismos gustos en nuestras reuniones de coleccionismo (“El día del dodecaedro”, “El día del Ghost”…) donde podrás probar las modificaciones de los compañeros y aprender nuevos trucos mientras merendamos.
+                    </li>
+                    <li>
+                      ¿Has visto un cubo que te encanta y no sabes si te gustará? ¡Pregunta en nuestra “Cuboteca” por él! 
+                    </li>
+                    <li>
+                      ¿Qué prefieres batir el Récord del Mundo? ¡No pasa nada, también te enseñamos! Y ponemos a tu disposición material profesional de competición para que puedas practicar con tus amigos en la escuela y te informamos de las próximas competiciones.
+                     </li>
+                  </ul>
+                  Y mucho más (Presentaciones de personalidades españolas, lecciones de lenguaje sobre el cubo, análisis de los Giros Por Segundo, colaboraciones con otras asociaciones, aplicación para Android®…).
+                </div>
+              </div>
+              <a href="#verMasEtsidiDesign" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <li class="tag__socialmedia ">
+                  <a href="https://www.instagram.com/acrupm/"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://x.com/acr_upm?lang=es"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia">
+                  <a href="mailto:acrupm.etsidi@gmail.com?subject=ACR"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <!-- <li class="tag__socialmedia ">
+                  <a href="http://www.etsididesign.com/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li> -->
+              </ul>
+
+            </div>
+          </article>
+
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/logo-gem.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">Grupo ETSIDI de Montaña</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                Somos un grupo de estudiantes apasionados por la <b>naturaleza</b> y las <b>actividades al aire libre</b>, especialmente las relacionadas con la <b>montaña</b> y la <b>aventura</b>.
+             </div>
+
+              <div class="collapse" id="verMasGEM">
+                <div class="">
+                  Desde nuestra asociación, trabajamos para promover un estilo de vida saludable y activo a través de la práctica de deportes de aventura en entornos naturales. Entre nuestras actividades, organizamos <b>salidas de senderismo, escalada, alpinismo, esquí, kayak</b> entre otros deportes.
+                   <br> <br>
+                   También promovemos la educación y la conciencia sobre <b>la conservación del medio ambiente, la seguridad en la montaña y la cultura montañera</b>. Nuestra asociación está formada por estudiantes de distintas disciplinas y niveles, lo que nos permite tener una visión amplia y diversa en nuestros proyectos y actividades. Agradecemos a cualquiera que se una al grupo y ayude a colaborar en nuestra misión de promover un estilo de vida activo y sostenible en nuestra comunidad universitaria.
+                   <br> <br>
+                   En conclusión, si te gusta el deporte y la naturaleza, ¡ésta es tu asociación!
+                   <br> <br>
+                   No dudes en contactarnos si tienes alguna pregunta o deseas colaborar en alguno de nuestros proyectos.
+                  </div>
+              </div>
+              
+              <a href="#verMasGEM" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/gm.etsidi"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <!-- <li class="tag__socialmedia">
+                    <a href="https://x.com/crea_etsidi?lang=es"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li> -->
+                  <li class="tag__socialmedia">
+                    <a href="mailto:gm.etsidi@upm.es?subject=G.E.M"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li>
+                  <!-- <li class="tag__socialmedia">
+                    <a href="https://blogs.upm.es/crea/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                  </li> -->
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image" src="/img/ETSIDI-Intercultural_Logo.jpg" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">ETSIDI Intercultural</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                La asociación se crea con la intención de establecer una relación más estrecha con y entre los alumnos de intercambio que vienen a La Escuela.
+               </div>
+              <div class="collapse" id="verMasIntercultural">
+                <div>
+                  También tiene la finalidad de dar a conocer el extranjero a los alumnos de la Escuela, y de despertar en ellos el interés por relacionarse con sus nuevos compañeros, o, incluso, plantearse la opción de realizar un intercambio internacional durante su periodo de estudios. Consideramos muy importante, y más hoy en día, tener contacto con otras culturas, a la vez que desarrollar habilidades transversales como idiomas, independencia, etc.
+                   <br> <br>
+                   Por último, se busca el objetivo de facilitar a estos alumnos de intercambio su estancia en la Escuela, proporcionándoles medios tanto educativos como culturales, de forma que disfruten de su tiempo en Madrid.
+                 <br> <br>
+                 En esta <a href="https://etsidi-intercultural.wixsite.com/etsidi-intercultural" style="color: #0f83ff;">página web</a> puedes encontrar toda la información necesaria para participar en las actividades que se organicen, como para colaborar como miembro en la asociación.
+                 <br> <br>
+                 Si estás pensando en realizar un Intercambio Académico, y no estás seguro de qué destino pedir, te recomendamos que le eches un vistazo a los <a href="https://drive.google.com/drive/folders/1SYZ89QgI0Gp_N6c8lvvf-BxWbc_lRKmR" style="color: #0f83ff;">Trípticos</a> que han rellenado otros compañeros de la Escuela. Esperamos que sirvan como base para comprender mejor algunos aspectos de la Movilidad.
+                </div>
+              </div>
+              <a href="#verMasIntercultural" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <!-- <li class="tag__socialmedia ">
+                  <a href="https://www.instagram.com/acrupm/"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://x.com/acr_upm?lang=es"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li> -->
+                <li class="tag__socialmedia">
+                  <a href="mailto:intercultural.etsidi@upm.es?subject=Intercultural"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia ">
+                  <a href="https://etsidi-intercultural.wixsite.com/etsidi-intercultural" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li>
+              </ul>
+
+            </div>
+          </article>
+
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/KRTUPM_logo.svg" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">UPM KRTeam</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                <b>UPM KRTEAM</b> es el Equipo de trabajo perteneciente a la asociación ETSIDI KRTeam de la Universidad Politécnica de Madrid. El objetivo principal es llevar un Kart de 4 tiempos diseñado por el Equipo a diversas competiciones en las que, de acuerdo con el reglamento y sin la necesidad de una homologación del RFEDA, sea posible su participación.
+              </div>
+
+              <div class="collapse" id="verMasKRT">
+                <div>
+                  En 2019 competimos en las 12 Horas Kartpetanas, en Segovia, con un honorable quinto puesto. En 2024, y con un proyecto renovado, competiremos de nuevo en esta carrera buscando alzarnos con el trofeo.
+                   <br> <br>
+                   Para llevar a cabo este proyecto realizaremos una división en grupos de trabajo, diferenciando entre:
+                   <br> <br>
+                    <ul>
+                      <li><b>Departamento de Chasis</b>: Destinado al diseño y fabricación de un chasis de kart 4T y todos los componentes relacionados con este.
+                      </li>
+                      <li><b>Departamento de Motor</b>: Destinado a la optimización, acondicionamiento y mejora de un motor de 4T HONDA GX390.
+                      </li>
+                      <li><b>Departamento de Electrónica</b>: Destinado a la programación e instalación de todos los sistemas electrónicos de un kart, como pueden ser una pantalla de información para el piloto, sistemas de comunicación y telemetría.
+                      </li>
+                      <li><b>Departamento de Marketing</b>: Destinado tanto a la difusión del proyecto, como a la captación de patrocinadores para la financiación del mismo.
+                      </li>
+                    </ul>
+                </div>
+              </div>
+              
+              <a href="#verMasKRT" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/upmkrteam"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <!-- <li class="tag__socialmedia">
+                    <a href="https://x.com/upmkrteam"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li> -->
+                  <!-- <li class="tag__socialmedia">
+                    <a href="mailto:tuna.peritos.madrid@gmail.com?subject=Tuna"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li> -->
+                  <li class="tag__socialmedia">
+                    <a href="upmkrteam.es" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                  </li>
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image"  src="/img/tuna-logo.png" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">Tuna de Ingenieros Técnicos Industriales</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                Fundada en el curso 1957-1958 es una de las tunas con más solera de Madrid.
+               </div>
+
+              <div class="collapse" id="verMasTuna">
+                <div>
+                  La evolución de la Tuna de Ingenieros Técnicos Industriales de Madrid en los últimos años la ha llevado a ser una de las más apreciadas y queridas debido principalmente a nuestra calidad musical, nuestro estilo alegre y nuestro arte del buen tunar.
+                   <br> <br>
+                   Todo ello está avalado por una serie de galardones nacionales e internacionales, así como la participación en numerosos festivales de gran prestigio. A continuación se señalan los eventos más importantes de los cuales hemos tomado parte en los últimos años:
+                    <br> <br>
+                    <ul>
+                      <li>1989: Premio a la II Mejor Tuna en el Certamen SKF en Coslada (Madrid). Participación en las ediciones de 1990,1992 y 1992.</li>
+                      <li>1991: Precio al Mejor Pandereta en el VI Certamen de Tunas de la Universidad Politécnica de Madrid. Premio al Mejor Bandera en el I Certamen de Ingenieros Técnicos Industriales de Santander.
+                      </li>
+                      <li>1993: Participación en el I Certamen de Tunas Ciudad de Arnedo (La Rioja). Organización del II Certamen Internacional de Ingenieros Técnicos Industriales en la Plaza Mayor de Madrid, con la presencia del Alcalde de la Villa.
+                      </li>
+                      <li>1994: Premio a la III mejor Tuna y al Mejor Bandera en el IX Certamen de Tunas de la Universidad Politécnica de Madrid. Premio al Mejor Bandera en el Certamen Internacional de Eindhoven (Holanda). Premio a la Mejor Instrumentación y a la Mejor Bandera en el III Certamen Nacional de Ingenieros Técnicos Industriales de Valencia.
+                      </li>
+                      <li>1995: Premio al Mejor Bandera en el II Certamen de Tunas Ciudad de Huelva. Premio a la Segunda Mejor Tuna y al Mejor Bandera en el X Certamen de Tunas de la Universidad Politécnica de Madrid.
+                      </li>
+                      <li>1996: Premio a la Mejor Tuna, Mejor Pieza Instrumental y Mejor Bandera en el Certamen Internacional de Tunas de Andújar (Jaén). Premio a la Mejor Pieza Instrumental en el V Certamen Nacional de Tunas de Ingenieros Técnicos Industriales en Cartagena. A la Mejor Tuna, Mejor Pieza Instrumental y Mejor Pasacalles en el IV Certamen Nacional de Tunas “Ciudad de Huelva”.</li>
+                      <li>1997: Premio a la Mejor Tuna, Mejor Pieza Instrumental, Mejor Bandera y Mejor Pandereta en el I Certamen Nacional de Tunas en Ocaña. Premio al Mejor Bandera y a la Tuna más Simpática en el XI Certamen de Tunas de la Universidad Politécnica de Madrid. Premio a la Segunda Mejor Tuna, Mejor Pasacalles, Mejor Bandera y Tuna Más Simpática en el II Certamen Nacional de Tunas de Alcalá de Henares. Premio a la Mejor Tuna y Mejor Pandereta en el I Certamen Nacional de Tunas “Ciudad de Guadalajara”.</li>
+                    </ul>
+                    Por no nombrar en la actualidad  los premios ganados recientemente tanto de mayor envergadura, como la gran cantidad a menor, destacando haber conseguido el premio a la mejor pandereta los tres últimos años de la celebración del certamen de tunas de la politécnica.
+                  </div>
+              </div>
+              <a href="#verMasTuna" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <!-- <li class="tag__socialmedia">
+                  <a href="https://www.instagram.com/gm.etsidi"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li> -->
+                <!-- <li class="tag__socialmedia">
+                  <a href="https://x.com/crea_etsidi?lang=es"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li> -->
+                <li class="tag__socialmedia">
+                  <a href="mailto:tuna.peritos.madrid@gmail.com?subject=Tuna"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <!-- <li class="tag__socialmedia">
+                  <a href="https://blogs.upm.es/crea/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li> -->
+              </ul>
+
+            </div>
+          </article>
+
+          <article class="postcard light blue">
+            <div class="postcard__img" href="#">
+              <img class="postcard__img_image"  src="/img/delegacion-logo.jpeg" alt="Image Title" />
+            </div>
+            <div class="postcard__text t-dark">
+              <h1 class="postcard__title blue"><a href="#">Delegación de Alumnos</a></h1>
+              <div class="postcard__bar"></div>
+              
+              <div class="postcard__preview-txt">
+                En Delegación de Alumnos nos encargamos de representar a todos los estudiantes de la Escuela y defender tanto sus derechos como sus intereses.
+               </div>
+
+              <div class="collapse" id="verMasDelegacion">
+                <div>
+                  Además, ofrecemos y gestionamos múltiples servicios como el alquiler de taquillas, la biblioteca de apuntes, venta de sudaderas, objetos perdidos, gestión de Evalúas, somos el punto unión entre alumnos y docentes, tenemos un punto rosa, entre muchas otras cosas.
+                   <br> <br>
+                   ¡Si tienes algún percance no dudes en contactar con nosotros!
+                </div>
+              </div>
+              
+              <a href="#verMasDelegacion" class="toggle-collapse"  data-bs-toggle="collapse" style="color:  #007bff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+                
+                <ul class="postcard__tagbox">
+                  <li class="tag__socialmedia">
+                    <a href="https://www.instagram.com/daetsidi"><img src="/img/insta.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="https://x.com/daetsidi"><img src="/img/twitter.png" height="30" width="30"/></a>
+                  </li>
+                  <li class="tag__socialmedia">
+                    <a href="mailto:da.etsidi@upm.es?subject=Delegación de Alumnos"><img src="/img/gmail.png" height="30" width="30"/></a>
+                  </li>
+                  <!-- <li class="tag__socialmedia">
+                    <a href="upmkrteam.es" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                  </li> -->
+                </ul>
+
+            </div>
+          </article>
+         
+          <article class="postcard dark blue">
+            <div class="postcard__img" >
+              <img class="postcard__img_image"  src="/img/ISA_Logo.jpg" alt="Image Title" />
+            </div>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a href="#">ISA-ETSIDI</a></h1>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">
+                La Sección de Estudiantes ISA-ETSIDI-UPM es una asociación sin ánimo de lucro que ayuda a complementar y ampliar los conocimientos adquiridos en nuestra formación universitaria en torno a la Instrumentación, Control y la Automatización de Procesos.
+               </div>
+
+              <div class="collapse" id="verMasISA">
+                <div>
+                  Organizamos diversos cursos, talleres, visitas técnicas y seminarios de la mano de profesionales de la industria con el fin de conocer las novedades tecnológicas, poner en práctica las asignaturas estudiadas y conocer problemas reales en la industria y su solución más actualizada, ya sea en formato presencial y/o telemático. Además, podemos participar en actividades organizadas por otras Secciones de Estudiantes ISA de toda España (<a href="https://isa-spain.org/secciones-de-estudiantes/" style="color: #0f83ff;">https://isa-spain.org/secciones-de-estudiantes/</a>). Toda la formación es acreditada con un diploma o un certificado.
+                  <br> <br>
+                  Llevamos funcionando desde el curso 2017-2018, de la mano de nuestra tutora, la profesora Evangelina Atanes y, entre otras cosas, hemos realizado visitas técnicas a industrias de interés tales como Mahou, Canal de Isabel II, Fertiberia o Clamber. Cada curso organizamos una charla de orientación profesional, y un curso de Instrumentación y Control de Procesos impartido por profesionales de la empresa Emerson, así como talleres prácticos de válvulas de control en grupos reducidos también con profesionales de empresas de ingeniería. Estamos preparando otras actividades, como talleres de Arduino en colaboración con la Asociación CREA de la Escuela, orientados específicamente al Control de Procesos.
+                  <br> <br>
+                  Además de las actividades que organizamos nosotros, por ser socio tienes la oportunidad de acceder a varias iniciativas muy interesantes de ISA-España para las Secciones de Estudiantes. Por ejemplo, si te encuentras un poco perdido sobre qué hacer cuando culminas tus estudios de Grado, puedes participar en el programa Mentoring organizado por ISA España para las Secciones de Estudiantes, que se realiza todos los cursos. De acuerdo con tus gustos y visión de futuro acerca del mundo laboral, se te asigna (por un plazo aproximado de 6 meses) un mentor, es decir, un profesional relacionado con el área de automatización y/o control de procesos, y socio activo de la ISA con puesto de trabajo en empresas como Repsol, Emerson, Técnicas Reunidas, etc. Gracias a su experiencia en el mundo laboral, dicho mentor te ofrecerá consejos e información valiosa para afrontar una entrevista de trabajo, te ayudará a preparar tu pirer Curriculum Vitae y diseñar tu perfil en redes sociales profesionales.
+                  <br> <br>
+                  También podrás optar por becas (parciales o completas) en cursos o másteres del campo de automatización y control de procesos para dar comienzo a tu vida profesional, como por ejemplo el Máster de Instrumentación y Control de ISA-Repsol.
+                  <br> <br>
+                  Al ser socio, además, puedes interactuar con profesionales internacionales del sector que desees a través de la <a href="https://connect.isa.org/community/divionlist" style="color: #0f83ff;">plataforma ISA Connect</a>.
+                  <br> <br>
+                  Si eres socio y quieres un poco más, puedes formar parte de la Comisión de la Sección de Estudiantes de la Escuela, que te aporta oportunidades y beneficios adicionales. Además de ayudarte a desarrollar habilidades como liderazgo, trabajo en equipo, capacidad de organización, entre otras, también podrás optar de modo preferente a las becas en cursos o másteres organizados por ISA-España.
+                </div>
+              </div>
+              <a href="#verMasISA" class="toggle-collapse" data-bs-toggle="collapse" style="color:  #0f83ff; width: 100px;"><i class="fa-solid fa-circle-plus"></i> Ver más</a>
+              
+              <ul class="postcard__tagbox">
+                <li class="tag__socialmedia">
+                  <a href="https://www.instagram.com/isa_etsidi/"><img src="/img/insta.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia">
+                  <a href="https://x.com/ISA_ETSIDI"><img src="/img/twitter.png" height="30" width="30"/></a>
+                </li>
+                <li class="tag__socialmedia">
+                  <a href="mailto:isa.etsidi.upm@gmail.com?subject=ISA"><img src="/img/gmail.png" height="30" width="30"/></a>
+                </li>
+                <!-- <li class="tag__socialmedia">
+                  <a href="https://blogs.upm.es/crea/" ><i class="fa-solid fa-globe fa-2xl"></i></a>
+                </li> -->
+              </ul>
+
+            </div>
+          </article>
+
+        </div>
+        
+      </div>
+
+    </div> 
+     <!-- PAGINA NOTICIAS -->
+     <div id="pagina_noticias" class="todas-las-paginas"  style="display: none"> 
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <select class=" form-select controlNoticias" id="selectorDeAno" aria-label="select year">
+              <option value="2023">2023</option>
+              <option selected value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+            <select class="form-select controlNoticias" id="selectorDeMes" aria-label="select month">
+              <option value="Enero">Enero</option>
+              <option value="Febrero">Febrero</option>
+              <option value="Marzo">Marzo</option>
+              <option value="Abril">Abril</option>
+              <option value="Mayo">Mayo</option>
+              <option value="Junio">Junio</option>
+              <option value="Julio">Julio</option>
+              <option value="Agosto">Agosto</option>
+              <option value="Septiembre">Septiembre</option>
+              <option value="Octubre">Octubre</option>
+              <option value="Noviembre">Noviembre</option>
+              <option value="Diciembre">Diciembre</option>
+            </select>
+          </div>
+
+          <div class="row container" id="containerNoticias">
+  
+          </div>
+
+        </div>
+      </div>
+     </div>
+      
     
     </main>
 

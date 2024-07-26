@@ -4,7 +4,7 @@
 
 
 $(function() {
- console.log = function () {};
+//  console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -28,8 +28,11 @@ $(function() {
                 })
                 
                 insertarBienvenida()
+                SetcurrentMonth()
 });
 
+
+//HELPERS--------------------------------------------------------------------
 
 //IGUAL METERLO COMO FUNCION HELPER
 const preventDoubleClick = function (event) {
@@ -59,17 +62,39 @@ $(document).on('click', '.nav-item:not(.dropdown)', async function () {
     document.getElementById("boton-cerrar-offcanvas").click();
 })
 
+//CAMBIO DE PESTAÑAS------------------------------------------------------------
+
+
+$(document).on('click', '.boton-cambio-pagina', async function (event) {
+    event.preventDefault();
+    if (preventDoubleClick(event)) { return }
+
+    // oculta todos los elementos con clase "todas-las-paginas"
+    $('.todas-las-paginas').each(function() {
+        $(this).hide();
+    });
+
+    // Get the target ID from the data attribute
+    const targetId = $(this).data('target');
+    const $targetElement = $('#' + targetId);
+
+    // console.log(targetId,'target')
+    
+    // Muestra la pagina
+    $targetElement.show();
+
+    //para no cargar el mapa a cada vez, tal vez podriamos quitarlo
+    if (targetId === 'pagina_mapa' && $targetElement.attr('content-loaded') === 'false') {
+            loadFloor('0');
+            await loadDropdownSearch();
+            $targetElement.attr('content-loaded', 'true');
+
+    }
+
+});
 
 
 //INICIO---------------------------------------------------------------------------------------------------
-
-$(document).on('click', '#boton_inicio', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    document.getElementById("pagina_horario").style.display = "none";
-    document.getElementById("pagina_mapa").style.display = "none";
-    document.getElementById("pagina_inicio").style.display = "";
-})
 
 
 function insertarBienvenida (){
@@ -645,7 +670,6 @@ $(document).on('click', '#cerrar_modal_asignaturas_1, #cerrar_modal_asignaturas_
                 element.style.display = "";
             }  
             
-   
 })
 
 $(document).on('click', '#cambiar_asignaturas', async function (event) {
@@ -733,13 +757,6 @@ $(document).on('submit', '#js_form_cambiar_nombre', async function (event) {
 });
 
 //HORARIO-----------------------------------------------------------------------------------------------------
-$(document).on('click', '#boton_horario', async function (event) {
-    event.preventDefault()
-    if (preventDoubleClick(event)) { return };
-    document.getElementById("pagina_inicio").style.display = "none";
-    document.getElementById("pagina_mapa").style.display = "none";
-    document.getElementById("pagina_horario").style.display = "";
-})
 
 function generarHorario(){
     $.ajax({
@@ -1096,26 +1113,310 @@ try {
    
 })
 
-//MAPA-----------------------------------------------------------------------------------
 
-$(document).on('click', '#boton_mapa', async function (event) {
+//SOCIAL-ASOCIACIONES-----------------------------------------------------------------------------------
+
+
+//cambiar entre ver más y ver menos en asociaciones
+const toggleLinks = document.querySelectorAll('.toggle-collapse');
+
+toggleLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      const collapseElement = document.querySelector(link.getAttribute('href'));
+      
+      collapseElement.addEventListener('shown.bs.collapse', function () {
+        link.innerHTML = '<i class="fa-solid fa-circle-minus"></i> Ver menos';
+      });
+      
+      collapseElement.addEventListener('hidden.bs.collapse', function () {
+        link.innerHTML = '<i class="fa-solid fa-circle-plus"></i> Ver más';
+      });
+    });
+  });
+
+//SOCIAL-NOTICIAS-----------------------------------------------------------------------------------
+
+
+
+async function SetcurrentMonth(){
+
+    let indexDelMes = new Date().getMonth();
+
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+
+
+    // Get the current month's value
+    const mesActual = meses[indexDelMes];
+
+    // Get the select element and set the selected value
+    const selectorDeMes = document.getElementById('selectorDeMes');
+    selectorDeMes.value = mesActual;
+
+    
+}
+
+$(document).on('click', '#botonPaginaNoticias', async function (event) {
     event.preventDefault()
     if (preventDoubleClick(event)) { return };
-    const paginaMapa = document.getElementById("pagina_mapa")
-    document.getElementById("pagina_inicio").style.display = "none";
-    document.getElementById("pagina_horario").style.display = "none";
-    paginaMapa.style.display = "";
+    await getNoticias()
 
+}) 
+
+async function getNoticias() {
+try {
+        const anoSeleccionado = document.querySelector('#selectorDeAno').value;
+        const mesSeleccionado = document.querySelector('#selectorDeMes').value;
+
+
+        $.ajax({
+            url: `/noticias/getNoticias/${anoSeleccionado}/${mesSeleccionado}`,
+            type: 'get',
+            success: function (info) {
+                console.log(info)
+                construirCardsNoticias(info)
+               
+            },
+            error: function (error) {
+            console.error(error)
+            }
+        })
+} catch (error) {
+    console.error('AJAX request for noticias failed',error)
+}
+
+}
+function construirCardsNoticias(info) {
+    const noticiasArray = info.noticias
+
+    const container = document.getElementById('containerNoticias'); // Make sure you have a container element
+
+    container.innerHTML=''
+    noticiasArray.forEach(noticia => {
+      const cardsNoticias = crearCardNoticia(noticia,info.delete);
+      container.appendChild(cardsNoticias);
+    });
+
+ if(info.add != ''){
+     const addDivHTML = `${info.add}`;
+     const addDiv = document.createElement('div');
+     addDiv.innerHTML = addDivHTML;
      
-    if (paginaMapa.getAttribute('content-loaded') === 'false') {
+     container.appendChild(addDiv.firstElementChild);
+ }
 
-        loadFloor('0');
-        await loadDropdownSearch()
+  }
 
-        paginaMapa.setAttribute('content-loaded','true');
-    }
+  
+function crearCardNoticia(noticia, deleteInfo) {
+   
 
+    // Create the main div
+const cardNoticias = document.createElement('div');
+cardNoticias.className = 'CardNoticias';
+cardNoticias.setAttribute('data-value', `${noticia.id}`);
+
+// Create the link inside the div
+const linkCardNoticias = document.createElement('a');
+linkCardNoticias.className = 'linkCardNoticias';
+
+if (noticia.link != null) linkCardNoticias.href = `${noticia.link}`
+
+else linkCardNoticias.href = '#'
+
+
+// Create the row-striped div
+const rowStriped = document.createElement('div');
+rowStriped.className = 'row row-striped';
+
+// Create the dayAndMonth div
+const dayAndMonth = document.createElement('div');
+dayAndMonth.className = 'dayAndMonth';
+
+// Create and append the day
+const day = document.createElement('h1');
+day.className = 'display-4';
+const badge = document.createElement('span');
+badge.className = 'badge text-bg-primary';
+badge.textContent = `${noticia.numero_dia}`;
+day.appendChild(badge);
+dayAndMonth.appendChild(day);
+
+
+// Create and append the month
+const month = document.createElement('h2');
+month.textContent = `${noticia.mes.substring(0, 3).toUpperCase()}`;
+dayAndMonth.appendChild(month);
+
+// Create the content div
+const contentDiv = document.createElement('div');
+contentDiv.className = 'col-10';
+
+// Create and append the title
+const title = document.createElement('h3');
+title.className = 'text-uppercase';
+title.textContent = `${noticia.titulo}`;
+contentDiv.appendChild(title);
+
+// Create and append the list
+const list = document.createElement('ul');
+list.className = 'list-inline';
+const listItem = document.createElement('li');
+listItem.className = 'list-inline-item day';
+listItem.innerHTML = `<i class="fa fa-calendar-o" aria-hidden="true"></i> ${noticia.dia_de_la_semana} ${noticia.numero_dia} de ${noticia.mes}`;
+list.appendChild(listItem);
+contentDiv.appendChild(list);
+
+// Create and append the paragraph
+const paragraph = document.createElement('p');
+paragraph.textContent = `${noticia.texto}`;
+contentDiv.appendChild(paragraph);
+
+// Append the dayAndMonth and contentDiv to the rowStriped div
+rowStriped.appendChild(dayAndMonth);
+rowStriped.appendChild(contentDiv);
+
+// Append the rowStriped div to the link
+linkCardNoticias.appendChild(rowStriped);
+
+// Append the link to the main div
+cardNoticias.appendChild(linkCardNoticias);
+
+if(deleteInfo != ''){
+
+    const buttonDivHTML = `${deleteInfo}`;
+      const buttonDiv = document.createElement('div');
+      buttonDiv.innerHTML = buttonDivHTML;
+      
+      // Append the button div to the main card div
+      cardNoticias.appendChild(buttonDiv.firstElementChild);
+}
+
+// Append the main div to the body or any other container element
+return cardNoticias
+    
+}
+$(document).on('change', '.controlNoticias', async function (){
+
+    getNoticias()
 })
+
+
+
+$(document).on('submit', '#js_form_crear_noticia', async function (event) {
+    try {
+        
+        event.preventDefault();
+        if (preventDoubleClick(event)) { return };
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    console.log('Form data:', data); // Debugging line to check the form data
+    $('#error_message_crear_noticia').hide();
+    $.ajax({
+        url: '/noticias/crearNuevaNoticia',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) { 
+        if (response.message === 'noticia publicada') {
+            console.log('ssssss')
+            document.getElementById("cerrar_modal_crear_noticia_2").click();
+                getNoticias()
+        }
+
+        },
+        error: function (e) {
+            let mensaje = e.responseJSON?.message || 'Algo fue mal... Prueba más tarde.';
+            console.error('Error:', mensaje); 
+            $('#error_message_crear_noticia').text(mensaje).show();
+            document.getElementById("cerrar_modal_crear_noticia_2").click();
+        }
+    });
+
+    } catch (error) {
+        console.error(error)
+    }
+    
+});
+
+
+$(document).on('click', '#cerrar_modal_crear_noticia_1, #cerrar_modal_crear_noticia_2', async function () {
+    $('#error_message_crear_noticia').hide();
+    $('.form-control').val('');
+   
+            
+})
+
+$(document).on('click', '.botonBorrarNoticia', async function (event) {
+ 
+    event.preventDefault(); 
+   if (preventDoubleClick(event)) { return };
+   
+   $('#error_message_borrar_noticia').hide();
+
+    const $cardNoticias = $(this).closest('.CardNoticias');
+
+    if ($cardNoticias.length) {
+
+        const dataValue = $cardNoticias.data('value');
+        
+        $('#UUIDNoticia').val(dataValue)
+      }  
+           
+})
+
+
+$(document).on('submit', '#js_form_borrar_noticia', async function (event) {
+    try {
+        
+    event.preventDefault();
+    if (preventDoubleClick(event)) { return };
+
+    const formData = new FormData(event.target);
+    const data = {};
+    console.log(formData,'formData')
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    $('#error_message_borrar_noticia').hide();
+    $.ajax({
+        url: '/noticias/borrarNoticia',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) { 
+        if (response.message === 'noticia borrada') {
+            document.getElementById("cerrar_modal_borrar_noticia_2").click();
+                getNoticias()
+        }
+
+        },
+        error: function (e) {
+            let mensaje = e.responseJSON?.message || 'Algo fue mal... Prueba más tarde.';
+            console.error('Error:', mensaje); 
+            $('#error_message_borrar_noticia').text(mensaje).show();
+
+        }
+    });
+
+    } catch (error) {
+        console.error(error)
+    }
+    
+});
+
+
+
+//MAPA-----------------------------------------------------------------------------------
 
 
 

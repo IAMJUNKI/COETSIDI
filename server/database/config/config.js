@@ -2,7 +2,7 @@ require('dotenv').config({ path: '../../.env' });
 const path = require('path');
 const fs = require('fs');
 
-const certPath = path.resolve(__dirname, 'certificate_Bundle_AWS/eu-north-1-bundle.pem');
+const certPath = path.resolve(__dirname, '../certificate_Bundle_AWS/eu-north-1-bundle.pem');
 
 
 
