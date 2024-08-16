@@ -11,7 +11,7 @@ function signupNewUser(req, res, next) {
 }
 
 function enviarCorreoDeVerificacion(req, res, next) {
-    authService.enviarCorreoDeVerificacion(req, res, next);
+    authService.enviarCorreoVerificacion(req, res, next);
 }
 
 function enviarCorreoRecuperarContrasena(req, res, next) {

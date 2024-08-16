@@ -120,15 +120,32 @@ globalRouter.use(passport.initialize());
 globalRouter.use(passport.session());
 
 // Serving static files
+globalRouter.use(express.static(path.join(__dirname, '../client/inicio/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/login/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/signup/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/dashboard/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/mailVerification/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/forget/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/errorPage/src')));
+globalRouter.use(express.static(path.join(__dirname, '../client/oauthGoogle/src')));
+globalRouter.use(express.static(path.join(__dirname, '../client/privacyPolicy/src')));
+
+
+globalRouter.get(['/'], (req, res, next) => {
+    try {
+        const file = 'inicio.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/inicio') }, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } catch (err) {
+        console.log(err, 'error');
+    }
+});
 
 // Serve login page
-globalRouter.get(['/', '/login'], (req, res, next) => {
+globalRouter.get(['/login'], (req, res, next) => {
     try {
         const file = 'login.html';
         res.sendFile(file, { root: path.join(__dirname, '../client/login') }, function (err) {
@@ -181,6 +198,19 @@ globalRouter.get('/forget', (req, res, next) => {
     }
 });
 
+globalRouter.get('/privacy-policy', (req, res, next) => {
+    try {
+        const file = 'privacyPolicy.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/privacyPolicy') }, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } catch (err) {
+        console.log(err, 'error');
+    }
+});
+
 // Verifies that the user is logged in before going to any other end point
 globalRouter.use('/auth', authRouter);
 globalRouter.use('', isLoggedIn);
@@ -215,8 +245,8 @@ globalRouter.get('/dashboard', (req, res, next) => {
 // Serve OAuth Google page
 globalRouter.get('/oauthgoogle', (req, res, next) => {
     try {
-        const file = 'dashboard.html';
-        res.sendFile(file, { root: path.join(__dirname, '../client/dashboard') }, function (err) {
+        const file = 'oauthGoogle.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/oauthGoogle') }, function (err) {
             if (err) {
                 console.log(err);
             }

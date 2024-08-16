@@ -1,0 +1,29 @@
+
+.links-container a {
+    text-decoration: none;
+    padding-right: 5px;
+    transition: color 0.3s;
+  }
+  
+  .links-container a:hover,
+  .links-container a:focus {
+    color: #0056b3; /* Darken link color on hover/focus */
+    outline: none;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    color: #909090;
+    font-family: 'Times New Roman', Times, serif;
+  
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+  
+    p{
+      color: rgb(64, 64, 64);
+    }
+  }
