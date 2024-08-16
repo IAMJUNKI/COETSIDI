@@ -48,14 +48,14 @@ function parseHorario(horario) {
       });
     }
 
-    if (startSemestre1) {
-      for (const [dia, horarioDia] of Object.entries(horario.semestre_1)) {
+    if (startSemestre1 && horario?.semestre_1) {
+      for (const [dia, horarioDia] of Object.entries(horario?.semestre_1)) {
         parseDia(horarioDia, startSemestre1, 16);
       }
     }
   
-    if (startSemestre2) {
-      for (const [dia, horarioDia] of Object.entries(horario.semestre_2)) {
+    if (startSemestre2 && horario?.semestre_2) {
+      for (const [dia, horarioDia] of Object.entries(horario?.semestre_2)) {
         parseDia(horarioDia, startSemestre2, 17);
       }
     }

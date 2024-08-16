@@ -120,6 +120,7 @@ globalRouter.use(passport.initialize());
 globalRouter.use(passport.session());
 
 // Serving static files
+globalRouter.use(express.static(path.join(__dirname, '../client/inicio/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/login/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/signup/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/dashboard/src')));
@@ -129,8 +130,22 @@ globalRouter.use(express.static(path.join(__dirname, '../client/errorPage/src'))
 globalRouter.use(express.static(path.join(__dirname, '../client/oauthGoogle/src')));
 globalRouter.use(express.static(path.join(__dirname, '../client/privacyPolicy/src')));
 
+
+globalRouter.get(['/'], (req, res, next) => {
+    try {
+        const file = 'inicio.html';
+        res.sendFile(file, { root: path.join(__dirname, '../client/inicio') }, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } catch (err) {
+        console.log(err, 'error');
+    }
+});
+
 // Serve login page
-globalRouter.get(['/', '/login'], (req, res, next) => {
+globalRouter.get(['/login'], (req, res, next) => {
     try {
         const file = 'login.html';
         res.sendFile(file, { root: path.join(__dirname, '../client/login') }, function (err) {

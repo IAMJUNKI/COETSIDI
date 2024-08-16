@@ -31,7 +31,7 @@ $(document).ready(function () {
 
             document.getElementById('mainDiv').innerHTML=` 
             <p class="text-center text-danger" style="font-size: 5.5rem;"><i class="fa-solid fa-circle-xmark"></i></p>
-            <p class="text-center h5">Something went wrong...</p>
+            <p class="text-center h5">Algo fue mal...</p>
             <div class="d-flex justify-content-center mt-3 t-100 links-container">
                 <a href="/dashboard" class="resalte" style="margin-bottom: 10px;">Volver al dashboard</a>
             </div>
