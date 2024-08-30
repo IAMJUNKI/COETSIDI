@@ -518,9 +518,26 @@ $(document).on('change', '#selector-grados', async function (event) {
     const gradoElegido = $(event.currentTarget).val()
     if(gradoElegido === '56DM'||gradoElegido === '56EE' || gradoElegido === 'erasmus'){
         $( "#curso5" ).prop( "disabled", false );
-    } else{
+        $( "#curso4" ).prop( "disabled", false );
+        $( "#curso3" ).prop( "disabled", false );
+        $( "#curso2" ).prop( "disabled", false );
+
+    } else if (gradoElegido === '56AC'||gradoElegido === '56AF' || gradoElegido === '56AE'){
         $( "#curso5" ).prop( "disabled", true );
         $( "#curso5" ).prop( "checked", false );
+        $( "#curso4" ).prop( "disabled", true );
+        $( "#curso4" ).prop( "checked", false );
+        $( "#curso3" ).prop( "disabled", true );
+        $( "#curso3" ).prop( "checked", false );
+        $( "#curso2" ).prop( "disabled", true );
+        $( "#curso2" ).prop( "checked", false );
+    }
+    else{
+        $( "#curso5" ).prop( "disabled", true );
+        $( "#curso5" ).prop( "checked", false );
+        $( "#curso4" ).prop( "disabled", false );
+        $( "#curso3" ).prop( "disabled", false );
+        $( "#curso2" ).prop( "disabled", false );
     }
     document.getElementById("segundaParteFormulario").style.display = "";
     
