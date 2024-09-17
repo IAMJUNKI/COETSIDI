@@ -32,9 +32,16 @@ function parseHorario(horario) {
         const HoraInicio = session.HoraInicio;
         const HoraFinal = session.HoraFinal;
         const aula = `${session.Aula}, ${session.Tipo}`;
+    
         const startDateDay = new Date(startDate);
-        startDateDay.setDate(startDate.getDate() + getDiaDeLaSemana(session.Dia)); //calcula desde el domingo que son los dias que le he mos dado mas arriba
-  
+        const startDateWeekday = startDate.getDay(); // Get weekday of the start date (0 = Sunday, 6 = Saturday)
+        const sessionWeekday = getDiaDeLaSemana(session.Dia); // Get the event day of the week (0 = Sunday, 6 = Saturday)
+    
+        // Adjust the start date so it falls on the correct day of the week
+        const daysDifference = (sessionWeekday + 7 - startDateWeekday) % 7;
+        startDateDay.setDate(startDate.getDate() + daysDifference);
+    
+        
         const event = crearEvento(
           session.Asignatura,
           aula,
@@ -43,10 +50,11 @@ function parseHorario(horario) {
           startDateDay,
           recurrence
         );
-  
+    
         events.push(event);
       });
     }
+
 
     if (startSemestre1 && horario?.semestre_1) {
       for (const [dia, horarioDia] of Object.entries(horario?.semestre_1)) {

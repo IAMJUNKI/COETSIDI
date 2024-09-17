@@ -4,7 +4,7 @@
 
 
 $(function() {
- console.log = function () {};
+//  console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',

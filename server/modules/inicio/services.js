@@ -33,14 +33,13 @@ const nombreDeUsuario = async (id) => {
     
         // Check the month and determine the semester to parse
         let semestre;
-        semestre = "semestre_2"
-        //  if ([9, 10, 11, 12].includes(mesActual)) { 
-        //     semestre = "semestre_1";
-        // } else if ([2, 3, 4, 5].includes(mesActual)) { 
-        //     semestre = "semestre_2";
-        // } else {
-        //     return { clasesActuales: [], proximaClase: [] }; 
-        // }
+         if ([9, 10, 11, 12].includes(mesActual)) { 
+            semestre = "semestre_1";
+        } else if ([2, 3, 4, 5].includes(mesActual)) { 
+            semestre = "semestre_2";
+        } else {
+            return { clasesActuales: [], proximaClase: [] }; 
+        }
         // variables to store current and next courses
         let clasesActuales = [];
         let proximaClase = [];
