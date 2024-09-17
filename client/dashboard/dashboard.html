@@ -237,7 +237,7 @@
 
     <main class=" container-xxl bd-gutter mt-3 my-md-4 bd-layout">
       <!-- PAGINA INICIO -->
-      <!-- <div id="pagina_inicio"> 
+      <div id="pagina_inicio"> 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Inicio</h1>
         </div>
@@ -247,7 +247,7 @@
             Cambiar asignaturas
           </button>
         </div>
-      </div>  -->
+      </div> 
       <!-- PAGINA HORARIO -->
       <div id="pagina_horario" style="display: none">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -309,11 +309,14 @@
        <div class="container-fluid p-0">
         <div id="map-container" class="position-relative">
             <div id="map"></div>
-              <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
+              <!-- <a id="button-see-all" class="btn" role="button" aria-expanded="false" value="hidden">
                 <i class="fa-solid fa-layer-group"></i>
-              </a>
-          
-            <div id="floor-select" class="controles" style="display: none;">
+              </a> -->
+            </div>
+            <input type="text" id="start-node" placeholder="Start Node">
+            <input type="text" id="end-node" placeholder="End Node">
+            <button id="find-path">Find Path</button>
+            <!-- <div id="floor-select" class="controles" style="display: none;">
               <button class="btn btn-light floor-button" value="baja">-1</button>
               <button class="btn btn-light active floor-button"  value="0">0</button>
               <button class="btn btn-light floor-button" value="1">1</button>
@@ -321,12 +324,12 @@
               <button class="btn btn-light floor-button" value="3">3</button>
               <button class="btn btn-light floor-button" value="4">4</button>
             </div>
-            <div id="route-finding" class="controles" style="display: none;" class="p-3 bg-white rounded shadow">
+            <div id="route-finding" class="controles"  class="p-3 bg-white rounded shadow">
               <select id="start-point" class="form-control mb-2"></select>
               <select id="end-point" class="form-control mb-2"></select>
               <button id="find-route" class="btn btn-primary w-100">Find Route</button>
             </div>
-        </div>
+        </div> -->
     </div>
     
     </main>

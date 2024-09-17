@@ -461,6 +461,11 @@
   position: relative;
 }
 
+#map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
 .leaflet-container {
   background-color: white !important; 
 }
