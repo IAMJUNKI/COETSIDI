@@ -5,7 +5,7 @@ const { knex } = require('@db/knex.js')
 const Horarios = require('@db/models/horarios.js')
 const csvDirPath = path.join(__dirname, '../../../../horarios/csv');
 const {gradosPorCurso} = require('@gestorData/services/gradosPorCurso.js')
-
+const {createRandomString} = require('@utils/utils.js')
 
 //funcion para leer un documento CSV
 const readCSV = async (filePath) => {
@@ -49,9 +49,13 @@ const processCSVs = async (filtroGrupos, filtroExtra = 'Teoría y Problemas', fi
           filteredData.forEach(row => { 
             const exists = allData.some(item => item.Grupo === row.Grupo && item.Asignatura === row.Asignatura);
             if (!exists) {
+                row.ID = createRandomString(8)
                 allData.push(row);
             }
-            else if (filtroExtra !== 'Teoría y Problemas') allData.push(row);
+            else if (filtroExtra !== 'Teoría y Problemas'){
+              row.ID = createRandomString(8)
+              allData.push(row);
+            }
         });
       }
 
@@ -118,7 +122,7 @@ const crearObjetoEstructurado = async (CSVFiltrado, tipoDeEstructura ,objetoGrad
       objetoEstructurado[semestreKey][Dia].push(asignatura);
     }
   });
-
+  // console.log('lalala', objetoEstructurado)
   return objetoEstructurado;
 };
 

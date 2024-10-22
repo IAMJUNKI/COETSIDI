@@ -24,7 +24,7 @@ const emailBloqueo = async function (datosEmail) {
 		let transporter = await createTransporter()
 		
         const info = await transporter.sendMail({
-			from: `"BLOQUEO 🚨" <${process.env.UPM_MAILER_USER}>`, 
+			from: `"BLOQUEO 🚨" <${process.env.MAIL_USER}>`, 
             to: 'd.junquera@alumnos.upm.es',
             subject: `¡¡¡Se ha bloqueado un usuario!!!! ${datetime()}`, 
             text: `${datosEmail}` 
@@ -44,7 +44,7 @@ const sendEmailCodigo = async function (datosEmail) {
         // send mail with defined transport object
 		console.log('heeey', datosEmail)
         await transporter.sendMail({
-            from: `"MY-ETSIDI 📩" <${process.env.UPM_MAILER_USER}>`, 
+            from: `"MY-ETSIDI 📩" <${process.env.MAIL_USER}>`, 
             to: `${datosEmail.email}`,
             subject: `${datosEmail.subject}`, // Subject line
             text: '', // plain text body

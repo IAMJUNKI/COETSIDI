@@ -1241,3 +1241,92 @@ a, a:hover {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+
+.contenido-tipo-edit-TyP{
+  color: #FFC868;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.contenido-tipo-edit-Lab{
+  color: #17d1bd;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.contenido-tipo-edit-AC{
+  color: #4e73e5;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.custom-toolbar {
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  align-items: center;
+  width: 100%; /* Full width for the container */
+  gap: 10px; /* Space between elements */
+}
+
+.custom-toolbar .first-group {
+  display: flex;
+  justify-content: flex-start; /* Align items within the group */
+  align-items: center;
+  gap: 10px; /* Space between button and anchor link */
+}
+
+.custom-toolbar .second-group {
+  display: flex;
+  justify-content: flex-start; /* Align items within the group */
+  align-items: center;
+  gap: 10px; /* Space between select elements */
+}
+
+/* Responsive styling for screens with a width of 489px or less */
+@media (max-width: 489px) {
+  .custom-toolbar {
+      display: flex;
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center items horizontally */
+      gap: 10px; /* Space between the two groups */
+  }
+
+  /* Group the button and link in one centered row */
+  .custom-toolbar .first-group {
+      justify-content: center; /* Center button and link */
+      width: 100%; /* Ensure full width for centering */
+  }
+
+  /* Center both select elements in the same row below */
+  .custom-toolbar .second-group {
+      justify-content: center; /* Center select elements */
+      width: 100%; /* Ensure full width for centering */
+  }
+
+  .custom-toolbar select {
+      width: auto; /* Keep select elements at default size */
+      max-width: 150px; /* Optionally limit width */
+  }
+}
+
+  .custom-offcanvas {
+      width: 480px !important;
+  }
+
+  .custom-offcanvas-mainmenu {
+    width: 70% !important;
+} 
+
+@media (min-width: 500px) { 
+  .custom-offcanvas-mainmenu {
+      width: 349.3px !important;
+  }
+}
+
+.modal-header.custom-no-border {
+  border-bottom: none;
+}

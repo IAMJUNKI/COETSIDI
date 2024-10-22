@@ -20,6 +20,7 @@ const { knex } = require('@db/knex.js');
 //     document.getElementById(element).append(spinner)  
 // }  
 
+
 function createRandomString(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -55,11 +55,43 @@ const generarHorarios = async (req, res, next) => {
     }
 };
 
+const editarCalendario = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const { id, semestre, dia, horaInicio, horaFinal, aula } = req.body
+        console.log (id, semestre, dia, horaInicio, horaFinal, aula)
+        const correctedData = services.correctDataTime(horaInicio,horaFinal)
+
+        const modifyData = await services.editarCalendario(userId, id, dia, correctedData.newHoraInicio, correctedData.newHoraFinal, aula, semestre)
+        res.status(200).send(modifyData)
+    } catch (e) {
+        debug('Error en handlers/editarCalendario ' + e)
+        throw e
+    }
+};
+
+
+const borrarAsignatura = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const { id, semestre, dia,} = req.body
+        console.log (id, semestre)
+
+        const modifyData = await services.borrarAsignatura(userId, id, semestre)
+        res.status(200).send(modifyData)
+    } catch (e) {
+        debug('Error en handlers/editarCalendario ' + e)
+        throw e
+    }
+};
+
 
 
 module.exports = {
     guardarSemestre,
     guardarColor,
     personalizacionHorario,
-    generarHorarios
+    generarHorarios,
+    editarCalendario,
+    borrarAsignatura
 }

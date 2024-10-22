@@ -4,7 +4,7 @@
 
 
 $(function() {
-//  console.log = function () {};
+ console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -782,6 +782,7 @@ function generarHorario(){
         success: async function (sessionArray) {
         
         renderSchedule(sessionArray);
+        updateTableView();
         await getPersonalizacion()
         await todaysDay()
         if (window.innerWidth >= 992) {
@@ -789,6 +790,28 @@ function generarHorario(){
         } else {
             showDay()
         }
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+}
+
+function recargarHorario(){
+    $.ajax({
+        url: '/calendario/generarHorario',
+        type: 'get',
+        success: async function (sessionArray) {
+        
+        renderSchedule(sessionArray);
+        updateTableView();
+        // await getPersonalizacion()
+        // await todaysDay()
+        // if (window.innerWidth >= 992) {
+        //     showAllDays();
+        // } else {
+        //     showDay()
+        // }
         },
         error: function (error) {
            console.error(error)
@@ -1021,13 +1044,55 @@ function changeColorHorario(color) {
 
    function renderSchedule(sessionArray){
     $('.session').remove()
+
+    sessionArray.sort((a, b) => {
+        const asignaturaA = a.element.asignatura.toLowerCase();
+        const asignaturaB = b.element.asignatura.toLowerCase();
+        
+        // First sort by asignatura using localeCompare for accent-insensitive sorting
+        const asignaturaComparison = asignaturaA.localeCompare(asignaturaB, 'es', { sensitivity: 'base' });
+        if (asignaturaComparison !== 0) return asignaturaComparison;
+    
+        // If asignatura is the same, sort by dia using localeCompare as well
+        const diaA = a.element.dia.toLowerCase();
+        const diaB = b.element.dia.toLowerCase();
+        
+        const diasOrder = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes']; // note the accented 'miércoles'
+        
+        const indexA = diasOrder.indexOf(diaA);
+        const indexB = diasOrder.indexOf(diaB);
+    
+        if (indexA < indexB) return -1;
+        if (indexA > indexB) return 1;
+    
+        // If dia is the same, sort by hora_inicio
+        const horaInicioA = a.element.hora_inicio; 
+        const horaInicioB = b.element.hora_inicio; 
+        
+        const [hoursA, minutesA] = horaInicioA.split(':').map(Number);
+        const [hoursB, minutesB] = horaInicioB.split(':').map(Number);
+    
+        const totalMinutesA = hoursA * 60 + minutesA;
+        const totalMinutesB = hoursB * 60 + minutesB;
+    
+        return totalMinutesA - totalMinutesB; 
+    });
+
+
     const scheduleContainer = document.getElementById('schedule-container');
+
+    const tableBody = document.querySelector('table tbody');
+    tableBody.innerHTML = ''; 
 
     sessionArray.forEach(miniSession => {
             const elementos = miniSession.element
         const sessionElement = createScheduleElement(elementos.asignatura, elementos.hora_inicio,  elementos.hora_final,  elementos.aula, elementos.grupo, elementos.dia, elementos.tipo, elementos.color, elementos.semestre, elementos.column_span);
 
+        const tableRow = createEditElement(elementos.tipo, elementos.asignatura_tablas, elementos.hora_inicio, elementos.hora_final, elementos.dia_tablas, elementos.semestre, elementos.id, elementos.aula)
+      
         scheduleContainer.appendChild(sessionElement);
+
+        tableBody.appendChild(tableRow);
       });
    }
 
@@ -1072,13 +1137,259 @@ function changeColorHorario(color) {
 
     sessionDiv.appendChild(sessionWrapper);
 
-    // sessionDiv.appendChild(titleElement);
-    // sessionDiv.appendChild(aulaElement);
-    // sessionDiv.appendChild(timeElement);
-    // sessionDiv.appendChild(tipoElement);
-  
     return sessionDiv;
   }
+
+
+function createEditElement(tipo, asignatura, horaInicio, horaFinal, dia, semestre, id, aula) {
+    // Creamos un elemento <tr> 
+    const tr = document.createElement('tr');
+    
+    // Añadimos una clase en funcion del semestre (semestre_1 or semestre_2)
+    tr.className = `table_edit_${semestre}`;
+
+    // Añadimos un ID que identifica la asignatura
+    tr.id = `${id}`; 
+
+    // Tipo 
+    const tipoTd = document.createElement('td');
+    tipoTd.className = 'text-center align-middle';
+    const iconSpan = document.createElement('span');
+    iconSpan.className = `contenido-tipo-edit-${tipo}`; 
+    const iconElement = document.createElement('i');
+    iconElement.className = `fa-solid fa-${tipo === 'TyP' ? 'book-open' : tipo === 'Lab' ? 'flask' : 'users-gear'}`;
+    iconSpan.appendChild(iconElement);
+    tipoTd.appendChild(iconSpan);
+
+    // Asignatura 
+    const asignaturaTd = document.createElement('td');
+    asignaturaTd.className = 'text-center align-middle';
+    asignaturaTd.textContent = asignatura;
+
+    // Horario
+    const horarioTd = document.createElement('td');
+    horarioTd.className = 'text-center align-middle';
+    horarioTd.textContent = `${dia} ${horaInicio} - ${horaFinal}`;
+
+    // Acciones  (Editar/Borrar)
+    const accionesTd = document.createElement('td');
+    accionesTd.className = 'text-center align-middle';
+    
+    const buttonGroupDiv = document.createElement('div');
+    buttonGroupDiv.className = 'btn-group align-top';
+    
+    const editButton = document.createElement('a');
+    editButton.className = 'btn btn-primary edit-button-calendar';
+    editButton.setAttribute('data-bs-toggle', 'modal');
+    editButton.href = '#modalEditCalendar';
+
+    // Add data attributes for modal population
+    editButton.setAttribute('data-bs-asignatura', asignatura); 
+    editButton.setAttribute('data-bs-day', dia); 
+    editButton.setAttribute('data-bs-start-time', horaInicio); 
+    editButton.setAttribute('data-bs-end-time', horaFinal); 
+    editButton.setAttribute('data-bs-aula', aula.trim() === '' ? 'Sin aula asociada' : aula);
+    editButton.setAttribute('data-bs-id', id); 
+    editButton.setAttribute('data-bs-semestre', semestre); 
+    
+    editButton.textContent = 'Editar';
+    
+    const deleteButton = document.createElement('a');
+    deleteButton.className = 'btn btn-danger delete-button-calendar';
+    deleteButton.setAttribute('data-bs-toggle', 'modal');
+    deleteButton.href = '#modalDeleteCalendar';
+
+    deleteButton.setAttribute('data-bs-asignatura', asignatura); 
+    deleteButton.setAttribute('data-bs-day', dia); 
+    deleteButton.setAttribute('data-bs-start-time', horaInicio); 
+    deleteButton.setAttribute('data-bs-end-time', horaFinal); 
+    deleteButton.setAttribute('data-bs-id', id); 
+    deleteButton.setAttribute('data-bs-semestre', semestre);
+    deleteButton.setAttribute('data-bs-tipo', tipo); 
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.className = 'fa fa-trash';
+    deleteButton.appendChild(deleteIcon);
+
+    buttonGroupDiv.appendChild(editButton);
+    buttonGroupDiv.appendChild(deleteButton);
+    accionesTd.appendChild(buttonGroupDiv);
+
+    // Añade las casillas a la fila
+    tr.appendChild(tipoTd);
+    tr.appendChild(asignaturaTd);
+    tr.appendChild(horarioTd);
+    tr.appendChild(accionesTd);
+    
+    return tr;
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('modalEditCalendar');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        // Get the button that triggered the modal
+        const button = event.relatedTarget;
+
+        // Extrae la informacion de los data attributes
+        const asignatura = button.getAttribute('data-bs-asignatura');
+        const day = button.getAttribute('data-bs-day');
+        const startTime = button.getAttribute('data-bs-start-time');
+        const endTime = button.getAttribute('data-bs-end-time');
+        const aula = button.getAttribute('data-bs-aula');
+        const id = button.getAttribute('data-bs-id');
+        const semestre = button.getAttribute('data-bs-semestre');
+
+        // Actualiza el contenido del modal
+        const modalTitle = modal.querySelector('#modalEditCalendarLabel');
+        const daySelect = modal.querySelector('#days');
+        const startTimeInput = modal.querySelector('#timePicker input[type="time"]:first-child');
+        const endTimeInput = modal.querySelector('#timePicker input[type="time"]:last-child');
+        const aulaInput = modal.querySelector('#combo-input-edit-mode');
+        const idInput = modal.querySelector('#entry-id');
+        const semesterInput = modal.querySelector('#entry-semester');
+
+        modalTitle.textContent = asignatura;
+        daySelect.value = day;
+        startTimeInput.value = startTime;
+        endTimeInput.value = endTime;
+        aulaInput.value = aula;
+        idInput.value = id; 
+        semesterInput.value = semestre
+    
+    });
+
+
+        const deleteModal = document.getElementById('modalDeleteCalendar');
+    
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            // Get the button that triggered the modal
+            const button = event.relatedTarget;
+    
+            // Extract the information from the data attributes
+            const asignatura = button.getAttribute('data-bs-asignatura');
+            const day = button.getAttribute('data-bs-day');
+            const startTime = button.getAttribute('data-bs-start-time');
+            const endTime = button.getAttribute('data-bs-end-time');
+            const id = button.getAttribute('data-bs-id');
+            const semestre = button.getAttribute('data-bs-semestre');
+            const tipo = button.getAttribute('data-bs-tipo');
+    
+            // Get the confirmation message div
+            const confirmationMessageDiv = deleteModal.querySelector('#delete-confirmation-message');
+    
+            // Update the confirmation message with the relevant details and bold tags
+            confirmationMessageDiv.innerHTML = `
+                <p>¿Estás segur@ de querer eliminar 
+                <strong>${asignatura}: ${day} de ${startTime} a ${endTime} (${tipo})</strong>?
+                 <button class="btn btn-link text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#delete-warning-message" aria-expanded="false" aria-controls="delete-warning-message">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+          </button>
+                </p>
+            `;
+    
+            // Set hidden inputs for form submission
+            const idInput = deleteModal.querySelector('#entry-id');
+            const semesterInput = deleteModal.querySelector('#entry-semester');
+    
+            idInput.value = id;
+            semesterInput.value = semestre;
+        });
+    
+});
+
+
+
+  
+$(document).on('submit', '#js_form_edit_asignaturas', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+    $.ajax({
+        url: '/calendario/editarCalendario',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                generarHorario()
+                document.getElementById("dismiss-edit-asignatura").click();
+               
+
+        },
+        error: function (e) {
+           console.error('Error editando asignatura:', e); // Debugging line to check the error
+        }
+    });
+});
+
+ 
+$(document).on('submit', '#js_form_borrar_asignatura', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => { 
+        data[key] = value;
+    });
+
+
+    $.ajax({
+        url: '/calendario/borrarAsignatura',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log('Success:', response); // Debugging line to check the response
+          
+                generarHorario()
+                document.getElementById("dismiss-delete-asignatura").click();
+               
+
+        },
+        error: function (e) {
+           console.error('Error editando asignatura:', e); // Debugging line to check the error
+        }
+    });
+});
+
+  
+const selectorSemestre1 = document.getElementById('selectorSemestre1');
+const selectorSemestre2 = document.getElementById('selectorSemestre2');
+
+// Function to show or hide rows based on the selected semester
+function updateTableView() {
+    if (selectorSemestre1.checked) {
+        // Show rows for Semestre 1
+        document.querySelectorAll('.table_edit_semestre_1').forEach(row => {
+            row.style.display = '';  // Show these rows
+        });
+        // Hide rows for Semestre 2
+        document.querySelectorAll('.table_edit_semestre_2').forEach(row => {
+            row.style.display = 'none';  // Hide these rows
+        });
+    } else if (selectorSemestre2.checked) {
+        // Show rows for Semestre 2
+        document.querySelectorAll('.table_edit_semestre_2').forEach(row => {
+            row.style.display = '';  // Show these rows
+        });
+        // Hide rows for Semestre 1
+        document.querySelectorAll('.table_edit_semestre_1').forEach(row => {
+            row.style.display = 'none';  // Hide these rows
+        });
+    }
+}
+
+// Event listeners for radio button changes
+selectorSemestre1.addEventListener('change', updateTableView);
+selectorSemestre2.addEventListener('change', updateTableView);
 
 
 //FUNCIONES RESPONSIVE
@@ -1170,6 +1481,88 @@ $(document).on('click', '#auth_calendar', function (event) {
         }
     });
 });
+
+
+// document.getElementById('edit-calendar').addEventListener('click', function () {
+//     const semester1Data = [
+//         {
+//             tipo: '<i class="fa-solid fa-book-open" aria-hidden="true"></i>',
+//             asignatura: 'Termodinámica',
+//             horario: 'Lunes 12:00 - 14:00',
+//         },
+//         {
+//             tipo: '<i class="fa-solid fa-flask" aria-hidden="true"></i>',
+//             asignatura: 'Expresion grafica y diseño asistido por ordenador',
+//             horario: 'Martes 13:00 - 14:00',
+//         },
+//         {
+//             tipo: '<i class="fa-solid fa-users-gear" aria-hidden="true"></i>',
+//             asignatura: 'Termodinámica',
+//             horario: 'Jueves 17:00 - 19:00',
+//         }
+//     ];
+
+//     const semester2Data = [
+//         {
+//             tipo: '<i class="fa-solid fa-book-open" aria-hidden="true"></i>',
+//             asignatura: 'Matemáticas',
+//             horario: 'Lunes 08:00 - 10:00',
+//         },
+//         {
+//             tipo: '<i class="fa-solid fa-flask" aria-hidden="true"></i>',
+//             asignatura: 'Química',
+//             horario: 'Martes 09:00 - 10:30',
+//         },
+//         {
+//             tipo: '<i class="fa-solid fa-users-gear" aria-hidden="true"></i>',
+//             asignatura: 'Física',
+//             horario: 'Jueves 11:00 - 13:00',
+//         }
+//     ];
+
+//     const tableBody = document.querySelector('table tbody');
+//     const selectorSemestre1 = document.getElementById('selectorSemestre1');
+//     const selectorSemestre2 = document.getElementById('selectorSemestre2');
+
+//     function populateTable(data) {
+//         tableBody.innerHTML = '';  // Clear the existing content
+//         data.forEach(item => {
+//             const row = `
+//                 <tr>
+//                     <td class="text-center align-middle">${item.tipo}</td>
+//                     <td class="text-center align-middle">${item.asignatura}</td>
+//                     <td class="text-center align-middle">${item.horario}</td>
+//                     <td class="text-center align-middle">
+//                         <div class="btn-group align-top">
+//                             <a class="btn btn-primary" data-bs-toggle="modal" href="#modalEditCalendar" role="button" aria-expanded="false" aria-controls="modalEditCalendar">
+//                                 Editar
+//                             </a>
+//                             <button class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button>
+//                         </div>
+//                     </td>
+//                 </tr>
+//             `;
+//             tableBody.insertAdjacentHTML('beforeend', row);
+//         });
+//     }
+
+//     // Initial load
+//     populateTable(semester1Data);
+
+//     // Event listeners for semester change
+//     selectorSemestre1.addEventListener('change', function () {
+//         if (this.checked) {
+//             populateTable(semester1Data);
+//         }
+//     });
+
+//     selectorSemestre2.addEventListener('change', function () {
+//         if (this.checked) {
+//             populateTable(semester2Data);
+//         }
+//     });
+// });
+
 
 
 //SOCIAL-ASOCIACIONES-----------------------------------------------------------------------------------
@@ -5066,6 +5459,19 @@ async function loadDropdownSearch (){
  
 }
 
+document.getElementById('edit-calendar').addEventListener('click', function() {
+    loadDropdownSearch();
+});
+
+
+// document.addEventListener('click', function(event) {
+//     if (event.target.classList.contains('edit-button-calendar')) {
+//         document.getElementById('combo-input-edit-mode').value = ''; // Clear the input field
+
+//     }
+// });
+
+
 
 
 //funcion que añade los valores de nodos posibles al dropdown
@@ -5073,11 +5479,25 @@ async function addNodesToDropdown (allNodes){
 
     const dropdownStart = document.getElementById('combo-dropdown-start');
     const dropdownEnd = document.getElementById('combo-dropdown-end');
+    const dropdownEditMode = document.getElementById('combo-dropdown-edit-mode');
     
     // Clear existing content before appending new items
     dropdownStart.innerHTML = '';
     dropdownEnd.innerHTML = '';
+    dropdownEditMode.innerHTML = '';
     
+    const dropdownItemVacio = document.createElement('div');
+    dropdownItemVacio.classList.add('dropdown-item');
+    dropdownItemVacio.textContent = "Sin aula asociada";
+    dropdownItemVacio.setAttribute('value', "empty");
+    
+    dropdownItemVacio.addEventListener('click', () => {
+        document.getElementById('combo-input-edit-mode').value = "Sin aula asociada";
+        dropdownEditMode.style.display = 'none';
+    });
+    
+    dropdownEditMode.appendChild(dropdownItemVacio);
+
 
 allNodes.forEach(node => {
     const dropdownItem1 = document.createElement('div');
@@ -5086,6 +5506,7 @@ allNodes.forEach(node => {
     dropdownItem1.setAttribute('value', node.id);
 
     const dropdownItem2 = dropdownItem1.cloneNode(true);
+    const dropdownItem3 = dropdownItem1.cloneNode(true);
 
     dropdownItem1.addEventListener('click', () => {
         document.getElementById('combo-input-start').value = node.name;
@@ -5097,8 +5518,14 @@ allNodes.forEach(node => {
         dropdownEnd.style.display = 'none';
     });
 
+    dropdownItem3.addEventListener('click', () => {
+        document.getElementById('combo-input-edit-mode').value = node.name;
+        dropdownEditMode.style.display = 'none';
+    });
+
     dropdownStart.appendChild(dropdownItem1);
     dropdownEnd.appendChild(dropdownItem2);
+    dropdownEditMode.appendChild(dropdownItem3);
 });
 
 }
@@ -5133,6 +5560,7 @@ allNodes.forEach(node => {
 
 const dropdownStart = document.getElementById('combo-dropdown-start');
 const dropdownEnd = document.getElementById('combo-dropdown-end');
+const dropdownEditMode = document.getElementById('combo-dropdown-edit-mode');
 
 // Clear existing content before appending new items
 // dropdownStart.innerHTML = '';
@@ -5163,6 +5591,7 @@ const dropdownEnd = document.getElementById('combo-dropdown-end');
 
 const inputStart = document.getElementById('combo-input-start');
 const inputEnd = document.getElementById('combo-input-end');
+const inputEditMode = document.getElementById('combo-input-edit-mode');
 
 // const dropdownItems = Array.from(dropdown.getElementsByClassName('dropdown-item'));
 
@@ -5172,6 +5601,10 @@ $(document).on('input','#combo-input-start', function() {
 
 $(document).on('input','#combo-input-end', function() {
     filterOptions('combo-input-end','combo-dropdown-end')
+});
+
+$(document).on('input','#combo-input-edit-mode', function() {
+    filterOptions('combo-input-edit-mode','combo-dropdown-edit-mode')
 });
 
 function filterOptions (inputVar,dropdownVar) {
@@ -5204,6 +5637,10 @@ $(document).on('click', '#combo-input-end', function(){
     $('#combo-input-end').trigger('input')
 })
 
+$(document).on('click', '#combo-input-edit-mode', function(){
+    $('#combo-input-edit-mode').trigger('input')
+})
+
 
 // Close dropdown if user clicks outside
 document.addEventListener('click', function(event) {
@@ -5212,6 +5649,9 @@ document.addEventListener('click', function(event) {
     }
     if (!inputEnd.contains(event.target) && !dropdownEnd.contains(event.target)) {
         dropdownEnd.style.display = 'none';
+    }
+    if (!inputEditMode.contains(event.target) && !dropdownEditMode.contains(event.target)) {
+        dropdownEditMode.style.display = 'none';
     }
 });
 
@@ -5235,11 +5675,21 @@ document.getElementById('combo-dropdown-end').addEventListener('click', async fu
     }
 });
 
+document.getElementById('combo-dropdown-edit-mode').addEventListener('click', async function(event) {
+    if (event.target.classList.contains('dropdown-item')) {
+        const inputValue = event.target.getAttribute('value')
+        const allNodes = await getAllNodes()
+        const nodeFound = await iterateAndMatch(allNodes,inputValue, inputEditMode)
+        // await findClassOnMap(nodeFound)
+        dropdownEditMode.style.display = 'none';
+    }
+});
 
 
 
 
-$(document).on('input','#combo-input-end, #combo-input-start', debounce(async function(event) {
+
+$(document).on('input','#combo-input-end, #combo-input-start,  #combo-input-edit-mode', debounce(async function(event) {
  const inputField = $(event.currentTarget)
 
     const inputValue = inputField.val()

@@ -25,6 +25,8 @@
 
     <!-- CSS Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+   
    
     <link
     rel="stylesheet"
@@ -53,7 +55,7 @@
           <i class="fa-solid fa-right-from-bracket"></i>
         </a>
       </div>
-      <div class="offcanvas-lg offcanvas-start flex-grow-1" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-lg offcanvas-start flex-grow-1 custom-offcanvas-mainmenu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">MyETSIDI</h5>
           <button type="button" class="btn-close" id="boton-cerrar-offcanvas" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#offcanvasNavbar"></button>
@@ -255,8 +257,7 @@
           <hr>
             Se te redigirá para que inicies sesión en tu cuenta de google.
             <br>
-            <span style="color: red;">En estos momentos no está disponible, pendiente de verificación por Google</span>
-        </div>
+             </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cerrar_modal_google_calendar" data-bs-dismiss="modal">volver</button>
           <button type="button" class="btn btn-primary" id="auth_calendar">confirmar</button>
@@ -265,7 +266,106 @@
     </div>
   </div>
 
+  
+  <!-- Modal editar calendario -->
+  <div class="modal fade modal-sm" id="modalEditCalendar" tabindex="-1" aria-labelledby="modalEditCalendarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="modal-header custom-no-border">
+              <h1 class="modal-title fs-5" id="modalEditCalendarLabel"></h1>
+              <button type="button" class="btn-close" id="dismiss-edit-asignatura"  data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="padding-top: 0%;">
+          
+          <form  id="js_form_edit_asignaturas">
+          <div class="container">
 
+            <input type="hidden" id="entry-id" name="id" value="">
+
+            <input type="hidden" id="entry-semester" name="semestre" value="">
+
+            <div class="row justify-content-center mb-3">
+                <div class="form-group col-md-7 w-100">
+                    <label for="days">Día de la semana</label>
+                    <select class="form-control text-center" id="days" name="dia">
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miércoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!-- Row for time selection -->
+            <div class="row justify-content-center">
+                <div class="form-group col-md-7 w-100">
+                    <label for="time">Horario</label>
+                    <div class="input-group d-flex align-items-center justify-content-between" id="timePicker">
+                        <input type="time" class="form-control" name="horaInicio">
+                        <span class="mx-2">a</span>
+                        <input type="time" class="form-control" name="horaFinal">
+                    </div>
+                </div>
+            </div>
+        
+            <!-- New row for "Aulas" (Classes) selection -->
+           <div class="row justify-content-center mt-3">
+    <div class="form-group col-md-7 w-100">
+        <label for="aulas">Aula</label>
+        <input class="form-control" autocomplete="off" type="text" id="combo-input-edit-mode" name="aula" placeholder="Aula">
+        <div class="dropdown-combo" id="combo-dropdown-edit-mode" style="display: none;">
+        </div>
+    </div>
+</div>
+          </div>
+          </form>
+             </div>
+        <div class="modal-footer">
+        <button type="submit" form="js_form_edit_asignaturas" class="btn btn-primary" id="edit_calendar">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal borrar asignatura calendario -->
+  <div class="modal fade modal-sm" id="modalDeleteCalendar" tabindex="-1" aria-labelledby="modalDeleteCalendarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" >
+        <div class="modal-header ">
+              <h1 class="modal-title fs-5" id="modalDeleteCalendarLabel"> Borrar Asignatura </h1>
+              <i class="fa-regular fa-trash-can fa-xl" style="padding: 10px;"></i>
+              <button type="button" class="btn-close" id="dismiss-delete-asignatura"  data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <form  id="js_form_borrar_asignatura">
+          <div class="container">
+
+            <input type="hidden" id="entry-id" name="id" value="">
+
+            <input type="hidden" id="entry-semester" name="semestre" value="">
+
+            <div id="delete-confirmation-message"></div>
+
+      <!-- Collapsible warning message -->
+      <div id="delete-warning-message" class="collapse mt-2">
+          <div class="text-muted" style="font-size: 0.85em;">
+              <small>
+                  <em>Una vez eliminado del calendario, solo se podrá volver a añadir rellenando de nuevo el formulario de asignaturas disponible en ajustes.</em>
+              </small>
+          </div>
+      </div>
+
+          </div>
+          </form>
+             </div>
+        <div class="modal-footer">
+        <button type="submit" form="js_form_borrar_asignatura" class="btn btn-danger" id="delete_calendar">Borrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal cambiar contraseña -->
   <div class="modal fade" id="modalCambiarContrasena" tabindex="-1" aria-labelledby="modalCambiarContrasenaLabel" aria-hidden="true">
@@ -490,24 +590,40 @@
       </div> 
       <!-- PAGINA HORARIO -->
       <div id="pagina_horario" class="todas-las-paginas" style="display: none; height: 90vh;">
+       
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2" id="titulo_pagina_horario">Horario</h1>
-          <div class="btn-toolbar mb-2 mb-md-0 align-items-center">
-            <a class="btn google-calendar" data-bs-toggle="modal" href="#modalGoogleCalendar" role="button" aria-expanded="false" aria-controls="modalGoogleCalendar">
-              <img src="/img/google_calendar.png" alt="Logo" width="30" height="30" class="d-block my-1" role="img">  
-            </a>
-              <select class="form-select horario-selectors" id="elegir-color" aria-label="Default select example">
-                <option value= "default-color" selected>normal</option>
-                <option value="dark-color">oscuro</option>
-                <option value="color">claro</option>
-                <option value="light-color">muy claro</option>
-              </select>
-            <select class="form-select horario-selectors" id="elegir-semestre" aria-label="Default select example">
-              <option value="semestre_1" selected>semestre 1</option>
-              <option value="semestre_2">semestre 2</option>
-            </select>
+          <div class="btn-toolbar mb-2 mb-md-0 align-items-center custom-toolbar">
+              <!-- First group: Button and anchor link in the same row -->
+              <div class="first-group">
+                  <button class="btn btn-outline-primary" id="edit-calendar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Editar
+                      <i class="fa-regular fa-pen-to-square"></i>
+                  </button>
+      
+                  <a class="btn google-calendar" data-bs-toggle="modal" href="#modalGoogleCalendar" role="button" aria-expanded="false" aria-controls="modalGoogleCalendar">
+                      <img src="/img/google_calendar.png" alt="Logo" width="30" height="30" class="d-block my-1" role="img">
+                  </a>
+              </div>
+      
+              <!-- Second group: Select elements in the same row -->
+              <div class="second-group">
+                  <select class="form-select horario-selectors" id="elegir-color" aria-label="Default select example">
+                      <option value="default-color" selected>normal</option>
+                      <option value="dark-color">oscuro</option>
+                      <option value="color">claro</option>
+                      <option value="light-color">muy claro</option>
+                  </select>
+      
+                  <select class="form-select horario-selectors" id="elegir-semestre" aria-label="Default select example">
+                      <option value="semestre_1" selected>semestre 1</option>
+                      <option value="semestre_2">semestre 2</option>
+                  </select>
+              </div>
           </div>
-        </div>
+      </div>
+      
+      
+      
         <div id="day-selector">
           <select class="form-select selector-days" id="day-select" disabled style=" background-color: transparent;">
             <option value="lunes">Lunes</option>
@@ -517,6 +633,51 @@
             <option value="viernes">Viernes</option>
           </select>
         </div>
+
+        <!-- Off canvas editing calendar -->
+        <div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header" style="background-color: #f3f3f3; ">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Editar Calendario</h5>
+      <i class="fa-regular fa-pen-to-square fa-xl" style="padding: 10px;"></i>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  
+    <div class="offcanvas-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-3">
+
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="selectorSemestre1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="selectorSemestre1">Semestre 1</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="selectorSemestre2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="selectorSemestre2">Semestre 2</label>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+
+                          <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">Tipo</th>
+                                    <th class="text-center align-middle">Asignatura</th>
+                                    <th class="text-center align-middle">Horario</th>
+                                    <th class="text-center align-middle">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table> 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
         <div class="schedule" id="schedule-container" aria-labelledby="schedule-heading">
   
           
@@ -1267,9 +1428,11 @@
     <!-- lottie JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 
+
  
   <!--My JS -->
   <script src="/js/dashboard.js" type="module"></script>
 
 </body>
+
 </html>
