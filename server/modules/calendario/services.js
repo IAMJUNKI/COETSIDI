@@ -36,92 +36,133 @@ else if (horarioPersonalizado.paleta_horario === null) {
 }
 
 const createSchedule = async (scheduleData) => {
-  const sessionArray = []
+  const sessionArray = [];
   const subjectColorMap = {};
   let colorIndex = 1;
   
+  // Step 1: Collect all subjects
+  const allSubjects = new Set();
+  
   for (const semestre in scheduleData) {
     const diasDeLaSemana = scheduleData[semestre];
-  
     for (const dia in diasDeLaSemana) {
       const sessions = diasDeLaSemana[dia];
-     
-      const collisionMap = {};
-      // console.log(dia,'dia')
-  // Iterate through scheduleData to calculate collision indices
-  sessions.forEach( (session, index) => {
-  let {Asignatura, HoraInicio, HoraFinal, Aula, Grupo, Tipo, ID } = session;
-  let asignaturaTablas = Asignatura
-  const startSession = session.HoraInicio.replace(":", "");
-  const endSession = session.HoraFinal.replace(":", "");
-  let collisions = 0
-  const collidedBuddy = []
-  for (let j = 0; j < sessions.length; j++) {
-  
-  const start2 = sessions[j].HoraInicio.replace(":", "");
-  const end2 = sessions[j].HoraFinal.replace(":", "");
-  
-  if(j === index) continue
-  else if ((startSession >= start2 && startSession < end2) || (endSession > start2 && endSession <= end2) || startSession<= start2 && endSession >= end2|| startSession>= start2 && endSession <= end2) {
-      collisions ++
-      collidedBuddy.push(j)
-  
-        }
-  }
-  
-  const collisionHandler = {}
-  collisionHandler.collidedBuddy = collidedBuddy
-  collisionHandler.collisions = collisions
-  collisionMap[index]=collisionHandler
-  
-        if (!subjectColorMap[Asignatura]) {
-          subjectColorMap[Asignatura] = `default-color-${colorIndex}`;
-          colorIndex = colorIndex === 12 ? 1 : colorIndex + 1; // Reset or increment color index
-        }
-        let diaSinAcento
-        if(dia === 'Miércoles'){
-          diaSinAcento = 'miercoles'
-        }
-        else{
-          diaSinAcento = dia.toLowerCase()
-        }
-        const colorClass = subjectColorMap[Asignatura];
-        const columnSpan =  handlerForCollisions(collisionMap,index, collidedBuddy,collisions, diaSinAcento)
-        if(Asignatura === 'English for Professional and Academic Communication') {
-          asignaturaTablas = 'EPAC'
-          Asignatura = 'EPAC'
-        } 
-       if(columnSpan !== `${dia}-start / ${dia}-end` && Asignatura.length>15) Asignatura = shortenSentence(Asignatura)
-      switch (Tipo) {
-          case 'Teoría y Problemas':
-              Tipo = 'TyP'
-              break;
-          case 'Laboratorio':
-              Tipo = 'Lab'
-              break;
-          case 'Acciones Cooperativas':
-              Tipo = 'AC'
-              break;
-      
-          default:
-              break;
-      }
-        // const sessionElement = createScheduleElement(Asignatura, HoraInicio, HoraFinal, Aula, Grupo, diaSinAcento, Tipo, colorClass, semestre, columnSpan);
-  
-        sessionArray.push({
-          element: {asignatura: Asignatura, hora_inicio: HoraInicio, hora_final: HoraFinal, aula: Aula, grupo: Grupo, dia: diaSinAcento, tipo: Tipo, color: colorClass, semestre, column_span: columnSpan, id: ID, asignatura_tablas: asignaturaTablas, dia_tablas: dia},
-          startTime: HoraInicio 
-        })
-      //   scheduleContainer.appendChild(sessionElement);
+      sessions.forEach((session) => {
+        allSubjects.add(session.Asignatura);
       });
     }
   }
-      sessionArray.sort((a, b) => {
-          return a.startTime.localeCompare(b.startTime);
+
+  // Step 2: Sort subjects alphabetically
+  const sortedSubjects = Array.from(allSubjects).sort();
+
+  // Step 3: Assign colors based on alphabetical order
+  sortedSubjects.forEach((subject) => {
+    if (!subjectColorMap[subject]) {
+      subjectColorMap[subject] = `default-color-${colorIndex}`;
+      colorIndex = colorIndex === 12 ? 1 : colorIndex + 1; // Reset or increment color index
+    }
+  });
+
+
+  for (const semestre in scheduleData) {
+    const diasDeLaSemana = scheduleData[semestre];
+
+    for (const dia in diasDeLaSemana) {
+      const sessions = diasDeLaSemana[dia];
+
+      const collisionMap = {};
+
+      sessions.forEach((session, index) => {
+        let { Asignatura, HoraInicio, HoraFinal, Aula, Grupo, Tipo, ID } = session;
+        let asignaturaTablas = Asignatura;
+        const startSession = session.HoraInicio.replace(":", "");
+        const endSession = session.HoraFinal.replace(":", "");
+        let collisions = 0;
+        const collidedBuddy = [];
+        
+        for (let j = 0; j < sessions.length; j++) {
+          const start2 = sessions[j].HoraInicio.replace(":", "");
+          const end2 = sessions[j].HoraFinal.replace(":", "");
+
+          if (j === index) continue;
+          else if (
+            (startSession >= start2 && startSession < end2) ||
+            (endSession > start2 && endSession <= end2) ||
+            (startSession <= start2 && endSession >= end2) ||
+            (startSession >= start2 && endSession <= end2)
+          ) {
+            collisions++;
+            collidedBuddy.push(j);
+          }
+        }
+
+        const collisionHandler = {};
+        collisionHandler.collidedBuddy = collidedBuddy;
+        collisionHandler.collisions = collisions;
+        collisionMap[index] = collisionHandler;
+
+        // Assign color based on the pre-generated subjectColorMap
+        const colorClass = subjectColorMap[Asignatura];
+
+        let diaSinAcento = dia === 'Miércoles' ? 'miercoles' : dia.toLowerCase();
+
+        const columnSpan = handlerForCollisions(collisionMap, index, collidedBuddy, collisions, diaSinAcento);
+
+        if (Asignatura === 'English for Professional and Academic Communication') {
+          asignaturaTablas = 'EPAC';
+          Asignatura = 'EPAC';
+        }
+
+        if (columnSpan !== `${dia}-start / ${dia}-end` && Asignatura.length > 15) {
+          Asignatura = shortenSentence(Asignatura);
+        }
+
+        switch (Tipo) {
+          case 'Teoría y Problemas':
+            Tipo = 'TyP';
+            break;
+          case 'Laboratorio':
+            Tipo = 'Lab';
+            break;
+          case 'Acciones Cooperativas':
+            Tipo = 'AC';
+            break;
+          default:
+            break;
+        }
+
+        // Push session data into the sessionArray
+        sessionArray.push({
+          element: {
+            asignatura: Asignatura,
+            hora_inicio: HoraInicio,
+            hora_final: HoraFinal,
+            aula: Aula,
+            grupo: Grupo,
+            dia: diaSinAcento,
+            tipo: Tipo,
+            color: colorClass,
+            semestre,
+            column_span: columnSpan,
+            id: ID,
+            asignatura_tablas: asignaturaTablas,
+            dia_tablas: dia
+          },
+          startTime: HoraInicio
+        });
       });
-  
-    return sessionArray;
-}
+    }
+  }
+
+  // Sort sessions by startTime
+  sessionArray.sort((a, b) => {
+    return a.startTime.localeCompare(b.startTime);
+  });
+
+  return sessionArray;
+};
+
 
 
 function handlerForCollisions(collisionMap,index,collidedBuddy,collisions, dia) {

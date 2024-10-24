@@ -4,7 +4,7 @@
 
 
 $(function() {
- console.log = function () {};
+//  console.log = function () {};
 
     $.ajax({
         url: '/gestorData/checkIfDataUserEmpty',
@@ -28,7 +28,9 @@ $(function() {
                 })
                 
                 insertarBienvenida()
-                SetcurrentMonth()
+                setcurrentMonth()
+                sessionCount()
+
 });
 
 
@@ -95,6 +97,23 @@ $(document).on('click', '.boton-cambio-pagina', async function (event) {
 
 
 //INICIO---------------------------------------------------------------------------------------------------
+
+
+function sessionCount (){
+
+    $.ajax({
+        url: '/sesiones/sessionCount',
+        type: 'post',
+        success: function (x) {
+            console.log(x, 'success')
+        
+        },
+        error: function (error) {
+           console.error(error)
+        }
+    })
+
+}
 
 
 function insertarBienvenida (){
@@ -805,13 +824,11 @@ function recargarHorario(){
         
         renderSchedule(sessionArray);
         updateTableView();
-        // await getPersonalizacion()
-        // await todaysDay()
-        // if (window.innerWidth >= 992) {
-        //     showAllDays();
-        // } else {
-        //     showDay()
-        // }
+        if (window.innerWidth >= 992) {
+            showAllDays();
+        } else {
+            showDay()
+        }
         },
         error: function (error) {
            console.error(error)
@@ -1319,7 +1336,7 @@ $(document).on('submit', '#js_form_edit_asignaturas', async function (event) {
         success: function (response) {
             console.log('Success:', response); // Debugging line to check the response
           
-                generarHorario()
+            recargarHorario()
                 document.getElementById("dismiss-edit-asignatura").click();
                
 
@@ -1349,7 +1366,7 @@ $(document).on('submit', '#js_form_borrar_asignatura', async function (event) {
         success: function (response) {
             console.log('Success:', response); // Debugging line to check the response
           
-                generarHorario()
+            recargarHorario()
                 document.getElementById("dismiss-delete-asignatura").click();
                
 
@@ -1589,7 +1606,7 @@ toggleLinks.forEach(function (link) {
 
 
 
-async function SetcurrentMonth(){
+async function setcurrentMonth(){
 
     let indexDelMes = new Date().getMonth();
 
@@ -5417,7 +5434,7 @@ async function findClassOnMap(nodeId){
                 color: 'green',
                 opacity:'1'
             });
-             map.flyToBounds(layer.getBounds());
+             map.flyToBounds(layer.getBounds(), {padding: [50,50]});
         }
     })
 );

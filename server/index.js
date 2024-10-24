@@ -20,6 +20,7 @@ const googleCalendarRouter = require('@googleCalendar/router.js');
 const calendarioRouter = require('@calendario/router.js');
 const inicioRouter = require('@inicio/router.js');
 const noticiasRouter = require('@noticias/router.js');
+const sesionesRouter = require('@sesiones/router.js');
 // const mapaRouter = require('@mapa/router.js')
 
 globalRouter.use(express.json());
@@ -275,6 +276,7 @@ globalRouter.use('/googleCalendar', googleCalendarRouter);
 globalRouter.use('/calendario', calendarioRouter);
 globalRouter.use('/inicio', inicioRouter);
 globalRouter.use('/noticias', noticiasRouter);
+globalRouter.use('/sesiones', sesionesRouter);
 // globalRouter.use('/mapa', mapaRouter);
 
 

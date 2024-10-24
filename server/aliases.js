@@ -9,7 +9,8 @@ moduleAlias.addAliases({
     '@inicio': path.join(__dirname, 'modules','inicio'),
     '@noticias': path.join(__dirname, 'modules','noticias'),
     '@mapa': path.join(__dirname, 'modules','mapa'),
+    '@sesiones': path.join(__dirname, 'modules','sesiones'),
     '@utils': path.join(__dirname, 'modules','utils'),
-    '@googleCalendar': path.join(__dirname, 'modules','googleCalendar')
+    '@googleCalendar': path.join(__dirname, 'modules','googleCalendar'),
     
 })
